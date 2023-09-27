@@ -29,8 +29,10 @@ const (
 type Feature interface {
 	Kind() FeatureKind                    // 类型
 	Name() string                         // 特征名称
+	Init() error                          // 初始化, 加载配置信息
 	Update(cacheDate, featureDate string) // 更新数据
 	Repair(cacheDate, featureDate string) // 回补数据
+	Increase(snapshot Snapshot)           // 增量计算, 用快照增量计算特征
 }
 
 // DataBuilder 数据构建器

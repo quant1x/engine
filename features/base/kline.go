@@ -17,6 +17,10 @@ type KLine struct {
 	Down   int     `dataframe:"down"`   // 指数类是下跌家数, 个股类是内盘
 }
 
+func (K *KLine) Init() error {
+	return nil
+}
+
 func (K *KLine) Kind() factors.FeatureKind {
 	return factors.FeatureBaseKLine
 }
@@ -31,6 +35,11 @@ func (K *KLine) Update(cacheDate, featureDate string) {
 }
 
 func (K *KLine) Repair(cacheDate, featureDate string) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (K *KLine) Increase(snapshot factors.Snapshot) {
 	//TODO implement me
 	panic("implement me")
 }

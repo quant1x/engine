@@ -2,7 +2,7 @@ package factors
 
 // History 历史整合数据
 type History struct {
-	Date       string  // 日期
+	Date       string  // 日期, 数据落地的日期
 	Code       string  // 代码
 	MA3        float64 // 3日均价
 	MV3        float64 // 3日均量

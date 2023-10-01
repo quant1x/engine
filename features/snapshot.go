@@ -1,4 +1,4 @@
-package factors
+package features
 
 type Snapshot struct {
 	Date       string // 日期

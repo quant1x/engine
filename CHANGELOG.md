@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.1.1] - 2023-10-01
+### Changed
+- 增加第一个策略执行的demo.
+- Add ChangeLog.
+- 增加趋势反转代码.
+- 新增K线和除权除息的基础数据.
+
 ## [0.1.0] - 2023-09-27
 
 ### Changed
@@ -18,6 +25,7 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.1.0...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.1.1...HEAD
 
+[0.1.1]: https://gitee.com/quant1x/engine/compare/v0.1.0...v0.1.1
 [0.1.0]: https://gitee.com/quant1x/engine/releases/tag/v0.1.0

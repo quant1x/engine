@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.1.2] - 2023-10-02
+### Changed
+- 完成第一个策略演示.
+
 ## [0.1.1] - 2023-10-01
 ### Changed
 - 增加第一个策略执行的demo.
@@ -25,7 +29,8 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.1.1...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.1.2...HEAD
 
+[0.1.2]: https://gitee.com/quant1x/engine/compare/v0.1.1...v0.1.2
 [0.1.1]: https://gitee.com/quant1x/engine/compare/v0.1.0...v0.1.1
 [0.1.0]: https://gitee.com/quant1x/engine/releases/tag/v0.1.0

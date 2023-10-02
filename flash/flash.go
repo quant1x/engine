@@ -31,7 +31,8 @@ func GetL5History(securityCode string, date ...string) *features.History {
 // DataSetList 数据集 列表
 func DataSetList() []features.DataSet {
 	list := []features.DataSet{
-		new(features.DataKLine),
+		new(features.DataXdxr),  // 除权除息
+		new(features.DataKLine), // 基础K线
 	}
 	return list
 }

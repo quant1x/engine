@@ -17,3 +17,23 @@ Quant1x-Engine
 | 0  | factors       | 量化因子                                               | [ ]    | [ ]    | [ ]  |
 | 0  | features      | 特征                                                 | [ ]    | [ ]    | [ ]  |
 | 0 | tracker | 回测 | [ ]    | [ ]    | [ ] |
+
+## 3. 使用示例
+
+### 3.1 更新数据
+
+```shell
+engine update --all
+```
+
+### 3.2 补登历史特征数据
+
+```shell
+engine repair --history --start=20230101
+```
+
+### 3.3 执行1号策略
+
+```shell
+engine --strategy=1
+```

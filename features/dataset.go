@@ -1,5 +1,7 @@
 package features
 
+import "gitee.com/quant1x/gotdx/quotes"
+
 // DataSet 数据层, 数据集接口
 type DataSet interface {
 	Kind() FeatureKind                      // 类型
@@ -8,7 +10,7 @@ type DataSet interface {
 	Filename(date, code string) string      // 缓存文件名
 	Update(cacheDate, featureDate string)   // 更新数据
 	Repair(cacheDate, featureDate string)   // 回补数据
-	Increase(snapshot Snapshot)             // 增量计算, 用快照增量计算特征
+	Increase(snapshot quotes.Snapshot)      // 增量计算, 用快照增量计算特征
 	Clone(date string, code string) DataSet // 克隆一个DataSet
 }
 

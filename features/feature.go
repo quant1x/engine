@@ -1,6 +1,7 @@
 package features
 
 import (
+	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gotdx/trading"
 )
 
@@ -10,6 +11,7 @@ const (
 	FeatureBaseXdxr FeatureKind = 0 // 基础数据-除权除息
 )
 
+// 登记所有的特征数据
 const (
 	FeatureBaseKLine        FeatureKind = 1 << iota // 基础数据-基础K线
 	FeatureBaseTransaction                          // 基础数据-历史成交
@@ -27,6 +29,7 @@ const (
 	_                                               // 预留6
 	_
 	_
+	FeatureHousNo1 // 侯总1号策略
 )
 
 type FeatureCache struct {
@@ -47,22 +50,23 @@ var (
 		FeatureBaseMinutes:     {Type: FeatureBaseMinutes, Key: "minutes", Name: "分时数据"},
 		FeatureHistory:         {Type: FeatureHistory, Key: CacheL5KeyHistory, Name: "历史特征数据"},
 		FeatureF10:             {Type: FeatureF10, Key: "cache/f10", Name: "基本面"},
+		FeatureHousNo1:         {Type: FeatureHousNo1, Key: "", Name: "1号策略数据"},
 	}
 )
 
 // Feature 特征
 type Feature interface {
-	Factory(date string, code string) Feature // 工厂
-	Kind() FeatureKind                        // 类型
-	Name() string                             // 特征名称
-	Key() string                              // 缓存关键字
-	Init() error                              // 初始化, 加载配置信息
-	GetDate() string                          //  日期
-	GetSecurityCode() string                  // 证券代码
-	FromHistory(history History) Feature      // 从历史数据加载
-	Update(cacheDate, featureDate string)     // 更新数据
-	Repair(cacheDate, featureDate string)     // 回补数据
-	Increase(snapshot Snapshot)               // 增量计算, 用快照增量计算特征
+	Factory(date string, code string) Feature                  // 工厂
+	Kind() FeatureKind                                         // 类型
+	Name() string                                              // 特征名称
+	Key() string                                               // 缓存关键字
+	Init() error                                               // 初始化, 加载配置信息
+	GetDate() string                                           // 日期
+	GetSecurityCode() string                                   // 证券代码
+	FromHistory(history History) Feature                       // 从历史数据加载
+	Update(cacheDate, featureDate string)                      // 更新数据
+	Repair(code, cacheDate, featureDate string, complete bool) // 回补数据
+	Increase(snapshot quotes.Snapshot) Feature                 // 增量计算, 用快照增量计算特征
 }
 
 // DataBuilder 数据构建器

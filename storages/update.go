@@ -49,7 +49,7 @@ func UpdateFeature(barIndex *int, cacheDate, featureDate string) {
 					data = data.FromHistory(*history)
 				}
 			}
-			data.Repair(cacheDate, featureDate)
+			data.Repair(code, cacheDate, featureDate, true)
 			mapFeature.Put(code, data)
 			barCode.Add(1)
 		}

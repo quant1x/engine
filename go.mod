@@ -3,7 +3,7 @@ module gitee.com/quant1x/engine
 go 1.21.1
 
 require (
-	gitee.com/quant1x/gotdx v1.15.2
+	gitee.com/quant1x/gotdx v1.15.3
 	gitee.com/quant1x/gox v1.11.7
 	gitee.com/quant1x/pandas v1.1.5
 	github.com/olekukonko/tablewriter v0.0.5

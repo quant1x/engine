@@ -1,5 +1,7 @@
 package features
 
+import "gitee.com/quant1x/gotdx/quotes"
+
 type DataXdxr struct {
 	DataCache
 }
@@ -31,7 +33,7 @@ func (x *DataXdxr) Repair(cacheDate, featureDate string) {
 	panic("implement me")
 }
 
-func (x *DataXdxr) Increase(snapshot Snapshot) {
+func (x *DataXdxr) Increase(snapshot quotes.Snapshot) {
 	//TODO implement me
 	panic("implement me")
 }

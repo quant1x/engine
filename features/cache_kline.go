@@ -3,6 +3,7 @@ package features
 import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/features/base"
+	"gitee.com/quant1x/gotdx/quotes"
 )
 
 type DataKLine struct {
@@ -36,7 +37,7 @@ func (k *DataKLine) Repair(cacheDate, featureDate string) {
 	panic("implement me")
 }
 
-func (k *DataKLine) Increase(snapshot Snapshot) {
+func (k *DataKLine) Increase(snapshot quotes.Snapshot) {
 	//TODO K线增量更新数据的条件是缓存的数据最晚的日期是上一个交易日, 否则会缺失缓存数据中最后1条数据和当日之间的数据, 所以只能按照K线的更新方法, 不适合用快照更新
 	// 第一步: 取出最后一条数据的记录
 	// 第二步: 检查时间的有效性

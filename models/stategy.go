@@ -2,6 +2,7 @@ package models
 
 import "gitee.com/quant1x/gox/util/treemap"
 
+// ModelKind 做多64个策略
 type ModelKind = int
 
 const (
@@ -10,6 +11,7 @@ const (
 
 const (
 	ModelHousNo1 ModelKind = 1 << iota // 1号策略
+	ModelTail                          // 尾盘策略
 )
 
 const (
@@ -36,6 +38,7 @@ var (
 	mapStrategies = map[ModelKind]StrategyWrap{
 		ModelZero:    {Type: ModelZero, Name: "0号策略"},
 		ModelHousNo1: {Type: ModelHousNo1, Name: "1号策略"},
+		ModelTail:    {Type: ModelTail, Name: "尾盘策略"},
 	}
 )
 

@@ -17,6 +17,7 @@ func ExecuteStrategy(model Strategy, barIndex *int) {
 	bar := progressbar.NewBar(*barIndex, "执行["+model.Name()+"]", count)
 	results := treemap.NewWithStringComparator()
 	for _, securityCode := range allCodes {
+		// 此处可以增加过滤规则
 		model.Evaluate(securityCode, results)
 		bar.Add(1)
 	}

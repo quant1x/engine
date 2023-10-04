@@ -18,14 +18,20 @@ var CmdUpdate = &flags.Command{
 	Short: "更新股市数据",
 	Long:  `更新股市数据`,
 	Run: func(cmd *flags.Command, args []string) {
-		if flagHistory.Value {
+		if flagAll.Value {
+			// 全部更新
 			handleUpdateAll()
+		} else if flagHistory.Value {
+			//handleUpdateAll()
 		}
 	},
 }
 
 func init() {
-	flagHistory.init(CmdUpdate)
+	commandInit(CmdUpdate, &flagAll)
+	commandInit(CmdUpdate, &flagHistory)
+	//flagAll.init(CmdUpdate)
+	//flagHistory.init(CmdUpdate)
 }
 
 func handleUpdateAll() {

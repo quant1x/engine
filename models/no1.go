@@ -1,8 +1,8 @@
 package models
 
 import (
+	"gitee.com/quant1x/engine/datasets/base"
 	"gitee.com/quant1x/engine/features"
-	"gitee.com/quant1x/engine/features/base"
 	"gitee.com/quant1x/engine/flash"
 	"gitee.com/quant1x/gotdx"
 	"gitee.com/quant1x/gotdx/securities"

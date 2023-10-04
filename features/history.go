@@ -1,7 +1,7 @@
 package features
 
 import (
-	"gitee.com/quant1x/engine/features/base"
+	"gitee.com/quant1x/engine/datasets/base"
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gotdx/trading"

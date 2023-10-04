@@ -13,23 +13,21 @@ const (
 
 // 登记所有的特征数据
 const (
-	FeatureBaseKLine        FeatureKind = 1 << iota // 基础数据-基础K线
-	FeatureBaseTransaction                          // 基础数据-历史成交
-	FeatureBaseMinutes                              // 基础数据-分时数据
-	FeatureHistory                                  // 历史特征数据
-	FeatureF10                                      // 基本面
-	FeatureKLineShap                                // K线形态等
-	FeatureMovingAverage                            // 移动平均线
-	FeatureBreaksThroughBox                         // 有效突破平台
-	_                                               // 预留1
-	_                                               // 预留2
-	_                                               // 预留3
-	_                                               // 预留4
-	_                                               // 预留5
-	_                                               // 预留6
-	_
-	_
-	FeatureHousNo1 // 侯总1号策略
+	FeatureHistory          = 1 << iota // 特征数据-历史
+	FeatureF10                          // 特征数据-基本面
+	FeatureKLineShap                    // 特征数据-K线形态等
+	FeatureMovingAverage                // 特征数据-移动平均线
+	FeatureBreaksThroughBox             // 特征数据-有效突破平台
+	_                                   // 预留1
+	_                                   // 预留2
+	_                                   // 预留3
+	_                                   // 预留4
+	_                                   // 预留5
+	_                                   // 预留6
+	_                                   // 预留7
+	_                                   // 预留8
+	FeatureHousNo1                      // 侯总1号策略
+	FeatureHousNo2                      // 侯总2号策略
 )
 
 type FeatureCache struct {
@@ -44,13 +42,10 @@ const (
 
 var (
 	mapFeatures = map[FeatureKind]FeatureCache{
-		FeatureBaseXdxr:        {Type: FeatureBaseXdxr, Key: "xdxr", Name: "除权除息"},
-		FeatureBaseKLine:       {Type: FeatureBaseKLine, Key: "day", Name: "日K线"},
-		FeatureBaseTransaction: {Type: FeatureBaseTransaction, Key: "trans", Name: "成交数据"},
-		FeatureBaseMinutes:     {Type: FeatureBaseMinutes, Key: "minutes", Name: "分时数据"},
-		FeatureHistory:         {Type: FeatureHistory, Key: CacheL5KeyHistory, Name: "历史特征数据"},
-		FeatureF10:             {Type: FeatureF10, Key: "cache/f10", Name: "基本面"},
-		FeatureHousNo1:         {Type: FeatureHousNo1, Key: "", Name: "1号策略数据"},
+		FeatureHistory: {Type: FeatureHistory, Key: CacheL5KeyHistory, Name: "历史特征数据"},
+		FeatureF10:     {Type: FeatureF10, Key: "cache/f10", Name: "基本面"},
+		FeatureHousNo1: {Type: FeatureHousNo1, Key: "", Name: "1号策略数据"},
+		FeatureHousNo2: {Type: FeatureHousNo2, Key: "", Name: "2号策略数据"},
 	}
 )
 

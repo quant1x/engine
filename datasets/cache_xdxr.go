@@ -1,41 +1,42 @@
-package features
+package datasets
 
-import "gitee.com/quant1x/gotdx/quotes"
+import (
+	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/datasets/base"
+	"gitee.com/quant1x/gotdx/quotes"
+)
 
 type DataXdxr struct {
 	DataCache
 }
 
-func (x *DataXdxr) Kind() FeatureKind {
-	return FeatureBaseXdxr
+func (x *DataXdxr) Kind() Kind {
+	return BaseXdxr
 }
 
 func (x *DataXdxr) Name() string {
-	return mapFeatures[x.Kind()].Name
+	return mapDataSets[x.Kind()].Name
 }
 
 func (x *DataXdxr) Key() string {
-	return mapFeatures[x.Kind()].Key
+	return mapDataSets[x.Kind()].Key
 }
 
 func (x *DataXdxr) Filename(date, code string) string {
-	//TODO implement me
-	panic("implement me")
+	x.filename = cache.XdxrFilename(x.Code)
+	return x.filename
 }
 
 func (x *DataXdxr) Update(cacheDate, featureDate string) {
-	//TODO implement me
-	panic("implement me")
+	base.UpdateXdxrInfo(x.Code)
 }
 
 func (x *DataXdxr) Repair(cacheDate, featureDate string) {
-	//TODO implement me
-	panic("implement me")
+	base.UpdateXdxrInfo(x.Code)
 }
 
 func (x *DataXdxr) Increase(snapshot quotes.Snapshot) {
-	//TODO implement me
-	panic("implement me")
+	// 除权除息没有增量计算的逻辑
 }
 
 func (x *DataXdxr) Clone(date string, code string) DataSet {

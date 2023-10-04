@@ -1,8 +1,8 @@
-package features
+package datasets
 
 import (
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/features/base"
+	"gitee.com/quant1x/engine/datasets/base"
 	"gitee.com/quant1x/gotdx/quotes"
 )
 
@@ -10,16 +10,16 @@ type DataKLine struct {
 	DataCache
 }
 
-func (k *DataKLine) Kind() FeatureKind {
-	return FeatureBaseKLine
+func (k *DataKLine) Kind() Kind {
+	return BaseKLine
 }
 
 func (k *DataKLine) Name() string {
-	return mapFeatures[k.Kind()].Name
+	return mapDataSets[k.Kind()].Name
 }
 
 func (k *DataKLine) Key() string {
-	return mapFeatures[k.Kind()].Key
+	return mapDataSets[k.Kind()].Key
 }
 
 func (k *DataKLine) Filename(date, code string) string {

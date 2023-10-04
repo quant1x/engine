@@ -2,6 +2,7 @@ package flash
 
 import (
 	"gitee.com/quant1x/engine/cachel5"
+	"gitee.com/quant1x/engine/datasets"
 	"gitee.com/quant1x/engine/features"
 )
 
@@ -29,10 +30,10 @@ func GetL5History(securityCode string, date ...string) *features.History {
 }
 
 // DataSetList 数据集 列表
-func DataSetList() []features.DataSet {
-	list := []features.DataSet{
-		new(features.DataXdxr),  // 除权除息
-		new(features.DataKLine), // 基础K线
+func DataSetList() []datasets.DataSet {
+	list := []datasets.DataSet{
+		new(datasets.DataXdxr),  // 除权除息
+		new(datasets.DataKLine), // 基础K线
 	}
 	return list
 }

@@ -1,0 +1,9 @@
+syntax = "proto3";
+package proto;
+option go_package = "./proto";
+message History {
+  string name = 1;
+  string date = 2;
+  double price = 3;
+}
+

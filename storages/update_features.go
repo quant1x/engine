@@ -8,25 +8,6 @@ import (
 	"gitee.com/quant1x/gox/util/treemap"
 )
 
-//// UpdateBaseCache 更新基础数据
-//func UpdateBaseCache(barIndex *int, cacheDate, featureDate string) {
-//	moduleName := "更新基础数据"
-//	allCodes := market.GetCodeList()
-//	cacheList := flash.BaseList()
-//	cacheCount := len(cacheList)
-//	barCache := progressbar.NewBar(*barIndex, "执行["+moduleName+"]", cacheCount)
-//	for _, cache := range cacheList {
-//		codeCount := len(allCodes)
-//		barCode := progressbar.NewBar(*barIndex+1, "执行["+cache.Name()+"]", codeCount)
-//		for _, code := range allCodes {
-//			data := cache.Factory(cacheDate, code).(features.Feature)
-//			data.Update(cacheDate, featureDate)
-//			barCode.Add(1)
-//		}
-//		barCache.Add(1)
-//	}
-//}
-
 // UpdateFeature 更新特征
 func UpdateFeature(barIndex *int, cacheDate, featureDate string) {
 	moduleName := "更新特征数据"

@@ -44,29 +44,25 @@ var (
 
 // ResultInfo 策略结果
 type ResultInfo struct {
-	Code         string  `name:"证券代码" json:"code" csv:"code" array:"0"`
-	Name         string  `name:"证券名称" json:"name" csv:"name" array:"1"`
-	Date         string  `name:"信号日期" json:"date" csv:"date" array:"2"`
-	TurnZ        float64 `name:"开盘换手Z" json:"turn_z" csv:"turn_z" arrar:"3"`
-	Rate         float64 `name:"涨跌幅%" json:"rate" csv:"rate"`
-	Buy          float64 `name:"委托价格" json:"buy" csv:"buy" array:"3"`
-	Sell         float64 `name:"目标价格" json:"sell" csv:"sell" array:"4"`
-	StrategyCode int     `name:"策略编码" json:"strategy_code" csv:"strategy_code" array:"5"`
-	StrategyName string  `name:"策略名称" json:"strategy_name" csv:"strategy_name" array:"6"`
-	//BlockCode    string  `name:"板块代码" json:"block_code" csv:"block_code" array:"7"`
-	BlockType      string  `name:"板块类型"`
-	BlockName      string  `name:"板块名称" json:"block_name" csv:"block_name" array:"7"`
-	BlockRate      float64 `name:"板块涨幅%" json:"block_rate" csv:"block_rate" array:"8"`
-	BlockTop       int     `name:"板块排名" json:"block_top" csv:"block_top" array:"9"`
-	BlockRank      int     `name:"个股排名" json:"block_rank" csv:"block_top" array:"10"`
-	BlockZhangTing string  `name:"板块涨停数" json:"block_zhangting" csv:"block_zhangting" array:"11"`
-	BlockDescribe  string  `name:"上涨/下跌/平盘" json:"block_describe" csv:"block_describe" array:"12"`
-	//BlockTopCode string  `name:"领涨股代码" json:"block_top_code" csv:"block_top_code" array:"12"`
-	BlockTopName string  `name:"领涨股名称" json:"block_top_name" csv:"block_top_name" array:"13"`
-	BlockTopRate float64 `name:"领涨股涨幅%" json:"block_top_rate" csv:"block_top_rate" array:"14"`
-	Tendency     string  `name:"短线趋势" json:"tendency" csv:"tendency" array:"15"`
-	//Open         float64 `name:"预计开盘" json:"open" csv:"open" array:"16"`
-	//CLOSE        float64 `name:"预计收盘" json:"close" csv:"close" array:"17"`
-	//High         float64 `name:"预计最高" json:"high" csv:"high" array:"18"`
-	//Low          float64 `name:"预计最低" json:"low" csv:"low" array:"19"`
+	Code           string  `name:"证券代码" dataframe:"code"`
+	Name           string  `name:"证券名称" dataframe:"name"`
+	Date           string  `name:"信号日期" dataframe:"date"`
+	TurnZ          float64 `name:"开盘换手Z" dataframe:"turn_z"`
+	Rate           float64 `name:"涨跌幅%" dataframe:"rate"`
+	Buy            float64 `name:"委托价格" dataframe:"buy"`
+	Sell           float64 `name:"目标价格" dataframe:"sell"`
+	StrategyCode   int     `name:"策略编码" dataframe:"strategy_code"`
+	StrategyName   string  `name:"策略名称" dataframe:"strategy_name"`
+	BlockType      string  `name:"板块类型" dataframe:"block_type"`
+	BlockCode      string  `name:"板块代码" dataframe:"block_code"`
+	BlockName      string  `name:"板块名称" dataframe:"block_name"`
+	BlockRate      float64 `name:"板块涨幅%" dataframe:"block_rate"`
+	BlockTop       int     `name:"板块排名" dataframe:"block_top"`
+	BlockZhangTing string  `name:"板块涨停数" dataframe:"block_zhangting"`
+	BlockDescribe  string  `name:"涨/跌/平" dataframe:"block_describe"`
+	BlockRank      int     `name:"个股排名" dataframe:"block_rank"`
+	BlockTopCode   string  `name:"领涨股代码" dataframe:"block_top_code"`
+	BlockTopName   string  `name:"领涨股名称" dataframe:"block_top_name"`
+	BlockTopRate   float64 `name:"领涨股涨幅%" dataframe:"block_top_rate"`
+	Tendency       string  `name:"短线趋势" dataframe:"tendency"`
 }

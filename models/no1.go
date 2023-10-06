@@ -4,7 +4,6 @@ import (
 	"gitee.com/quant1x/engine/datasets/base"
 	"gitee.com/quant1x/engine/features"
 	"gitee.com/quant1x/engine/flash"
-	"gitee.com/quant1x/gotdx"
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/logger"
@@ -86,12 +85,7 @@ func (m *ModelNo1) v1Evaluate(securityCode string, result *treemap.Map) {
 
 func (m *ModelNo1) Evaluate(securityCode string, result *treemap.Map) {
 	history := flash.GetL5History(securityCode)
-	tdxApi := gotdx.GetTdxApi()
-	hq, err := tdxApi.GetSnapshot([]string{securityCode})
-	if err != nil || hq == nil {
-		return
-	}
-	snapshot := hq[0]
+	snapshot := getQuoteSnapshot(securityCode)
 
 	//lastDate := trading.LastTradeDate()
 	//klines := base.CheckoutKLines(securityCode, lastDate)
@@ -117,7 +111,7 @@ func (m *ModelNo1) Evaluate(securityCode string, result *treemap.Map) {
 	r1MA10 := lastNo1.MA10
 	r1MA20 := lastNo1.MA20
 	// 取出今日的半成品数据
-	today := history.Payloads.No1.Increase(snapshot).(*features.HousNo1)
+	today := history.Payloads.No1.Increase(*snapshot).(*features.HousNo1)
 	ma5 := today.MA5
 	ma10 := today.MA10
 	ma20 := today.MA20

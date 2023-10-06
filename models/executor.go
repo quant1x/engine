@@ -12,6 +12,10 @@ import (
 
 // ExecuteStrategy 执行策略
 func ExecuteStrategy(model Strategy, barIndex *int) {
+	// 加载即时行情
+	GetAllSnapshots(barIndex)
+	fmt.Println()
+	// 执行策略
 	allCodes := market.GetCodeList()
 	count := len(allCodes)
 	bar := progressbar.NewBar(*barIndex, "执行["+model.Name()+"]", count)

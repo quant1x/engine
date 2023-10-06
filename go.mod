@@ -3,7 +3,7 @@ module gitee.com/quant1x/engine
 go 1.21.1
 
 require (
-	gitee.com/quant1x/gotdx v1.15.3
+	gitee.com/quant1x/gotdx v1.15.4
 	gitee.com/quant1x/gox v1.11.8
 	gitee.com/quant1x/pandas v1.1.5
 	github.com/mattn/go-runewidth v0.0.9
@@ -15,7 +15,7 @@ require (
 
 require (
 	github.com/dlclark/regexp2 v1.10.0 // indirect
-	github.com/dop251/goja v0.0.0-20230828202809-3dbe69dd2b8e // indirect
+	github.com/dop251/goja v0.0.0-20230919151941-fc55792775de // indirect
 	github.com/frankban/quicktest v1.14.6 // indirect
 	github.com/go-sourcemap/sourcemap v2.1.3+incompatible // indirect
 	github.com/gocarina/gocsv v0.0.0-20230616125104-99d496ca653d // indirect

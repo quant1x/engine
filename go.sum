@@ -1,5 +1,5 @@
-gitee.com/quant1x/gotdx v1.15.3 h1:Jj2hbFSvQjpGptU7NjYZ6YPJE93jPf4e8M1XbpI3Dwk=
-gitee.com/quant1x/gotdx v1.15.3/go.mod h1:voygdfXFIjoqSPn2gHpqvBvlI7lyGofBm21T6Qi4Svo=
+gitee.com/quant1x/gotdx v1.15.4 h1:UTcTPig0Fh4gcDGK9X9Sjk5p9y05I/w+9o3/Dr+FYfc=
+gitee.com/quant1x/gotdx v1.15.4/go.mod h1:tZmBPXKtOmWXEq/iKmIL8ly8chm8o/SbbcorOp48OQQ=
 gitee.com/quant1x/gox v1.11.8 h1:Wmaiu+Aoyjx+lMrZCCIHzNfKd5jSseRmBujCcQQGZg4=
 gitee.com/quant1x/gox v1.11.8/go.mod h1:9iYO+gRqp44WfwuPGhhl8nwsuZg9JNGZDsPw9jC8o5U=
 gitee.com/quant1x/pandas v1.1.5 h1:Yf6ZB5y4i2jms1RxsV3gxSUQmBN9Tn3wkABeYcZsigM=
@@ -16,8 +16,8 @@ github.com/dlclark/regexp2 v1.7.0/go.mod h1:DHkYz0B9wPfa6wondMfaivmHpzrQ3v9q8cnm
 github.com/dlclark/regexp2 v1.10.0 h1:+/GIL799phkJqYW+3YbOd8LCcbHzT0Pbo8zl70MHsq0=
 github.com/dlclark/regexp2 v1.10.0/go.mod h1:DHkYz0B9wPfa6wondMfaivmHpzrQ3v9q8cnmRbL6yW8=
 github.com/dop251/goja v0.0.0-20211022113120-dc8c55024d06/go.mod h1:R9ET47fwRVRPZnOGvHxxhuZcbrMCuiqOz3Rlrh4KSnk=
-github.com/dop251/goja v0.0.0-20230828202809-3dbe69dd2b8e h1:UvQD6hTSfeM6hhTQ24Dlw2RppP05W7SWbWb6kubJAog=
-github.com/dop251/goja v0.0.0-20230828202809-3dbe69dd2b8e/go.mod h1:QMWlm50DNe14hD7t24KEqZuUdC9sOTy8W6XbCU1mlw4=
+github.com/dop251/goja v0.0.0-20230919151941-fc55792775de h1:lA38Xtzr1Wo+iQdkN2E11ziKXJYRxLlzK/e2/fdxoEI=
+github.com/dop251/goja v0.0.0-20230919151941-fc55792775de/go.mod h1:QMWlm50DNe14hD7t24KEqZuUdC9sOTy8W6XbCU1mlw4=
 github.com/dop251/goja_nodejs v0.0.0-20210225215109-d91c329300e7/go.mod h1:hn7BA7c8pLvoGndExHudxTDKZ84Pyvv+90pbBjbTz0Y=
 github.com/dop251/goja_nodejs v0.0.0-20211022123610-8dd9abb0616d/go.mod h1:DngW8aVqWbuLRMHItjPUyqdj+HWPvnQe8V8y1nDpIbM=
 github.com/frankban/quicktest v1.14.6 h1:7Xjx+VpznH+oBnejlPUj8oUpdxnVs4f8XU8WnHkI4W8=

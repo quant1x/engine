@@ -138,12 +138,7 @@ func (h *History) Repair(code, cacheDate, featureDate string, complete bool) {
 
 	// 扩展数据 修复
 	{
-		//no1 := HousNo1{
-		//	MA5:  h.MA5,
-		//	MA10: h.MA10,
-		//	MA20: h.MA20,
-		//}
-		//_ = api.Copy(&h.Payloads.No1, &no1)
+		// hous_no1
 		h.Payloads.No1.Repair(securityCode, cacheDate, featureDate, false)
 		h.Last.No1.Repair(securityCode, cacheDate, featureDate, true)
 	}

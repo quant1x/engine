@@ -8,7 +8,7 @@ import (
 type FeatureKind = uint64
 
 const (
-	FeatureBaseXdxr FeatureKind = 0 // 基础数据-除权除息
+// FeatureBaseXdxr FeatureKind = 0 // 基础数据-除权除息
 )
 
 // 登记所有的特征数据

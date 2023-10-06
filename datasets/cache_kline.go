@@ -10,7 +10,7 @@ type DataKLine struct {
 	DataCache
 }
 
-func (k *DataKLine) Kind() Kind {
+func (k *DataKLine) Kind() DataKind {
 	return BaseKLine
 }
 
@@ -29,12 +29,10 @@ func (k *DataKLine) Filename(date, code string) string {
 
 func (k *DataKLine) Update(cacheDate, featureDate string) {
 	base.UpdateAllBasicKLine(k.Code)
-
 }
 
 func (k *DataKLine) Repair(cacheDate, featureDate string) {
-	//TODO implement me
-	panic("implement me")
+	base.UpdateAllBasicKLine(k.Code)
 }
 
 func (k *DataKLine) Increase(snapshot quotes.Snapshot) {

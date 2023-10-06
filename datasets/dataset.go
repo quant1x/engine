@@ -4,18 +4,18 @@ import (
 	"gitee.com/quant1x/gotdx/quotes"
 )
 
-type Kind = uint64
+type DataKind = uint64
 
 const (
-	BaseKLine       Kind = 1 << iota // 基础数据-基础K线
-	BaseTransaction                  // 基础数据-历史成交
-	BaseMinutes                      // 基础数据-分时数据
-	BaseXdxr                         // 基础数据-除权除息
+	BaseKLine       DataKind = 1 << iota // 基础数据-基础K线
+	BaseTransaction                      // 基础数据-历史成交
+	BaseMinutes                          // 基础数据-分时数据
+	BaseXdxr                             // 基础数据-除权除息
 )
 
 // DataSet 数据层, 数据集接口 smart
 type DataSet interface {
-	Kind() Kind                             // 类型
+	Kind() DataKind                         // 类型
 	Name() string                           // 特征名称
 	Key() string                            // 缓存关键字
 	Filename(date, code string) string      // 缓存文件名
@@ -33,13 +33,13 @@ type DataCache struct {
 }
 
 type DataSetCache struct {
-	Type Kind
+	Type DataKind
 	Key  string
 	Name string
 }
 
 var (
-	mapDataSets = map[Kind]DataSetCache{
+	mapDataSets = map[DataKind]DataSetCache{
 		BaseXdxr:        {Type: BaseXdxr, Key: "xdxr", Name: "除权除息"},
 		BaseKLine:       {Type: BaseKLine, Key: "day", Name: "日K线"},
 		BaseTransaction: {Type: BaseTransaction, Key: "trans", Name: "成交数据"},

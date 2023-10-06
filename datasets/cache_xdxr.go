@@ -10,7 +10,7 @@ type DataXdxr struct {
 	DataCache
 }
 
-func (x *DataXdxr) Kind() Kind {
+func (x *DataXdxr) Kind() DataKind {
 	return BaseXdxr
 }
 

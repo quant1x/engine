@@ -27,18 +27,18 @@ func UpdateBaseData(barIndex *int, cacheDate, featureDate string) {
 	const useGoroutine = false
 	moduleName := "更新基础数据"
 	allCodes := market.GetCodeList()
-	cacheList := flash.DataSetList()
-	cacheCount := len(cacheList)
-	barCache := progressbar.NewBar(*barIndex, "执行["+moduleName+"]", cacheCount)
+	dataSetList := flash.DataSetList()
+	dataSetCount := len(dataSetList)
+	barCache := progressbar.NewBar(*barIndex, "执行["+moduleName+"]", dataSetCount)
 	var wg sync.WaitGroup
 	maxWidth := 0
-	for _, dataSet := range cacheList {
+	for _, dataSet := range dataSetList {
 		width := runewidth.StringWidth(dataSet.Name())
 		if width > maxWidth {
 			maxWidth = width
 		}
 	}
-	for sequence, dataSet := range cacheList {
+	for sequence, dataSet := range dataSetList {
 		codeCount := len(allCodes)
 		//format := fmt.Sprintf("%%%ds", maxWidth)
 		//title := fmt.Sprintf(format, dataSet.Name())

@@ -3,8 +3,8 @@ module gitee.com/quant1x/engine
 go 1.21.1
 
 require (
-	gitee.com/quant1x/gotdx v1.15.4
-	gitee.com/quant1x/gox v1.11.8
+	gitee.com/quant1x/gotdx v1.15.5
+	gitee.com/quant1x/gox v1.11.9
 	gitee.com/quant1x/pandas v1.1.5
 	github.com/mattn/go-runewidth v0.0.9
 	github.com/olekukonko/tablewriter v0.0.5

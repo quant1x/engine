@@ -1,7 +1,7 @@
-gitee.com/quant1x/gotdx v1.15.4 h1:UTcTPig0Fh4gcDGK9X9Sjk5p9y05I/w+9o3/Dr+FYfc=
-gitee.com/quant1x/gotdx v1.15.4/go.mod h1:tZmBPXKtOmWXEq/iKmIL8ly8chm8o/SbbcorOp48OQQ=
-gitee.com/quant1x/gox v1.11.8 h1:Wmaiu+Aoyjx+lMrZCCIHzNfKd5jSseRmBujCcQQGZg4=
-gitee.com/quant1x/gox v1.11.8/go.mod h1:9iYO+gRqp44WfwuPGhhl8nwsuZg9JNGZDsPw9jC8o5U=
+gitee.com/quant1x/gotdx v1.15.5 h1:xAGBX7hRgOX0i+3qN3/YoQXDMGUIGjMRRyCn+K5hKHE=
+gitee.com/quant1x/gotdx v1.15.5/go.mod h1:+F8XivtDRpd0q1xRkyRCKBEePEWxKCvhl1prTb8LLFI=
+gitee.com/quant1x/gox v1.11.9 h1:e1191RLRIDz/xxBGEgR/vnNuBWRm1pPMUEGUXhYR2go=
+gitee.com/quant1x/gox v1.11.9/go.mod h1:9iYO+gRqp44WfwuPGhhl8nwsuZg9JNGZDsPw9jC8o5U=
 gitee.com/quant1x/pandas v1.1.5 h1:Yf6ZB5y4i2jms1RxsV3gxSUQmBN9Tn3wkABeYcZsigM=
 gitee.com/quant1x/pandas v1.1.5/go.mod h1:1CPK/YlGC/7vzK98x56iwRnp54fBVxkDV/aGGvMQi/w=
 github.com/chzyer/logex v1.2.0/go.mod h1:9+9sk7u7pGNWYMkh0hdiL++6OeibzJccyQU4p4MedaY=

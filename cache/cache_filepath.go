@@ -43,6 +43,18 @@ func GetHoldingPath() string {
 	return GetRootPath() + "/" + cacheHoldingPath
 }
 
+// GetInfoPath 信息路径
+func GetInfoPath() string {
+	return GetRootPath() + "/" + cacheInfoPath
+}
+
+// GetQuarterlyPath 季报路径
+//
+//	Deprecated: 不推荐
+func GetQuarterlyPath() string {
+	return GetRootPath() + "/" + cacheInfoPath + "q"
+}
+
 // GetSnapshotPath 快照路径
 func GetSnapshotPath() string {
 	return GetRootPath() + "/" + cacheSnapshotPath

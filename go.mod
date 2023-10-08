@@ -4,7 +4,7 @@ go 1.21.1
 
 require (
 	gitee.com/quant1x/gotdx v1.15.5
-	gitee.com/quant1x/gox v1.11.9
+	gitee.com/quant1x/gox v1.12.0
 	gitee.com/quant1x/pandas v1.1.5
 	github.com/mattn/go-runewidth v0.0.9
 	github.com/olekukonko/tablewriter v0.0.5
@@ -12,6 +12,8 @@ require (
 	google.golang.org/protobuf v1.31.0
 	gopkg.in/yaml.v3 v3.0.1
 )
+
+//replace gitee.com/quant1x/gox v1.11.9 => ../../mymmsc/gox
 
 require (
 	github.com/dlclark/regexp2 v1.10.0 // indirect

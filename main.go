@@ -6,6 +6,7 @@ import (
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/gox/logger"
 	flags "github.com/spf13/cobra"
+	"runtime/debug"
 	"time"
 )
 
@@ -19,6 +20,8 @@ func main() {
 	mainStart := time.Now()
 	defer func() {
 		if err := recover(); err != nil {
+			s := string(debug.Stack())
+			fmt.Printf("\nerr=%v, stack=%s\n", err, s)
 			logger.Fatalf("%s 异常: %+v", command.Application, err)
 		}
 		elapsedTime := time.Since(mainStart) / time.Millisecond

@@ -25,7 +25,7 @@ func (f *HousNo1) Kind() FeatureKind {
 	return FeatureHousNo1
 }
 
-func (f *HousNo1) Name() string {
+func (f *HousNo1) FeatureName() string {
 	return mapFeatures[f.Kind()].Name
 }
 
@@ -34,8 +34,7 @@ func (f *HousNo1) Key() string {
 }
 
 func (f *HousNo1) Init() error {
-	//TODO implement me
-	panic("implement me")
+	return nil
 }
 
 func (f *HousNo1) GetDate() string {

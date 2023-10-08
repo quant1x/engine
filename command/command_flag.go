@@ -1,18 +1,20 @@
 package command
 
 import (
-	flags "github.com/spf13/cobra"
+	"gitee.com/quant1x/engine/datasets/base"
+	cmder "github.com/spf13/cobra"
 	"unsafe"
 )
 
 var (
 	flagAll       = cmdFlag[bool]{Name: "all", Value: false, Usage: "全部"}
+	flagDataSet   = cmdFlag[bool]{Name: "dataset", Value: false, Usage: "数据集"}
 	flagHistory   = cmdFlag[bool]{Name: "history", Value: false, Usage: "历史特征数据"}
-	flagStartDate = cmdFlag[string]{Name: "start", Value: "", Usage: "开始日期"}
+	flagStartDate = cmdFlag[string]{Name: "start", Value: base.TickDefaultStartDate, Usage: "开始日期"}
 	flagEndDate   = cmdFlag[string]{Name: "end", Value: "", Usage: "结束日期"}
 )
 
-type Command = flags.Command
+type Command = cmder.Command
 
 type cmdFlag[T ~int | ~bool | ~string] struct {
 	Name  string
@@ -20,7 +22,7 @@ type cmdFlag[T ~int | ~bool | ~string] struct {
 	Value T
 }
 
-func (cf *cmdFlag[T]) init(cmd *flags.Command) {
+func (cf *cmdFlag[T]) init(cmd *cmder.Command) {
 	switch v := any(cf.Value).(type) {
 	case bool:
 		cmd.Flags().BoolVar((*bool)(unsafe.Pointer(&cf.Value)), cf.Name, v, cf.Usage)
@@ -31,7 +33,7 @@ func (cf *cmdFlag[T]) init(cmd *flags.Command) {
 	}
 }
 
-func commandInit[T ~int | ~bool | ~string](cmd *flags.Command, cf *cmdFlag[T]) {
+func commandInit[T ~int | ~bool | ~string](cmd *cmder.Command, cf *cmdFlag[T]) {
 	switch v := any(cf.Value).(type) {
 	case bool:
 		cmd.Flags().BoolVar((*bool)(unsafe.Pointer(&cf.Value)), cf.Name, v, cf.Usage)

@@ -64,7 +64,7 @@ func (this *Cache1D[T]) Factory(date, securityCode string) features.Feature {
 
 func (this *Cache1D[T]) Name() string {
 	var t T
-	return t.Name()
+	return t.FeatureName()
 }
 
 // Length 获取长度

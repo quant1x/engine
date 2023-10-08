@@ -8,13 +8,14 @@ import (
 )
 
 func TestF10(t *testing.T) {
-	date := "2023-09-28"
+	date := "2023-09-27"
 	//cacheDate, featureDate := cachel5.CorrectDate(date)
-	cacheDate := "2023-09-27"
+	cacheDate := "2023-09-28"
 	featureDate := date
 	code := "sh600105"
 	code = "sh000001"
-	f10 := NewF10(date, code)
+	f10 := NewF10(cacheDate, code)
+	f10.Init()
 	f10.Repair(code, cacheDate, featureDate, true)
 	data, _ := json.Marshal(f10)
 	text := api.Bytes2String(data)

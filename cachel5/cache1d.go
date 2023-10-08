@@ -52,7 +52,7 @@ func NewCache1D[T features.Feature](key string, factory func(date, securityCode 
 		replaceDate: "",
 		allCodes:    []string{},
 	}
-	d1.Date = DefaultCanReadDate()
+	d1.Date = cache.DefaultCanReadDate()
 	d1.allCodes = market.GetCodeList()
 	RegisterCacheLoader(key, &d1)
 	return &d1

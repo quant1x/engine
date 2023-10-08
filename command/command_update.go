@@ -2,7 +2,7 @@ package command
 
 import (
 	"fmt"
-	"gitee.com/quant1x/engine/cachel5"
+	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/storages"
 	cmder "github.com/spf13/cobra"
 )
@@ -34,8 +34,8 @@ func init() {
 
 func handleUpdateAll() {
 	fmt.Println()
-	currentDate := cachel5.DefaultCanUpdateDate()
-	cacheDate, featureDate := cachel5.CorrectDate(currentDate)
+	currentDate := cache.DefaultCanUpdateDate()
+	cacheDate, featureDate := cache.CorrectDate(currentDate)
 
 	//storages.UpdateBaseCache(&barIndex, cacheDate, featureDate)
 	storages.UpdateBaseData(&barIndex, cacheDate, featureDate)

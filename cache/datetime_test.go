@@ -1,4 +1,4 @@
-package cachel5
+package cache
 
 import (
 	"fmt"

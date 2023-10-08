@@ -2,7 +2,7 @@ package command
 
 import (
 	"fmt"
-	"gitee.com/quant1x/engine/cachel5"
+	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/storages"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/logger"
@@ -24,7 +24,7 @@ var CmdRepair = &cmder.Command{
 	Long:  `回补股市数据`,
 	Run: func(cmd *cmder.Command, args []string) {
 		beginDate := trading.FixTradeDate(flagStartDate.Value)
-		endDate := cachel5.DefaultCanReadDate()
+		endDate := cache.DefaultCanReadDate()
 		if len(flagEndDate.Value) > 0 {
 			endDate = trading.FixTradeDate(flagEndDate.Value)
 		}
@@ -60,7 +60,7 @@ func handleRepairAll(dates []string) {
 	barIndex := 1
 	bar := progressbar.NewBar(barIndex, "执行["+moduleName+"]", count)
 	for _, date := range dates {
-		cacheDate, featureDate := cachel5.CorrectDate(date)
+		cacheDate, featureDate := cache.CorrectDate(date)
 		barIndex++
 		storages.RepairAllFeature(&barIndex, cacheDate, featureDate)
 		_ = cacheDate
@@ -79,7 +79,7 @@ func handleRepairDataSet(dates []string) {
 	barIndex := 1
 	bar := progressbar.NewBar(barIndex, "执行["+moduleName+"]", count)
 	for _, date := range dates {
-		cacheDate, featureDate := cachel5.CorrectDate(date)
+		cacheDate, featureDate := cache.CorrectDate(date)
 		barIndex++
 		storages.RepairBaseData(&barIndex, cacheDate, featureDate)
 		bar.Add(1)
@@ -96,7 +96,7 @@ func handleRepair(dates []string) {
 	bar := progressbar.NewBar(barIndex, "执行["+moduleName+"]", count)
 	for _, date := range dates {
 		bar.Add(1)
-		cacheDate, featureDate := cachel5.CorrectDate(date)
+		cacheDate, featureDate := cache.CorrectDate(date)
 		storages.Repair(cacheDate, featureDate)
 	}
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())

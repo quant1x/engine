@@ -2,7 +2,7 @@ package command
 
 import (
 	"fmt"
-	"gitee.com/quant1x/engine/cachel5"
+	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets"
 	"gitee.com/quant1x/engine/flash"
 	"gitee.com/quant1x/gotdx/proto"
@@ -56,7 +56,7 @@ func init() {
 	CmdPrint.Flags().StringVar(&exchangeCode, "exchange", "", "查看快照扩展数据")
 	CmdPrint.Flags().StringVar(&maCode, "ma", "", "查看均线")
 	CmdPrint.Flags().StringVar(&boxCode, "box", "", "查看平台数据")
-	CmdPrint.Flags().StringVar(&tradeDate, "date", cachel5.DefaultCanReadDate(), "指定日期")
+	CmdPrint.Flags().StringVar(&tradeDate, "date", cache.DefaultCanReadDate(), "指定日期")
 }
 
 //// 输出K线概要数据列表

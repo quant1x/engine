@@ -38,10 +38,11 @@ type FeatureCache struct {
 
 var (
 	mapFeatures = map[FeatureKind]FeatureCache{
-		FeatureHistory: {Type: FeatureHistory, Key: CacheL5KeyHistory, Name: "历史特征数据"},
-		FeatureF10:     {Type: FeatureF10, Key: CacheL5KeyF10, Name: "基本面"},
-		FeatureHousNo1: {Type: FeatureHousNo1, Key: "", Name: "1号策略数据"},
-		FeatureHousNo2: {Type: FeatureHousNo2, Key: "", Name: "2号策略数据"},
+		FeatureHistory:          {Type: FeatureHistory, Key: CacheL5KeyHistory, Name: "历史特征数据"},
+		FeatureF10:              {Type: FeatureF10, Key: CacheL5KeyF10, Name: "基本面"},
+		FeatureHousNo1:          {Type: FeatureHousNo1, Key: "", Name: "1号策略数据"},
+		FeatureHousNo2:          {Type: FeatureHousNo2, Key: "", Name: "2号策略数据"},
+		FeatureBreaksThroughBox: {Type: FeatureBreaksThroughBox, Key: CacheL5KeyBox, Name: "平台"},
 	}
 )
 

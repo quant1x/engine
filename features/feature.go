@@ -36,14 +36,10 @@ type FeatureCache struct {
 	Name string
 }
 
-const (
-	CacheL5KeyHistory = "cache/history"
-)
-
 var (
 	mapFeatures = map[FeatureKind]FeatureCache{
 		FeatureHistory: {Type: FeatureHistory, Key: CacheL5KeyHistory, Name: "历史特征数据"},
-		FeatureF10:     {Type: FeatureF10, Key: "cache/f10", Name: "基本面"},
+		FeatureF10:     {Type: FeatureF10, Key: CacheL5KeyF10, Name: "基本面"},
 		FeatureHousNo1: {Type: FeatureHousNo1, Key: "", Name: "1号策略数据"},
 		FeatureHousNo2: {Type: FeatureHousNo2, Key: "", Name: "2号策略数据"},
 	}
@@ -53,7 +49,7 @@ var (
 type Feature interface {
 	Factory(date string, code string) Feature                  // 工厂
 	Kind() FeatureKind                                         // 类型
-	Name() string                                              // 特征名称
+	FeatureName() string                                       // 特征名称
 	Key() string                                               // 缓存关键字
 	Init() error                                               // 初始化, 加载配置信息
 	GetDate() string                                           // 日期

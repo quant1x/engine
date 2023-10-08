@@ -19,6 +19,10 @@ type CompleteData struct {
 	No1 HousNo1
 }
 
+const (
+	CacheL5KeyHistory = "cache/history"
+)
+
 // History 历史整合数据
 type History struct {
 	Date       string         // 日期, 数据落地的日期
@@ -59,7 +63,7 @@ func (h *History) Kind() FeatureKind {
 	return FeatureHistory
 }
 
-func (h *History) Name() string {
+func (h *History) FeatureName() string {
 	return mapFeatures[h.Kind()].Name
 }
 
@@ -68,8 +72,7 @@ func (h *History) Key() string {
 }
 
 func (h *History) Init() error {
-	//TODO implement me
-	panic("implement me")
+	return nil
 }
 
 func (h *History) GetDate() string {
@@ -97,11 +100,6 @@ func (h *History) Repair(code, cacheDate, featureDate string, complete bool) {
 	if len(klines) == 0 {
 		return
 	}
-	//digits := 2
-	//securityInfo, ok := securities.CheckoutSecurityInfo(securityCode)
-	//if ok {
-	//	digits = int(securityInfo.DecimalPoint)
-	//}
 	df := pandas.LoadStructs(klines)
 	var (
 		OPEN  = df.ColAsNDArray("open")
@@ -135,7 +133,6 @@ func (h *History) Repair(code, cacheDate, featureDate string, complete bool) {
 	//	MV20       float64 // 20日均量
 	mv20 := MA(VOL, 20)
 	h.MV20 = SeriesIndexOf(mv20, -1)
-
 	// 扩展数据 修复
 	{
 		// hous_no1

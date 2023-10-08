@@ -3,9 +3,10 @@ package main
 import (
 	"fmt"
 	"gitee.com/quant1x/engine/command"
+	"gitee.com/quant1x/engine/internal/functions"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/gox/logger"
-	flags "github.com/spf13/cobra"
+	cmder "github.com/spf13/cobra"
 	"runtime/debug"
 	"time"
 )
@@ -28,12 +29,12 @@ func main() {
 		fmt.Printf("\n总耗时: %.3fs\n", float64(elapsedTime)/1000)
 	}()
 	// stock模块内的更新版本号
-	//command.UpdateApplicationVersion(MinVersion)
-	//functions.GOMAXPROCS()
+	command.UpdateApplicationVersion(MinVersion)
+	functions.GOMAXPROCS()
 
-	var rootCmd = &flags.Command{
+	var rootCmd = &cmder.Command{
 		Use: command.Application,
-		Run: func(cmd *flags.Command, args []string) {
+		Run: func(cmd *cmder.Command, args []string) {
 			//stat.SetAvx2Enabled(modules.CpuAvx2)
 			//runtime.GOMAXPROCS(modules.CpuNum)
 			var model models.Strategy
@@ -48,6 +49,6 @@ func main() {
 		},
 	}
 	rootCmd.Flags().IntVar(&strategyNumber, "strategy", models.DefaultStrategy, "策略编号")
-	rootCmd.AddCommand(command.CmdUpdate, command.CmdRepair)
+	rootCmd.AddCommand(command.CmdVersion, command.CmdPrint, command.CmdUpdate, command.CmdRepair)
 	_ = rootCmd.Execute()
 }

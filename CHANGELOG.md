@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.1.6] - 2023-10-08
+### Changed
+- 删除废弃的特征组合box.
+
 ## [0.1.5] - 2023-10-08
 ### Changed
 - 调整缓存机制的时间函数的package归属.
@@ -65,8 +69,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.1.5...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.1.6...HEAD
 
+[0.1.6]: https://gitee.com/quant1x/engine/compare/v0.1.5...v0.1.6
 [0.1.5]: https://gitee.com/quant1x/engine/compare/v0.1.4...v0.1.5
 [0.1.4]: https://gitee.com/quant1x/engine/compare/v0.1.3...v0.1.4
 [0.1.3]: https://gitee.com/quant1x/engine/compare/v0.1.2...v0.1.3

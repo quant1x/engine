@@ -198,7 +198,7 @@ func AllNotices(noticeType EMNoticeType, date string, pageNumber ...int) (notice
 			Title: strings.TrimSpace(v.TitleCh),
 			//Keywords     string `dataframe:"关键词"`   // 公告关键词
 			//Increase     int    `dataframe:"增持"`    // 增持
-			//Reduce       int    `dataframe:"减持"`    // 减持
+			//Reduces       int    `dataframe:"减持"`    // 减持
 			//HolderChange int    `dataframe:"控制人变更"` // 实际控制人变更
 		}
 		noticeKeywords := []string{}
@@ -324,7 +324,7 @@ func StockNotices(securityCode, beginDate, endDate string, pageNumber ...int) (n
 			Title: strings.TrimSpace(v.TitleCh),
 			//Keywords     string `dataframe:"关键词"`   // 公告关键词
 			//Increase     int    `dataframe:"增持"`    // 增持
-			//Reduce       int    `dataframe:"减持"`    // 减持
+			//Reduces       int    `dataframe:"减持"`    // 减持
 			//HolderChange int    `dataframe:"控制人变更"` // 实际控制人变更
 		}
 		noticeKeywords := []string{}

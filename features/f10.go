@@ -36,7 +36,7 @@ type F10 struct {
 	BasicEPS       float64 `name:"每股收益"`         // 每股收益
 	SafetyScore    int     `name:"安全分"`          // 通达信安全分
 	Increases      int     `name:"增持"`           // 公告-增持
-	Reduce         int     `name:"减持"`           // 公告-减持
+	Reduces        int     `name:"减持"`           // 公告-减持
 	Risk           int     `name:"风险数"`          // 公告-风险数
 	RiskKeywords   string  `name:"风险关键词"`        // 公告-风险关键词
 }

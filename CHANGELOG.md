@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.1.5] - 2023-10-08
+### Changed
+- 调整缓存机制的时间函数的package归属.
+- 调整测试代码.
+- 增加version, print子命令.
+- 优化命令行参数解析.
+- 更新依赖库的版本.
+- 调整数据集合, 增加基础K线, 财报, 安全分, 除权除息.
+- 新增东方财富数据的接口.
+- 调整除权除息列表的测试代码.
+- 增加通达信协议日期转换函数.
+- 特征增加侯总1号策略.
+- Repair增加特征数据.
+- Repair增加基础数据.
+- 增加异常是显示调用栈.
+- 新增F10基本面特征数据组合.
+- 增加个股安全评估数据.
+- 修正cache1d的缓存关键字.
+- 增补规范的文件名函数.
+- 调整代码归属.
+- 更新gox库版本.
+
 ## [0.1.4] - 2023-10-07
 ### Changed
 - 更新gox、gotdx库版本.
@@ -43,8 +65,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.1.4...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.1.5...HEAD
 
+[0.1.5]: https://gitee.com/quant1x/engine/compare/v0.1.4...v0.1.5
 [0.1.4]: https://gitee.com/quant1x/engine/compare/v0.1.3...v0.1.4
 [0.1.3]: https://gitee.com/quant1x/engine/compare/v0.1.2...v0.1.3
 [0.1.2]: https://gitee.com/quant1x/engine/compare/v0.1.1...v0.1.2

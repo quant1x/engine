@@ -10,6 +10,12 @@ type DataXdxr struct {
 	DataCache
 }
 
+func (x *DataXdxr) Init(barIndex *int, date string) error {
+	_ = barIndex
+	_ = date
+	return nil
+}
+
 func (x *DataXdxr) Kind() DataKind {
 	return BaseXdxr
 }

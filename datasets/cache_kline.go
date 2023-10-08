@@ -10,6 +10,12 @@ type DataKLine struct {
 	DataCache
 }
 
+func (k *DataKLine) Init(barIndex *int, date string) error {
+	_ = barIndex
+	_ = date
+	return nil
+}
+
 func (k *DataKLine) Kind() DataKind {
 	return BaseKLine
 }
@@ -24,11 +30,14 @@ func (k *DataKLine) Key() string {
 
 func (k *DataKLine) Filename(date, code string) string {
 	k.filename = cache.KLineFilename(code)
+	_ = date
 	return k.filename
 }
 
 func (k *DataKLine) Update(cacheDate, featureDate string) {
 	base.UpdateAllBasicKLine(k.Code)
+	_ = cacheDate
+	_ = featureDate
 }
 
 func (k *DataKLine) Repair(cacheDate, featureDate string) {

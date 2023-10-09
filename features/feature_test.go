@@ -44,8 +44,13 @@ func loadGoTypes() {
 					pkgTypes = map[string]reflect.Type{}
 					packages[loadedType.PkgPath()] = pkgTypes
 				}
-				types[loadedType.String()] = loadedType
+				typeName := loadedType.String()
+				//fmt.Println(typeName, "==>", loadedType.PkgPath())
+				types[typeName] = loadedType
 				pkgTypes[loadedType.Name()] = loadedType
+				//if loadedType.Implements(Feature) {
+				//	fmt.Println(typeName, "==>", loadedType.PkgPath())
+				//}
 			}
 		}
 	}

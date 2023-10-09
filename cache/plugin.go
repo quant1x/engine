@@ -5,7 +5,8 @@ import (
 	"sync"
 )
 
-type Plugin interface {
+// DataPlugin 数据插件
+type DataPlugin interface {
 	Name() string
 	Setup(config map[string]string) error
 }
@@ -19,31 +20,31 @@ var (
 )
 
 var (
-	pluginMutex sync.Mutex
-	mapPlugins  = map[string]Plugin{}
+	pluginMutex    sync.Mutex
+	mapDataPlugins = map[string]DataPlugin{}
 	//setupStatus map[string]bool
 )
 
 // Register 注册插件
-func Register(plugin Plugin) error {
+func Register(plugin DataPlugin) error {
 	pluginMutex.Lock()
 	defer pluginMutex.Unlock()
-	_, ok := mapPlugins[plugin.Name()]
+	_, ok := mapDataPlugins[plugin.Name()]
 	if ok {
 		return ErrIsExists
 	}
-	mapPlugins[plugin.Name()] = plugin
+	mapDataPlugins[plugin.Name()] = plugin
 	return nil
 }
 
 // 获取所有注册插件
-func loadPlugins() (plugin chan Plugin, setupStatus map[string]bool) {
+func loadPlugins() (plugin chan DataPlugin, setupStatus map[string]bool) {
 	// 这里定义一个长度为10的队列
-	var sortPlugin = make(chan Plugin, 10)
+	var sortPlugin = make(chan DataPlugin, 10)
 	setupStatus = map[string]bool{}
 
 	// 所有的插件
-	for name, plugin := range mapPlugins {
+	for name, plugin := range mapDataPlugins {
 		sortPlugin <- plugin
 		setupStatus[name] = false
 	}
@@ -52,7 +53,7 @@ func loadPlugins() (plugin chan Plugin, setupStatus map[string]bool) {
 }
 
 // SetupPlugins 加载所有插件
-func SetupPlugins(pluginChan chan Plugin, setupStatus map[string]bool) error {
+func SetupPlugins(pluginChan chan DataPlugin, setupStatus map[string]bool) error {
 	num := len(pluginChan)
 	for num > 0 {
 		plugin := <-pluginChan

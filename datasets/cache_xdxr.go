@@ -39,14 +39,19 @@ func (x *DataXdxr) Filename(date, code string) string {
 
 func (x *DataXdxr) Update(cacheDate, featureDate string) {
 	base.UpdateXdxrInfo(x.Code)
+	_ = cacheDate
+	_ = featureDate
 }
 
 func (x *DataXdxr) Repair(cacheDate, featureDate string) {
 	base.UpdateXdxrInfo(x.Code)
+	_ = cacheDate
+	_ = featureDate
 }
 
 func (x *DataXdxr) Increase(snapshot quotes.Snapshot) {
 	// 除权除息没有增量计算的逻辑
+	_ = snapshot
 }
 
 func (x *DataXdxr) Clone(date string, code string) DataSet {

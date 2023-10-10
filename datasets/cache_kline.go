@@ -46,6 +46,8 @@ func (k *DataKLine) Update(cacheDate, featureDate string) {
 
 func (k *DataKLine) Repair(cacheDate, featureDate string) {
 	base.UpdateAllBasicKLine(k.Code)
+	_ = cacheDate
+	_ = featureDate
 }
 
 func (k *DataKLine) Increase(snapshot quotes.Snapshot) {

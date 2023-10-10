@@ -50,7 +50,7 @@ type Feature interface {
 	GetDate() string                                           // 日期
 	GetSecurityCode() string                                   // 证券代码
 	FromHistory(history History) Feature                       // 从历史数据加载
-	Update(cacheDate, featureDate string)                      // 更新数据
+	Update(code, cacheDate, featureDate string, complete bool) // 更新数据
 	Repair(code, cacheDate, featureDate string, complete bool) // 回补数据
 	Increase(snapshot quotes.Snapshot) Feature                 // 增量计算, 用快照增量计算特征
 }

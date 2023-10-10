@@ -14,9 +14,9 @@ import (
 	"sync"
 )
 
-func PluginsRepairBase(barIndex *int, cacheDate, featureDate string) {
-	const useGoroutine = false
-	moduleName := "修复基础数据"
+// UpdateBaseData 更新基础数据
+func UpdateBaseData(barIndex *int, cacheDate, featureDate string) {
+	moduleName := "更新基础数据"
 	// 1. 获取全部注册的数据集插件
 	mask := cache.PluginMaskDataSet
 	//dataSetList := flash.DataSetList()
@@ -56,17 +56,17 @@ func PluginsRepairBase(barIndex *int, cacheDate, featureDate string) {
 		barCode := progressbar.NewBar(barNo, "执行["+title+"]", codeCount)
 		wg.Add(1)
 		if useGoroutine {
-			go repairDateSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate)
+			go updateDateSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate)
 		} else {
-			repairDateSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate)
+			updateDateSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate)
 		}
 	}
 	wg.Wait()
 }
 
-// PluginsRepairFeatures 插件方式回补特征
-func PluginsRepairFeatures(barIndex *int, cacheDate, featureDate string) {
-	moduleName := "修复特征数据" + cacheDate
+// UpdateFeatures 更新特征
+func UpdateFeatures(barIndex *int, cacheDate, featureDate string) {
+	moduleName := "更新特征数据" + cacheDate
 	// 1. 获取全部注册的数据集插件
 	mask := cache.PluginMaskFeature
 	//dataSetList := flash.DataSetList()
@@ -100,7 +100,7 @@ func PluginsRepairFeatures(barIndex *int, cacheDate, featureDate string) {
 					data = data.FromHistory(*history)
 				}
 			}
-			data.Repair(code, cacheDate, featureDate, true)
+			data.Update(code, cacheDate, featureDate, true)
 			mapFeature.Put(code, data)
 			barCode.Add(1)
 		}

@@ -101,7 +101,7 @@ func (f *F10) FromHistory(history History) Feature {
 	return f
 }
 
-func (f *F10) Update(cacheDate, featureDate string) {
+func (f *F10) Update(code, cacheDate, featureDate string, complete bool) {
 	securityCode := f.GetSecurityCode()
 
 	// 1. 基本信息
@@ -121,7 +121,9 @@ func (f *F10) Update(cacheDate, featureDate string) {
 	safetyScore := tdxweb.GetSafetyScore(securityCode)
 	f.SafetyScore = safetyScore
 
+	_ = code
 	_ = cacheDate
+	_ = complete
 }
 
 func (f *F10) Repair(code, cacheDate, featureDate string, complete bool) {

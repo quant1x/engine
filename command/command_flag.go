@@ -8,8 +8,8 @@ import (
 
 var (
 	flagAll       = cmdFlag[bool]{Name: "all", Value: false, Usage: "全部"}
-	flagDataSet   = cmdFlag[bool]{Name: "dataset", Value: false, Usage: "数据集"}
-	flagHistory   = cmdFlag[bool]{Name: "history", Value: false, Usage: "历史特征数据"}
+	flagBaseData  = cmdFlag[bool]{Name: "base", Value: false, Usage: "基础数据"}
+	flagFeatures  = cmdFlag[bool]{Name: "features", Value: false, Usage: "特征数据"}
 	flagStartDate = cmdFlag[string]{Name: "start", Value: base.TickDefaultStartDate, Usage: "开始日期"}
 	flagEndDate   = cmdFlag[string]{Name: "end", Value: "", Usage: "结束日期"}
 )

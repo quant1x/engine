@@ -20,8 +20,8 @@ var CmdRepair = &cmder.Command{
 	Args: func(cmd *cmder.Command, args []string) error {
 		return nil
 	},
-	Short: "回补股市数据",
-	Long:  `回补股市数据`,
+	Short: "修复股市数据",
+	Long:  `修复股市数据`,
 	Run: func(cmd *cmder.Command, args []string) {
 		beginDate := trading.FixTradeDate(flagStartDate.Value)
 		endDate := cache.DefaultCanReadDate()
@@ -33,9 +33,9 @@ var CmdRepair = &cmder.Command{
 		fmt.Printf("修复数据: %s => %s"+strings.Repeat("\r\n", 2), dates[0], dates[count-1])
 		if flagAll.Value {
 			handleRepairAll(dates)
-		} else if flagDataSet.Value {
+		} else if flagBaseData.Value {
 			handleRepairDataSet(dates)
-		} else if flagHistory.Value {
+		} else if flagFeatures.Value {
 			handleRepairFeatures(dates)
 		}
 	},
@@ -43,14 +43,14 @@ var CmdRepair = &cmder.Command{
 
 func init() {
 	commandInit(CmdRepair, &flagAll)
-	commandInit(CmdRepair, &flagDataSet)
-	commandInit(CmdRepair, &flagHistory)
+	commandInit(CmdRepair, &flagBaseData)
+	commandInit(CmdRepair, &flagFeatures)
 	commandInit(CmdRepair, &flagStartDate)
 	commandInit(CmdRepair, &flagEndDate)
 }
 
 func handleRepairAll(dates []string) {
-	moduleName := "补登全部历史数据"
+	moduleName := "修复全部数据"
 	count := len(dates)
 	fmt.Println()
 	fmt.Println()
@@ -59,7 +59,7 @@ func handleRepairAll(dates []string) {
 	for _, date := range dates {
 		cacheDate, featureDate := cache.CorrectDate(date)
 		barIndex++
-		storages.RepairAllFeature(&barIndex, cacheDate, featureDate)
+		storages.RepairFeatures(&barIndex, cacheDate, featureDate)
 		_ = cacheDate
 		_ = featureDate
 		bar.Add(1)
@@ -78,8 +78,7 @@ func handleRepairDataSet(dates []string) {
 	for _, date := range dates {
 		cacheDate, featureDate := cache.CorrectDate(date)
 		barIndex++
-		//storages.RepairBaseData(&barIndex, cacheDate, featureDate)
-		storages.PluginsRepairBase(&barIndex, cacheDate, featureDate)
+		storages.RepairBaseData(&barIndex, cacheDate, featureDate)
 		bar.Add(1)
 	}
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())
@@ -94,9 +93,8 @@ func handleRepairFeatures(dates []string) {
 	bar := progressbar.NewBar(barIndex, "执行["+moduleName+"]", count)
 	for _, date := range dates {
 		cacheDate, featureDate := cache.CorrectDate(date)
-		//storages.Repair(cacheDate, featureDate)
 		barIndex++
-		storages.PluginsRepairFeatures(&barIndex, cacheDate, featureDate)
+		storages.RepairFeatures(&barIndex, cacheDate, featureDate)
 		bar.Add(1)
 	}
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())

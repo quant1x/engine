@@ -95,7 +95,7 @@ func (h *History) FromHistory(history History) Feature {
 	return h
 }
 
-func (h *History) Update(cacheDate, featureDate string) {
+func (h *History) Update(code, cacheDate, featureDate string, complete bool) {
 	//TODO implement me
 	panic("implement me")
 }

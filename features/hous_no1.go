@@ -53,7 +53,7 @@ func (f *HousNo1) FromHistory(history History) Feature {
 	return f
 }
 
-func (f *HousNo1) Update(cacheDate, featureDate string) {
+func (f *HousNo1) Update(code, cacheDate, featureDate string, complete bool) {
 	//TODO implement me
 	panic("implement me")
 }

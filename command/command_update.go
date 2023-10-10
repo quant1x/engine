@@ -18,28 +18,37 @@ var CmdUpdate = &cmder.Command{
 	Short: "更新股市数据",
 	Long:  `更新股市数据`,
 	Run: func(cmd *cmder.Command, args []string) {
+		fmt.Println()
+		currentDate := cache.DefaultCanUpdateDate()
+		cacheDate, featureDate := cache.CorrectDate(currentDate)
 		if flagAll.Value {
 			// 全部更新
-			handleUpdateAll()
-		} else if flagHistory.Value {
-			//handleUpdateAll()
+			handleUpdateAll(cacheDate, featureDate)
+		} else if flagBaseData.Value {
+			handleUpdateBaseData(cacheDate, featureDate)
+		} else if flagFeatures.Value {
+			handleUpdateFeatures(cacheDate, featureDate)
 		}
 	},
 }
 
 func init() {
 	commandInit(CmdUpdate, &flagAll)
-	commandInit(CmdUpdate, &flagHistory)
+	commandInit(CmdUpdate, &flagFeatures)
 }
 
-func handleUpdateAll() {
-	fmt.Println()
-	currentDate := cache.DefaultCanUpdateDate()
-	cacheDate, featureDate := cache.CorrectDate(currentDate)
+// 全部更新
+func handleUpdateAll(cacheDate, featureDate string) {
+	handleUpdateBaseData(cacheDate, featureDate)
+	handleUpdateFeatures(cacheDate, featureDate)
+}
 
-	//storages.UpdateBaseCache(&barIndex, cacheDate, featureDate)
+// 更新基础数据
+func handleUpdateBaseData(cacheDate, featureDate string) {
 	storages.UpdateBaseData(&barIndex, cacheDate, featureDate)
-	storages.UpdateFeature(&barIndex, cacheDate, featureDate)
-	_ = cacheDate
-	_ = featureDate
+}
+
+// 更新特征组合
+func handleUpdateFeatures(cacheDate, featureDate string) {
+	storages.UpdateFeatures(&barIndex, cacheDate, featureDate)
 }

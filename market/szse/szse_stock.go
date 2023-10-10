@@ -2,7 +2,7 @@ package szse
 
 import (
 	"fmt"
-	"gitee.com/quant1x/engine/internal/functions"
+	"gitee.com/quant1x/engine/util/functions"
 	"gitee.com/quant1x/gox/http"
 	urlpkg "net/url"
 )

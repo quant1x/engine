@@ -1,4 +1,4 @@
-package utils
+package util
 
 // ScoreBoard 记分牌
 type ScoreBoard struct {

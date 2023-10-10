@@ -3,7 +3,7 @@ package dfcf
 import (
 	"encoding/json"
 	"fmt"
-	"gitee.com/quant1x/engine/internal/functions"
+	"gitee.com/quant1x/engine/util/functions"
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/exception"

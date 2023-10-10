@@ -21,7 +21,7 @@ func PluginsRepairBase(barIndex *int, cacheDate, featureDate string) {
 	mask := cache.PluginMaskDataSet
 	//dataSetList := flash.DataSetList()
 	plugins := cache.Plugins(mask)
-	dataSetList := []datasets.DataSet{}
+	var dataSetList []datasets.DataSet
 	// 1.1 缓存数据集名称的最大宽度
 	maxWidth := 0
 	for _, plugin := range plugins {
@@ -71,7 +71,7 @@ func PluginsRepairFeatures(barIndex *int, cacheDate, featureDate string) {
 	mask := cache.PluginMaskFeature
 	//dataSetList := flash.DataSetList()
 	plugins := cache.Plugins(mask)
-	cacheList := []cachel5.CacheAdapter{}
+	var cacheList []cachel5.CacheAdapter
 	maxWidth := 0
 	for _, plugin := range plugins {
 		adapter, ok := plugin.(cachel5.CacheAdapter)
@@ -82,13 +82,6 @@ func PluginsRepairFeatures(barIndex *int, cacheDate, featureDate string) {
 				maxWidth = width
 			}
 		}
-		//feature, ok := plugin.(features.Feature)
-		//if ok {
-		//	width := runewidth.StringWidth(feature.FeatureName())
-		//	if width > maxWidth {
-		//		maxWidth = width
-		//	}
-		//}
 	}
 	allCodes := market.GetCodeList()
 	cacheCount := len(cacheList)

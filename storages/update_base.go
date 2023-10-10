@@ -23,6 +23,8 @@ func updateDateSet(wg *sync.WaitGroup, parent, bar *progressbar.Bar, dataSet dat
 }
 
 // UpdateBaseData 更新基础数据
+//
+//	Deprecated: 废弃的接口
 func UpdateBaseData(barIndex *int, cacheDate, featureDate string) {
 	const useGoroutine = false
 	moduleName := "更新基础数据"
@@ -40,8 +42,6 @@ func UpdateBaseData(barIndex *int, cacheDate, featureDate string) {
 	}
 	for sequence, dataSet := range dataSetList {
 		codeCount := len(allCodes)
-		//format := fmt.Sprintf("%%%ds", maxWidth)
-		//title := fmt.Sprintf(format, dataSet.Name())
 		width := runewidth.StringWidth(dataSet.Name())
 		title := strings.Repeat(" ", maxWidth-width) + dataSet.Name()
 		barNo := *barIndex + 1

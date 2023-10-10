@@ -9,15 +9,14 @@ import (
 )
 
 // UpdateFeature 更新特征
+//
+//	Deprecated: 废弃的接口
 func UpdateFeature(barIndex *int, cacheDate, featureDate string) {
 	moduleName := "更新特征数据"
 	allCodes := market.GetCodeList()
 	cacheList := flash.CacheList()
 	cacheCount := len(cacheList)
-	//fmt.Println("\n\n")
 	barCache := progressbar.NewBar(*barIndex, "执行["+moduleName+"]", cacheCount)
-	//barCache.Add(0)
-	//fmt.Println()
 	for _, cache := range cacheList {
 		mapFeature := treemap.NewWithStringComparator()
 		codeCount := len(allCodes)

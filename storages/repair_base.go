@@ -10,6 +10,8 @@ import (
 )
 
 // RepairBaseData 更新基础数据
+//
+//	Deprecated: 废弃的接口
 func RepairBaseData(barIndex *int, cacheDate, featureDate string) {
 	const useGoroutine = false
 	moduleName := "更新基础数据"

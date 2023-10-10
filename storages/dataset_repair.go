@@ -12,7 +12,7 @@ func repairDateSet(wg *sync.WaitGroup, parent, bar *progressbar.Bar, dataSet dat
 	allCodes := market.GetCodeList()
 	for _, code := range allCodes {
 		data := dataSet.Clone(cacheDate, code).(datasets.DataSet)
-		data.Update(cacheDate, featureDate)
+		data.Repair(cacheDate, featureDate)
 		bar.Add(1)
 	}
 	parent.Add(1)

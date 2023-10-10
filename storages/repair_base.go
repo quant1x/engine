@@ -2,9 +2,9 @@ package storages
 
 import (
 	"gitee.com/quant1x/engine/flash"
-	"gitee.com/quant1x/engine/internal/util/runewidth"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/gox/progressbar"
+	"gitee.com/quant1x/gox/text/runewidth"
 	"strings"
 	"sync"
 )

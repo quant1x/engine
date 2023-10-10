@@ -22,6 +22,7 @@ func PluginsRepairBase(barIndex *int, cacheDate, featureDate string) {
 	//dataSetList := flash.DataSetList()
 	plugins := cache.Plugins(mask)
 	dataSetList := []datasets.DataSet{}
+	// 1.1 缓存数据集名称的最大宽度
 	maxWidth := 0
 	for _, plugin := range plugins {
 		dataSet, ok := plugin.(datasets.DataSet)
@@ -34,7 +35,7 @@ func PluginsRepairBase(barIndex *int, cacheDate, featureDate string) {
 		}
 	}
 
-	// 2. 遍历全部数据差价
+	// 2. 遍历全部数据插件
 	dataSetCount := len(dataSetList)
 	barCache := progressbar.NewBar(*barIndex, "执行["+moduleName+"]", dataSetCount)
 

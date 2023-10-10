@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.1.7] - 2023-10-10
+### Changed
+- 调整基本面数据的优先级.
+- 修订项目总名称.
+- 修订分支的描述.
+- 调整变量的写法.
+- 调整变量的写法.
+- 调整变量的写法.
+- 调整变量的写法.
+- 调整变量的写法.
+- 调整插件模式的遍历方法.
+- 修订README, 增加对于协同开发方面的说明.
+- 收录github.com/mattn/go-runewidth@v0.0.15.
+- 移除测试性代码.
+- 调整插件接口名.
+- 增加插件接口, 用以收盘写数据操作.
+- 增加smart接口.
+- 修正安全分单词.
+- 删除废弃的测试代码.
+- 更新F10中公告的增持和减持的字段名.
+
 ## [0.1.6] - 2023-10-08
 ### Changed
 - 删除废弃的特征组合box.
@@ -69,8 +90,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.1.6...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.1.7...HEAD
 
+[0.1.7]: https://gitee.com/quant1x/engine/compare/v0.1.6...v0.1.7
 [0.1.6]: https://gitee.com/quant1x/engine/compare/v0.1.5...v0.1.6
 [0.1.5]: https://gitee.com/quant1x/engine/compare/v0.1.4...v0.1.5
 [0.1.4]: https://gitee.com/quant1x/engine/compare/v0.1.3...v0.1.4

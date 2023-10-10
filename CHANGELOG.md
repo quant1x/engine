@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.1.8] - 2023-10-10
+### Changed
+- 调整更新和修复子命令.
+- 更新gox版本.
+- 消除没有使用参数的告警提示.
+- 标注废弃部分函数.
+- 增加注释.
+
 ## [0.1.7] - 2023-10-10
 ### Changed
 - 调整基本面数据的优先级.
@@ -90,8 +98,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.1.7...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.1.8...HEAD
 
+[0.1.8]: https://gitee.com/quant1x/engine/compare/v0.1.7...v0.1.8
 [0.1.7]: https://gitee.com/quant1x/engine/compare/v0.1.6...v0.1.7
 [0.1.6]: https://gitee.com/quant1x/engine/compare/v0.1.5...v0.1.6
 [0.1.5]: https://gitee.com/quant1x/engine/compare/v0.1.4...v0.1.5

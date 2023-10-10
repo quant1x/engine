@@ -10,6 +10,10 @@ type DataKLine struct {
 	DataCache
 }
 
+func init() {
+	_ = cache.Register(&DataKLine{})
+}
+
 func (k *DataKLine) Init(barIndex *int, date string) error {
 	_ = barIndex
 	_ = date

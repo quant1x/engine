@@ -41,6 +41,13 @@ type F10 struct {
 	RiskKeywords   string  `name:"风险关键词"`        // 公告-风险关键词
 }
 
+//func init() {
+//	err := cache.Register(&F10{})
+//	if err != nil {
+//		panic(err)
+//	}
+//}
+
 func NewF10(date, code string) *F10 {
 	v := F10{
 		Date:         date,
@@ -76,7 +83,7 @@ func (f *F10) Key() string {
 	return mapFeatures[f.Kind()].Key
 }
 
-func (f *F10) Init() error {
+func (f *F10) Init(barIndex *int, date string) error {
 	loadQuarterlyReports(f.GetDate())
 	return nil
 }
@@ -143,6 +150,11 @@ func (f *F10) Repair(code, cacheDate, featureDate string, complete bool) {
 }
 
 func (f *F10) Increase(snapshot quotes.Snapshot) Feature {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (f *F10) ChangingOverDate(date string) {
 	//TODO implement me
 	panic("implement me")
 }

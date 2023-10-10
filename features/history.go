@@ -46,6 +46,13 @@ type History struct {
 	UpdateTime string         // 更新时间
 }
 
+//func init() {
+//	err := cache.Register(&History{})
+//	if err != nil {
+//		panic(err)
+//	}
+//}
+
 func NewHistory(date, code string) *History {
 	v := History{
 		Date: date,
@@ -71,7 +78,7 @@ func (h *History) Key() string {
 	return mapFeatures[h.Kind()].Key
 }
 
-func (h *History) Init() error {
+func (h *History) Init(barIndex *int, date string) error {
 	return nil
 }
 

@@ -38,6 +38,7 @@ type Cache1D[T features.Feature] struct {
 	mapCache    map[string]T
 	replaceDate string // 替换缓存的日期
 	allCodes    []string
+	tmp         T
 }
 
 // NewCache1D 创建一个新的C1D对象
@@ -62,9 +63,18 @@ func (this *Cache1D[T]) Factory(date, securityCode string) features.Feature {
 	return this.factory(date, securityCode)
 }
 
+func (this *Cache1D[T]) Init(barIndex *int, date string) error {
+	_ = barIndex
+	_ = date
+	return nil
+}
+
+func (this *Cache1D[T]) Kind() cache.Kind {
+	return this.tmp.Kind()
+}
+
 func (this *Cache1D[T]) Name() string {
-	var t T
-	return t.FeatureName()
+	return this.tmp.FeatureName()
 }
 
 // Length 获取长度

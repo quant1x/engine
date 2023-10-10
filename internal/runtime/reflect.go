@@ -1,29 +1,25 @@
-package features
+package runtime
 
 import (
 	"fmt"
+	"gitee.com/quant1x/engine/features"
 	"reflect"
 	"strings"
-	"testing"
+	"sync"
 	"unsafe"
 )
 
-func TestNewDataBuilder(t *testing.T) {
-	date := "2023-07-04"
-	v := NewDataBuilder("test", date, nil)
-	fmt.Println(v)
-}
-
-// typelinks2 for 1.7 ~
-//
 //go:linkname typelinks2 reflect.typelinks
 func typelinks2() (sections []unsafe.Pointer, offset [][]int32)
 
 //go:linkname resolveTypeOff reflect.resolveTypeOff
 func resolveTypeOff(rtype unsafe.Pointer, off int32) unsafe.Pointer
 
-var types map[string]reflect.Type
-var packages map[string]map[string]reflect.Type
+var (
+	typeOnce sync.Once
+	types    = map[string]reflect.Type{}
+	packages = map[string]map[string]reflect.Type{}
+)
 
 type emptyInterface struct {
 	typ  unsafe.Pointer
@@ -31,7 +27,7 @@ type emptyInterface struct {
 }
 
 func loadGoTypes() {
-	fia := reflect.TypeOf((*Feature)(nil)).Elem()
+	fia := reflect.TypeOf((*features.Feature)(nil)).Elem()
 	var obj interface{} = reflect.TypeOf(0)
 	sections, offset := typelinks2()
 	for i, offs := range offset {
@@ -46,18 +42,18 @@ func loadGoTypes() {
 					pkgTypes = map[string]reflect.Type{}
 					packages[loadedType.PkgPath()] = pkgTypes
 				}
-				typeName := loadedType.String()
-				//fmt.Println(typeName, "==>", loadedType.PkgPath())
-				types[typeName] = loadedType
-				pkgTypes[loadedType.Name()] = loadedType
-				//if loadedType.Implements(Feature) {
-				//	fmt.Println(typeName, "==>", loadedType.PkgPath())
-				//}
+				//typeString := loadedType.String()
+				//types[typeString] = loadedType
 				pkgPath := loadedType.PkgPath()
+				typeName := loadedType.Name()
+				//fmt.Println(pkgPath, "=>", typeString, "=>", typeName)
+				structName := fmt.Sprintf("%s.%s", pkgPath, typeName)
+				types[structName] = loadedType
+				pkgTypes[loadedType.Name()] = loadedType
 				if strings.HasPrefix(pkgPath, "gitee.com/quant1x/engine") {
-					//fmt.Println(typeName, "==>", loadedType.PkgPath())
+					fmt.Println(structName, "==>", loadedType.PkgPath())
 					if reflect.PtrTo(loadedType).Implements(fia) {
-						fmt.Println("found", pkgPath, "==>", loadedType.Name())
+						fmt.Println("found", pkgPath, "==>", structName)
 					}
 				}
 			}
@@ -65,8 +61,18 @@ func loadGoTypes() {
 	}
 }
 
-func TestInterface(t *testing.T) {
-	types = make(map[string]reflect.Type)
-	packages = make(map[string]map[string]reflect.Type)
+func lazyInit() {
 	loadGoTypes()
+}
+
+func FindImplements(u reflect.Type) (list []reflect.Type) {
+	typeOnce.Do(lazyInit)
+	for name, t := range types {
+		//fmt.Println(name)
+		if reflect.PtrTo(t).Implements(u) {
+			list = append(list, t)
+		}
+		_ = name
+	}
+	return
 }

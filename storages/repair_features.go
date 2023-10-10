@@ -10,6 +10,8 @@ import (
 )
 
 // Repair 回补数据
+//
+//	Deprecated: 废弃的接口
 func Repair(cacheDate, featureDate string) {
 	allCodes := market.GetCodeList()
 	for _, cache := range flash.CacheList() {
@@ -37,6 +39,8 @@ func Repair(cacheDate, featureDate string) {
 }
 
 // RepairAllFeature 回补更新特征
+//
+//	Deprecated: 废弃的接口
 func RepairAllFeature(barIndex *int, cacheDate, featureDate string) {
 	moduleName := "回补特征数据" + cacheDate
 	allCodes := market.GetCodeList()
@@ -48,7 +52,7 @@ func RepairAllFeature(barIndex *int, cacheDate, featureDate string) {
 		codeCount := len(allCodes)
 		barCode := progressbar.NewBar(*barIndex+1, "执行["+cache.Name()+"]", codeCount)
 		dataSource := cache.Factory(featureDate, "")
-		_ = dataSource.Init()
+		_ = dataSource.Init(barIndex, featureDate)
 		for _, code := range allCodes {
 			data := cache.Factory(cacheDate, code).(features.Feature)
 			if data.Kind() != features.FeatureHistory {

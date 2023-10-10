@@ -10,6 +10,10 @@ type DataXdxr struct {
 	DataCache
 }
 
+func init() {
+	_ = cache.Register(&DataXdxr{})
+}
+
 func (x *DataXdxr) Init(barIndex *int, date string) error {
 	_ = barIndex
 	_ = date

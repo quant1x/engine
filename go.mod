@@ -6,7 +6,6 @@ require (
 	gitee.com/quant1x/gotdx v1.15.6
 	gitee.com/quant1x/gox v1.12.0
 	gitee.com/quant1x/pandas v1.1.6
-	github.com/mattn/go-runewidth v0.0.9
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/spf13/cobra v1.7.0
 	google.golang.org/protobuf v1.31.0
@@ -27,6 +26,7 @@ require (
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/kr/text v0.2.0 // indirect
+	github.com/mattn/go-runewidth v0.0.9 // indirect
 	github.com/peterbourgon/diskv/v3 v3.0.1 // indirect
 	github.com/rogpeppe/fastuuid v1.2.0 // indirect
 	github.com/rogpeppe/go-internal v1.11.0 // indirect

@@ -1,6 +1,7 @@
 package flash
 
 import (
+	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/cachel5"
 	"gitee.com/quant1x/engine/datasets"
 	"gitee.com/quant1x/engine/features"
@@ -15,11 +16,23 @@ var (
 	__l5F10 *cachel5.Cache1D[*features.F10] = nil
 )
 
+func init() {
+	__l5Once.Do(lazyInitFeatures)
+}
+
 func lazyInitFeatures() {
 	// 历史数据
 	__l5History = cachel5.NewCache1D[*features.History](features.CacheL5KeyHistory, features.NewHistory)
+	err := cache.Register(__l5History)
+	if err != nil {
+		panic(err)
+	}
 	// 基本面F10
 	__l5F10 = cachel5.NewCache1D[*features.F10](features.CacheL5KeyF10, features.NewF10)
+	err = cache.Register(__l5F10)
+	if err != nil {
+		panic(err)
+	}
 }
 
 // CacheList 缓存列表

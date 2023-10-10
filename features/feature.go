@@ -1,6 +1,7 @@
 package features
 
 import (
+	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gotdx/trading"
 )
@@ -8,26 +9,19 @@ import (
 type FeatureKind = uint64
 
 const (
-// FeatureBaseXdxr FeatureKind = 0 // 基础数据-除权除息
+	baseFeature FeatureKind = cache.PluginMaskFeature // 特征类型基础编码
 )
 
 // 登记所有的特征数据
 const (
-	FeatureHistory          = 1 << iota // 特征数据-历史
-	FeatureF10                          // 特征数据-基本面
-	FeatureKLineShap                    // 特征数据-K线形态等
-	FeatureMovingAverage                // 特征数据-移动平均线
-	FeatureBreaksThroughBox             // 特征数据-有效突破平台
-	_                                   // 预留1
-	_                                   // 预留2
-	_                                   // 预留3
-	_                                   // 预留4
-	_                                   // 预留5
-	_                                   // 预留6
-	_                                   // 预留7
-	_                                   // 预留8
-	FeatureHousNo1                      // 侯总1号策略
-	FeatureHousNo2                      // 侯总2号策略
+	FeatureHistory          = baseFeature + 1    // 特征数据-历史
+	FeatureF10              = baseFeature + 2    // 特征数据-基本面
+	FeatureKLineShap        = baseFeature + 3    // 特征数据-K线形态等
+	FeatureMovingAverage    = baseFeature + 4    // 特征数据-移动平均线
+	FeatureBreaksThroughBox = baseFeature + 5    // 特征数据-有效突破平台
+	featureHous             = baseFeature + 1000 // 侯总策略编码号段
+	FeatureHousNo1          = featureHous + 1    // 侯总1号策略
+	FeatureHousNo2          = featureHous + 2    // 侯总2号策略
 )
 
 type FeatureCache struct {
@@ -52,7 +46,7 @@ type Feature interface {
 	Kind() FeatureKind                                         // 类型
 	FeatureName() string                                       // 特征名称
 	Key() string                                               // 缓存关键字
-	Init() error                                               // 初始化, 加载配置信息
+	Init(barIndex *int, date string) error                     // 初始化, 加载配置信息
 	GetDate() string                                           // 日期
 	GetSecurityCode() string                                   // 证券代码
 	FromHistory(history History) Feature                       // 从历史数据加载

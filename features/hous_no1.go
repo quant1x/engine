@@ -33,7 +33,7 @@ func (f *HousNo1) Key() string {
 	return mapFeatures[f.Kind()].Key
 }
 
-func (f *HousNo1) Init() error {
+func (f *HousNo1) Init(barIndex *int, date string) error {
 	return nil
 }
 

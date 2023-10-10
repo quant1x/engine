@@ -1,18 +1,23 @@
 package datasets
 
 import (
+	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/gotdx/quotes"
 )
 
 type DataKind = uint64
 
 const (
-	BaseKLine            DataKind = 1 << iota // 基础数据-基础K线
-	BaseTransaction                           // 基础数据-历史成交
-	BaseMinutes                               // 基础数据-分时数据
-	BaseXdxr                                  // 基础数据-除权除息
-	BaseQuarterlyReports                      // 基础数据-季报
-	BaseSafetyScore                           // 基础数据-安全分
+	baseKind DataKind = 0
+)
+
+const (
+	BaseXdxr             DataKind = cache.PluginMaskDataSet | (baseKind + 1) // 基础数据-除权除息
+	BaseKLine            DataKind = cache.PluginMaskDataSet | (baseKind + 2) // 基础数据-基础K线
+	BaseTransaction      DataKind = cache.PluginMaskDataSet | (baseKind + 3) // 基础数据-历史成交
+	BaseMinutes          DataKind = cache.PluginMaskDataSet | (baseKind + 4) // 基础数据-分时数据
+	BaseQuarterlyReports DataKind = cache.PluginMaskDataSet | (baseKind + 5) // 基础数据-季报
+	BaseSafetyScore      DataKind = cache.PluginMaskDataSet | (baseKind + 6) // 基础数据-安全分
 	BaseAggregationData  DataKind = 1 << 63
 	BaseTest             DataKind = 0x8000000000000000
 )

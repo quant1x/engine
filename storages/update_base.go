@@ -3,9 +3,9 @@ package storages
 import (
 	"gitee.com/quant1x/engine/datasets"
 	"gitee.com/quant1x/engine/flash"
+	"gitee.com/quant1x/engine/internal/util/runewidth"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/gox/progressbar"
-	"github.com/mattn/go-runewidth"
 	"strings"
 	"sync"
 )

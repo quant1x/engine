@@ -36,10 +36,7 @@ var CmdRepair = &cmder.Command{
 		} else if flagDataSet.Value {
 			handleRepairDataSet(dates)
 		} else if flagHistory.Value {
-			//date := "2023-09-28"
-			//cacheDate, featureDate := cachel5.CorrectDate(date)
-			//update.Repair(cacheDate, featureDate)
-			handleRepair(dates)
+			handleRepairFeatures(dates)
 		}
 	},
 }
@@ -53,7 +50,7 @@ func init() {
 }
 
 func handleRepairAll(dates []string) {
-	moduleName := "补登历史数据"
+	moduleName := "补登全部历史数据"
 	count := len(dates)
 	fmt.Println()
 	fmt.Println()
@@ -81,15 +78,16 @@ func handleRepairDataSet(dates []string) {
 	for _, date := range dates {
 		cacheDate, featureDate := cache.CorrectDate(date)
 		barIndex++
-		storages.RepairBaseData(&barIndex, cacheDate, featureDate)
+		//storages.RepairBaseData(&barIndex, cacheDate, featureDate)
+		storages.PluginsRepairBase(&barIndex, cacheDate, featureDate)
 		bar.Add(1)
 	}
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())
 	fmt.Println()
 }
 
-func handleRepair(dates []string) {
-	moduleName := "补登历史数据"
+func handleRepairFeatures(dates []string) {
+	moduleName := "补登特征数据"
 	logger.Info(moduleName + ", 任务开始")
 	count := len(dates)
 	barIndex := 1
@@ -97,7 +95,8 @@ func handleRepair(dates []string) {
 	for _, date := range dates {
 		bar.Add(1)
 		cacheDate, featureDate := cache.CorrectDate(date)
-		storages.Repair(cacheDate, featureDate)
+		//storages.Repair(cacheDate, featureDate)
+		storages.PluginsRepairFeatures(&barIndex, cacheDate, featureDate)
 	}
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())
 	fmt.Println()

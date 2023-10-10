@@ -15,6 +15,10 @@ type DataQuarterlyReport struct {
 	cache map[string]dfcf.QuarterlyReport
 }
 
+func init() {
+	_ = cache.Register(&DataQuarterlyReport{})
+}
+
 func (r *DataQuarterlyReport) Kind() DataKind {
 	return BaseQuarterlyReports
 }

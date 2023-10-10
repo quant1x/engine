@@ -93,10 +93,11 @@ func handleRepairFeatures(dates []string) {
 	barIndex := 1
 	bar := progressbar.NewBar(barIndex, "执行["+moduleName+"]", count)
 	for _, date := range dates {
-		bar.Add(1)
 		cacheDate, featureDate := cache.CorrectDate(date)
 		//storages.Repair(cacheDate, featureDate)
+		barIndex++
 		storages.PluginsRepairFeatures(&barIndex, cacheDate, featureDate)
+		bar.Add(1)
 	}
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())
 	fmt.Println()

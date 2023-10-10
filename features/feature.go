@@ -14,8 +14,8 @@ const (
 
 // 登记所有的特征数据
 const (
-	FeatureHistory          = baseFeature + 1    // 特征数据-历史
-	FeatureF10              = baseFeature + 2    // 特征数据-基本面
+	FeatureF10              = baseFeature + 1    // 特征数据-基本面
+	FeatureHistory          = baseFeature + 2    // 特征数据-历史
 	FeatureKLineShap        = baseFeature + 3    // 特征数据-K线形态等
 	FeatureMovingAverage    = baseFeature + 4    // 特征数据-移动平均线
 	FeatureBreaksThroughBox = baseFeature + 5    // 特征数据-有效突破平台

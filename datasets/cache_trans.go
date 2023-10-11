@@ -52,12 +52,15 @@ func (r *TransactionRecord) Filename(date, code string) string {
 }
 
 func (r *TransactionRecord) Update(cacheDate, featureDate string) {
-	base.UpdateTickStartDate(featureDate)
+	base.UpdateTickStartDate(cacheDate)
 	base.GetTickAll(r.Code)
+	_ = featureDate
 }
 
 func (r *TransactionRecord) Repair(cacheDate, featureDate string) {
-	base.GetTickAll(r.Code)
+	//base.GetTickAll(r.Code)
+	base.GetTickData(r.Code, cacheDate)
+	_ = featureDate
 }
 
 func (r *TransactionRecord) Increase(snapshot quotes.Snapshot) {

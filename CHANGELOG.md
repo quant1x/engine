@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.2.0] - 2023-10-11
+### Changed
+- 子命令print自动检测是否打印特征数据, 暂时不支持结构嵌套.
+- 修订bitmap结构体注释.
+- 屏蔽暂时废弃的变量声明.
+- 调整源文件名.
+- 调整进度条的index.
+- 基础数据增加历史成交数据.
+- 数据插件增加get接口.
+- 增加位图, 为将来扩展特征类型做准备.
+
 ## [0.1.9] - 2023-10-10
 ### Changed
 - 将内部函数公开.
@@ -102,8 +113,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.1.9...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.2.0...HEAD
 
+[0.2.0]: https://gitee.com/quant1x/engine/compare/v0.1.9...v0.2.0
 [0.1.9]: https://gitee.com/quant1x/engine/compare/v0.1.8...v0.1.9
 [0.1.8]: https://gitee.com/quant1x/engine/compare/v0.1.7...v0.1.8
 [0.1.7]: https://gitee.com/quant1x/engine/compare/v0.1.6...v0.1.7

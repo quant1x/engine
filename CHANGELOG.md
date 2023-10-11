@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.2.2] - 2023-10-11
+### Changed
+- 更新gotdx版本, 历史成交数据去掉用pandas的方式读写, 改为切片和csv文件直接交换.
+
 ## [0.2.1] - 2023-10-11
 ### Changed
 - 修订切片自动扩容地址变化引起的优先级较高的特征信息不能打印的bug.
@@ -117,8 +121,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.2.1...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.2.2...HEAD
 
+[0.2.2]: https://gitee.com/quant1x/engine/compare/v0.2.1...v0.2.2
 [0.2.1]: https://gitee.com/quant1x/engine/compare/v0.2.0...v0.2.1
 [0.2.0]: https://gitee.com/quant1x/engine/compare/v0.1.9...v0.2.0
 [0.1.9]: https://gitee.com/quant1x/engine/compare/v0.1.8...v0.1.9

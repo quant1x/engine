@@ -18,7 +18,12 @@ func init() {
 	_ = cache.Register(&TransactionRecord{})
 }
 
-func (r *TransactionRecord) Get(code string, date ...string) any {
+func (r *TransactionRecord) Usage() string {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (r *TransactionRecord) Print(code string, date ...string) {
 	//TODO implement me
 	panic("implement me")
 }

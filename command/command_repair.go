@@ -43,14 +43,13 @@ var CmdRepair = &cmder.Command{
 			if len(keywords) == 0 {
 				handleRepairDataSet(dates)
 			} else {
-				plugins := cache.PluginsWithName(cache.PluginMaskDataSet, keywords...)
+				plugins := cache.PluginsWithName(cache.PluginMaskBaseData, keywords...)
 				if len(plugins) == 0 {
 					fmt.Printf("没有找到名字是[%s]的数据插件\n", strings.Join(keywords, ","))
 				} else {
 					handleRepairData(dates, plugins)
 				}
 			}
-
 		} else if flagFeatures.Value {
 			handleRepairFeatures(dates)
 		}
@@ -121,7 +120,7 @@ func handleRepairFeatures(dates []string) {
 func handleRepairData(dates []string, plugins []cache.DataPlugin) {
 	fmt.Println()
 	//// 1. 获取全部注册的数据集插件
-	//mask := cache.PluginMaskDataSet
+	//mask := cache.PluginMaskBaseData
 	////dataSetList := flash.DataSetList()
 	//plugins := cache.Plugins(mask)
 

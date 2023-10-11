@@ -35,3 +35,11 @@ var (
 		//FeatureBreaksThroughBox: {Type: FeatureBreaksThroughBox, Key: CacheL5KeyBox, Name: "平台"},
 	}
 )
+
+func GetDataDescript(kind FeatureKind) FeatureCache {
+	v, ok := mapFeatures[kind]
+	if !ok {
+		panic("类型不存在")
+	}
+	return v
+}

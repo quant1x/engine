@@ -19,7 +19,12 @@ func init() {
 	_ = cache.Register(&DataQuarterlyReport{})
 }
 
-func (r *DataQuarterlyReport) Get(code string, date ...string) any {
+func (r *DataQuarterlyReport) Usage() string {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (r *DataQuarterlyReport) Print(code string, date ...string) {
 	//TODO implement me
 	panic("implement me")
 }

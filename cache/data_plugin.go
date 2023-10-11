@@ -9,8 +9,8 @@ import (
 type Kind = uint64
 
 const (
-	PluginMaskDataSet Kind = 0x1000000000000000
-	PluginMaskFeature Kind = 0x2000000000000000
+	PluginMaskBaseData Kind = 0x1000000000000000
+	PluginMaskFeature  Kind = 0x2000000000000000
 )
 
 // DataPlugin 数据插件
@@ -19,10 +19,12 @@ type DataPlugin interface {
 	Kind() Kind
 	// Key 字符串关键词
 	Key() string
+	// Usage 控制台参数提示信息
+	Usage() string
 	// Init 初始化, 加载配置信息
 	Init(barIndex *int, date string) error
-	// Get 获取指定日期的数据, any类型是指针
-	//Get(code string, date ...string) any
+	// Print 控制台输出指定日期的数据
+	Print(code string, date ...string)
 
 	//Setup(config map[string]string) error
 }
@@ -67,10 +69,10 @@ func Register(plugin DataPlugin) error {
 }
 
 //// 获取所有注册插件
-//func loadPlugins() (plugin chan DataPlugin, setupStatus map[Kind]bool) {
+//func loadPlugins() (plugin chan DataPlugin, setupStatus map[Type]bool) {
 //	// 这里定义一个长度为10的队列
 //	var sortPlugin = make(chan DataPlugin, 10)
-//	setupStatus = map[Kind]bool{}
+//	setupStatus = map[Type]bool{}
 //
 //	// 所有的插件
 //	for kind, plugin := range mapDataPlugins {
@@ -82,7 +84,7 @@ func Register(plugin DataPlugin) error {
 //}
 //
 //// SetupPlugins 加载所有插件
-//func SetupPlugins(pluginChan chan DataPlugin, setupStatus map[Kind]bool) error {
+//func SetupPlugins(pluginChan chan DataPlugin, setupStatus map[Type]bool) error {
 //	num := len(pluginChan)
 //	for num > 0 {
 //		plugin := <-pluginChan
@@ -101,7 +103,7 @@ func Register(plugin DataPlugin) error {
 //		// 如果这个插件能被setup
 //		if canSetup {
 //			_ = plugin.Setup(nil)
-//			setupStatus[plugin.Kind()] = true
+//			setupStatus[plugin.Type()] = true
 //		} else {
 //			// 如果插件不能被setup, 这个plugin就塞入到最后一个队列
 //			pluginChan <- plugin
@@ -116,7 +118,7 @@ func Plugins(mask ...Kind) (list []DataPlugin) {
 	defer pluginMutex.Unlock()
 	pluginType := Kind(0)
 	if len(mask) > 0 {
-		if mask[0] == PluginMaskDataSet || mask[0] == PluginMaskFeature {
+		if mask[0] == PluginMaskBaseData || mask[0] == PluginMaskFeature {
 			pluginType = mask[0]
 		}
 	}
@@ -161,7 +163,17 @@ func PluginsWithName(pluginType Kind, keywords ...string) (list []DataPlugin) {
 }
 
 //// Get 从注册的数据插件中获取数据
-//func Get(kind Kind, securityCode string, date ...string) any {
+//func Get(kind Type, securityCode string, date ...string) any {
+//	data, ok := mapDataPlugins[kind]
+//	if ok {
+//		ptr := data.Get(securityCode, date...)
+//		return ptr
+//	}
+//	return nil
+//}
+
+//// Get 从注册的数据插件中获取数据
+//func Get(kind Type, securityCode string, date ...string) any {
 //	data, ok := mapDataPlugins[kind]
 //	if ok {
 //		ptr := data.Get(securityCode, date...)

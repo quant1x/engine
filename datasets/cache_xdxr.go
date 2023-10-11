@@ -14,7 +14,12 @@ func init() {
 	_ = cache.Register(&DataXdxr{})
 }
 
-func (x *DataXdxr) Get(code string, date ...string) any {
+func (x *DataXdxr) Usage() string {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (x *DataXdxr) Print(code string, date ...string) {
 	//TODO implement me
 	panic("implement me")
 }

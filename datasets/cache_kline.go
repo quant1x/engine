@@ -14,7 +14,12 @@ func init() {
 	_ = cache.Register(&DataKLine{})
 }
 
-func (k *DataKLine) Get(code string, date ...string) any {
+func (k *DataKLine) Usage() string {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (k *DataKLine) Print(code string, date ...string) {
 	//TODO implement me
 	panic("implement me")
 }

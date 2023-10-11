@@ -5,11 +5,15 @@ import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
+	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/coroutine"
 	"gitee.com/quant1x/gox/logger"
+	"gitee.com/quant1x/gox/tags"
 	"gitee.com/quant1x/gox/util/treemap"
+	"github.com/olekukonko/tablewriter"
+	"os"
 	"strings"
 	"sync"
 )
@@ -81,6 +85,10 @@ func (this *Cache1D[T]) Name() string {
 	return this.tmp.FeatureName()
 }
 
+func (this *Cache1D[T]) Usage() string {
+	return this.tmp.FeatureName()
+}
+
 // Length 获取长度
 func (this *Cache1D[T]) Length() int {
 	return len(this.allCodes)
@@ -130,6 +138,40 @@ func (this *Cache1D[T]) Checkout(date ...string) {
 		// 重置once锁计数器为0
 		this.once.Reset()
 		this.once.Do(this.ReplaceCache)
+	}
+}
+
+func checkoutTable(v any) (headers []string, records [][]string) {
+	headers = []string{"字段", "数值"}
+	fields := tags.GetHeadersByTags(v)
+	values := tags.GetValuesByTags(v)
+	num := len(fields)
+	if num > len(values) {
+		num = len(values)
+	}
+	for i := 0; i < num; i++ {
+		records = append(records, []string{fields[i], strings.TrimSpace(values[i])})
+	}
+	return
+}
+
+func (this *Cache1D[T]) Print(code string, date ...string) {
+	securityCode := proto.CorrectSecurityCode(code)
+	//name := securities.GetStockName(securityCode)
+	//tradeDate = trading.FixTradeDate(tradeDate)
+	tradeDate := cache.DefaultCanReadDate()
+	if len(date) > 0 {
+		tradeDate = trading.FixTradeDate(date[0])
+	}
+	//fmt.Printf("%s: %s, %s\n", securityCode, name, tradeDate)
+	value := this.Get(securityCode, tradeDate)
+	if value != nil {
+		headers, records := checkoutTable(*value)
+		table := tablewriter.NewWriter(os.Stdout)
+		table.SetHeader(headers)
+		table.SetColumnAlignment([]int{tablewriter.ALIGN_RIGHT, tablewriter.ALIGN_LEFT})
+		table.AppendBulk(records)
+		table.Render()
 	}
 }
 

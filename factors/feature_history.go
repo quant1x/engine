@@ -25,25 +25,25 @@ const (
 
 // History 历史整合数据
 type History struct {
-	Date       string         // 日期, 数据落地的日期
-	Code       string         // 代码
-	MA3        float64        // 3日均价
-	MV3        float64        // 3日均量
-	MA5        float64        // 5日均价
-	MV5        float64        // 5日均量
-	MA10       float64        // 10日均价
-	MV10       float64        // 10日均量
-	MA20       float64        // 20日均价
-	MV20       float64        // 20日均量
-	QSFZ       bool           // QSFZ: 反转信号
-	CP         float64        // QSFZ: 股价涨幅
-	CV         float64        // QSFZ: 成交量涨幅
-	VP         float64        // QSFZ: 价量比
-	VP3        float64        // QSFZ: 3日价量比
-	VP5        float64        // QSFZ: 5日价量比
+	Date       string         `name:"日期"`          // 日期, 数据落地的日期
+	Code       string         `name:"代码"`          // 代码
+	MA3        float64        `name:"3日均价"`        // 3日均价
+	MV3        float64        `name:"3日均量"`        // 3日均量
+	MA5        float64        `name:"5日均价"`        // 5日均价
+	MV5        float64        `name:"5日均量"`        // 5日均量
+	MA10       float64        `name:"10日均价"`       // 10日均价
+	MV10       float64        `name:"10日均量"`       // 10日均量
+	MA20       float64        `name:"20日均价"`       // 20日均价
+	MV20       float64        `name:"20日均量"`       // 20日均量
+	QSFZ       bool           `name:"QSFZ: 反转信号"`  // QSFZ: 反转信号
+	CP         float64        `name:"QSFZ: 股价涨幅"`  // QSFZ: 股价涨幅
+	CV         float64        `name:"QSFZ: 成交量涨幅"` // QSFZ: 成交量涨幅
+	VP         float64        `name:"QSFZ: 价量比"`   // QSFZ: 价量比
+	VP3        float64        `name:"QSFZ: 3日价量比"` // QSFZ: 3日价量比
+	VP5        float64        `name:"QSFZ: 5日价量比"` // QSFZ: 5日价量比
 	Payloads   IncompleteData // 扩展的半成品数据
 	Last       CompleteData   // 上一个交易日的数据
-	UpdateTime string         // 更新时间
+	UpdateTime string         `name:"更新时间"` // 更新时间
 }
 
 //func init() {

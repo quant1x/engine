@@ -3,6 +3,7 @@ package command
 import (
 	"gitee.com/quant1x/engine/datasets"
 	"gitee.com/quant1x/engine/datasets/base"
+	"gitee.com/quant1x/engine/factors"
 	cmder "github.com/spf13/cobra"
 	"unsafe"
 )
@@ -13,6 +14,9 @@ var (
 	flagFeatures  = cmdFlag[bool]{Name: "features", Value: false, Usage: "特征数据"}
 	flagStartDate = cmdFlag[string]{Name: "start", Value: base.TickDefaultStartDate, Usage: "开始日期"}
 	flagEndDate   = cmdFlag[string]{Name: "end", Value: "", Usage: "结束日期"}
+	flagDate      = cmdFlag[string]{Name: "date", Value: "", Usage: "日期"}
+	dataF10       = factors.GetDataDescript(factors.FeatureF10)
+	flagF10       = cmdFlag[string]{Name: dataF10.Key, Value: "", Usage: dataF10.Name}
 	dataTrans     = datasets.GetDataDescript(datasets.BaseTransaction)
 	flagTrans     = cmdFlag[bool]{Name: dataTrans.Key, Value: false, Usage: dataTrans.Name}
 )

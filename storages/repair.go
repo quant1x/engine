@@ -64,7 +64,7 @@ func RepairData(barIndex int, cacheDate, featureDate string, plugins []cache.Dat
 func RepairBaseData(barIndex *int, cacheDate, featureDate string) {
 	moduleName := "修复基础数据"
 	// 1. 获取全部注册的数据集插件
-	mask := cache.PluginMaskDataSet
+	mask := cache.PluginMaskBaseData
 	//dataSetList := flash.DataSetList()
 	plugins := cache.Plugins(mask)
 	var dataSetList []datasets.DataSet

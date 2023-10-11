@@ -20,10 +20,10 @@ const (
 	TickDefaultStartDate    = "2023-01-01" // 分笔成交最早的日期
 )
 
-var (
-	kTransactionRawFields = []string{"Time", "Price", "Vol", "Num", "BuyOrSell"}
-	kTransactionFields    = []string{"time", "price", "vol", "num", "buyorsell"}
-)
+//var (
+//	kTransactionRawFields = []string{"Time", "Price", "Vol", "Num", "BuyOrSell"}
+//	kTransactionFields    = []string{"time", "price", "vol", "num", "buyorsell"}
+//)
 
 var (
 	// TickDefaultStartDate 最早的时间
@@ -228,8 +228,7 @@ func checkoutTickData(securityCode string, date string, ignorePreviousData bool)
 			if trading.CurrentlyTrading(tradeDate) {
 				data, err = tdxApi.GetTransactionData(securityCode, start, offset)
 			} else {
-				iDate := stat.AnyToInt64(tradeDate)
-				data, err = tdxApi.GetHistoryTransactionData(securityCode, uint32(iDate), start, offset)
+				data, err = tdxApi.GetHistoryTransactionData(securityCode, toTdxProtocolDate(tradeDate), start, offset)
 			}
 			if err == nil && data != nil {
 				break

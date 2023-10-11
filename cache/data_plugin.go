@@ -47,7 +47,7 @@ type DataItem interface {
 }
 
 var (
-	ErrIsExists = errors.New("plugin is already exists")
+	ErrAlreadyExists = errors.New("plugin is already exists")
 )
 
 var (
@@ -62,7 +62,7 @@ func Register(plugin DataPlugin) error {
 	defer pluginMutex.Unlock()
 	_, ok := mapDataPlugins[plugin.Kind()]
 	if ok {
-		return ErrIsExists
+		return ErrAlreadyExists
 	}
 	mapDataPlugins[plugin.Kind()] = plugin
 	return nil

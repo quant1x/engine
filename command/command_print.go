@@ -66,14 +66,14 @@ var CmdPrint = &cmder.Command{
 }
 
 func init() {
-	//commandInit(CmdPrint, &flagF10)
 	commandInit(CmdPrint, &flagDate)
 	plugins := cache.Plugins(cache.PluginMaskFeature)
+	subModules = make([]cmdFlag[string], len(plugins))
 	for i, plugin := range plugins {
 		key := plugin.Key()
-		cf := cmdFlag[string]{Name: key, Usage: plugin.Usage(), Value: ""}
-		subModules = append(subModules, cf)
-		CmdPrint.Flags().StringVar(&subModules[i].Value, subModules[i].Name, "", subModules[i].Usage)
+		usage := plugin.Usage()
+		subModules[i] = cmdFlag[string]{Name: key, Usage: usage, Value: ""}
+		CmdPrint.Flags().StringVar(&(subModules[i].Value), subModules[i].Name, "", subModules[i].Usage)
 	}
 	//CmdPrint.Flags().StringVar(&f10Code, "f10", "", "查看快照扩展数据")
 	//CmdPrint.Flags().StringVar(&exchangeCode, "exchange", "", "查看快照扩展数据")

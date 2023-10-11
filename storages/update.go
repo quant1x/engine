@@ -4,9 +4,9 @@ import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/cachel5"
 	"gitee.com/quant1x/engine/datasets"
-	"gitee.com/quant1x/engine/features"
-	"gitee.com/quant1x/engine/flash"
+	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
+	"gitee.com/quant1x/engine/smart"
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/text/runewidth"
 	"gitee.com/quant1x/gox/util/treemap"
@@ -93,9 +93,9 @@ func UpdateFeatures(barIndex *int, cacheDate, featureDate string) {
 		dataSource := adapter.Factory(featureDate, "")
 		_ = dataSource.Init(barIndex, featureDate)
 		for _, code := range allCodes {
-			data := adapter.Factory(cacheDate, code).(features.Feature)
-			if data.Kind() != features.FeatureHistory {
-				history := flash.GetL5History(code, cacheDate)
+			data := adapter.Factory(cacheDate, code).(factors.Feature)
+			if data.Kind() != factors.FeatureHistory {
+				history := smart.GetL5History(code, cacheDate)
 				if history != nil {
 					data = data.FromHistory(*history)
 				}

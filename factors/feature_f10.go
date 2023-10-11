@@ -1,4 +1,4 @@
-package features
+package factors
 
 import (
 	"gitee.com/quant1x/engine/datasets/tdxweb"

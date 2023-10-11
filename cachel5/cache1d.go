@@ -3,7 +3,7 @@ package cachel5
 import (
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/features"
+	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
@@ -28,11 +28,11 @@ func getCache1DFilepath(key, date string) string {
 }
 
 // Cache1D 每天1个证券代码1条数据
-type Cache1D[T features.Feature] struct {
+type Cache1D[T factors.Feature] struct {
 	once        coroutine.RollingMutex
 	m           sync.RWMutex
 	factory     func(date, securityCode string) T
-	Key         string // 缓存关键字
+	cacheKey    string // 缓存关键字
 	Date        string // 日期
 	filename    string // 缓存文件名
 	mapCache    map[string]T
@@ -44,9 +44,9 @@ type Cache1D[T features.Feature] struct {
 // NewCache1D 创建一个新的C1D对象
 //
 //	key支持多级相对路径, 比如a/b, 创建的路径是~/.quant1x/a/b.yyyy-mm-dd
-func NewCache1D[T features.Feature](key string, factory func(date, securityCode string) T) *Cache1D[T] {
+func NewCache1D[T factors.Feature](key string, factory func(date, securityCode string) T) *Cache1D[T] {
 	d1 := Cache1D[T]{
-		Key:         key,
+		cacheKey:    key,
 		Date:        "",
 		factory:     factory,
 		mapCache:    map[string]T{},
@@ -59,7 +59,7 @@ func NewCache1D[T features.Feature](key string, factory func(date, securityCode 
 	return &d1
 }
 
-func (this *Cache1D[T]) Factory(date, securityCode string) features.Feature {
+func (this *Cache1D[T]) Factory(date, securityCode string) factors.Feature {
 	return this.factory(date, securityCode)
 }
 
@@ -71,6 +71,10 @@ func (this *Cache1D[T]) Init(barIndex *int, date string) error {
 
 func (this *Cache1D[T]) Kind() cache.Kind {
 	return this.tmp.Kind()
+}
+
+func (this *Cache1D[T]) Key() string {
+	return this.tmp.Key()
 }
 
 func (this *Cache1D[T]) Name() string {
@@ -86,7 +90,7 @@ func (this *Cache1D[T]) Length() int {
 func (this *Cache1D[T]) loadCache(date string) {
 	this.allCodes = market.GetCodeList()
 	this.Date = trading.FixTradeDate(date)
-	this.filename = getCache1DFilepath(this.Key, this.Date)
+	this.filename = getCache1DFilepath(this.cacheKey, this.Date)
 	var list []T
 	err := api.CsvToSlices(this.filename, &list)
 	if err != nil || len(list) == 0 {

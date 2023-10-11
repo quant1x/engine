@@ -58,3 +58,11 @@ var (
 		BaseSafetyScore:      {Type: BaseSafetyScore, Key: "safescore", Name: "安全分"},
 	}
 )
+
+func GetDataDescript(kind DataKind) DataSetCache {
+	v, ok := mapDataSets[kind]
+	if !ok {
+		panic("类型不存在")
+	}
+	return v
+}

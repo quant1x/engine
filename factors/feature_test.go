@@ -1,4 +1,4 @@
-package features
+package factors
 
 import (
 	"fmt"
@@ -8,11 +8,11 @@ import (
 	"unsafe"
 )
 
-func TestNewDataBuilder(t *testing.T) {
-	date := "2023-07-04"
-	v := NewDataBuilder("test", date, nil)
-	fmt.Println(v)
-}
+//func TestNewDataBuilder(t *testing.T) {
+//	date := "2023-07-04"
+//	v := NewDataBuilder("test", date, nil)
+//	fmt.Println(v)
+//}
 
 // typelinks2 for 1.7 ~
 //

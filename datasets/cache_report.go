@@ -19,6 +19,11 @@ func init() {
 	_ = cache.Register(&DataQuarterlyReport{})
 }
 
+func (r *DataQuarterlyReport) Get(code string, date ...string) any {
+	//TODO implement me
+	panic("implement me")
+}
+
 func (r *DataQuarterlyReport) Kind() DataKind {
 	return BaseQuarterlyReports
 }

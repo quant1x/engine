@@ -1,4 +1,4 @@
-package features
+package factors
 
 import (
 	"encoding/json"
@@ -16,7 +16,8 @@ func TestF10(t *testing.T) {
 	code := "sh600105"
 	code = "sh000001"
 	f10 := NewF10(cacheDate, code)
-	f10.Init()
+	barIndex := 1
+	f10.Init(&barIndex, featureDate)
 	f10.Repair(code, cacheDate, featureDate, true)
 	data, _ := json.Marshal(f10)
 	text := api.Bytes2String(data)

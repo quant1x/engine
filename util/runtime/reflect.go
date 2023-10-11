@@ -2,7 +2,7 @@ package runtime
 
 import (
 	"fmt"
-	"gitee.com/quant1x/engine/features"
+	"gitee.com/quant1x/engine/factors"
 	"reflect"
 	"strings"
 	"sync"
@@ -27,7 +27,7 @@ type emptyInterface struct {
 }
 
 func loadGoTypes() {
-	fia := reflect.TypeOf((*features.Feature)(nil)).Elem()
+	fia := reflect.TypeOf((*factors.Feature)(nil)).Elem()
 	var obj interface{} = reflect.TypeOf(0)
 	sections, offset := typelinks2()
 	for i, offs := range offset {

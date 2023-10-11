@@ -34,7 +34,21 @@ var CmdRepair = &cmder.Command{
 		if flagAll.Value {
 			handleRepairAll(dates)
 		} else if flagBaseData.Value {
-			handleRepairDataSet(dates)
+			keywords := []string{}
+			if flagTrans.Value {
+				keywords = append(keywords, flagTrans.Name)
+			}
+			if len(keywords) == 0 {
+				handleRepairDataSet(dates)
+			} else {
+				plugins := cache.PluginsWithName(cache.PluginMaskDataSet, keywords...)
+				if len(plugins) == 0 {
+					fmt.Printf("没有找到名字是[%s]的数据插件\n", strings.Join(keywords, ","))
+				} else {
+					handleRepairData(dates, plugins)
+				}
+			}
+
 		} else if flagFeatures.Value {
 			handleRepairFeatures(dates)
 		}
@@ -47,6 +61,7 @@ func init() {
 	commandInit(CmdRepair, &flagFeatures)
 	commandInit(CmdRepair, &flagStartDate)
 	commandInit(CmdRepair, &flagEndDate)
+	commandInit(CmdRepair, &flagTrans)
 }
 
 func handleRepairAll(dates []string) {
@@ -95,6 +110,27 @@ func handleRepairFeatures(dates []string) {
 		cacheDate, featureDate := cache.CorrectDate(date)
 		barIndex++
 		storages.RepairFeatures(&barIndex, cacheDate, featureDate)
+		bar.Add(1)
+	}
+	logger.Info(moduleName+", 任务执行完毕.", time.Now())
+	fmt.Println()
+}
+
+func handleRepairData(dates []string, plugins []cache.DataPlugin) {
+	//// 1. 获取全部注册的数据集插件
+	//mask := cache.PluginMaskDataSet
+	////dataSetList := flash.DataSetList()
+	//plugins := cache.Plugins(mask)
+
+	moduleName := "修复数据"
+	logger.Info(moduleName + ", 任务开始")
+	count := len(dates)
+	barIndex := 1
+	bar := progressbar.NewBar(barIndex, "执行["+moduleName+"]", count)
+	for _, date := range dates {
+		cacheDate, featureDate := cache.CorrectDate(date)
+		barIndex++
+		storages.RepairData(&barIndex, cacheDate, featureDate, plugins)
 		bar.Add(1)
 	}
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())

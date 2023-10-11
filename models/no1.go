@@ -2,8 +2,8 @@ package models
 
 import (
 	"gitee.com/quant1x/engine/datasets/base"
-	"gitee.com/quant1x/engine/features"
-	"gitee.com/quant1x/engine/flash"
+	"gitee.com/quant1x/engine/factors"
+	"gitee.com/quant1x/engine/smart"
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/logger"
@@ -69,12 +69,12 @@ func (m *ModelNo1) v1Evaluate(securityCode string, result *treemap.Map) {
 	r2 := COUNT(c2.Bools(), N)
 	// 横向对比
 	d := r1.And(r2)
-	s := features.BoolIndexOf(d, -1)
+	s := factors.BoolIndexOf(d, -1)
 	if s {
-		price := features.SeriesIndexOf(CLOSE, -1)
+		price := factors.SeriesIndexOf(CLOSE, -1)
 		result.Put(securityCode, ResultInfo{Code: securityCode,
 			Name:         securities.GetStockName(securityCode),
-			Date:         features.StringIndexOf(DATE, -1),
+			Date:         factors.StringIndexOf(DATE, -1),
 			Rate:         0.00,
 			Buy:          price,
 			Sell:         price * 1.05,
@@ -84,7 +84,7 @@ func (m *ModelNo1) v1Evaluate(securityCode string, result *treemap.Map) {
 }
 
 func (m *ModelNo1) Evaluate(securityCode string, result *treemap.Map) {
-	history := flash.GetL5History(securityCode)
+	history := smart.GetL5History(securityCode)
 	snapshot := getQuoteSnapshot(securityCode)
 
 	//lastDate := trading.LastTradeDate()
@@ -111,7 +111,7 @@ func (m *ModelNo1) Evaluate(securityCode string, result *treemap.Map) {
 	r1MA10 := lastNo1.MA10
 	r1MA20 := lastNo1.MA20
 	// 取出今日的半成品数据
-	today := history.Payloads.No1.Increase(*snapshot).(*features.HousNo1)
+	today := history.Payloads.No1.Increase(*snapshot).(*factors.HousNo1)
 	ma5 := today.MA5
 	ma10 := today.MA10
 	ma20 := today.MA20
@@ -126,7 +126,7 @@ func (m *ModelNo1) Evaluate(securityCode string, result *treemap.Map) {
 	c2 := CROSS(s10, s20)
 	// 横向对比
 	d := c1.And(c2)
-	s := features.BoolIndexOf(d, -1)
+	s := factors.BoolIndexOf(d, -1)
 	if s {
 		price := snapshot.Price
 		date := snapshot.Date

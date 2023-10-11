@@ -14,6 +14,11 @@ func init() {
 	_ = cache.Register(&DataKLine{})
 }
 
+func (k *DataKLine) Get(code string, date ...string) any {
+	//TODO implement me
+	panic("implement me")
+}
+
 func (k *DataKLine) Init(barIndex *int, date string) error {
 	_ = barIndex
 	_ = date

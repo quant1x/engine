@@ -17,8 +17,12 @@ const (
 type DataPlugin interface {
 	// Kind 优先级排序字段, 潜在的依赖关系
 	Kind() Kind
+	// Key 字符串关键词
+	Key() string
 	// Init 初始化, 加载配置信息
 	Init(barIndex *int, date string) error
+	// Get 获取指定日期的数据, any类型是指针
+	Get(code string, date ...string) any
 
 	//Setup(config map[string]string) error
 }
@@ -117,7 +121,7 @@ func Plugins(mask ...Kind) (list []DataPlugin) {
 		}
 	}
 	// TODO: 这个地方的内存申请方面需要优化
-	kinds := []Kind{}
+	var kinds []Kind
 	for kind, _ := range mapDataPlugins {
 		if pluginType == 0 || kind&pluginType == pluginType {
 			kinds = append(kinds, kind)
@@ -131,4 +135,37 @@ func Plugins(mask ...Kind) (list []DataPlugin) {
 		}
 	}
 	return
+}
+
+func PluginsWithName(pluginType Kind, keywords ...string) (list []DataPlugin) {
+	if len(keywords) == 0 {
+		return
+	}
+	var kinds []Kind
+	for kind, plugin := range mapDataPlugins {
+		if kind&pluginType == pluginType && slices.Contains(keywords, plugin.Key()) {
+			kinds = append(kinds, kind)
+		}
+	}
+	if len(kinds) == 0 {
+		return
+	}
+	slices.Sort(kinds)
+	for _, kind := range kinds {
+		plugin, ok := mapDataPlugins[kind]
+		if ok {
+			list = append(list, plugin)
+		}
+	}
+	return
+}
+
+// Get 从注册的数据插件中获取数据
+func Get(kind Kind, securityCode string, date ...string) any {
+	data, ok := mapDataPlugins[kind]
+	if ok {
+		ptr := data.Get(securityCode, date...)
+		return ptr
+	}
+	return nil
 }

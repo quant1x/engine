@@ -1,7 +1,7 @@
 package cachel5
 
 import (
-	"gitee.com/quant1x/engine/features"
+	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/gox/util/treemap"
 	"sync"
 )
@@ -15,7 +15,7 @@ type CacheAdapter interface {
 	// Merge 合并数据
 	Merge(p *treemap.Map)
 	// Factory 工厂
-	Factory(date, securityCode string) features.Feature
+	Factory(date, securityCode string) factors.Feature
 }
 
 var (

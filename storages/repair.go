@@ -4,15 +4,61 @@ import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/cachel5"
 	"gitee.com/quant1x/engine/datasets"
-	"gitee.com/quant1x/engine/features"
-	"gitee.com/quant1x/engine/flash"
+	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
+	"gitee.com/quant1x/engine/smart"
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/text/runewidth"
 	"gitee.com/quant1x/gox/util/treemap"
 	"strings"
 	"sync"
 )
+
+// RepairData 修复数据
+func RepairData(barIndex *int, cacheDate, featureDate string, plugins []cache.DataPlugin) {
+	moduleName := "修复基础数据"
+	var dataSetList []datasets.DataSet
+	// 1.1 缓存数据集名称的最大宽度
+	maxWidth := 0
+	for _, plugin := range plugins {
+		dataSet, ok := plugin.(datasets.DataSet)
+		if ok {
+			dataSetList = append(dataSetList, dataSet)
+			width := runewidth.StringWidth(dataSet.Name())
+			if width > maxWidth {
+				maxWidth = width
+			}
+		}
+	}
+
+	// 2. 遍历全部数据插件
+	dataSetCount := len(dataSetList)
+	barCache := progressbar.NewBar(*barIndex, "执行["+moduleName+"]", dataSetCount)
+
+	allCodes := market.GetCodeList()
+	var wg sync.WaitGroup
+
+	for sequence, dataSet := range dataSetList {
+		_ = dataSet.Init(barIndex, featureDate)
+		codeCount := len(allCodes)
+		//format := fmt.Sprintf("%%%ds", maxWidth)
+		//title := fmt.Sprintf(format, dataSet.Name())
+		width := runewidth.StringWidth(dataSet.Name())
+		title := strings.Repeat(" ", maxWidth-width) + dataSet.Name()
+		barNo := *barIndex + 1
+		if useGoroutine {
+			barNo += sequence
+		}
+		barCode := progressbar.NewBar(barNo, "执行["+title+"]", codeCount)
+		wg.Add(1)
+		if useGoroutine {
+			go repairDateSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate)
+		} else {
+			repairDateSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate)
+		}
+	}
+	wg.Wait()
+}
 
 // RepairBaseData 修复基础数据
 func RepairBaseData(barIndex *int, cacheDate, featureDate string) {
@@ -93,9 +139,9 @@ func RepairFeatures(barIndex *int, cacheDate, featureDate string) {
 		dataSource := adapter.Factory(featureDate, "")
 		_ = dataSource.Init(barIndex, featureDate)
 		for _, code := range allCodes {
-			data := adapter.Factory(cacheDate, code).(features.Feature)
-			if data.Kind() != features.FeatureHistory {
-				history := flash.GetL5History(code, cacheDate)
+			data := adapter.Factory(cacheDate, code).(factors.Feature)
+			if data.Kind() != factors.FeatureHistory {
+				history := smart.GetL5History(code, cacheDate)
 				if history != nil {
 					data = data.FromHistory(*history)
 				}

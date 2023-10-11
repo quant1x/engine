@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets"
-	"gitee.com/quant1x/engine/flash"
+	"gitee.com/quant1x/engine/smart"
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gotdx/trading"
@@ -95,7 +95,7 @@ func printF10(securityCode string) {
 	securityCode = proto.CorrectSecurityCode(securityCode)
 	name := securities.GetStockName(securityCode)
 	fmt.Printf("%s: %s, %s\n", securityCode, name, tradeDate)
-	value := flash.GetL5F10(securityCode, tradeDate)
+	value := smart.GetL5F10(securityCode, tradeDate)
 	headers, records := checkoutTable(value)
 	table := tablewriter.NewWriter(os.Stdout)
 	table.SetHeader(headers)

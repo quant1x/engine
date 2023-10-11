@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.2.1] - 2023-10-11
+### Changed
+- 修订切片自动扩容地址变化引起的优先级较高的特征信息不能打印的bug.
+
 ## [0.2.0] - 2023-10-11
 ### Changed
 - 子命令print自动检测是否打印特征数据, 暂时不支持结构嵌套.
@@ -113,8 +117,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.2.0...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.2.1...HEAD
 
+[0.2.1]: https://gitee.com/quant1x/engine/compare/v0.2.0...v0.2.1
 [0.2.0]: https://gitee.com/quant1x/engine/compare/v0.1.9...v0.2.0
 [0.1.9]: https://gitee.com/quant1x/engine/compare/v0.1.8...v0.1.9
 [0.1.8]: https://gitee.com/quant1x/engine/compare/v0.1.7...v0.1.8

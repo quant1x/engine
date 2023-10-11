@@ -11,7 +11,7 @@ const (
 
 var bitmask = []byte{1, 1 << 1, 1 << 2, 1 << 3, 1 << 4, 1 << 5, 1 << 6, 1 << 7}
 
-// 首字母小写 只能调用 工厂函数 创建
+// Bitmap 首字母小写 只能调用 工厂函数 创建
 type Bitmap struct {
 	bits     []byte
 	bitCount uint64 // 已填入数字的数量

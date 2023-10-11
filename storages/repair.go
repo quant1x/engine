@@ -15,7 +15,7 @@ import (
 )
 
 // RepairData 修复数据
-func RepairData(barIndex *int, cacheDate, featureDate string, plugins []cache.DataPlugin) {
+func RepairData(barIndex int, cacheDate, featureDate string, plugins []cache.DataPlugin) {
 	moduleName := "修复基础数据"
 	var dataSetList []datasets.DataSet
 	// 1.1 缓存数据集名称的最大宽度
@@ -33,19 +33,19 @@ func RepairData(barIndex *int, cacheDate, featureDate string, plugins []cache.Da
 
 	// 2. 遍历全部数据插件
 	dataSetCount := len(dataSetList)
-	barCache := progressbar.NewBar(*barIndex, "执行["+cacheDate+":"+moduleName+"]", dataSetCount)
+	barCache := progressbar.NewBar(barIndex, "执行["+cacheDate+":"+moduleName+"]", dataSetCount)
 
 	allCodes := market.GetCodeList()
 	var wg sync.WaitGroup
 
 	for sequence, dataSet := range dataSetList {
-		_ = dataSet.Init(barIndex, featureDate)
+		_ = dataSet.Init(&barIndex, featureDate)
 		codeCount := len(allCodes)
 		//format := fmt.Sprintf("%%%ds", maxWidth)
 		//title := fmt.Sprintf(format, dataSet.Name())
 		width := runewidth.StringWidth(dataSet.Name())
 		title := strings.Repeat(" ", maxWidth-width) + dataSet.Name()
-		barNo := *barIndex + 1
+		barNo := barIndex + 1
 		if useGoroutine {
 			barNo += sequence
 		}

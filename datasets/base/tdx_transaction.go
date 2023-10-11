@@ -106,6 +106,7 @@ func GetTickAll(securityCode string) {
 	}
 	tStart := strconv.FormatInt(int64(info.IPODate), 10)
 	fixStart := __tickHistoryStartDate
+	//fmt.Println("start date:", fixStart)
 	if tStart < fixStart {
 		tStart = fixStart
 	}

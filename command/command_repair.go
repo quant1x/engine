@@ -3,6 +3,7 @@ package command
 import (
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/datasets/base"
 	"gitee.com/quant1x/engine/storages"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/logger"
@@ -31,6 +32,7 @@ var CmdRepair = &cmder.Command{
 		dates := trading.TradeRange(beginDate, endDate)
 		count := len(dates)
 		fmt.Printf("修复数据: %s => %s"+strings.Repeat("\r\n", 2), dates[0], dates[count-1])
+		base.UpdateTickStartDate(dates[0])
 		if flagAll.Value {
 			handleRepairAll(dates)
 		} else if flagBaseData.Value {
@@ -130,8 +132,8 @@ func handleRepairData(dates []string, plugins []cache.DataPlugin) {
 	bar := progressbar.NewBar(barIndex, "执行["+moduleName+"]", count)
 	for _, date := range dates {
 		cacheDate, featureDate := cache.CorrectDate(date)
-		barIndex++
-		storages.RepairData(&barIndex, cacheDate, featureDate, plugins)
+		//barIndex++
+		storages.RepairData(barIndex+1, cacheDate, featureDate, plugins)
 		bar.Add(1)
 	}
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())

@@ -13,6 +13,7 @@ func repairDateSet(wg *sync.WaitGroup, parent, bar *progressbar.Bar, dataSet dat
 	for _, code := range allCodes {
 		data := dataSet.Clone(cacheDate, code).(datasets.DataSet)
 		data.Repair(cacheDate, featureDate)
+		_ = data
 		bar.Add(1)
 	}
 	parent.Add(1)

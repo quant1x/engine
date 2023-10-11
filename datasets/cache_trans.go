@@ -52,8 +52,8 @@ func (r *TransactionRecord) Filename(date, code string) string {
 }
 
 func (r *TransactionRecord) Update(cacheDate, featureDate string) {
-	//TODO implement me
-	panic("implement me")
+	base.UpdateTickStartDate(featureDate)
+	base.GetTickAll(r.Code)
 }
 
 func (r *TransactionRecord) Repair(cacheDate, featureDate string) {

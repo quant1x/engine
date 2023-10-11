@@ -34,6 +34,7 @@ var CmdUpdate = &cmder.Command{
 
 func init() {
 	commandInit(CmdUpdate, &flagAll)
+	commandInit(CmdUpdate, &flagBaseData)
 	commandInit(CmdUpdate, &flagFeatures)
 }
 

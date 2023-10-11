@@ -22,7 +22,7 @@ type DataPlugin interface {
 	// Init 初始化, 加载配置信息
 	Init(barIndex *int, date string) error
 	// Get 获取指定日期的数据, any类型是指针
-	Get(code string, date ...string) any
+	//Get(code string, date ...string) any
 
 	//Setup(config map[string]string) error
 }
@@ -160,12 +160,12 @@ func PluginsWithName(pluginType Kind, keywords ...string) (list []DataPlugin) {
 	return
 }
 
-// Get 从注册的数据插件中获取数据
-func Get(kind Kind, securityCode string, date ...string) any {
-	data, ok := mapDataPlugins[kind]
-	if ok {
-		ptr := data.Get(securityCode, date...)
-		return ptr
-	}
-	return nil
-}
+//// Get 从注册的数据插件中获取数据
+//func Get(kind Kind, securityCode string, date ...string) any {
+//	data, ok := mapDataPlugins[kind]
+//	if ok {
+//		ptr := data.Get(securityCode, date...)
+//		return ptr
+//	}
+//	return nil
+//}

@@ -33,7 +33,7 @@ func RepairData(barIndex *int, cacheDate, featureDate string, plugins []cache.Da
 
 	// 2. 遍历全部数据插件
 	dataSetCount := len(dataSetList)
-	barCache := progressbar.NewBar(*barIndex, "执行["+moduleName+"]", dataSetCount)
+	barCache := progressbar.NewBar(*barIndex, "执行["+cacheDate+":"+moduleName+"]", dataSetCount)
 
 	allCodes := market.GetCodeList()
 	var wg sync.WaitGroup

@@ -2,6 +2,7 @@ package cache
 
 import (
 	"fmt"
+	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
 )
 
@@ -57,4 +58,12 @@ func ReportsFilename(date string) string {
 	path := quarterlyCachePath(date)
 	filename := fmt.Sprintf("%s/%s.csv", path, keyword)
 	return filename
+}
+
+// TickFilename tick文件比较多, 目录结构${tick}/${YYYY}/${YYYYMMDD}/${CacheIdPath}
+func TickFilename(code, date string) string {
+	date = trading.FixTradeDate(date, TDX_FORMAT_PROTOCOL_DATE)
+	cacheId := CacheId(code)
+	tickPath := fmt.Sprintf("%s/%s/%s/%s.csv", GetTickPath(), date[0:4], date, cacheId)
+	return tickPath
 }

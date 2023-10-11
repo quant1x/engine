@@ -117,6 +117,7 @@ func handleRepairFeatures(dates []string) {
 }
 
 func handleRepairData(dates []string, plugins []cache.DataPlugin) {
+	fmt.Println()
 	//// 1. 获取全部注册的数据集插件
 	//mask := cache.PluginMaskDataSet
 	////dataSetList := flash.DataSetList()

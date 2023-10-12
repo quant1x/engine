@@ -23,6 +23,8 @@ type DataPlugin interface {
 	Usage() string
 	// Init 初始化, 加载配置信息
 	Init(barIndex *int, date string) error
+	// Check 数据校验
+	//Check(cacheDate, featureDate string)
 	// Print 控制台输出指定日期的数据
 	Print(code string, date ...string)
 

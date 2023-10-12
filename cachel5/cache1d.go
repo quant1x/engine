@@ -42,7 +42,7 @@ type Cache1D[T factors.Feature] struct {
 	mapCache    map[string]T
 	replaceDate string // 替换缓存的日期
 	allCodes    []string
-	tmp         T
+	tShadow     T // 泛型T的影子
 }
 
 // NewCache1D 创建一个新的C1D对象
@@ -59,12 +59,15 @@ func NewCache1D[T factors.Feature](key string, factory func(date, securityCode s
 	}
 	d1.Date = cache.DefaultCanReadDate()
 	d1.allCodes = market.GetCodeList()
+	(&d1).Checkout(d1.Date)
+	//d1.factory = d1.tShadow.Factory
+	d1.tShadow = d1.factory(d1.Date, "sh000001")
 	RegisterCacheLoader(key, &d1)
 	return &d1
 }
 
 func (this *Cache1D[T]) Factory(date, securityCode string) factors.Feature {
-	return this.factory(date, securityCode)
+	return this.tShadow.Factory(date, securityCode)
 }
 
 func (this *Cache1D[T]) Init(barIndex *int, date string) error {
@@ -74,19 +77,19 @@ func (this *Cache1D[T]) Init(barIndex *int, date string) error {
 }
 
 func (this *Cache1D[T]) Kind() cache.Kind {
-	return this.tmp.Kind()
+	return this.tShadow.Kind()
 }
 
 func (this *Cache1D[T]) Key() string {
-	return this.tmp.Key()
+	return this.tShadow.Key()
 }
 
 func (this *Cache1D[T]) Name() string {
-	return this.tmp.FeatureName()
+	return this.tShadow.FeatureName()
 }
 
 func (this *Cache1D[T]) Usage() string {
-	return this.tmp.FeatureName()
+	return this.tShadow.FeatureName()
 }
 
 // Length 获取长度

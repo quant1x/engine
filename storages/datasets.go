@@ -52,16 +52,16 @@ import (
 //		barCode := progressbar.NewBar(barNo, "执行["+title+"]", codeCount)
 //		wg.Add(1)
 //		if useGoroutine {
-//			go updateDataSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate, opRepair)
+//			go updateOneDataSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate, opRepair)
 //		} else {
-//			updateDataSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate, opRepair)
+//			updateOneDataSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate, opRepair)
 //		}
 //	}
 //	wg.Wait()
 //}
 
 // 更新单个数据集
-func updateDataSet(wg *sync.WaitGroup, parent, bar *progressbar.Bar, dataSet datasets.DataSet, cacheDate, featureDate string, op cache.OpKind) {
+func updateOneDataSet(wg *sync.WaitGroup, parent, bar *progressbar.Bar, dataSet datasets.DataSet, cacheDate, featureDate string, op cache.OpKind) {
 	allCodes := market.GetCodeList()
 	for _, code := range allCodes {
 		data := dataSet.Clone(cacheDate, code).(datasets.DataSet)
@@ -103,11 +103,11 @@ func BaseDataUpdate(barIndex int, cacheDate, featureDate string, plugins []cache
 	barCache := progressbar.NewBar(barIndex, "执行["+cacheDate+":"+moduleName+"]", dataSetCount)
 
 	allCodes := market.GetCodeList()
+	codeCount := len(allCodes)
 	var wg sync.WaitGroup
 
 	for sequence, dataSet := range dataSetList {
 		_ = dataSet.Init(&barIndex, featureDate)
-		codeCount := len(allCodes)
 		//format := fmt.Sprintf("%%%ds", maxWidth)
 		//title := fmt.Sprintf(format, dataSet.Name())
 		width := runewidth.StringWidth(dataSet.Name())
@@ -119,9 +119,9 @@ func BaseDataUpdate(barIndex int, cacheDate, featureDate string, plugins []cache
 		barCode := progressbar.NewBar(barNo, "执行["+title+"]", codeCount)
 		wg.Add(1)
 		if cache.UseGoroutine {
-			go updateDataSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate, op)
+			go updateOneDataSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate, op)
 		} else {
-			updateDataSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate, op)
+			updateOneDataSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate, op)
 		}
 	}
 	wg.Wait()
@@ -169,9 +169,9 @@ func BaseDataUpdate(barIndex int, cacheDate, featureDate string, plugins []cache
 //		barCode := progressbar.NewBar(barNo, "执行["+title+"]", codeCount)
 //		wg.Add(1)
 //		if useGoroutine {
-//			go updateDataSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate, opUpdate)
+//			go updateOneDataSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate, opUpdate)
 //		} else {
-//			updateDataSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate, opUpdate)
+//			updateOneDataSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate, opUpdate)
 //		}
 //	}
 //	wg.Wait()

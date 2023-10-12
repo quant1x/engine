@@ -42,14 +42,14 @@ type DataCache struct {
 	filename string // 文件名
 }
 
-type DataSetCache struct {
+type DataSetSummary struct {
 	Type DataKind
 	Key  string
 	Name string
 }
 
 var (
-	mapDataSets = map[DataKind]DataSetCache{
+	mapDataSets = map[DataKind]DataSetSummary{
 		BaseXdxr:             {Type: BaseXdxr, Key: "xdxr", Name: "除权除息"},
 		BaseKLine:            {Type: BaseKLine, Key: "day", Name: "日K线"},
 		BaseTransaction:      {Type: BaseTransaction, Key: "trans", Name: "成交数据"},
@@ -59,7 +59,7 @@ var (
 	}
 )
 
-func GetDataDescript(kind DataKind) DataSetCache {
+func GetDataDescript(kind DataKind) DataSetSummary {
 	v, ok := mapDataSets[kind]
 	if !ok {
 		panic("类型不存在")

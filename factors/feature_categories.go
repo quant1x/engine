@@ -4,7 +4,7 @@ import (
 	"gitee.com/quant1x/engine/cache"
 )
 
-type FeatureCache struct {
+type FeatureSummary struct {
 	Type FeatureKind
 	Key  string
 	Name string
@@ -27,7 +27,7 @@ const (
 )
 
 var (
-	mapFeatures = map[FeatureKind]FeatureCache{
+	mapFeatures = map[FeatureKind]FeatureSummary{
 		FeatureHistory: {Type: FeatureHistory, Key: CacheL5KeyHistory, Name: "历史特征数据"},
 		FeatureF10:     {Type: FeatureF10, Key: CacheL5KeyF10, Name: "基本面"},
 		FeatureHousNo1: {Type: FeatureHousNo1, Key: "", Name: "1号策略数据"},
@@ -36,10 +36,10 @@ var (
 	}
 )
 
-func GetDataDescript(kind FeatureKind) FeatureCache {
-	v, ok := mapFeatures[kind]
-	if !ok {
-		panic("类型不存在")
-	}
-	return v
-}
+//func GetDataDescript(kind FeatureKind) FeatureSummary {
+//	v, ok := mapFeatures[kind]
+//	if !ok {
+//		panic("类型不存在")
+//	}
+//	return v
+//}

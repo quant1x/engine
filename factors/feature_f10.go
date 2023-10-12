@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	CacheL5KeyF10 = "cache/f10"
+	CacheL5KeyF10 = "f10"
 )
 
 // F10 证券基本面

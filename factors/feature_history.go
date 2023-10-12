@@ -21,7 +21,7 @@ type CompleteData struct {
 }
 
 const (
-	CacheL5KeyHistory = "cache/history"
+	CacheL5KeyHistory = "history"
 )
 
 // History 历史整合数据
@@ -101,8 +101,7 @@ func (h *History) FromHistory(history History) Feature {
 }
 
 func (h *History) Update(code, cacheDate, featureDate string, complete bool) {
-	//TODO implement me
-	panic("implement me")
+	h.Repair(code, cacheDate, featureDate, complete)
 }
 
 func (h *History) Repair(code, cacheDate, featureDate string, complete bool) {
@@ -151,11 +150,13 @@ func (h *History) Repair(code, cacheDate, featureDate string, complete bool) {
 		h.Payloads.No1.Repair(securityCode, cacheDate, featureDate, false)
 		h.Last.No1.Repair(securityCode, cacheDate, featureDate, true)
 	}
+	_ = code
 	_ = OPEN
 	_ = CLOSE
 	_ = HIGH
 	_ = LOW
 	_ = VOL
+	_ = complete
 }
 
 func (h *History) Increase(snapshot quotes.Snapshot) Feature {

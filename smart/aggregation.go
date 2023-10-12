@@ -44,7 +44,7 @@ func CacheList() []cachel5.CacheAdapter {
 	return list
 }
 
-func GetHistory() *cachel5.Cache1D[*factors.History] {
+func CacheHistory() *cachel5.Cache1D[*factors.History] {
 	__l5Once.Do(lazyInitFeatures)
 	return __l5History
 }

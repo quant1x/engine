@@ -11,10 +11,7 @@ import (
 )
 
 var (
-	exchangeCode = "" // Exchange
-	maCode       = "" // 移动平均线
-	boxCode      = "" // 平台
-	subModules   = []cmdFlag[string]{}
+	printModules = []cmdFlag[string]{}
 )
 
 // CmdPrint 打印命令
@@ -30,7 +27,7 @@ var CmdPrint = &cmder.Command{
 		}
 		keywords := ""
 		code := ""
-		for _, m := range subModules {
+		for _, m := range printModules {
 			if len(m.Value) > 0 {
 				keywords = m.Name
 				code = m.Value
@@ -59,12 +56,12 @@ var CmdPrint = &cmder.Command{
 func init() {
 	commandInit(CmdPrint, &flagDate)
 	plugins := cache.Plugins(cache.PluginMaskFeature)
-	subModules = make([]cmdFlag[string], len(plugins))
+	printModules = make([]cmdFlag[string], len(plugins))
 	for i, plugin := range plugins {
 		key := plugin.Key()
 		usage := plugin.Usage()
-		subModules[i] = cmdFlag[string]{Name: key, Usage: plugin.Provider() + ": " + usage, Value: ""}
-		CmdPrint.Flags().StringVar(&(subModules[i].Value), subModules[i].Name, "", subModules[i].Usage)
+		printModules[i] = cmdFlag[string]{Name: key, Usage: plugin.Provider() + ": " + usage, Value: ""}
+		CmdPrint.Flags().StringVar(&(printModules[i].Value), printModules[i].Name, "", printModules[i].Usage)
 	}
 }
 

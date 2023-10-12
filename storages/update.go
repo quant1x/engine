@@ -65,12 +65,8 @@ func UpdateBaseData(barIndex *int, cacheDate, featureDate string) {
 }
 
 // UpdateFeatures 更新特征
-func UpdateFeatures(barIndex *int, cacheDate, featureDate string) {
+func UpdateFeatures(barIndex *int, cacheDate, featureDate string, plugins []cache.DataPlugin) {
 	moduleName := "更新特征数据" + cacheDate
-	// 1. 获取全部注册的数据集插件
-	mask := cache.PluginMaskFeature
-	//dataSetList := flash.DataSetList()
-	plugins := cache.Plugins(mask)
 	var cacheList []cachel5.CacheAdapter
 	maxWidth := 0
 	for _, plugin := range plugins {

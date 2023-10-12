@@ -10,6 +10,15 @@ type DataXdxr struct {
 	DataCache
 }
 
+func (x *DataXdxr) Check(cacheDate, featureDate string) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (x *DataXdxr) Provider() string {
+	return cache.DefaultDataProvider
+}
+
 func init() {
 	_ = cache.Register(&DataXdxr{})
 }

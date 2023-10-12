@@ -14,6 +14,15 @@ type TransactionRecord struct {
 	DataCache
 }
 
+func (r *TransactionRecord) Check(cacheDate, featureDate string) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (r *TransactionRecord) Provider() string {
+	return cache.DefaultDataProvider
+}
+
 func init() {
 	_ = cache.Register(&TransactionRecord{})
 }

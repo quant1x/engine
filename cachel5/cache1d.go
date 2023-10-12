@@ -76,6 +76,10 @@ func (this *Cache1D[T]) Init(barIndex *int, date string) error {
 	return nil
 }
 
+func (this *Cache1D[T]) Provider() string {
+	return this.tShadow.Provider()
+}
+
 func (this *Cache1D[T]) Kind() cache.Kind {
 	return this.tShadow.Kind()
 }
@@ -176,6 +180,11 @@ func (this *Cache1D[T]) Print(code string, date ...string) {
 		table.AppendBulk(records)
 		table.Render()
 	}
+}
+
+func (this *Cache1D[T]) Check(cacheDate, featureDate string) {
+	//TODO implement me
+	panic("implement me")
 }
 
 // Get 获取指定证券代码的数据

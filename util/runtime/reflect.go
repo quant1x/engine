@@ -42,18 +42,18 @@ func loadGoTypes() {
 					pkgTypes = map[string]reflect.Type{}
 					packages[loadedType.PkgPath()] = pkgTypes
 				}
-				//typeString := loadedType.String()
 				//types[typeString] = loadedType
 				pkgPath := loadedType.PkgPath()
 				typeName := loadedType.Name()
+				//typeString := loadedType.String()
 				//fmt.Println(pkgPath, "=>", typeString, "=>", typeName)
 				structName := fmt.Sprintf("%s.%s", pkgPath, typeName)
 				types[structName] = loadedType
 				pkgTypes[loadedType.Name()] = loadedType
 				if strings.HasPrefix(pkgPath, "gitee.com/quant1x/engine") {
-					fmt.Println(structName, "==>", loadedType.PkgPath())
+					//fmt.Println(structName, "==>", loadedType.PkgPath())
 					if reflect.PtrTo(loadedType).Implements(fia) {
-						fmt.Println("found", pkgPath, "==>", structName)
+						fmt.Println("found", pkgPath, "==>", loadedType.String(), "==>", structName)
 					}
 				}
 			}

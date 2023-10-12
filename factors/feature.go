@@ -8,6 +8,7 @@ type FeatureKind = uint64
 
 // Feature 特征
 type Feature interface {
+	Provider() string
 	Factory(date string, code string) Feature                  // 工厂
 	Kind() FeatureKind                                         // 类型
 	FeatureName() string                                       // 特征名称

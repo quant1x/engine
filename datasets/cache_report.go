@@ -15,6 +15,15 @@ type DataQuarterlyReport struct {
 	cache map[string]dfcf.QuarterlyReport
 }
 
+func (r *DataQuarterlyReport) Check(cacheDate, featureDate string) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (r *DataQuarterlyReport) Provider() string {
+	return cache.DefaultDataProvider
+}
+
 func init() {
 	_ = cache.Register(&DataQuarterlyReport{})
 }

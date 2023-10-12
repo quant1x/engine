@@ -10,6 +10,15 @@ type DataKLine struct {
 	DataCache
 }
 
+func (k *DataKLine) Check(cacheDate, featureDate string) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (k *DataKLine) Provider() string {
+	return cache.DefaultDataProvider
+}
+
 func init() {
 	_ = cache.Register(&DataKLine{})
 }

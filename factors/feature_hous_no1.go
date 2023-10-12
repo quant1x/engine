@@ -1,6 +1,7 @@
 package factors
 
 import (
+	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets/base"
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/quotes"
@@ -14,6 +15,10 @@ type HousNo1 struct {
 	MA5  float64
 	MA10 float64
 	MA20 float64
+}
+
+func (f *HousNo1) Provider() string {
+	return cache.DefaultDataProvider
 }
 
 func (f *HousNo1) Factory(date string, code string) Feature {

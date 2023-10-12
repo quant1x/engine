@@ -4,15 +4,10 @@ import (
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets"
-	"gitee.com/quant1x/engine/smart"
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gotdx/trading"
-	"gitee.com/quant1x/gox/tags"
-	"github.com/olekukonko/tablewriter"
 	cmder "github.com/spf13/cobra"
-	"os"
-	"strings"
 )
 
 var (
@@ -49,10 +44,6 @@ var CmdPrint = &cmder.Command{
 			} else {
 				handlePrintData(code, tradeDate, plugins[0])
 			}
-		} else if len(maCode) > 0 {
-			//printMA(maCode)
-		} else if len(boxCode) > 0 {
-			//printBox(boxCode)
 		} else {
 			if len(args) != 1 {
 				fmt.Println(cmd.Help())
@@ -72,14 +63,9 @@ func init() {
 	for i, plugin := range plugins {
 		key := plugin.Key()
 		usage := plugin.Usage()
-		subModules[i] = cmdFlag[string]{Name: key, Usage: usage, Value: ""}
+		subModules[i] = cmdFlag[string]{Name: key, Usage: plugin.Provider() + ": " + usage, Value: ""}
 		CmdPrint.Flags().StringVar(&(subModules[i].Value), subModules[i].Name, "", subModules[i].Usage)
 	}
-	//CmdPrint.Flags().StringVar(&f10Code, "f10", "", "查看快照扩展数据")
-	//CmdPrint.Flags().StringVar(&exchangeCode, "exchange", "", "查看快照扩展数据")
-	//CmdPrint.Flags().StringVar(&maCode, "ma", "", "查看均线")
-	//CmdPrint.Flags().StringVar(&boxCode, "box", "", "查看平台数据")
-	//CmdPrint.Flags().StringVar(&tradeDate, "date", cache.DefaultCanReadDate(), "指定日期")
 }
 
 // 输出结构化信息
@@ -112,32 +98,32 @@ func printKline(securityCode string, tradeDate string) {
 	fmt.Println(df)
 }
 
-func checkoutTable(v any) (headers []string, records [][]string) {
-	headers = []string{"字段", "数值"}
-	fields := tags.GetHeadersByTags(v)
-	values := tags.GetValuesByTags(v)
-	num := len(fields)
-	if num > len(values) {
-		num = len(values)
-	}
-	for i := 0; i < num; i++ {
-		records = append(records, []string{fields[i], strings.TrimSpace(values[i])})
-	}
-	return
-}
+//func checkoutTable(v any) (headers []string, records [][]string) {
+//	headers = []string{"字段", "数值"}
+//	fields := tags.GetHeadersByTags(v)
+//	values := tags.GetValuesByTags(v)
+//	num := len(fields)
+//	if num > len(values) {
+//		num = len(values)
+//	}
+//	for i := 0; i < num; i++ {
+//		records = append(records, []string{fields[i], strings.TrimSpace(values[i])})
+//	}
+//	return
+//}
 
-func printF10(securityCode string, tradeDate string) {
-	securityCode = proto.CorrectSecurityCode(securityCode)
-	name := securities.GetStockName(securityCode)
-	fmt.Printf("%s: %s, %s\n", securityCode, name, tradeDate)
-	value := smart.GetL5F10(securityCode, tradeDate)
-	headers, records := checkoutTable(value)
-	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader(headers)
-	table.SetColumnAlignment([]int{tablewriter.ALIGN_RIGHT, tablewriter.ALIGN_LEFT})
-	table.AppendBulk(records)
-	table.Render()
-}
+//func printF10(securityCode string, tradeDate string) {
+//	securityCode = proto.CorrectSecurityCode(securityCode)
+//	name := securities.GetStockName(securityCode)
+//	fmt.Printf("%s: %s, %s\n", securityCode, name, tradeDate)
+//	value := smart.GetL5F10(securityCode, tradeDate)
+//	headers, records := checkoutTable(value)
+//	table := tablewriter.NewWriter(os.Stdout)
+//	table.SetHeader(headers)
+//	table.SetColumnAlignment([]int{tablewriter.ALIGN_RIGHT, tablewriter.ALIGN_LEFT})
+//	table.AppendBulk(records)
+//	table.Render()
+//}
 
 //func printExchange(securityCode string) {
 //	securityCode = proto.CorrectSecurityCode(securityCode)

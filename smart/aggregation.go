@@ -58,6 +58,12 @@ func GetL5History(securityCode string, date ...string) *factors.History {
 	return *data
 }
 
+func CacheF10() *cachel5.Cache1D[*factors.F10] {
+	__l5Once.Do(lazyInitFeatures)
+	return __l5F10
+
+}
+
 func GetL5F10(securityCode string, date ...string) *factors.F10 {
 	__l5Once.Do(lazyInitFeatures)
 	data := __l5F10.Get(securityCode, date...)

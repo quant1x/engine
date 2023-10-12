@@ -13,8 +13,15 @@ const (
 	PluginMaskFeature  Kind = 0x2000000000000000
 )
 
+const (
+	// DefaultDataProvider 默认数据提供者
+	DefaultDataProvider = "quant1x"
+)
+
 // DataPlugin 数据插件
 type DataPlugin interface {
+	// Provider 数据提供者
+	Provider() string
 	// Kind 优先级排序字段, 潜在的依赖关系
 	Kind() Kind
 	// Key 字符串关键词
@@ -24,7 +31,7 @@ type DataPlugin interface {
 	// Init 初始化, 加载配置信息
 	Init(barIndex *int, date string) error
 	// Check 数据校验
-	//Check(cacheDate, featureDate string)
+	Check(cacheDate, featureDate string)
 	// Print 控制台输出指定日期的数据
 	Print(code string, date ...string)
 

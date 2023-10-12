@@ -1,6 +1,7 @@
 package factors
 
 import (
+	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets/base"
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/quotes"
@@ -44,6 +45,10 @@ type History struct {
 	Payloads   IncompleteData // 扩展的半成品数据
 	Last       CompleteData   // 上一个交易日的数据
 	UpdateTime string         `name:"更新时间"` // 更新时间
+}
+
+func (h *History) Provider() string {
+	return cache.DefaultDataProvider
 }
 
 //func init() {

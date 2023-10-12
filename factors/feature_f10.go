@@ -1,6 +1,7 @@
 package factors
 
 import (
+	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets/tdxweb"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/gotdx/quotes"
@@ -39,6 +40,10 @@ type F10 struct {
 	Reduces        int     `name:"减持"`           // 公告-减持
 	Risk           int     `name:"风险数"`          // 公告-风险数
 	RiskKeywords   string  `name:"风险关键词"`        // 公告-风险关键词
+}
+
+func (f *F10) Provider() string {
+	return cache.DefaultDataProvider
 }
 
 //func init() {

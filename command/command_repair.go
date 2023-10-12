@@ -68,6 +68,8 @@ func initRepair() {
 func handleRepairAll(dates []string) {
 	moduleName := "修复全部数据"
 	count := len(dates)
+	mask := cache.PluginMaskBaseData
+	plugins := cache.Plugins(mask)
 	fmt.Println()
 	fmt.Println()
 	barIndex := 1
@@ -75,7 +77,8 @@ func handleRepairAll(dates []string) {
 	for _, date := range dates {
 		cacheDate, featureDate := cache.CorrectDate(date)
 		barIndex++
-		storages.RepairFeatures(&barIndex, cacheDate, featureDate)
+		//storages.RepairFeatures(&barIndex, cacheDate, featureDate)
+		storages.FeaturesUpdate(&barIndex, cacheDate, featureDate, plugins, cache.OpRepair)
 		_ = cacheDate
 		_ = featureDate
 		bar.Add(1)
@@ -88,42 +91,43 @@ func handleRepairDataSet(dates []string) {
 	fmt.Println()
 	moduleName := "补登数据集合"
 	logger.Info(moduleName + ", 任务开始")
+	mask := cache.PluginMaskBaseData
+	plugins := cache.Plugins(mask)
 	count := len(dates)
 	barIndex := 1
 	bar := progressbar.NewBar(barIndex, "执行["+moduleName+"]", count)
 	for _, date := range dates {
 		cacheDate, featureDate := cache.CorrectDate(date)
 		barIndex++
-		storages.RepairBaseData(&barIndex, cacheDate, featureDate)
+		storages.BaseDataUpdate(barIndex, cacheDate, featureDate, plugins, cache.OpRepair)
 		bar.Add(1)
 	}
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())
 	fmt.Println()
 }
 
+// 修复 - 特征数据
 func handleRepairFeatures(dates []string) {
 	moduleName := "补登特征数据"
 	logger.Info(moduleName + ", 任务开始")
+	mask := cache.PluginMaskBaseData
+	plugins := cache.Plugins(mask)
 	count := len(dates)
 	barIndex := 1
 	bar := progressbar.NewBar(barIndex, "执行["+moduleName+"]", count)
 	for _, date := range dates {
 		cacheDate, featureDate := cache.CorrectDate(date)
 		barIndex++
-		storages.RepairFeatures(&barIndex, cacheDate, featureDate)
+		storages.FeaturesUpdate(&barIndex, cacheDate, featureDate, plugins, cache.OpRepair)
 		bar.Add(1)
 	}
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())
 	fmt.Println()
 }
 
+// 修复 - 指定的基础数据
 func handleRepairData(dates []string, plugins []cache.DataPlugin) {
 	fmt.Println()
-	//// 1. 获取全部注册的数据集插件
-	//mask := cache.PluginMaskBaseData
-	////dataSetList := flash.DataSetList()
-	//plugins := cache.Plugins(mask)
-
 	moduleName := "修复数据"
 	logger.Info(moduleName + ", 任务开始")
 	count := len(dates)
@@ -132,7 +136,7 @@ func handleRepairData(dates []string, plugins []cache.DataPlugin) {
 	for _, date := range dates {
 		cacheDate, featureDate := cache.CorrectDate(date)
 		//barIndex++
-		storages.RepairData(barIndex+1, cacheDate, featureDate, plugins)
+		storages.BaseDataUpdate(barIndex+1, cacheDate, featureDate, plugins, cache.OpRepair)
 		bar.Add(1)
 	}
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())

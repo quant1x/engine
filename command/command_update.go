@@ -65,7 +65,11 @@ func handleUpdateAll(cacheDate, featureDate string) {
 
 // 更新基础数据
 func handleUpdateBaseData(cacheDate, featureDate string) {
-	storages.UpdateBaseData(&barIndex, cacheDate, featureDate)
+	// 1. 获取全部注册的数据集插件
+	mask := cache.PluginMaskFeature
+	plugins := cache.Plugins(mask)
+	// 2. 执行操作
+	storages.BaseDataUpdate(barIndex, cacheDate, featureDate, plugins, cache.OpUpdate)
 }
 
 // 更新特征组合
@@ -77,5 +81,5 @@ func handleUpdateFeatures(cacheDate, featureDate string, keywords ...string) {
 		//dataSetList := flash.DataSetList()
 		plugins = cache.Plugins(mask)
 	}
-	storages.UpdateFeatures(&barIndex, cacheDate, featureDate, plugins)
+	storages.FeaturesUpdate(&barIndex, cacheDate, featureDate, plugins, cache.OpUpdate)
 }

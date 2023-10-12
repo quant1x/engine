@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.2.8] - 2023-10-13
+### Changed
+- 优化update和repair数据处理流程.
+
 ## [0.2.7] - 2023-10-13
 ### Changed
 - 优化update和repair数据处理流程.
@@ -149,8 +153,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.2.7...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.2.8...HEAD
 
+[0.2.8]: https://gitee.com/quant1x/engine/compare/v0.2.7...v0.2.8
 [0.2.7]: https://gitee.com/quant1x/engine/compare/v0.2.6...v0.2.7
 [0.2.6]: https://gitee.com/quant1x/engine/compare/v0.2.5...v0.2.6
 [0.2.5]: https://gitee.com/quant1x/engine/compare/v0.2.4...v0.2.5

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.2.5] - 2023-10-12
+### Changed
+- 调整engine数据的提供者为engine.
+
 ## [0.2.4] - 2023-10-12
 ### Changed
 - 命令字初始化改为显式.
@@ -137,8 +141,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.2.4...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.2.5...HEAD
 
+[0.2.5]: https://gitee.com/quant1x/engine/compare/v0.2.4...v0.2.5
 [0.2.4]: https://gitee.com/quant1x/engine/compare/v0.2.3...v0.2.4
 [0.2.3]: https://gitee.com/quant1x/engine/compare/v0.2.2...v0.2.3
 [0.2.2]: https://gitee.com/quant1x/engine/compare/v0.2.1...v0.2.2

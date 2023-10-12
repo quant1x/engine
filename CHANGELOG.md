@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.2.3] - 2023-10-12
+### Changed
+- 调整子命令的检索逻辑.
+- 新增数据验证check接口.
+- 调整缓存的工厂用法.
+- 新增通达信自选股列表导出函数.
+- 增加一个单独的增量计算的接口备用.
+- 增加通达信F10的资金流向, 这个数据因为网络请求的轮询机制, 数据很有可能存在不同源的问题, 从而导致数据不完整或者不正确.
+- 变更源文件名.
+- 调整历史成交记录的update和repair, 更新的日期应该采用cacheDate.
+- 修改错误名.
+
 ## [0.2.2] - 2023-10-11
 ### Changed
 - 更新gotdx版本, 历史成交数据去掉用pandas的方式读写, 改为切片和csv文件直接交换.
@@ -121,8 +133,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.2.2...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.2.3...HEAD
 
+[0.2.3]: https://gitee.com/quant1x/engine/compare/v0.2.2...v0.2.3
 [0.2.2]: https://gitee.com/quant1x/engine/compare/v0.2.1...v0.2.2
 [0.2.1]: https://gitee.com/quant1x/engine/compare/v0.2.0...v0.2.1
 [0.2.0]: https://gitee.com/quant1x/engine/compare/v0.1.9...v0.2.0

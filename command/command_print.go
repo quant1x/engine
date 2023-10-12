@@ -53,7 +53,7 @@ var CmdPrint = &cmder.Command{
 	},
 }
 
-func init() {
+func initPrint() {
 	commandInit(CmdPrint, &flagDate)
 	plugins := cache.Plugins(cache.PluginMaskFeature)
 	printModules = make([]cmdFlag[string], len(plugins))

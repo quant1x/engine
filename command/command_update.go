@@ -43,7 +43,7 @@ var CmdUpdate = &cmder.Command{
 	},
 }
 
-func init() {
+func initUpdate() {
 	commandInit(CmdUpdate, &flagAll)
 	commandInit(CmdUpdate, &flagBaseData)
 	commandInit(CmdUpdate, &flagFeatures)

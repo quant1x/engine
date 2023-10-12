@@ -56,7 +56,7 @@ var CmdRepair = &cmder.Command{
 	},
 }
 
-func init() {
+func initRepair() {
 	commandInit(CmdRepair, &flagAll)
 	commandInit(CmdRepair, &flagBaseData)
 	commandInit(CmdRepair, &flagFeatures)

@@ -15,7 +15,7 @@ const (
 
 const (
 	// DefaultDataProvider 默认数据提供者
-	DefaultDataProvider = "quant1x"
+	DefaultDataProvider = "engine"
 )
 
 // DataPlugin 数据插件

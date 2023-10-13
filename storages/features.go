@@ -106,7 +106,6 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 		//wg.Add(1)
 		//updateOneFeature(&wg, barCache, barCode, adapter, cacheDate, featureDate, op, barIndex)
 		updateOneFeature(barCache, barCode, adapter, cacheDate, featureDate, op, barIndex)
-		barCache.Add(1)
 	}
 	//wg.Wait()
 }

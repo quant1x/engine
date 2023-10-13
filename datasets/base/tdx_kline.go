@@ -6,9 +6,11 @@ import (
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/pandas"
 	"gitee.com/quant1x/pandas/stat"
+	"sync"
 )
 
 var (
+	klineMutex sync.Mutex
 	// TODO: 隔日需要清空重新缓存
 	routineLocalKLines = map[string][]KLine{}
 )
@@ -51,7 +53,9 @@ func CheckoutKLines(code, date string) []KLine {
 		cacheKLines = LoadBasicKline(securityCode)
 	}
 	// 1.2 覆盖缓存
+	klineMutex.Lock()
 	routineLocalKLines[securityCode] = cacheKLines
+	klineMutex.Unlock()
 	// 2. 对齐数据缓存的日期, 过滤可能存在停牌没有数据的情况
 	offset := checkKLineOffset(cacheKLines, date)
 	if offset < 0 {

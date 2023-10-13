@@ -7,6 +7,7 @@ require (
 	gitee.com/quant1x/gox v1.12.1
 	gitee.com/quant1x/pandas v1.1.6
 	github.com/olekukonko/tablewriter v0.0.5
+	github.com/panjf2000/ants/v2 v2.8.2
 	github.com/spf13/cobra v1.7.0
 	google.golang.org/protobuf v1.31.0
 	gopkg.in/yaml.v3 v3.0.1

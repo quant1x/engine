@@ -66,7 +66,7 @@ func handleUpdateAll(cacheDate, featureDate string) {
 // 更新基础数据
 func handleUpdateBaseData(cacheDate, featureDate string) {
 	// 1. 获取全部注册的数据集插件
-	mask := cache.PluginMaskFeature
+	mask := cache.PluginMaskBaseData
 	plugins := cache.Plugins(mask)
 	// 2. 执行操作
 	storages.BaseDataUpdate(barIndex, cacheDate, featureDate, plugins, cache.OpUpdate)

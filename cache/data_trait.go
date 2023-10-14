@@ -10,4 +10,6 @@ type Trait interface {
 	Key() string
 	// Desc 数据描述(data description)
 	Desc() string
+	// Provider 提供者
+	Provider() string
 }

@@ -8,13 +8,13 @@ type Data interface {
 	Key() string
 	// Desc 数据描述(data description)
 	Desc() string
-	// FileName 缓存文件名
-	//	接受两个参数 证券代码和日期
-	FileName(securityCode, date string) string
+	// Filename 缓存文件名
+	//	接受两个参数 日期和证券代码
+	Filename(date, securityCode string) string
 	// IsBaseData 是否基础数据
-	IsBaseData() bool
+	//IsBaseData() bool
 	// IsFeature 是否特征
-	IsFeature() bool
+	//IsFeature() bool
 	// Init 初始化, 加载配置信息
 	Init(barIndex *int, date string) error
 	// Check 数据校验

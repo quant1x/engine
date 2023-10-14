@@ -91,7 +91,7 @@ func BaseDataUpdate(barIndex int, cacheDate, featureDate string, plugins []cache
 		dataSet, ok := plugin.(datasets.DataSet)
 		if ok {
 			dataSetList = append(dataSetList, dataSet)
-			width := runewidth.StringWidth(dataSet.Name())
+			width := runewidth.StringWidth(dataSet.Desc())
 			if width > maxWidth {
 				maxWidth = width
 			}
@@ -110,8 +110,9 @@ func BaseDataUpdate(barIndex int, cacheDate, featureDate string, plugins []cache
 		_ = dataSet.Init(&barIndex, featureDate)
 		//format := fmt.Sprintf("%%%ds", maxWidth)
 		//title := fmt.Sprintf(format, dataSet.Name())
-		width := runewidth.StringWidth(dataSet.Name())
-		title := strings.Repeat(" ", maxWidth-width) + dataSet.Name()
+		desc := dataSet.Desc()
+		width := runewidth.StringWidth(desc)
+		title := strings.Repeat(" ", maxWidth-width) + desc
 		barNo := barIndex + 1
 		if cache.UseGoroutine {
 			barNo += sequence

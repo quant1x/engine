@@ -39,16 +39,16 @@ func (k *DataKLine) Init(barIndex *int, date string) error {
 	return nil
 }
 
-func (k *DataKLine) Kind() DataKind {
+func (k *DataKLine) Kind() cache.Kind {
 	return BaseKLine
 }
 
-func (k *DataKLine) Name() string {
-	return mapDataSets[k.Kind()].Name
+func (k *DataKLine) Key() string {
+	return mapDataSets[k.Kind()].Key()
 }
 
-func (k *DataKLine) Key() string {
-	return mapDataSets[k.Kind()].Key
+func (k *DataKLine) Desc() string {
+	return mapDataSets[k.Kind()].Desc()
 }
 
 func (k *DataKLine) Filename(date, code string) string {

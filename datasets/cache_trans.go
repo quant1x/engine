@@ -37,16 +37,16 @@ func (r *TransactionRecord) Print(code string, date ...string) {
 	panic("implement me")
 }
 
-func (r *TransactionRecord) Kind() DataKind {
+func (r *TransactionRecord) Kind() cache.Kind {
 	return BaseTransaction
 }
 
-func (r *TransactionRecord) Name() string {
-	return mapDataSets[r.Kind()].Name
+func (r *TransactionRecord) Key() string {
+	return mapDataSets[r.Kind()].Key()
 }
 
-func (r *TransactionRecord) Key() string {
-	return mapDataSets[r.Kind()].Key
+func (r *TransactionRecord) Desc() string {
+	return mapDataSets[r.Kind()].Desc()
 }
 
 func (r *TransactionRecord) Init(barIndex *int, date string) error {

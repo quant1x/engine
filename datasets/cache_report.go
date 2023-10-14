@@ -38,16 +38,16 @@ func (r *DataQuarterlyReport) Print(code string, date ...string) {
 	panic("implement me")
 }
 
-func (r *DataQuarterlyReport) Kind() DataKind {
+func (r *DataQuarterlyReport) Kind() cache.Kind {
 	return BaseQuarterlyReports
 }
 
-func (r *DataQuarterlyReport) Name() string {
-	return mapDataSets[r.Kind()].Name
+func (r *DataQuarterlyReport) Key() string {
+	return mapDataSets[r.Kind()].Key()
 }
 
-func (r *DataQuarterlyReport) Key() string {
-	return mapDataSets[r.Kind()].Key
+func (r *DataQuarterlyReport) Desc() string {
+	return mapDataSets[r.Kind()].Desc()
 }
 
 func (r *DataQuarterlyReport) Filename(date, code string) string {

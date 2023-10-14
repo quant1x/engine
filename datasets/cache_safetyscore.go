@@ -1,6 +1,7 @@
 package datasets
 
 import (
+	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/gotdx/quotes"
 )
 
@@ -11,7 +12,7 @@ type DataSafetyScore struct {
 	DataCache
 }
 
-func (s *DataSafetyScore) Kind() DataKind {
+func (s *DataSafetyScore) Kind() cache.Kind {
 	//TODO implement me
 	panic("implement me")
 }

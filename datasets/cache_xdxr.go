@@ -39,16 +39,16 @@ func (x *DataXdxr) Init(barIndex *int, date string) error {
 	return nil
 }
 
-func (x *DataXdxr) Kind() DataKind {
+func (x *DataXdxr) Kind() cache.Kind {
 	return BaseXdxr
 }
 
-func (x *DataXdxr) Name() string {
-	return mapDataSets[x.Kind()].Name
+func (x *DataXdxr) Key() string {
+	return mapDataSets[x.Kind()].Key()
 }
 
-func (x *DataXdxr) Key() string {
-	return mapDataSets[x.Kind()].Key
+func (x *DataXdxr) Desc() string {
+	return mapDataSets[x.Kind()].Desc()
 }
 
 func (x *DataXdxr) Filename(date, code string) string {

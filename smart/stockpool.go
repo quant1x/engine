@@ -11,6 +11,7 @@ type StockPool struct {
 	Sell           float64 `name:"目标价格" dataframe:"sell"`
 	StrategyCode   int     `name:"策略编码" dataframe:"strategy_code"`
 	StrategyName   string  `name:"策略名称" dataframe:"strategy_name"`
+	Rules          uint64  `name:"规则" dataframe:"rules"`
 	BlockType      string  `name:"板块类型" dataframe:"block_type"`
 	BlockCode      string  `name:"板块代码" dataframe:"block_code"`
 	BlockName      string  `name:"板块名称" dataframe:"block_name"`

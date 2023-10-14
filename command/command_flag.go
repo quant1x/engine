@@ -2,9 +2,7 @@ package command
 
 import (
 	"gitee.com/quant1x/engine/datasets"
-	//"gitee.com/quant1x/engine/datasets"
 	"gitee.com/quant1x/engine/datasets/base"
-	//"gitee.com/quant1x/engine/factors"
 	cmder "github.com/spf13/cobra"
 	"unsafe"
 )
@@ -19,7 +17,7 @@ var (
 	//dataF10       = factors.GetDataDescript(factors.FeatureF10)
 	//flagF10       = cmdFlag[string]{Name: dataF10.Key, Value: "", Usage: dataF10.Name}
 	dataTrans = datasets.GetDataDescript(datasets.BaseTransaction)
-	flagTrans = cmdFlag[bool]{Name: dataTrans.Key, Value: false, Usage: dataTrans.Name}
+	flagTrans = cmdFlag[bool]{Name: dataTrans.Key(), Value: false, Usage: dataTrans.Desc()}
 )
 
 type Command = cmder.Command

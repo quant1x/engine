@@ -2,6 +2,7 @@ package smart
 
 // StockPool 股票池
 type StockPool struct {
+	Status         int     `name:"策略状态" dataframe:"status"`
 	Date           string  `name:"信号日期" dataframe:"date"`
 	Code           string  `name:"证券代码" dataframe:"code"`
 	Name           string  `name:"证券名称" dataframe:"name"`

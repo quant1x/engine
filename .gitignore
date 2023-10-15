@@ -18,3 +18,4 @@ strategy-mac-amd64
 strategy-win-amd64.exe
 *.png
 *.csv
+*.pprof

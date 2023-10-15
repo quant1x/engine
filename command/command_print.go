@@ -60,7 +60,7 @@ func initPrint() {
 	for i, plugin := range plugins {
 		key := plugin.Key()
 		usage := plugin.Usage()
-		printModules[i] = cmdFlag[string]{Name: key, Usage: plugin.Provider() + ": " + usage, Value: ""}
+		printModules[i] = cmdFlag[string]{Name: key, Usage: plugin.Owner() + ": " + usage, Value: ""}
 		CmdPrint.Flags().StringVar(&(printModules[i].Value), printModules[i].Name, "", printModules[i].Usage)
 	}
 }

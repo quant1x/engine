@@ -1,5 +1,7 @@
 package cache
 
+import "context"
+
 // Data 数据接口
 type Data interface {
 	// Kind 数据类型
@@ -10,6 +12,7 @@ type Data interface {
 	Desc() string
 	// Filename 缓存文件名
 	//	接受两个参数 日期和证券代码
+	// 	文件名为空不缓存
 	Filename(date, securityCode string) string
 	// IsBaseData 是否基础数据
 	//IsBaseData() bool
@@ -21,4 +24,12 @@ type Data interface {
 	Check(cacheDate, featureDate string)
 	// Print 控制台输出指定日期的数据
 	Print(code string, date ...string)
+}
+
+// Operator 缓存运算接口
+type Operator interface {
+	// Init 初始化, 接受context, 日期和证券代码作为入参
+	Init(ctx context.Context, date, securityCode string)
+	// Pull 拉取数据
+	Pull(date, securityCode string) Operator
 }

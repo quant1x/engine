@@ -7,7 +7,11 @@ import (
 	"gitee.com/quant1x/engine/util/functions"
 	"gitee.com/quant1x/gox/logger"
 	cmder "github.com/spf13/cobra"
+	"log"
+	_ "net/http/pprof"
+	"os"
 	"runtime/debug"
+	"runtime/pprof"
 	"time"
 )
 
@@ -16,8 +20,22 @@ var (
 	strategyNumber = 0       // 策略编号
 )
 
+var (
+	cpuProfile = "./cpu.pprof"
+	memProfile = "./mem.pprof"
+)
+
 // 更新日线数据工具
 func main() {
+	fCpu, err := os.Create(cpuProfile)
+	if err != nil {
+		log.Fatal(err)
+	}
+	_ = pprof.StartCPUProfile(fCpu)
+	defer pprof.StopCPUProfile()
+	//go func() {
+	//	log.Println(http.ListenAndServe(":8000", nil))
+	//}()
 	mainStart := time.Now()
 	defer func() {
 		if err := recover(); err != nil {
@@ -52,4 +70,10 @@ func main() {
 	command.Init()
 	rootCmd.AddCommand(command.CmdVersion, command.CmdPrint, command.CmdUpdate, command.CmdRepair)
 	_ = rootCmd.Execute()
+	fMem, err := os.Create(memProfile)
+	if err != nil {
+		log.Fatal(err)
+	}
+	_ = pprof.WriteHeapProfile(fMem)
+	_ = fMem.Close()
 }

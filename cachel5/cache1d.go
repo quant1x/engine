@@ -19,12 +19,17 @@ import (
 	"sync"
 )
 
+const (
+	// 闪存路径
+	cache1dPrefix = "flash"
+)
+
 // 返回文件路径, 指定关键字和日期
 func getCache1DFilepath(key, date string) string {
 	cachePath, key, found := strings.Cut(key, "/")
 	if !found {
 		key = cachePath
-		cachePath = "cache"
+		cachePath = cache1dPrefix
 	}
 	cachePath = cache.GetRootPath() + "/" + cachePath
 	year := date[:4]

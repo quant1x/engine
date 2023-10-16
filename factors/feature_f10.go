@@ -1,6 +1,7 @@
 package factors
 
 import (
+	"context"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets/tdxweb"
 	"gitee.com/quant1x/engine/market"
@@ -19,7 +20,7 @@ const (
 type F10 struct {
 	Date           string  `name:"日期" dataframe:"date"`                    // 日期
 	Code           string  `name:"代码" dataframe:"code"`                    // 代码
-	Name           string  `name:"名称" dataframe:"name"`                    // 名称
+	Name_          string  `name:"名称" dataframe:"name"`                    // 名称
 	SubNew         bool    `name:"次新股" dataframe:"sub_new"`                // 是否次新股
 	VolUnit        int     `name:"每手" dataframe:"vol_unit"`                // 每手单位
 	DecimalPoint   int     `name:"小数点" dataframe:"decimal_point"`          // 小数点
@@ -42,28 +43,11 @@ type F10 struct {
 	RiskKeywords   string  `name:"风险关键词" dataframe:"risk_keywords"`        // 公告-风险关键词
 }
 
-func (f *F10) Check(cacheDate, featureDate string) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (f *F10) Checkout(securityCode, date string) {
-	//TODO implement me
-	panic("implement me")
-}
-
-//func init() {
-//	err := cache.Register(&F10{})
-//	if err != nil {
-//		panic(err)
-//	}
-//}
-
 func NewF10(date, code string) *F10 {
 	v := F10{
 		Date:         date,
 		Code:         code,
-		Name:         securities.GetStockName(code),
+		Name_:        securities.GetStockName(code),
 		VolUnit:      100,
 		DecimalPoint: 2,
 		SubNew:       market.IsSubNewStock(code),
@@ -72,13 +56,9 @@ func NewF10(date, code string) *F10 {
 	if ok {
 		v.VolUnit = int(securityInfo.VolUnit)
 		v.DecimalPoint = int(securityInfo.DecimalPoint)
-		v.Name = securityInfo.Name
+		v.Name_ = securityInfo.Name
 	}
 	return &v
-}
-
-func (f *F10) Owner() string {
-	return cache.DefaultDataProvider
 }
 
 func (f *F10) Factory(date string, code string) Feature {
@@ -90,16 +70,27 @@ func (f *F10) Kind() cache.Kind {
 	return FeatureF10
 }
 
-func (f *F10) Desc() string {
-	return mapFeatures[f.Kind()].Name
-}
-
 func (f *F10) Key() string {
-	return mapFeatures[f.Kind()].Key
+	return mapFeatures[f.Kind()].Key()
 }
 
-func (f *F10) Init(barIndex *int, date string) error {
+func (f *F10) Name() string {
+	return mapFeatures[f.Kind()].Name()
+}
+
+func (f *F10) Owner() string {
+	return mapFeatures[f.Kind()].Owner()
+}
+
+func (f *F10) Usage() string {
+	return mapFeatures[f.Kind()].Name()
+}
+
+func (f *F10) Init(ctx context.Context, date, securityCode string) error {
 	loadQuarterlyReports(f.GetDate())
+	_ = ctx
+	_ = date
+	_ = securityCode
 	return nil
 }
 
@@ -167,11 +158,6 @@ func (f *F10) Repair(code, cacheDate, featureDate string, complete bool) {
 }
 
 func (f *F10) Increase(snapshot quotes.Snapshot) Feature {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (f *F10) ChangingOverDate(date string) {
 	//TODO implement me
 	panic("implement me")
 }

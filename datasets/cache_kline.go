@@ -1,6 +1,7 @@
 package datasets
 
 import (
+	"context"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets/base"
 	"gitee.com/quant1x/gotdx/quotes"
@@ -10,33 +11,21 @@ type DataKLine struct {
 	DataCache
 }
 
-func (k *DataKLine) Check(cacheDate, featureDate string) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (k *DataKLine) Owner() string {
-	return cache.DefaultDataProvider
-}
-
 func init() {
 	_ = cache.Register(&DataKLine{})
 }
 
-func (k *DataKLine) Usage() string {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (k *DataKLine) Print(code string, date ...string) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (k *DataKLine) Init(barIndex *int, date string) error {
-	_ = barIndex
+func (k *DataKLine) Init(ctx context.Context, date, securityCode string) error {
+	//_ = barIndex
+	_ = ctx
 	_ = date
+	_ = securityCode
 	return nil
+}
+
+func (k *DataKLine) Check(cacheDate, featureDate string) error {
+	//TODO implement me
+	panic("implement me")
 }
 
 func (k *DataKLine) Kind() cache.Kind {
@@ -47,14 +36,28 @@ func (k *DataKLine) Key() string {
 	return mapDataSets[k.Kind()].Key()
 }
 
-func (k *DataKLine) Desc() string {
-	return mapDataSets[k.Kind()].Desc()
+func (k *DataKLine) Name() string {
+	return mapDataSets[k.Kind()].Name()
+}
+
+func (k *DataKLine) Owner() string {
+	return mapDataSets[k.Kind()].Owner()
 }
 
 func (k *DataKLine) Filename(date, code string) string {
 	k.filename = cache.KLineFilename(code)
 	_ = date
 	return k.filename
+}
+
+func (k *DataKLine) Usage() string {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (k *DataKLine) Print(code string, date ...string) {
+	//TODO implement me
+	panic("implement me")
 }
 
 func (k *DataKLine) Update(cacheDate, featureDate string) {

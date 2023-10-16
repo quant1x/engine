@@ -97,15 +97,11 @@ func (this *Cache1D[T]) Key() string {
 }
 
 func (this *Cache1D[T]) Name() string {
-	return this.tShadow.Desc()
-}
-
-func (this *Cache1D[T]) Desc() string {
-	return this.tShadow.Desc()
+	return this.tShadow.Name()
 }
 
 func (this *Cache1D[T]) Usage() string {
-	return this.tShadow.Desc()
+	return this.tShadow.Usage()
 }
 
 // Length 获取长度

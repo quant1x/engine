@@ -1,6 +1,7 @@
 package datasets
 
 import (
+	"context"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets/base"
 	"gitee.com/quant1x/gotdx/quotes"
@@ -14,28 +15,10 @@ func init() {
 	_ = cache.Register(&DataXdxr{})
 }
 
-func (x *DataXdxr) Check(cacheDate, featureDate string) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (x *DataXdxr) Owner() string {
-	return cache.DefaultDataProvider
-}
-
-func (x *DataXdxr) Usage() string {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (x *DataXdxr) Print(code string, date ...string) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (x *DataXdxr) Init(barIndex *int, date string) error {
-	_ = barIndex
+func (x *DataXdxr) Init(ctx context.Context, date, securityCode string) error {
+	_ = ctx
 	_ = date
+	_ = securityCode
 	return nil
 }
 
@@ -47,8 +30,27 @@ func (x *DataXdxr) Key() string {
 	return mapDataSets[x.Kind()].Key()
 }
 
-func (x *DataXdxr) Desc() string {
-	return mapDataSets[x.Kind()].Desc()
+func (x *DataXdxr) Name() string {
+	return mapDataSets[x.Kind()].Name()
+}
+
+func (x *DataXdxr) Owner() string {
+	return mapDataSets[x.Kind()].Owner()
+}
+
+func (x *DataXdxr) Usage() string {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (x *DataXdxr) Check(cacheDate, featureDate string) error {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (x *DataXdxr) Print(code string, date ...string) {
+	//TODO implement me
+	panic("implement me")
 }
 
 func (x *DataXdxr) Filename(date, code string) string {

@@ -1,6 +1,7 @@
 package factors
 
 import (
+	"context"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets/base"
 	"gitee.com/quant1x/gotdx/proto"
@@ -47,20 +48,6 @@ type History struct {
 	UpdateTime string         `name:"更新时间" dataframe:"update_time"`  // 更新时间
 }
 
-func (h *History) Check(cacheDate, featureDate string) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (h *History) Checkout(securityCode, date string) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (h *History) Owner() string {
-	return cache.DefaultDataProvider
-}
-
 //func init() {
 //	err := cache.Register(&History{})
 //	if err != nil {
@@ -85,15 +72,26 @@ func (h *History) Kind() cache.Kind {
 	return FeatureHistory
 }
 
-func (h *History) Desc() string {
-	return mapFeatures[h.Kind()].Name
+func (h *History) Name() string {
+	return mapFeatures[h.Kind()].Name()
 }
 
 func (h *History) Key() string {
-	return mapFeatures[h.Kind()].Key
+	return mapFeatures[h.Kind()].Key()
 }
 
-func (h *History) Init(barIndex *int, date string) error {
+func (h *History) Owner() string {
+	return mapFeatures[h.Kind()].Owner()
+}
+
+func (h *History) Usage() string {
+	return mapFeatures[h.Kind()].Name()
+}
+
+func (h *History) Init(ctx context.Context, date, securityCode string) error {
+	_ = ctx
+	_ = date
+	_ = securityCode
 	return nil
 }
 

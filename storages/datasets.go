@@ -1,64 +1,16 @@
 package storages
 
 import (
+	"context"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets"
 	"gitee.com/quant1x/engine/market"
+	"gitee.com/quant1x/gox/coroutine"
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/text/runewidth"
 	"strings"
 	"sync"
 )
-
-//// BaseDataUpdate 修复基础数据
-//func BaseDataUpdate(barIndex *int, cacheDate, featureDate string) {
-//	moduleName := "修复基础数据"
-//	// 1. 获取全部注册的数据集插件
-//	mask := cache.PluginMaskBaseData
-//	//dataSetList := flash.DataSetList()
-//	plugins := cache.Plugins(mask)
-//	var dataSetList []datasets.DataSet
-//	// 1.1 缓存数据集名称的最大宽度
-//	maxWidth := 0
-//	for _, plugin := range plugins {
-//		dataSet, ok := plugin.(datasets.DataSet)
-//		if ok {
-//			dataSetList = append(dataSetList, dataSet)
-//			width := runewidth.StringWidth(dataSet.Name())
-//			if width > maxWidth {
-//				maxWidth = width
-//			}
-//		}
-//	}
-//
-//	// 2. 遍历全部数据插件
-//	dataSetCount := len(dataSetList)
-//	barCache := progressbar.NewBar(*barIndex, "执行["+moduleName+"]", dataSetCount)
-//
-//	allCodes := market.GetCodeList()
-//	var wg sync.WaitGroup
-//
-//	for sequence, dataSet := range dataSetList {
-//		_ = dataSet.Init(barIndex, featureDate)
-//		codeCount := len(allCodes)
-//		//format := fmt.Sprintf("%%%ds", maxWidth)
-//		//title := fmt.Sprintf(format, dataSet.Name())
-//		width := runewidth.StringWidth(dataSet.Name())
-//		title := strings.Repeat(" ", maxWidth-width) + dataSet.Name()
-//		barNo := *barIndex + 1
-//		if useGoroutine {
-//			barNo += sequence
-//		}
-//		barCode := progressbar.NewBar(barNo, "执行["+title+"]", codeCount)
-//		wg.Add(1)
-//		if useGoroutine {
-//			go updateOneDataSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate, opRepair)
-//		} else {
-//			updateOneDataSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate, opRepair)
-//		}
-//	}
-//	wg.Wait()
-//}
 
 // 更新单个数据集
 func updateOneDataSet(wg *sync.WaitGroup, parent, bar *progressbar.Bar, dataSet datasets.DataSet, cacheDate, featureDate string, op cache.OpKind) {
@@ -91,7 +43,7 @@ func BaseDataUpdate(barIndex int, cacheDate, featureDate string, plugins []cache
 		dataSet, ok := plugin.(datasets.DataSet)
 		if ok {
 			dataSetList = append(dataSetList, dataSet)
-			width := runewidth.StringWidth(dataSet.Desc())
+			width := runewidth.StringWidth(dataSet.Name())
 			if width > maxWidth {
 				maxWidth = width
 			}
@@ -106,11 +58,13 @@ func BaseDataUpdate(barIndex int, cacheDate, featureDate string, plugins []cache
 	codeCount := len(allCodes)
 	var wg sync.WaitGroup
 
+	parent := coroutine.Context()
+	ctx := context.WithValue(parent, cache.KBarIndex, barIndex)
 	for sequence, dataSet := range dataSetList {
-		_ = dataSet.Init(&barIndex, featureDate)
+		_ = dataSet.Init(ctx, featureDate, "")
 		//format := fmt.Sprintf("%%%ds", maxWidth)
 		//title := fmt.Sprintf(format, dataSet.Name())
-		desc := dataSet.Desc()
+		desc := dataSet.Name()
 		width := runewidth.StringWidth(desc)
 		title := strings.Repeat(" ", maxWidth-width) + desc
 		barNo := barIndex + 1
@@ -127,53 +81,3 @@ func BaseDataUpdate(barIndex int, cacheDate, featureDate string, plugins []cache
 	}
 	wg.Wait()
 }
-
-//// UpdateBaseData 更新基础数据
-//func UpdateBaseData(barIndex *int, cacheDate, featureDate string) {
-//	moduleName := "更新基础数据"
-//	// 1. 获取全部注册的数据集插件
-//	mask := cache.PluginMaskBaseData
-//	//dataSetList := flash.DataSetList()
-//	plugins := cache.Plugins(mask)
-//	var dataSetList []datasets.DataSet
-//	// 1.1 缓存数据集名称的最大宽度
-//	maxWidth := 0
-//	for _, plugin := range plugins {
-//		dataSet, ok := plugin.(datasets.DataSet)
-//		if ok {
-//			dataSetList = append(dataSetList, dataSet)
-//			width := runewidth.StringWidth(dataSet.Name())
-//			if width > maxWidth {
-//				maxWidth = width
-//			}
-//		}
-//	}
-//
-//	// 2. 遍历全部数据插件
-//	dataSetCount := len(dataSetList)
-//	barCache := progressbar.NewBar(*barIndex, "执行["+moduleName+"]", dataSetCount)
-//
-//	allCodes := market.GetCodeList()
-//	var wg sync.WaitGroup
-//
-//	for sequence, dataSet := range dataSetList {
-//		_ = dataSet.Init(barIndex, featureDate)
-//		codeCount := len(allCodes)
-//		//format := fmt.Sprintf("%%%ds", maxWidth)
-//		//title := fmt.Sprintf(format, dataSet.Name())
-//		width := runewidth.StringWidth(dataSet.Name())
-//		title := strings.Repeat(" ", maxWidth-width) + dataSet.Name()
-//		barNo := *barIndex + 1
-//		if useGoroutine {
-//			barNo += sequence
-//		}
-//		barCode := progressbar.NewBar(barNo, "执行["+title+"]", codeCount)
-//		wg.Add(1)
-//		if useGoroutine {
-//			go updateOneDataSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate, opUpdate)
-//		} else {
-//			updateOneDataSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate, opUpdate)
-//		}
-//	}
-//	wg.Wait()
-//}

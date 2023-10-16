@@ -1,6 +1,7 @@
 package factors
 
 import (
+	"context"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets/base"
 	"gitee.com/quant1x/gotdx/proto"
@@ -17,18 +18,9 @@ type HousNo1 struct {
 	MA20 float64 `dataframe:"ma20"`
 }
 
-func (f *HousNo1) Check(cacheDate, featureDate string) {
-	//TODO implement me
-	panic("implement me")
-}
-
 func (f *HousNo1) Checkout(securityCode, date string) {
 	//TODO implement me
 	panic("implement me")
-}
-
-func (f *HousNo1) Owner() string {
-	return cache.DefaultDataProvider
 }
 
 func (f *HousNo1) Factory(date string, code string) Feature {
@@ -40,15 +32,23 @@ func (f *HousNo1) Kind() cache.Kind {
 	return FeatureHousNo1
 }
 
-func (f *HousNo1) Desc() string {
-	return mapFeatures[f.Kind()].Name
-}
-
 func (f *HousNo1) Key() string {
-	return mapFeatures[f.Kind()].Key
+	return mapFeatures[f.Kind()].Key()
 }
 
-func (f *HousNo1) Init(barIndex *int, date string) error {
+func (f *HousNo1) Name() string {
+	return mapFeatures[f.Kind()].Name()
+}
+
+func (f *HousNo1) Owner() string {
+	return mapFeatures[f.Kind()].Owner()
+}
+
+func (f *HousNo1) Usage() string {
+	return mapFeatures[f.Kind()].Name()
+}
+
+func (f *HousNo1) Init(ctx context.Context, date, securityCode string) error {
 	return nil
 }
 

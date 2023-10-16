@@ -4,12 +4,6 @@ import (
 	"gitee.com/quant1x/engine/cache"
 )
 
-type FeatureSummary struct {
-	Type cache.Kind
-	Key  string
-	Name string
-}
-
 const (
 	baseFeature cache.Kind = cache.PluginMaskFeature // 特征类型基础编码
 )
@@ -27,11 +21,10 @@ const (
 )
 
 var (
-	mapFeatures = map[cache.Kind]FeatureSummary{
-		FeatureHistory: {Type: FeatureHistory, Key: CacheL5KeyHistory, Name: "历史特征数据"},
-		FeatureF10:     {Type: FeatureF10, Key: CacheL5KeyF10, Name: "基本面"},
-		FeatureHousNo1: {Type: FeatureHousNo1, Key: "", Name: "1号策略数据"},
-		FeatureHousNo2: {Type: FeatureHousNo2, Key: "", Name: "2号策略数据"},
-		//FeatureBreaksThroughBox: {Type: FeatureBreaksThroughBox, Key: CacheL5KeyBox, Name: "平台"},
+	mapFeatures = map[cache.Kind]cache.DataSummary{
+		FeatureHistory: cache.Summary(FeatureHistory, CacheL5KeyHistory, "历史特征数据", cache.DefaultDataProvider),
+		FeatureF10:     cache.Summary(FeatureF10, CacheL5KeyF10, "基本面", cache.DefaultDataProvider),
+		FeatureHousNo1: cache.Summary(FeatureHousNo1, "", "1号策略数据", cache.DefaultDataProvider),
+		FeatureHousNo2: cache.Summary(FeatureHousNo2, "", "2号策略数据", cache.DefaultDataProvider),
 	}
 )

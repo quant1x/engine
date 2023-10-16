@@ -1,12 +1,14 @@
 package storages
 
 import (
+	"context"
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/cachel5"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/smart"
+	"gitee.com/quant1x/gox/coroutine"
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/text/runewidth"
 	"gitee.com/quant1x/gox/util/treemap"
@@ -187,7 +189,9 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 		//defer p.Release()
 
 		dataSource := adapter.Factory(featureDate, "")
-		_ = dataSource.Init(barIndex, featureDate)
+		parent := coroutine.Context()
+		ctx := context.WithValue(parent, cache.KBarIndex, barIndex)
+		_ = dataSource.Init(ctx, featureDate, "")
 		for _, code := range allCodes {
 			feature := adapter.Factory(cacheDate, code).(factors.Feature)
 			if feature.Kind() != factors.FeatureHistory {

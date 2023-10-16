@@ -1,6 +1,7 @@
 package datasets
 
 import (
+	"context"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets/base"
 	"gitee.com/quant1x/gotdx/quotes"
@@ -12,15 +13,6 @@ import (
 //	不可以当作tick数据来使用
 type TransactionRecord struct {
 	DataCache
-}
-
-func (r *TransactionRecord) Check(cacheDate, featureDate string) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (r *TransactionRecord) Owner() string {
-	return cache.DefaultDataProvider
 }
 
 func init() {
@@ -45,14 +37,24 @@ func (r *TransactionRecord) Key() string {
 	return mapDataSets[r.Kind()].Key()
 }
 
-func (r *TransactionRecord) Desc() string {
-	return mapDataSets[r.Kind()].Desc()
+func (r *TransactionRecord) Name() string {
+	return mapDataSets[r.Kind()].Name()
 }
 
-func (r *TransactionRecord) Init(barIndex *int, date string) error {
-	_ = barIndex
+func (r *TransactionRecord) Owner() string {
+	return mapDataSets[r.Kind()].Owner()
+}
+
+func (r *TransactionRecord) Init(ctx context.Context, date, securityCode string) error {
+	_ = ctx
 	_ = date
+	_ = securityCode
 	return nil
+}
+
+func (r *TransactionRecord) Check(cacheDate, featureDate string) error {
+	//TODO implement me
+	panic("implement me")
 }
 
 func (r *TransactionRecord) Filename(date, code string) string {

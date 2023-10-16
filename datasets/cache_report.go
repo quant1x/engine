@@ -1,6 +1,7 @@
 package datasets
 
 import (
+	"context"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets/dfcf"
 	"gitee.com/quant1x/gotdx/quotes"
@@ -13,15 +14,6 @@ import (
 type DataQuarterlyReport struct {
 	DataCache
 	cache map[string]dfcf.QuarterlyReport
-}
-
-func (r *DataQuarterlyReport) Check(cacheDate, featureDate string) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (r *DataQuarterlyReport) Owner() string {
-	return cache.DefaultDataProvider
 }
 
 func init() {
@@ -46,8 +38,12 @@ func (r *DataQuarterlyReport) Key() string {
 	return mapDataSets[r.Kind()].Key()
 }
 
-func (r *DataQuarterlyReport) Desc() string {
-	return mapDataSets[r.Kind()].Desc()
+func (r *DataQuarterlyReport) Name() string {
+	return mapDataSets[r.Kind()].Name()
+}
+
+func (r *DataQuarterlyReport) Owner() string {
+	return mapDataSets[r.Kind()].Owner()
 }
 
 func (r *DataQuarterlyReport) Filename(date, code string) string {
@@ -55,10 +51,20 @@ func (r *DataQuarterlyReport) Filename(date, code string) string {
 	panic("implement me")
 }
 
-func (r *DataQuarterlyReport) Init(barIndex *int, date string) error {
+func (r *DataQuarterlyReport) Init(ctx context.Context, date, securityCode string) error {
+	barIndex, ok := ctx.Value(cache.KBarIndex).(*int)
+	if !ok {
+		*barIndex = 1
+	}
 	*barIndex++
 	r.cache = IntegrateQuarterlyReports(barIndex, date)
+	_ = securityCode
 	return nil
+}
+
+func (r *DataQuarterlyReport) Check(cacheDate, featureDate string) error {
+	//TODO implement me
+	panic("implement me")
 }
 
 func (r *DataQuarterlyReport) Update(cacheDate, featureDate string) {

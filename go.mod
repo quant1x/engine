@@ -4,16 +4,15 @@ go 1.21.1
 
 require (
 	gitee.com/quant1x/gotdx v1.15.7
-	gitee.com/quant1x/gox v1.12.1
+	gitee.com/quant1x/gox v1.12.4
 	gitee.com/quant1x/pandas v1.1.6
 	github.com/olekukonko/tablewriter v0.0.5
-	github.com/panjf2000/ants/v2 v2.8.2
 	github.com/spf13/cobra v1.7.0
 	google.golang.org/protobuf v1.31.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
-//replace gitee.com/quant1x/gox v1.11.9 => ../../mymmsc/gox
+//replace gitee.com/quant1x/gox v1.12.2 => ../../mymmsc/gox
 
 require (
 	github.com/dlclark/regexp2 v1.10.0 // indirect
@@ -34,8 +33,8 @@ require (
 	github.com/shabbyrobe/xmlwriter v0.0.0-20230525083848-85336ec334fa // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/tealeg/xlsx/v3 v3.3.2 // indirect
-	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
-	golang.org/x/sys v0.12.0 // indirect
+	golang.org/x/exp v0.0.0-20231006140011-7918f672742d // indirect
+	golang.org/x/sys v0.13.0 // indirect
 	golang.org/x/text v0.13.0 // indirect
 	gonum.org/v1/gonum v0.14.0 // indirect
 )

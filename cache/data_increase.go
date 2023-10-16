@@ -1,4 +1,4 @@
-package factors
+package cache
 
 // Increase 增量数据计算接口
 //

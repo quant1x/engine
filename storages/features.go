@@ -1,17 +1,17 @@
 package storages
 
 import (
+	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/cachel5"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/smart"
-	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/text/runewidth"
 	"gitee.com/quant1x/gox/util/treemap"
-	"github.com/panjf2000/ants/v2"
 	"sync"
+	"time"
 )
 
 //// 更新单个特征
@@ -30,7 +30,9 @@ import (
 //	wg.Done()
 //}
 
-func updateStockFeature(wg *sync.WaitGroup, bar *progressbar.Bar, feature factors.Feature, code string, cacheDate, featureDate string, op cache.OpKind, p *treemap.Map) {
+func updateStockFeature(wg *sync.WaitGroup, bar *progressbar.Bar, feature factors.Feature, code string, cacheDate, featureDate string, op cache.OpKind, p *treemap.Map, sb *cache.ScoreBoard) {
+	now := time.Now()
+	defer sb.Add(1, time.Since(now))
 	if op == cache.OpRepair {
 		feature.Repair(code, cacheDate, featureDate, true)
 	} else {
@@ -42,40 +44,40 @@ func updateStockFeature(wg *sync.WaitGroup, bar *progressbar.Bar, feature factor
 }
 
 // 更新单个特征
-func updateOneFeature(parent, bar *progressbar.Bar, adapter cachel5.CacheAdapter, cacheDate, featureDate string, op cache.OpKind, barIndex *int) {
-	mapFeature := treemap.NewWithStringComparator()
-	var wg sync.WaitGroup
-	dataSource := adapter.Factory(featureDate, "")
-	_ = dataSource.Init(barIndex, featureDate)
-	allCodes := market.GetCodeList()
-	for _, code := range allCodes {
-		feature := adapter.Factory(cacheDate, code).(factors.Feature)
-		if feature.Kind() != factors.FeatureHistory {
-			history := smart.GetL5History(code, cacheDate)
-			if history != nil {
-				feature = feature.FromHistory(*history)
-			}
-		}
-		wg.Add(1)
-		//if op == cache.OpRepair {
-		//	feature.Repair(code, cacheDate, featureDate, true)
-		//} else {
-		//	feature.Update(code, cacheDate, featureDate, true)
-		//}
-		//mapFeature.Put(code, feature)
-		//bar.Add(1)
-		//if cache.UseGoroutine {
-		//
-		//}
-		go updateStockFeature(&wg, bar, feature, code, cacheDate, featureDate, op, mapFeature)
-	}
-	// 加载缓存
-	adapter.Checkout(cacheDate)
-	// 合并
-	adapter.Merge(mapFeature)
-	wg.Wait()
-	parent.Add(1)
-}
+//func updateOneFeature(parent, bar *progressbar.Bar, adapter cachel5.CacheAdapter, cacheDate, featureDate string, op cache.OpKind, barIndex *int) {
+//	mapFeature := treemap.NewWithStringComparator()
+//	var wg sync.WaitGroup
+//	dataSource := adapter.Factory(featureDate, "")
+//	_ = dataSource.Init(barIndex, featureDate)
+//	allCodes := market.GetCodeList()
+//	for _, code := range allCodes {
+//		feature := adapter.Factory(cacheDate, code).(factors.Feature)
+//		if feature.Kind() != factors.FeatureHistory {
+//			history := smart.GetL5History(code, cacheDate)
+//			if history != nil {
+//				feature = feature.FromHistory(*history)
+//			}
+//		}
+//		wg.Add(1)
+//		//if op == cache.OpRepair {
+//		//	feature.Repair(code, cacheDate, featureDate, true)
+//		//} else {
+//		//	feature.Update(code, cacheDate, featureDate, true)
+//		//}
+//		//mapFeature.Put(code, feature)
+//		//bar.Add(1)
+//		//if cache.UseGoroutine {
+//		//
+//		//}
+//		go updateStockFeature(&wg, bar, feature, code, cacheDate, featureDate, op, mapFeature)
+//	}
+//	// 加载缓存
+//	adapter.Checkout(cacheDate)
+//	// 合并
+//	adapter.Merge(mapFeature)
+//	wg.Wait()
+//	parent.Add(1)
+//}
 
 //const (
 //	queueMax = 4096
@@ -172,17 +174,17 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 	codeCount := len(allCodes)
 	for _, adapter := range adapters {
 		wgAdapter.Add(1)
-
+		var sb cache.ScoreBoard
 		barCode := progressbar.NewBar(*barIndex+1, "执行["+adapter.Name()+"]", codeCount)
 		//updateOneFeature(barAdapter, barCode, adapter, cacheDate, featureDate, op, barIndex)
 
 		mapFeature := treemap.NewWithStringComparator()
 		var wg sync.WaitGroup
-		p, _ := ants.NewPoolWithFunc(quotes.POOL_MAX, func(i interface{}) {
-			v := i.(featureTask)
-			updateStockFeature(v.wg, v.bar, v.feature, v.securityCode, v.cacheDate, v.featureDate, op, mapFeature)
-		})
-		defer p.Release()
+		//p, _ := ants.NewPoolWithFunc(quotes.POOL_MAX, func(i interface{}) {
+		//	v := i.(featureTask)
+		//	updateStockFeature(v.wg, v.bar, v.feature, v.securityCode, v.cacheDate, v.featureDate, op, mapFeature)
+		//})
+		//defer p.Release()
 
 		dataSource := adapter.Factory(featureDate, "")
 		_ = dataSource.Init(barIndex, featureDate)
@@ -195,15 +197,16 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 				}
 			}
 			wg.Add(1)
+			go updateStockFeature(&wg, barCode, feature, code, cacheDate, featureDate, op, mapFeature, &sb)
 			//go updateStockFeature(&wg, barCode, feature, code, cacheDate, featureDate, op, mapFeature)
-			_ = p.Invoke(featureTask{
-				wg:           &wg,
-				bar:          barCode,
-				feature:      feature,
-				securityCode: code,
-				cacheDate:    cacheDate,
-				featureDate:  featureDate,
-			})
+			//_ = p.Invoke(featureTask{
+			//	wg:           &wg,
+			//	bar:          barCode,
+			//	feature:      feature,
+			//	securityCode: code,
+			//	cacheDate:    cacheDate,
+			//	featureDate:  featureDate,
+			//})
 		}
 		wg.Wait()
 		// 加载缓存
@@ -213,6 +216,7 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 		// 适配器进度条+1
 		barAdapter.Add(1)
 		wgAdapter.Done()
+		fmt.Println(sb.String())
 	}
 	wgAdapter.Wait()
 }

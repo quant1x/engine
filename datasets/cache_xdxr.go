@@ -10,17 +10,17 @@ type DataXdxr struct {
 	DataCache
 }
 
+func init() {
+	_ = cache.Register(&DataXdxr{})
+}
+
 func (x *DataXdxr) Check(cacheDate, featureDate string) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (x *DataXdxr) Provider() string {
+func (x *DataXdxr) Owner() string {
 	return cache.DefaultDataProvider
-}
-
-func init() {
-	_ = cache.Register(&DataXdxr{})
 }
 
 func (x *DataXdxr) Usage() string {

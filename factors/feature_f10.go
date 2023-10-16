@@ -42,8 +42,14 @@ type F10 struct {
 	RiskKeywords   string  `name:"风险关键词"`        // 公告-风险关键词
 }
 
-func (f *F10) Provider() string {
-	return cache.DefaultDataProvider
+func (f *F10) Check(cacheDate, featureDate string) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (f *F10) Checkout(securityCode, date string) {
+	//TODO implement me
+	panic("implement me")
 }
 
 //func init() {
@@ -71,16 +77,20 @@ func NewF10(date, code string) *F10 {
 	return &v
 }
 
+func (f *F10) Owner() string {
+	return cache.DefaultDataProvider
+}
+
 func (f *F10) Factory(date string, code string) Feature {
 	v := NewF10(date, code)
 	return v
 }
 
-func (f *F10) Kind() FeatureKind {
+func (f *F10) Kind() cache.Kind {
 	return FeatureF10
 }
 
-func (f *F10) FeatureName() string {
+func (f *F10) Desc() string {
 	return mapFeatures[f.Kind()].Name
 }
 

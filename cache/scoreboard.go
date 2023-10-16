@@ -1,6 +1,7 @@
 package cache
 
 import (
+	"fmt"
 	"sync"
 	"time"
 )
@@ -21,11 +22,16 @@ func (this *ScoreBoard) Add(delta int, take time.Duration) {
 	defer this.m.Unlock()
 	this.Count = this.Count + delta
 	this.CrossTime += take
-	if this.Min > take {
+	if this.Min == 0 || this.Min > take {
 		this.Min = take
 	}
-	if this.Max < take {
+	if this.Max == 0 || this.Max < take {
 		this.Max = take
 	}
 	this.Speed = float64(this.Count) / this.CrossTime.Seconds()
+}
+
+func (this *ScoreBoard) String() string {
+	s := fmt.Sprintf("kind: %d, total: %d, crosstime: %s, max: %f, min: %f, speed: %f", this.Kind, this.Count, this.CrossTime, this.Max, this.Min, this.Speed)
+	return s
 }

@@ -15,7 +15,7 @@ func (k *DataKLine) Check(cacheDate, featureDate string) {
 	panic("implement me")
 }
 
-func (k *DataKLine) Provider() string {
+func (k *DataKLine) Owner() string {
 	return cache.DefaultDataProvider
 }
 

@@ -47,7 +47,17 @@ type History struct {
 	UpdateTime string         `name:"更新时间"` // 更新时间
 }
 
-func (h *History) Provider() string {
+func (h *History) Check(cacheDate, featureDate string) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (h *History) Checkout(securityCode, date string) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (h *History) Owner() string {
 	return cache.DefaultDataProvider
 }
 
@@ -71,11 +81,11 @@ func (h *History) Factory(date string, code string) Feature {
 	return v
 }
 
-func (h *History) Kind() FeatureKind {
+func (h *History) Kind() cache.Kind {
 	return FeatureHistory
 }
 
-func (h *History) FeatureName() string {
+func (h *History) Desc() string {
 	return mapFeatures[h.Kind()].Name
 }
 

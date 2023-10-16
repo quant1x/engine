@@ -29,6 +29,7 @@ func RegisterCacheLoader(key string, loader CacheAdapter) {
 	__mapLoader[key] = loader
 }
 
+// SwitchDate 统一切换数据的缓存日期
 func SwitchDate(date string) {
 	__loadMutex.Lock()
 	defer __loadMutex.Unlock()

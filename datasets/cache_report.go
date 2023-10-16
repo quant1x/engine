@@ -20,7 +20,7 @@ func (r *DataQuarterlyReport) Check(cacheDate, featureDate string) {
 	panic("implement me")
 }
 
-func (r *DataQuarterlyReport) Provider() string {
+func (r *DataQuarterlyReport) Owner() string {
 	return cache.DefaultDataProvider
 }
 

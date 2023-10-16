@@ -30,7 +30,7 @@ func getOneNotice(securityCode, currentDate string) (notice companyNotice) {
 	for pageNo := 1; pageNo < pagesCount+1; pageNo++ {
 		list, pages, err := dfcf.StockNotices(securityCode, beginDate, endDate, pageNo)
 		if err != nil || pages < 1 {
-			logger.Error(err)
+			logger.Error(securityCode, beginDate, endDate, err)
 			break
 		}
 		if pagesCount < pages {

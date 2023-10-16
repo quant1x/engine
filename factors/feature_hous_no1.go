@@ -17,7 +17,17 @@ type HousNo1 struct {
 	MA20 float64
 }
 
-func (f *HousNo1) Provider() string {
+func (f *HousNo1) Check(cacheDate, featureDate string) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (f *HousNo1) Checkout(securityCode, date string) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (f *HousNo1) Owner() string {
 	return cache.DefaultDataProvider
 }
 
@@ -26,11 +36,11 @@ func (f *HousNo1) Factory(date string, code string) Feature {
 	panic("implement me")
 }
 
-func (f *HousNo1) Kind() FeatureKind {
+func (f *HousNo1) Kind() cache.Kind {
 	return FeatureHousNo1
 }
 
-func (f *HousNo1) FeatureName() string {
+func (f *HousNo1) Desc() string {
 	return mapFeatures[f.Kind()].Name
 }
 

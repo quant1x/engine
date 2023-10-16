@@ -38,7 +38,9 @@ func CheckoutKLines(code, date string) []KLine {
 	securityCode := proto.CorrectSecurityCode(code)
 	date = trading.FixTradeDate(date)
 	// 1. 取缓存的K线
+	klineMutex.Lock()
 	cacheKLines, ok := routineLocalKLines[securityCode]
+	klineMutex.Unlock()
 	if !ok {
 		cacheKLines = LoadBasicKline(securityCode)
 	}

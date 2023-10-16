@@ -5,6 +5,7 @@ import (
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/gox/concurrent"
 )
 
 func checkCapital(list []quotes.XdxrInfo, date string) *quotes.XdxrInfo {
@@ -28,7 +29,8 @@ type f10SecurityInfo struct {
 }
 
 var (
-	__mapListingDate = map[string]string{}
+	//__mapListingDate = map[string]string{}
+	__mapListingDate = concurrent.NewHashMap[string, string]()
 )
 
 func checkoutSecurityBasicInfo(securityCode, featureDate string) f10SecurityInfo {
@@ -46,13 +48,13 @@ func checkoutSecurityBasicInfo(securityCode, featureDate string) f10SecurityInfo
 		f10.Capital, f10.TotalCapital, f10.IpoDate, f10.UpdateDate = getFinanceInfo(securityCode, featureDate)
 	}
 	if len(f10.IpoDate) == 0 {
-		ipoDate, ok := __mapListingDate[securityCode]
+		ipoDate, ok := __mapListingDate.Get(securityCode)
 		if !ok {
 			ipoDate = getIpoDate(securityCode, featureDate)
 		}
 		f10.IpoDate = ipoDate
 		if len(f10.IpoDate) > 0 {
-			__mapListingDate[securityCode] = f10.IpoDate
+			__mapListingDate.Set(securityCode, f10.IpoDate)
 		}
 	}
 	if len(f10.UpdateDate) == 0 || f10.UpdateDate > featureDate {

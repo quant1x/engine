@@ -19,7 +19,7 @@ func (r *TransactionRecord) Check(cacheDate, featureDate string) {
 	panic("implement me")
 }
 
-func (r *TransactionRecord) Provider() string {
+func (r *TransactionRecord) Owner() string {
 	return cache.DefaultDataProvider
 }
 

@@ -26,7 +26,9 @@ type Data interface {
 	Print(code string, date ...string)
 }
 
-// Operator 缓存运算接口
+// Operator 缓存操作接口
+//
+//	数据操作, 包含初始化和拉取两个接口
 type Operator interface {
 	// Init 初始化, 接受context, 日期和证券代码作为入参
 	Init(ctx context.Context, date, securityCode string)

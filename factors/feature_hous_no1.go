@@ -12,9 +12,9 @@ import (
 )
 
 type HousNo1 struct {
-	MA5  float64
-	MA10 float64
-	MA20 float64
+	MA5  float64 `dataframe:"ma5"`
+	MA10 float64 `dataframe:"ma10"`
+	MA20 float64 `dataframe:"ma20"`
 }
 
 func (f *HousNo1) Check(cacheDate, featureDate string) {

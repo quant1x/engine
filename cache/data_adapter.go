@@ -21,6 +21,20 @@ const (
 // DataAdapter 数据插件
 type DataAdapter interface {
 	Trait // 继承特性接口
+
+	//// Kind 数据类型
+	//Kind() Kind
+	//// Key 数据关键词, key与cache落地强关联
+	//Key() string
+	//// Name 特性名称
+	//Name() string
+	//// Usage 控制台参数提示信息, 数据描述(data description)
+	//Usage() string
+	//// Owner 提供者
+	//Owner() string
+	//// Init 初始化, 接受context, 日期和证券代码作为入参
+	//Init(ctx context.Context, date, securityCode string) error
+
 	// DataCommand string
 	//DataCommand // 控制台命令字接口
 	//// Init 初始化, 加载配置信息

@@ -66,16 +66,14 @@ func (r *TransactionRecord) Filename(date, code string) string {
 	panic("implement me")
 }
 
-func (r *TransactionRecord) Update(cacheDate, featureDate string) {
-	base.UpdateTickStartDate(cacheDate)
+func (r *TransactionRecord) Update(date string) {
+	base.UpdateTickStartDate(date)
 	base.GetTickAll(r.Code)
-	_ = featureDate
 }
 
-func (r *TransactionRecord) Repair(cacheDate, featureDate string) {
+func (r *TransactionRecord) Repair(date string) {
 	//base.GetTickAll(r.Code)
-	base.GetTickData(r.Code, cacheDate)
-	_ = featureDate
+	base.GetTickData(r.Code, date)
 }
 
 func (r *TransactionRecord) Increase(snapshot quotes.Snapshot) {

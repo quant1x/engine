@@ -70,16 +70,14 @@ func (k *DataKLine) Print(code string, date ...string) {
 	panic("implement me")
 }
 
-func (k *DataKLine) Update(cacheDate, featureDate string) {
+func (k *DataKLine) Update(date string) {
 	base.UpdateAllBasicKLine(k.Code)
-	_ = cacheDate
-	_ = featureDate
+	_ = date
 }
 
-func (k *DataKLine) Repair(cacheDate, featureDate string) {
+func (k *DataKLine) Repair(date string) {
 	base.UpdateAllBasicKLine(k.Code)
-	_ = cacheDate
-	_ = featureDate
+	_ = date
 }
 
 func (k *DataKLine) Increase(snapshot quotes.Snapshot) {

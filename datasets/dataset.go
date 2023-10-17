@@ -27,12 +27,16 @@ const (
 //	数据集是基础数据, 应当遵循结构简单, 尽量减小缓存的文件数量, 加载迅速
 //	检索的规则是按日期和代码进行查询
 type DataSet interface {
-	cache.Trait
+	cache.Base
 	cache.DataFile
-	Update(cacheDate, featureDate string)   // 更新数据
-	Repair(cacheDate, featureDate string)   // 回补数据
-	Increase(snapshot quotes.Snapshot)      // 增量计算, 用快照增量计算特征
-	Clone(date string, code string) DataSet // 克隆一个DataSet
+	// Update 更新数据
+	Update(date string)
+	// Repair 回补数据
+	Repair(date string)
+	// Increase 增量计算, 用快照增量计算特征
+	Increase(snapshot quotes.Snapshot)
+	// Clone 克隆一个DataSet
+	Clone(date string, code string) DataSet
 }
 
 var (

@@ -8,10 +8,10 @@ const (
 	KBarIndex = "barIndex"
 )
 
-// Trait 基础的特性
+// Base 缓存的基础接口
 //
 //	这也是一个特征, 为啥起这个名字, 自己可以脑补 哈哈~
-type Trait interface {
+type Base interface {
 	// Kind 数据类型
 	Kind() Kind
 	// Owner 提供者
@@ -46,8 +46,14 @@ type DataFile interface {
 //	cacheDate 缓存日期
 //	featureDate 特征数据的日期
 type Swift interface {
+}
+
+// Future 预备数据的接口
+type Future interface {
 	// GetDate 日期
 	GetDate() string
+	// GetSecurityCode 证券代码
+	GetSecurityCode() string
 	// Update 更新数据
 	//	whole 是否完整的数据, false是加工成半成品数据, 为了配合Increase
 	Update(securityCode, cacheDate, featureDate string, whole bool)
@@ -56,17 +62,6 @@ type Swift interface {
 	// Increase 增量计算, 用快照增量计算特征
 	//Increase(securityCode string, snapshot quotes.Snapshot)
 	//Assign(target *cachel5.CacheAdapter) bool   // 赋值
-}
-
-// Future 预备数据的接口
-type Future interface {
-	// GetSecurityCode 证券代码
-	GetSecurityCode() string
-	// Update 更新数据
-	//	whole 是否完整的数据, false是加工成半成品数据, 为了配合Increase
-	Update(securityCode, cacheDate, featureDate string, whole bool)
-	// Repair 回补数据
-	Repair(securityCode, cacheDate, featureDate string, whole bool)
 }
 
 // Operator 缓存操作接口

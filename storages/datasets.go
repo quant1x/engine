@@ -13,14 +13,14 @@ import (
 )
 
 // 更新单个数据集
-func updateOneDataSet(wg *sync.WaitGroup, parent, bar *progressbar.Bar, dataSet datasets.DataSet, cacheDate, featureDate string, op cache.OpKind) {
+func updateOneDataSet(wg *sync.WaitGroup, parent, bar *progressbar.Bar, dataSet datasets.DataSet, date string, op cache.OpKind) {
 	allCodes := market.GetCodeList()
 	for _, code := range allCodes {
-		data := dataSet.Clone(cacheDate, code).(datasets.DataSet)
+		data := dataSet.Clone(date, code).(datasets.DataSet)
 		if op == cache.OpUpdate {
-			data.Update(cacheDate, featureDate)
+			data.Update(date)
 		} else if op == cache.OpRepair {
-			data.Repair(cacheDate, featureDate)
+			data.Repair(date)
 		}
 		bar.Add(1)
 	}
@@ -29,7 +29,7 @@ func updateOneDataSet(wg *sync.WaitGroup, parent, bar *progressbar.Bar, dataSet 
 }
 
 // BaseDataUpdate 修复数据
-func BaseDataUpdate(barIndex int, cacheDate, featureDate string, plugins []cache.DataAdapter, op cache.OpKind) {
+func BaseDataUpdate(barIndex int, date string, plugins []cache.DataAdapter, op cache.OpKind) {
 	moduleName := "基础数据"
 	if op == cache.OpRepair {
 		moduleName = "修复" + moduleName
@@ -52,7 +52,7 @@ func BaseDataUpdate(barIndex int, cacheDate, featureDate string, plugins []cache
 
 	// 2. 遍历全部数据插件
 	dataSetCount := len(dataSetList)
-	barCache := progressbar.NewBar(barIndex, "执行["+cacheDate+":"+moduleName+"]", dataSetCount)
+	barCache := progressbar.NewBar(barIndex, "执行["+date+":"+moduleName+"]", dataSetCount)
 
 	allCodes := market.GetCodeList()
 	codeCount := len(allCodes)
@@ -61,7 +61,7 @@ func BaseDataUpdate(barIndex int, cacheDate, featureDate string, plugins []cache
 	parent := coroutine.Context()
 	ctx := context.WithValue(parent, cache.KBarIndex, barIndex)
 	for sequence, dataSet := range dataSetList {
-		_ = dataSet.Init(ctx, featureDate, "")
+		_ = dataSet.Init(ctx, date, "")
 		//format := fmt.Sprintf("%%%ds", maxWidth)
 		//title := fmt.Sprintf(format, dataSet.Name())
 		desc := dataSet.Name()
@@ -74,9 +74,9 @@ func BaseDataUpdate(barIndex int, cacheDate, featureDate string, plugins []cache
 		barCode := progressbar.NewBar(barNo, "执行["+title+"]", codeCount)
 		wg.Add(1)
 		if cache.UseGoroutine {
-			go updateOneDataSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate, op)
+			go updateOneDataSet(&wg, barCache, barCode, dataSet, date, op)
 		} else {
-			updateOneDataSet(&wg, barCache, barCode, dataSet, cacheDate, featureDate, op)
+			updateOneDataSet(&wg, barCache, barCode, dataSet, date, op)
 		}
 	}
 	wg.Wait()

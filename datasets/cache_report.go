@@ -71,14 +71,12 @@ func (r *DataQuarterlyReport) Check(cacheDate, featureDate string) error {
 	panic("implement me")
 }
 
-func (r *DataQuarterlyReport) Update(cacheDate, featureDate string) {
-	_ = cacheDate
-	_ = featureDate
+func (r *DataQuarterlyReport) Update(date string) {
+	_ = date
 }
 
-func (r *DataQuarterlyReport) Repair(cacheDate, featureDate string) {
-	_ = cacheDate
-	_ = featureDate
+func (r *DataQuarterlyReport) Repair(date string) {
+	_ = date
 }
 
 func (r *DataQuarterlyReport) Increase(snapshot quotes.Snapshot) {
@@ -129,20 +127,5 @@ func IntegrateQuarterlyReports(barIndex *int, date string) map[string]dfcf.Quart
 			logger.Errorf("cache %s failed, error: %+v", filename, err)
 		}
 	}
-	//// 确定更新日期
-	//currentDate := cachel5.DefaultCanUpdateDate()
-	//c1d := flash.CacheF10()
-	//merge := func(securityCode string, f10 *flash.F10) (ok bool) {
-	//	f10.Date = currentDate
-	//	cover, ok := mapReports[securityCode]
-	//	if ok {
-	//		f10.BPS = cover.BPS
-	//		f10.BasicEPS = cover.BasicEPS
-	//	}
-	//	return ok
-	//}
-	//c1d.Checkout(currentDate)
-	//c1d.Apply(merge)
-	//logger.Info(modName+", 任务执行完毕.", time.Now())
 	return mapReports
 }

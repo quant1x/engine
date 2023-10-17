@@ -29,7 +29,7 @@ var CmdUpdate = &cmder.Command{
 			// 全部更新
 			handleUpdateAll(cacheDate, featureDate)
 		} else if flagBaseData.Value {
-			handleUpdateBaseData(cacheDate, featureDate)
+			handleUpdateBaseData(featureDate)
 		} else if flagFeatures.Value {
 			keywords := []string{}
 			for _, m := range updateModules {
@@ -60,17 +60,17 @@ func initUpdate() {
 
 // 全部更新
 func handleUpdateAll(cacheDate, featureDate string) {
-	handleUpdateBaseData(cacheDate, featureDate)
+	handleUpdateBaseData(featureDate)
 	handleUpdateFeatures(cacheDate, featureDate)
 }
 
 // 更新基础数据
-func handleUpdateBaseData(cacheDate, featureDate string) {
+func handleUpdateBaseData(date string) {
 	// 1. 获取全部注册的数据集插件
 	mask := cache.PluginMaskBaseData
 	plugins := cache.Plugins(mask)
 	// 2. 执行操作
-	storages.BaseDataUpdate(barIndex, cacheDate, featureDate, plugins, cache.OpUpdate)
+	storages.BaseDataUpdate(barIndex, date, plugins, cache.OpUpdate)
 }
 
 // 更新特征组合

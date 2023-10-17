@@ -20,7 +20,7 @@ const (
 
 // DataAdapter 数据插件
 type DataAdapter interface {
-	Trait // 继承特性接口
+	Base // 继承特性接口
 
 	//// Kind 数据类型
 	//Kind() Kind

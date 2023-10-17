@@ -7,16 +7,12 @@ import (
 
 // Feature 特征
 type Feature interface {
-	cache.Trait
+	cache.Base
 	cache.Future
-	//cache.Swift
-
 	// Factory 工厂
 	Factory(date string, code string) Feature
-
 	// FromHistory 从历史数据加载
 	FromHistory(history History) Feature
-
 	// Increase 增量计算
 	//	用快照增量计算特征
 	Increase(snapshot quotes.Snapshot) Feature

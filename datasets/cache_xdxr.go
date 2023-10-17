@@ -62,16 +62,14 @@ func (x *DataXdxr) Filename(date, code string) string {
 	return x.filename
 }
 
-func (x *DataXdxr) Update(cacheDate, featureDate string) {
+func (x *DataXdxr) Update(date string) {
 	base.UpdateXdxrInfo(x.Code)
-	_ = cacheDate
-	_ = featureDate
+	_ = date
 }
 
-func (x *DataXdxr) Repair(cacheDate, featureDate string) {
+func (x *DataXdxr) Repair(date string) {
 	base.UpdateXdxrInfo(x.Code)
-	_ = cacheDate
-	_ = featureDate
+	_ = date
 }
 
 func (x *DataXdxr) Increase(snapshot quotes.Snapshot) {

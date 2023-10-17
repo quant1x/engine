@@ -42,24 +42,41 @@ var CmdRepair = &cmder.Command{
 			handleRepairAll(dates)
 		} else if flagBaseData.Value {
 			keywords := []string{}
-			for _, m := range updateModules {
+			for _, m := range repairBases {
 				if m.Value {
 					keywords = append(keywords, m.Name)
 					break
 				}
 			}
 			if len(keywords) == 0 {
-				handleRepairDataSet(dates)
+				handleRepairAllDataSets(dates)
 			} else {
 				plugins := cache.PluginsWithName(cache.PluginMaskBaseData, keywords...)
 				if len(plugins) == 0 {
 					fmt.Printf("没有找到名字是[%s]的数据插件\n", strings.Join(keywords, ","))
 				} else {
-					handleRepairData(dates, plugins)
+					handleRepairDataSetsWithPlugins(dates, plugins)
 				}
 			}
 		} else if flagFeatures.Value {
-			handleRepairFeatures(dates)
+			keywords := []string{}
+			for _, m := range repairFeatures {
+				if m.Value {
+					keywords = append(keywords, m.Name)
+					break
+				}
+			}
+			if len(keywords) == 0 {
+				handleRepairAllFeatures(dates)
+			} else {
+				plugins := cache.PluginsWithName(cache.PluginMaskFeature, keywords...)
+				if len(plugins) == 0 {
+					fmt.Printf("没有找到名字是[%s]的数据插件\n", strings.Join(keywords, ","))
+				} else {
+					handleRepairFeaturesWithPlugins(dates, plugins)
+				}
+			}
+
 		}
 	},
 }
@@ -112,7 +129,7 @@ func handleRepairAll(dates []string) {
 	fmt.Println()
 }
 
-func handleRepairDataSet(dates []string) {
+func handleRepairAllDataSets(dates []string) {
 	fmt.Println()
 	moduleName := "补登数据集合"
 	logger.Info(moduleName + ", 任务开始")
@@ -122,9 +139,27 @@ func handleRepairDataSet(dates []string) {
 	barIndex := 1
 	bar := progressbar.NewBar(barIndex, "执行["+moduleName+"]", count)
 	for _, date := range dates {
-		cacheDate, featureDate := cache.CorrectDate(date)
+		//cacheDate, featureDate := cache.CorrectDate(date)
 		barIndex++
-		storages.BaseDataUpdate(barIndex, cacheDate, featureDate, plugins, cache.OpRepair)
+		storages.BaseDataUpdate(barIndex, date, plugins, cache.OpRepair)
+		bar.Add(1)
+	}
+	logger.Info(moduleName+", 任务执行完毕.", time.Now())
+	fmt.Println()
+}
+
+// 修复 - 指定的基础数据
+func handleRepairDataSetsWithPlugins(dates []string, plugins []cache.DataAdapter) {
+	fmt.Println()
+	moduleName := "修复数据"
+	logger.Info(moduleName + ", 任务开始")
+	count := len(dates)
+	barIndex := 1
+	bar := progressbar.NewBar(barIndex, "执行["+moduleName+"]", count)
+	for _, date := range dates {
+		//cacheDate, featureDate := cache.CorrectDate(date)
+		//barIndex++
+		storages.BaseDataUpdate(barIndex+1, date, plugins, cache.OpRepair)
 		bar.Add(1)
 	}
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())
@@ -132,7 +167,7 @@ func handleRepairDataSet(dates []string) {
 }
 
 // 修复 - 特征数据
-func handleRepairFeatures(dates []string) {
+func handleRepairAllFeatures(dates []string) {
 	moduleName := "补登特征数据"
 	logger.Info(moduleName + ", 任务开始")
 	mask := cache.PluginMaskFeature
@@ -150,8 +185,8 @@ func handleRepairFeatures(dates []string) {
 	fmt.Println()
 }
 
-// 修复 - 指定的基础数据
-func handleRepairData(dates []string, plugins []cache.DataAdapter) {
+// 修复 - 指定的特征数据
+func handleRepairFeaturesWithPlugins(dates []string, plugins []cache.DataAdapter) {
 	fmt.Println()
 	moduleName := "修复数据"
 	logger.Info(moduleName + ", 任务开始")
@@ -160,8 +195,8 @@ func handleRepairData(dates []string, plugins []cache.DataAdapter) {
 	bar := progressbar.NewBar(barIndex, "执行["+moduleName+"]", count)
 	for _, date := range dates {
 		cacheDate, featureDate := cache.CorrectDate(date)
-		//barIndex++
-		storages.BaseDataUpdate(barIndex+1, cacheDate, featureDate, plugins, cache.OpRepair)
+		barIndex++
+		storages.FeaturesUpdate(&barIndex, cacheDate, featureDate, plugins, cache.OpRepair)
 		bar.Add(1)
 	}
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())

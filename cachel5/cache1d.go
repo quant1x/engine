@@ -2,7 +2,6 @@ package cachel5
 
 import (
 	"context"
-	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
@@ -20,25 +19,9 @@ import (
 	"sync"
 )
 
-const (
-	// 闪存路径
-	cache1dPrefix = "flash"
-)
-
-// 返回文件路径, 指定关键字和日期
-func getCache1DFilepath(key, date string) string {
-	cachePath, key, found := strings.Cut(key, "/")
-	if !found {
-		key = cachePath
-		cachePath = cache1dPrefix
-	}
-	cachePath = cache.GetRootPath() + "/" + cachePath
-	year := date[:4]
-	filename := fmt.Sprintf("%s/%s/%s.%s", cachePath, year, key, date)
-	return filename
-}
-
-// Cache1D 每天1个证券代码1条数据
+// Cache1D 缓存所有证券代码的特征组合数据
+//
+//	每天1个证券代码1条数据
 type Cache1D[T factors.Feature] struct {
 	once     coroutine.PeriodicOnce
 	m        sync.RWMutex
@@ -69,8 +52,7 @@ func NewCache1D[T factors.Feature](key string, factory func(date, securityCode s
 	d1.Date = cache.DefaultCanReadDate()
 	d1.allCodes = market.GetCodeList()
 	d1.Checkout(d1.Date)
-	//d1.factory = d1.tShadow.Factory
-	d1.tShadow = d1.factory(d1.Date, "sh000001")
+	d1.tShadow = d1.factory(d1.Date, defaultSecurityCode)
 	RegisterCacheLoader(key, d1)
 	return d1
 }
@@ -131,7 +113,6 @@ func (this *Cache1D[T]) loadCache(date string) {
 
 // 加载默认数据, 日期为当前交易中的日期
 func (this *Cache1D[T]) loadDefault() {
-	//this.Date = DefaultCanReadDate()
 	this.loadCache(this.Date)
 }
 

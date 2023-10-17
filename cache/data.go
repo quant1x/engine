@@ -26,6 +26,7 @@ type Trait interface {
 	Init(ctx context.Context, date, securityCode string) error
 }
 
+// DataFile 基础数据文件接口
 type DataFile interface {
 	// Checkout 捡出指定日期的缓存数据
 	Checkout(securityCode, date string)

@@ -35,7 +35,6 @@ func getCache1DFilepath(key, date string) string {
 type CacheAdapter interface {
 	// Name 名称
 	Name() string
-
 	// Checkout 加载指定日期的缓存
 	Checkout(date ...string)
 	// Merge 合并数据

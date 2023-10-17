@@ -12,10 +12,10 @@ const (
 //
 //	这也是一个特征, 为啥起这个名字, 自己可以脑补 哈哈~
 type Trait interface {
-	// Owner 提供者
-	Owner() string
 	// Kind 数据类型
 	Kind() Kind
+	// Owner 提供者
+	Owner() string
 	// Key 数据关键词, key与cache落地强关联
 	Key() string
 	// Name 特性名称

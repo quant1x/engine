@@ -137,11 +137,8 @@ func (this *Cache1D[T]) loadDefault() {
 
 // ReplaceCache 替换当前缓存数据
 func (this *Cache1D[T]) ReplaceCache() {
-	//this.m.Lock()
-	//clear(this.mapCache)
 	this.mapCache.Clear()
 	this.loadCache(this.replaceDate)
-	//this.m.Unlock()
 }
 
 func (this *Cache1D[T]) Checkout(date ...string) {

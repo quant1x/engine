@@ -6,7 +6,9 @@ import (
 	"sync"
 )
 
-// CacheAdapter 缓存加载器
+// CacheAdapter 缓存适配器
+//
+//	一天一个特征组合缓存文件
 type CacheAdapter interface {
 	// Name 名称
 	Name() string

@@ -57,7 +57,7 @@ type Cache1D[T factors.Feature] struct {
 //
 //	key支持多级相对路径, 比如a/b, 创建的路径是~/.quant1x/a/b.yyyy-mm-dd
 func NewCache1D[T factors.Feature](key string, factory func(date, securityCode string) T) *Cache1D[T] {
-	d1 := Cache1D[T]{
+	d1 := &Cache1D[T]{
 		cacheKey: key,
 		Date:     "",
 		factory:  factory,
@@ -68,11 +68,11 @@ func NewCache1D[T factors.Feature](key string, factory func(date, securityCode s
 	}
 	d1.Date = cache.DefaultCanReadDate()
 	d1.allCodes = market.GetCodeList()
-	(&d1).Checkout(d1.Date)
+	d1.Checkout(d1.Date)
 	//d1.factory = d1.tShadow.Factory
 	d1.tShadow = d1.factory(d1.Date, "sh000001")
-	RegisterCacheLoader(key, &d1)
-	return &d1
+	RegisterCacheLoader(key, d1)
+	return d1
 }
 
 func (this *Cache1D[T]) Factory(date, securityCode string) factors.Feature {

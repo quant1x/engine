@@ -165,8 +165,8 @@ func ShareHolder(securityCode, date string, diffQuarters ...int) (list []Circula
 	return
 }
 
-// GetCacheShareHolder 获取流动股东数据
-func GetCacheShareHolder(securityCode, date string, diffQuarters ...int) (list []CirculatingShareholder) {
+// cacheShareHolder 获取流动股东数据
+func cacheShareHolder(securityCode, date string, diffQuarters ...int) (list []CirculatingShareholder) {
 	diff := 1
 	if len(diffQuarters) > 0 {
 		diff = diffQuarters[0]
@@ -185,6 +185,23 @@ func GetCacheShareHolder(securityCode, date string, diffQuarters ...int) (list [
 	}
 	if len(list) > 0 {
 		_ = api.SlicesToCsv(filename, list)
+	}
+	return
+}
+
+// GetCacheShareHolder 获取流动股东数据
+func GetCacheShareHolder(securityCode, date string, diffQuarters ...int) (list []CirculatingShareholder) {
+	diff := 1
+	if len(diffQuarters) > 0 {
+		diff = diffQuarters[0]
+	}
+	for ; diff < 4; diff++ {
+		tmpList := cacheShareHolder(securityCode, date, diff)
+		if len(tmpList) == 0 {
+			continue
+		}
+		list = tmpList
+		break
 	}
 	return
 }

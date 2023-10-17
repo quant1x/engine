@@ -19,11 +19,6 @@ func init() {
 	_ = cache.Register(&TransactionRecord{})
 }
 
-func (r *TransactionRecord) Usage() string {
-	//TODO implement me
-	panic("implement me")
-}
-
 func (r *TransactionRecord) Print(code string, date ...string) {
 	//TODO implement me
 	panic("implement me")
@@ -45,11 +40,20 @@ func (r *TransactionRecord) Owner() string {
 	return mapDataSets[r.Kind()].Owner()
 }
 
+func (r *TransactionRecord) Usage() string {
+	return mapDataSets[r.Kind()].Name()
+}
+
 func (r *TransactionRecord) Init(ctx context.Context, date, securityCode string) error {
 	_ = ctx
 	_ = date
 	_ = securityCode
 	return nil
+}
+
+func (r *TransactionRecord) Checkout(securityCode, date string) {
+	//TODO implement me
+	panic("implement me")
 }
 
 func (r *TransactionRecord) Check(cacheDate, featureDate string) error {

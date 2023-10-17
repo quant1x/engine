@@ -72,23 +72,3 @@ func GetL5F10(securityCode string, date ...string) *factors.F10 {
 	}
 	return *data
 }
-
-//var (
-//	__dataSetOnce sync.Once
-//	__dataSets    []datasets.DataSet = nil
-//)
-//
-//func lazyInitDataSets() {
-//	__dataSets = []datasets.DataSet{
-//		new(datasets.DataQuarterlyReport), // 季报
-//		new(datasets.DataXdxr),            // 除权除息
-//		new(datasets.DataKLine),           // 基础K线
-//		//new(datasets.DataSafetyScore),     // 安全分
-//	}
-//}
-//
-//// DataSetList 数据集 列表
-//func DataSetList() []datasets.DataSet {
-//	__dataSetOnce.Do(lazyInitDataSets)
-//	return __dataSets
-//}

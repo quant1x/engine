@@ -1,6 +1,7 @@
 package cachel5
 
 import (
+	"context"
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/factors"
@@ -78,9 +79,10 @@ func (this *Cache1D[T]) Factory(date, securityCode string) factors.Feature {
 	return this.tShadow.Factory(date, securityCode)
 }
 
-func (this *Cache1D[T]) Init(barIndex *int, date string) error {
-	_ = barIndex
+func (this *Cache1D[T]) Init(ctx context.Context, date, securityCode string) error {
+	_ = ctx
 	_ = date
+	_ = securityCode
 	return nil
 }
 

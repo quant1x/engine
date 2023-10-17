@@ -9,7 +9,8 @@ import (
 // CacheAdapter 缓存加载器
 type CacheAdapter interface {
 	// Name 名称
-	Name() string
+	//Name() string
+
 	// Checkout 加载指定日期的缓存
 	Checkout(date ...string)
 	// Merge 合并数据

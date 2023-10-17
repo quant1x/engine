@@ -13,6 +13,11 @@ import (
 	"time"
 )
 
+var (
+	repairBases    = []cmdFlag[bool]{}
+	repairFeatures = []cmdFlag[bool]{}
+)
+
 // CmdRepair 补登历史数据
 var CmdRepair = &cmder.Command{
 	Use:     "repair",
@@ -37,8 +42,11 @@ var CmdRepair = &cmder.Command{
 			handleRepairAll(dates)
 		} else if flagBaseData.Value {
 			keywords := []string{}
-			if flagTrans.Value {
-				keywords = append(keywords, flagTrans.Name)
+			for _, m := range updateModules {
+				if m.Value {
+					keywords = append(keywords, m.Name)
+					break
+				}
 			}
 			if len(keywords) == 0 {
 				handleRepairDataSet(dates)
@@ -62,7 +70,24 @@ func initRepair() {
 	commandInit(CmdRepair, &flagFeatures)
 	commandInit(CmdRepair, &flagStartDate)
 	commandInit(CmdRepair, &flagEndDate)
-	commandInit(CmdRepair, &flagTrans)
+
+	plugins := cache.Plugins(cache.PluginMaskBaseData)
+	repairBases = make([]cmdFlag[bool], len(plugins))
+	for i, plugin := range plugins {
+		key := plugin.Key()
+		usage := plugin.Usage()
+		repairBases[i] = cmdFlag[bool]{Name: key, Usage: plugin.Owner() + ": " + usage, Value: false}
+		CmdRepair.Flags().BoolVar(&(repairBases[i].Value), repairBases[i].Name, repairBases[i].Value, repairBases[i].Usage)
+	}
+
+	plugins = cache.Plugins(cache.PluginMaskFeature)
+	repairFeatures = make([]cmdFlag[bool], len(plugins))
+	for i, plugin := range plugins {
+		key := plugin.Key()
+		usage := plugin.Usage()
+		repairFeatures[i] = cmdFlag[bool]{Name: key, Usage: plugin.Owner() + ": " + usage, Value: false}
+		CmdRepair.Flags().BoolVar(&(repairFeatures[i].Value), repairFeatures[i].Name, repairFeatures[i].Value, repairFeatures[i].Usage)
+	}
 }
 
 func handleRepairAll(dates []string) {
@@ -110,7 +135,7 @@ func handleRepairDataSet(dates []string) {
 func handleRepairFeatures(dates []string) {
 	moduleName := "补登特征数据"
 	logger.Info(moduleName + ", 任务开始")
-	mask := cache.PluginMaskBaseData
+	mask := cache.PluginMaskFeature
 	plugins := cache.Plugins(mask)
 	count := len(dates)
 	barIndex := 1
@@ -126,7 +151,7 @@ func handleRepairFeatures(dates []string) {
 }
 
 // 修复 - 指定的基础数据
-func handleRepairData(dates []string, plugins []cache.DataPlugin) {
+func handleRepairData(dates []string, plugins []cache.DataAdapter) {
 	fmt.Println()
 	moduleName := "修复数据"
 	logger.Info(moduleName + ", 任务开始")

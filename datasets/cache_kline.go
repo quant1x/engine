@@ -23,8 +23,17 @@ func (k *DataKLine) Init(ctx context.Context, date, securityCode string) error {
 	return nil
 }
 
+func (k *DataKLine) Checkout(securityCode, date string) {
+	//TODO implement me
+	_ = securityCode
+	_ = date
+	panic("implement me")
+}
+
 func (k *DataKLine) Check(cacheDate, featureDate string) error {
 	//TODO implement me
+	_ = cacheDate
+	_ = featureDate
 	panic("implement me")
 }
 
@@ -44,19 +53,20 @@ func (k *DataKLine) Owner() string {
 	return mapDataSets[k.Kind()].Owner()
 }
 
+func (k *DataKLine) Usage() string {
+	return mapDataSets[k.Kind()].Name()
+}
+
 func (k *DataKLine) Filename(date, code string) string {
 	k.filename = cache.KLineFilename(code)
 	_ = date
 	return k.filename
 }
 
-func (k *DataKLine) Usage() string {
-	//TODO implement me
-	panic("implement me")
-}
-
 func (k *DataKLine) Print(code string, date ...string) {
 	//TODO implement me
+	_ = code
+	_ = date
 	panic("implement me")
 }
 
@@ -78,6 +88,7 @@ func (k *DataKLine) Increase(snapshot quotes.Snapshot) {
 	// 第二步: 检查时间的有效性
 	// 第三步: 用快照组织K线结构
 	// 第四步: 如果不符合快照更新, 则忽略
+	_ = snapshot
 	panic("implement me")
 }
 

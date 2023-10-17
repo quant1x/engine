@@ -47,13 +47,14 @@ func initUpdate() {
 	commandInit(CmdUpdate, &flagAll)
 	commandInit(CmdUpdate, &flagBaseData)
 	commandInit(CmdUpdate, &flagFeatures)
+
 	plugins := cache.Plugins(cache.PluginMaskFeature)
 	updateModules = make([]cmdFlag[bool], len(plugins))
 	for i, plugin := range plugins {
 		key := plugin.Key()
 		usage := plugin.Usage()
 		updateModules[i] = cmdFlag[bool]{Name: key, Usage: plugin.Owner() + ": " + usage, Value: false}
-		CmdUpdate.Flags().BoolVar(&(updateModules[i].Value), updateModules[i].Name, updateModules[i].Value, printModules[i].Usage)
+		CmdUpdate.Flags().BoolVar(&(updateModules[i].Value), updateModules[i].Name, updateModules[i].Value, updateModules[i].Usage)
 	}
 }
 

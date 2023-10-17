@@ -66,7 +66,7 @@ func initPrint() {
 }
 
 // 输出结构化信息
-func handlePrintData(code, date string, plugin cache.DataPlugin) {
+func handlePrintData(code, date string, plugin cache.DataAdapter) {
 	fmt.Println()
 	securityCode := proto.CorrectSecurityCode(code)
 	name := securities.GetStockName(securityCode)

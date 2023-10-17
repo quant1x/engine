@@ -18,8 +18,8 @@ const (
 	DefaultDataProvider = "engine"
 )
 
-// DataPlugin 数据插件
-type DataPlugin interface {
+// DataAdapter 数据插件
+type DataAdapter interface {
 	Trait // 继承特性接口
 	// DataCommand string
 	//DataCommand // 控制台命令字接口
@@ -27,7 +27,8 @@ type DataPlugin interface {
 	//Init(ctx context.Context, date, securityCode string) error
 	//// Check 数据校验
 	//Check(cacheDate, featureDate string)
-	//// Print 控制台输出指定日期的数据
+
+	// Print 控制台输出指定日期的数据
 	Print(code string, date ...string)
 
 	//Setup(config map[string]string) error
@@ -50,12 +51,12 @@ var (
 
 var (
 	pluginMutex    sync.Mutex
-	mapDataPlugins = map[Kind]DataPlugin{}
+	mapDataPlugins = map[Kind]DataAdapter{}
 	//setupStatus map[string]bool
 )
 
 // Register 注册插件
-func Register(plugin DataPlugin) error {
+func Register(plugin DataAdapter) error {
 	pluginMutex.Lock()
 	defer pluginMutex.Unlock()
 	_, ok := mapDataPlugins[plugin.Kind()]
@@ -67,9 +68,9 @@ func Register(plugin DataPlugin) error {
 }
 
 //// 获取所有注册插件
-//func loadPlugins() (plugin chan DataPlugin, setupStatus map[Type]bool) {
+//func loadPlugins() (plugin chan DataAdapter, setupStatus map[Type]bool) {
 //	// 这里定义一个长度为10的队列
-//	var sortPlugin = make(chan DataPlugin, 10)
+//	var sortPlugin = make(chan DataAdapter, 10)
 //	setupStatus = map[Type]bool{}
 //
 //	// 所有的插件
@@ -82,7 +83,7 @@ func Register(plugin DataPlugin) error {
 //}
 //
 //// SetupPlugins 加载所有插件
-//func SetupPlugins(pluginChan chan DataPlugin, setupStatus map[Type]bool) error {
+//func SetupPlugins(pluginChan chan DataAdapter, setupStatus map[Type]bool) error {
 //	num := len(pluginChan)
 //	for num > 0 {
 //		plugin := <-pluginChan
@@ -111,7 +112,7 @@ func Register(plugin DataPlugin) error {
 //}
 
 // Plugins 按照类型标志位捡出数据插件
-func Plugins(mask ...Kind) (list []DataPlugin) {
+func Plugins(mask ...Kind) (list []DataAdapter) {
 	pluginMutex.Lock()
 	defer pluginMutex.Unlock()
 	pluginType := Kind(0)
@@ -137,7 +138,7 @@ func Plugins(mask ...Kind) (list []DataPlugin) {
 	return
 }
 
-func PluginsWithName(pluginType Kind, keywords ...string) (list []DataPlugin) {
+func PluginsWithName(pluginType Kind, keywords ...string) (list []DataAdapter) {
 	if len(keywords) == 0 {
 		return
 	}
@@ -159,23 +160,3 @@ func PluginsWithName(pluginType Kind, keywords ...string) (list []DataPlugin) {
 	}
 	return
 }
-
-//// Get 从注册的数据插件中获取数据
-//func Get(kind Type, securityCode string, date ...string) any {
-//	data, ok := mapDataPlugins[kind]
-//	if ok {
-//		ptr := data.Get(securityCode, date...)
-//		return ptr
-//	}
-//	return nil
-//}
-
-//// Get 从注册的数据插件中获取数据
-//func Get(kind Type, securityCode string, date ...string) any {
-//	data, ok := mapDataPlugins[kind]
-//	if ok {
-//		ptr := data.Get(securityCode, date...)
-//		return ptr
-//	}
-//	return nil
-//}

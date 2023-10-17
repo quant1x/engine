@@ -15,13 +15,6 @@ func init() {
 	_ = cache.Register(&DataXdxr{})
 }
 
-func (x *DataXdxr) Init(ctx context.Context, date, securityCode string) error {
-	_ = ctx
-	_ = date
-	_ = securityCode
-	return nil
-}
-
 func (x *DataXdxr) Kind() cache.Kind {
 	return BaseXdxr
 }
@@ -39,6 +32,17 @@ func (x *DataXdxr) Owner() string {
 }
 
 func (x *DataXdxr) Usage() string {
+	return mapDataSets[x.Kind()].Name()
+}
+
+func (x *DataXdxr) Init(ctx context.Context, date, securityCode string) error {
+	_ = ctx
+	_ = date
+	_ = securityCode
+	return nil
+}
+
+func (x *DataXdxr) Checkout(securityCode, date string) {
 	//TODO implement me
 	panic("implement me")
 }

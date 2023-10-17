@@ -8,24 +8,6 @@ const (
 	KBarIndex = "barIndex"
 )
 
-// Initialize 初始化接口
-type Initialize interface {
-	// Init 初始化, 接受context, 日期和证券代码作为入参
-	Init(ctx context.Context, date, securityCode string) error
-}
-
-//// DataItem 单行数据
-//type DataItem interface {
-//	// Initialize 初始化接口
-//	Initialize
-//	// GetDate 得到日期
-//	GetDate() string // 日期
-//	// GetSecurityCode 得到证券代码
-//	GetSecurityCode() string // 证券代码
-//	// GetSecurityName 获取证券名称
-//	GetSecurityName() string // 证券名称
-//}
-
 // Trait 基础的特性
 //
 //	这也是一个特征, 为啥起这个名字, 自己可以脑补 哈哈~
@@ -40,8 +22,6 @@ type Trait interface {
 	Usage() string
 	// Owner 提供者
 	Owner() string
-	// Initialize 初始化
-	//Initialize
 	// Init 初始化, 接受context, 日期和证券代码作为入参
 	Init(ctx context.Context, date, securityCode string) error
 }
@@ -67,8 +47,6 @@ type DataFile interface {
 type Swift interface {
 	// GetDate 日期
 	GetDate() string
-	// GetSecurityCode 证券代码
-	GetSecurityCode() string
 	// Update 更新数据
 	//	whole 是否完整的数据, false是加工成半成品数据, 为了配合Increase
 	Update(securityCode, cacheDate, featureDate string, whole bool)
@@ -77,6 +55,17 @@ type Swift interface {
 	// Increase 增量计算, 用快照增量计算特征
 	//Increase(securityCode string, snapshot quotes.Snapshot)
 	//Assign(target *cachel5.CacheAdapter) bool   // 赋值
+}
+
+// Future 预备数据的接口
+type Future interface {
+	// GetSecurityCode 证券代码
+	GetSecurityCode() string
+	// Update 更新数据
+	//	whole 是否完整的数据, false是加工成半成品数据, 为了配合Increase
+	Update(securityCode, cacheDate, featureDate string, whole bool)
+	// Repair 回补数据
+	Repair(securityCode, cacheDate, featureDate string, whole bool)
 }
 
 // Operator 缓存操作接口

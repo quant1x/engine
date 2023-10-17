@@ -16,22 +16,6 @@ import (
 	"time"
 )
 
-//// 更新单个特征
-//func updateV1OneFeature(wg *sync.WaitGroup, parent, bar *progressbar.Bar, adapter cachel5.CacheAdapter, cacheDate, featureDate string, op cache.OpKind) {
-//	allCodes := market.GetCodeList()
-//	for _, code := range allCodes {
-//		feature := adapter.Clone(cacheDate, code).(datasets.DataSet)
-//		if op == cache.OpUpdate {
-//			feature.Update(cacheDate, featureDate)
-//		} else if op == cache.OpRepair {
-//			feature.Repair(cacheDate, featureDate)
-//		}
-//		bar.Add(1)
-//	}
-//	parent.Add(1)
-//	wg.Done()
-//}
-
 func updateStockFeature(wg *sync.WaitGroup, bar *progressbar.Bar, feature factors.Feature, code string, cacheDate, featureDate string, op cache.OpKind, p *treemap.Map, sb *cache.ScoreBoard) {
 	now := time.Now()
 	defer sb.Add(1, time.Since(now))
@@ -45,109 +29,17 @@ func updateStockFeature(wg *sync.WaitGroup, bar *progressbar.Bar, feature factor
 	wg.Done()
 }
 
-// 更新单个特征
-//func updateOneFeature(parent, bar *progressbar.Bar, adapter cachel5.CacheAdapter, cacheDate, featureDate string, op cache.OpKind, barIndex *int) {
-//	mapFeature := treemap.NewWithStringComparator()
-//	var wg sync.WaitGroup
-//	dataSource := adapter.Factory(featureDate, "")
-//	_ = dataSource.Init(barIndex, featureDate)
-//	allCodes := market.GetCodeList()
-//	for _, code := range allCodes {
-//		feature := adapter.Factory(cacheDate, code).(factors.Feature)
-//		if feature.Kind() != factors.FeatureHistory {
-//			history := smart.GetL5History(code, cacheDate)
-//			if history != nil {
-//				feature = feature.FromHistory(*history)
-//			}
-//		}
-//		wg.Add(1)
-//		//if op == cache.OpRepair {
-//		//	feature.Repair(code, cacheDate, featureDate, true)
-//		//} else {
-//		//	feature.Update(code, cacheDate, featureDate, true)
-//		//}
-//		//mapFeature.Put(code, feature)
-//		//bar.Add(1)
-//		//if cache.UseGoroutine {
-//		//
-//		//}
-//		go updateStockFeature(&wg, bar, feature, code, cacheDate, featureDate, op, mapFeature)
-//	}
-//	// 加载缓存
-//	adapter.Checkout(cacheDate)
-//	// 合并
-//	adapter.Merge(mapFeature)
-//	wg.Wait()
-//	parent.Add(1)
-//}
-
-//const (
-//	queueMax = 4096
-//)
-//
 //type featureTask struct {
 //	wg           *sync.WaitGroup
 //	bar          *progressbar.Bar
-//	feature         factors.Feature
+//	feature      factors.Feature
 //	securityCode string
 //	cacheDate    string
 //	featureDate  string
 //}
-//
-//// 更新单个特征
-//func v2updateOneFeature(parent, bar *progressbar.Bar, adapter cachel5.CacheAdapter, cacheDate, featureDate string, op cache.OpKind, barIndex *int) {
-//	mapFeature := treemap.NewWithStringComparator()
-//	var wg sync.WaitGroup
-//	dataSource := adapter.Factory(featureDate, "")
-//	_ = dataSource.Init(barIndex, featureDate)
-//	allCodes := market.GetCodeList()
-//	queue := fastqueue.NewQueue[featureTask](queueMax)
-//	queue.SetReadEvent(func(feature []featureTask) {
-//		for _, v := range feature {
-//			//v.wg.Add(1)
-//			updateStockFeature(v.wg, v.bar, v.feature, v.securityCode, v.cacheDate, v.featureDate, op, mapFeature)
-//			//fmt.Println(v)
-//			//bar.Add(1)
-//		}
-//	})
-//	for _, code := range allCodes {
-//		feature := adapter.Factory(cacheDate, code).(factors.Feature)
-//		if feature.Kind() != factors.FeatureHistory {
-//			history := smart.GetL5History(code, cacheDate)
-//			if history != nil {
-//				feature = feature.FromHistory(*history)
-//			}
-//		}
-//		wg.Add(1)
-//		go queue.Push(featureTask{
-//			wg:           &wg,
-//			bar:          bar,
-//			feature:         feature,
-//			securityCode: code,
-//			cacheDate:    cacheDate,
-//			featureDate:  featureDate,
-//		})
-//	}
-//	queue.Wait()
-//	// 加载缓存
-//	adapter.Checkout(cacheDate)
-//	// 合并
-//	adapter.Merge(mapFeature)
-//	//wg.Wait()
-//	parent.Add(1)
-//}
-
-type featureTask struct {
-	wg           *sync.WaitGroup
-	bar          *progressbar.Bar
-	feature      factors.Feature
-	securityCode string
-	cacheDate    string
-	featureDate  string
-}
 
 // FeaturesUpdate 更新特征
-func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cache.DataPlugin, op cache.OpKind) {
+func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cache.DataAdapter, op cache.OpKind) {
 	moduleName := "特征数据"
 	if op == cache.OpRepair {
 		moduleName = "修复" + moduleName

@@ -20,11 +20,6 @@ func init() {
 	_ = cache.Register(&DataQuarterlyReport{})
 }
 
-func (r *DataQuarterlyReport) Usage() string {
-	//TODO implement me
-	panic("implement me")
-}
-
 func (r *DataQuarterlyReport) Print(code string, date ...string) {
 	//TODO implement me
 	panic("implement me")
@@ -46,6 +41,10 @@ func (r *DataQuarterlyReport) Owner() string {
 	return mapDataSets[r.Kind()].Owner()
 }
 
+func (r *DataQuarterlyReport) Usage() string {
+	return mapDataSets[r.Kind()].Name()
+}
+
 func (r *DataQuarterlyReport) Filename(date, code string) string {
 	//TODO implement me
 	panic("implement me")
@@ -60,6 +59,11 @@ func (r *DataQuarterlyReport) Init(ctx context.Context, date, securityCode strin
 	r.cache = IntegrateQuarterlyReports(barIndex, date)
 	_ = securityCode
 	return nil
+}
+
+func (r *DataQuarterlyReport) Checkout(securityCode, date string) {
+	//TODO implement me
+	panic("implement me")
 }
 
 func (r *DataQuarterlyReport) Check(cacheDate, featureDate string) error {

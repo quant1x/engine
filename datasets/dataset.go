@@ -28,6 +28,7 @@ const (
 //	检索的规则是按日期和代码进行查询
 type DataSet interface {
 	cache.Trait
+	cache.DataFile
 	Update(cacheDate, featureDate string)   // 更新数据
 	Repair(cacheDate, featureDate string)   // 回补数据
 	Increase(snapshot quotes.Snapshot)      // 增量计算, 用快照增量计算特征

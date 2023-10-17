@@ -4,6 +4,38 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.3.2] - 2023-10-17
+### Changed
+- 调整源代码文件名.
+- 调整代码结构.
+- Aaa.
+- 更新主要依赖库版本.
+- 修订项目的主要关键词解释.
+- 修订缓存操作接口的注释.
+- 调整history结构的csv字段名.
+- 调整HousNo1的csv字段名.
+- 调整F10的csv字段名.
+- 调整cache1d的缓存路径.
+- 调整增量(不推荐)接口的package.
+- 调整数据接口.
+- 应用程序增加性能分析功能.
+- 更新gox版本.
+- 增加数据项接口.
+- 增加数据运算接口.
+- 增加忽略pprof文件.
+- 调整记分牌的package.
+- 调整提供者的方法名.
+- 新增 数据的控制台命令支持接口.
+- Trait特性接口增加提供者方法.
+- 调整dataset方法.
+- 调整dataset方法.
+- 股票池增加策略状态字段.
+- 新增规则接口.
+- 新增summary和trait两个接口.
+- 新增数据接口.
+- 股票池增加规则字段.
+- 增加股票池结构, 所有的数据都放在一个文件里面.
+
 ## [0.3.1] - 2023-10-13
 ### Changed
 - 增加ants协程池控制并发数量.
@@ -165,8 +197,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.3.1...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.3.2...HEAD
 
+[0.3.2]: https://gitee.com/quant1x/engine/compare/v0.3.1...v0.3.2
 [0.3.1]: https://gitee.com/quant1x/engine/compare/v0.3.0...v0.3.1
 [0.3.0]: https://gitee.com/quant1x/engine/compare/v0.2.9...v0.3.0
 [0.2.9]: https://gitee.com/quant1x/engine/compare/v0.2.8...v0.2.9

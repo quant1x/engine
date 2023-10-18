@@ -12,17 +12,17 @@ import (
 
 // DataQuarterlyReport 季报
 type DataQuarterlyReport struct {
-	dataManifest
+	Manifest
 	cache map[string]dfcf.QuarterlyReport
 }
 
 func init() {
-	_ = cache.Register(&DataQuarterlyReport{dataManifest: dataManifest{kind: BaseQuarterlyReports}})
+	_ = cache.Register(&DataQuarterlyReport{Manifest: Manifest{kind: BaseQuarterlyReports}})
 }
 
 func (r *DataQuarterlyReport) Clone(date string, code string) DataSet {
-	manifest := dataManifest{Date: date, Code: code, kind: BaseQuarterlyReports}
-	var dest = DataQuarterlyReport{dataManifest: manifest}
+	manifest := Manifest{Date: date, Code: code, kind: BaseQuarterlyReports}
+	var dest = DataQuarterlyReport{Manifest: manifest}
 	return &dest
 }
 

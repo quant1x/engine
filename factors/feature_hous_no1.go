@@ -12,10 +12,10 @@ import (
 )
 
 type HousNo1 struct {
-	featureManifest `dataframe:"-"`
-	MA5             float64 `dataframe:"ma5"`
-	MA10            float64 `dataframe:"ma10"`
-	MA20            float64 `dataframe:"ma20"`
+	Manifest `dataframe:"-"`
+	MA5      float64 `dataframe:"ma5"`
+	MA10     float64 `dataframe:"ma10"`
+	MA20     float64 `dataframe:"ma20"`
 }
 
 func (f *HousNo1) Init(ctx context.Context, date string) error {

@@ -12,16 +12,16 @@ import (
 //	最短3秒内的合并统计数据, 与行情数据保持一致
 //	不可以当作tick数据来使用
 type TransactionRecord struct {
-	dataManifest
+	Manifest
 }
 
 func init() {
-	_ = cache.Register(&TransactionRecord{dataManifest: dataManifest{kind: BaseTransaction}})
+	_ = cache.Register(&TransactionRecord{Manifest: Manifest{kind: BaseTransaction}})
 }
 
 func (r *TransactionRecord) Clone(date string, code string) DataSet {
-	manifest := dataManifest{Date: date, Code: code, kind: BaseTransaction}
-	var dest = TransactionRecord{dataManifest: manifest}
+	manifest := Manifest{Date: date, Code: code, kind: BaseTransaction}
+	var dest = TransactionRecord{Manifest: manifest}
 	return &dest
 }
 

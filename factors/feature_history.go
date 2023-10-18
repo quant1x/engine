@@ -26,34 +26,34 @@ const (
 
 // History 历史整合数据
 type History struct {
-	featureManifest `dataframe:"-"`
-	Date            string         `name:"日期" dataframe:"date"`           // 日期, 数据落地的日期
-	Code            string         `name:"代码" dataframe:"code"`           // 代码
-	MA3             float64        `name:"3日均价" dataframe:"ma3"`          // 3日均价
-	MV3             float64        `name:"3日均量" dataframe:"mv3"`          // 3日均量
-	MA5             float64        `name:"5日均价" dataframe:"ma5"`          // 5日均价
-	MV5             float64        `name:"5日均量" dataframe:"mv5"`          // 5日均量
-	MA10            float64        `name:"10日均价" dataframe:"ma10"`        // 10日均价
-	MV10            float64        `name:"10日均量" dataframe:"mv10"`        // 10日均量
-	MA20            float64        `name:"20日均价" dataframe:"ma20"`        // 20日均价
-	MV20            float64        `name:"20日均量" dataframe:"mv20"`        // 20日均量
-	QSFZ            bool           `name:"QSFZ: 反转信号" dataframe:"qsfz"`   // QSFZ: 反转信号
-	CP              float64        `name:"QSFZ: 股价涨幅" dataframe:"cp"`     // QSFZ: 股价涨幅
-	CV              float64        `name:"QSFZ: 成交量涨幅" dataframe:"cv"`    // QSFZ: 成交量涨幅
-	VP              float64        `name:"QSFZ: 价量比" dataframe:"vp"`      // QSFZ: 价量比
-	VP3             float64        `name:"QSFZ: 3日价量比" dataframe:"vp_3"`  // QSFZ: 3日价量比
-	VP5             float64        `name:"QSFZ: 5日价量比" dataframe:"vp_5"`  // QSFZ: 5日价量比
-	Payloads        IncompleteData `name:"payloads" dataframe:"payloads"` // 扩展的半成品数据
-	Last            CompleteData   `name:"last" dataframe:"last"`         // 上一个交易日的数据
-	UpdateTime      string         `name:"更新时间" dataframe:"update_time"`  // 更新时间
+	Manifest   `dataframe:"-"`
+	Date       string         `name:"日期" dataframe:"date"`           // 日期, 数据落地的日期
+	Code       string         `name:"代码" dataframe:"code"`           // 代码
+	MA3        float64        `name:"3日均价" dataframe:"ma3"`          // 3日均价
+	MV3        float64        `name:"3日均量" dataframe:"mv3"`          // 3日均量
+	MA5        float64        `name:"5日均价" dataframe:"ma5"`          // 5日均价
+	MV5        float64        `name:"5日均量" dataframe:"mv5"`          // 5日均量
+	MA10       float64        `name:"10日均价" dataframe:"ma10"`        // 10日均价
+	MV10       float64        `name:"10日均量" dataframe:"mv10"`        // 10日均量
+	MA20       float64        `name:"20日均价" dataframe:"ma20"`        // 20日均价
+	MV20       float64        `name:"20日均量" dataframe:"mv20"`        // 20日均量
+	QSFZ       bool           `name:"QSFZ: 反转信号" dataframe:"qsfz"`   // QSFZ: 反转信号
+	CP         float64        `name:"QSFZ: 股价涨幅" dataframe:"cp"`     // QSFZ: 股价涨幅
+	CV         float64        `name:"QSFZ: 成交量涨幅" dataframe:"cv"`    // QSFZ: 成交量涨幅
+	VP         float64        `name:"QSFZ: 价量比" dataframe:"vp"`      // QSFZ: 价量比
+	VP3        float64        `name:"QSFZ: 3日价量比" dataframe:"vp_3"`  // QSFZ: 3日价量比
+	VP5        float64        `name:"QSFZ: 5日价量比" dataframe:"vp_5"`  // QSFZ: 5日价量比
+	Payloads   IncompleteData `name:"payloads" dataframe:"payloads"` // 扩展的半成品数据
+	Last       CompleteData   `name:"last" dataframe:"last"`         // 上一个交易日的数据
+	UpdateTime string         `name:"更新时间" dataframe:"update_time"`  // 更新时间
 }
 
 func NewHistory(date, code string) *History {
-	manifest := featureManifest{Date: date, Code: code, kind: FeatureHistory}
+	manifest := Manifest{Date: date, Code: code, kind: FeatureHistory}
 	v := History{
-		featureManifest: manifest,
-		Date:            date,
-		Code:            code,
+		Manifest: manifest,
+		Date:     date,
+		Code:     code,
 	}
 	return &v
 }

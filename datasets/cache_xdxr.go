@@ -8,16 +8,16 @@ import (
 )
 
 type DataXdxr struct {
-	dataManifest
+	Manifest
 }
 
 func init() {
-	_ = cache.Register(&DataXdxr{dataManifest: dataManifest{kind: BaseXdxr}})
+	_ = cache.Register(&DataXdxr{Manifest: Manifest{kind: BaseXdxr}})
 }
 
 func (x *DataXdxr) Clone(date string, code string) DataSet {
-	manifest := dataManifest{Date: date, Code: code, kind: BaseXdxr}
-	var dest = DataXdxr{dataManifest: manifest}
+	manifest := Manifest{Date: date, Code: code, kind: BaseXdxr}
+	var dest = DataXdxr{Manifest: manifest}
 	return &dest
 }
 

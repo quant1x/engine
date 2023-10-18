@@ -2,38 +2,38 @@ package datasets
 
 import "gitee.com/quant1x/engine/cache"
 
-// dataManifest 基础的数据缓存
-type dataManifest struct {
+// Manifest 基础的数据缓存
+type Manifest struct {
 	Date     string // 日期
 	Code     string // 证券代码
 	filename string // 文件名
 	kind     cache.Kind
 }
 
-func (d dataManifest) Kind() cache.Kind {
+func (d Manifest) Kind() cache.Kind {
 	return d.kind
 }
 
-func (d dataManifest) Owner() string {
+func (d Manifest) Owner() string {
 	return mapDataSets[d.Kind()].Owner()
 }
 
-func (d dataManifest) Key() string {
+func (d Manifest) Key() string {
 	return mapDataSets[d.Kind()].Key()
 }
 
-func (d dataManifest) Name() string {
+func (d Manifest) Name() string {
 	return mapDataSets[d.Kind()].Name()
 }
 
-func (d dataManifest) Usage() string {
+func (d Manifest) Usage() string {
 	return mapDataSets[d.Kind()].Usage()
 }
 
-func (d dataManifest) GetDate() string {
+func (d Manifest) GetDate() string {
 	return d.Date
 }
 
-func (d dataManifest) GetSecurityCode() string {
+func (d Manifest) GetSecurityCode() string {
 	return d.Code
 }

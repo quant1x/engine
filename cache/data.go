@@ -6,24 +6,6 @@ const (
 	KBarIndex = "barIndex"
 )
 
-//// Trait 基础的特性
-////
-////	这也是一个特征, 为啥起这个名字, 自己可以脑补 哈哈~
-//type Trait interface {
-//	// Kind 数据类型
-//	Kind() Kind
-//	// Owner 提供者
-//	Owner() string
-//	// Key 数据关键词, key与cache落地强关联
-//	Key() string
-//	// Name 特性名称
-//	Name() string
-//	// Usage 控制台参数提示信息, 数据描述(data description)
-//	Usage() string
-//	// Init 初始化, 接受context, 日期和证券代码作为入参
-//	Init(ctx context.Context, date, securityCode string) error
-//}
-
 // Base 缓存的基础接口
 //
 //	这也是一个特征, 为啥起这个名字, 自己可以脑补 哈哈~

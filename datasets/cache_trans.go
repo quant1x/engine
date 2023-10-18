@@ -16,11 +16,11 @@ type TransactionRecord struct {
 }
 
 func init() {
-	_ = cache.Register(&TransactionRecord{Manifest: Manifest{kind: BaseTransaction}})
+	_ = cache.Register(&TransactionRecord{Manifest: Manifest{Kind_: BaseTransaction}})
 }
 
 func (r *TransactionRecord) Clone(date string, code string) DataSet {
-	manifest := Manifest{Date: date, Code: code, kind: BaseTransaction}
+	manifest := Manifest{Date: date, Code: code, Kind_: BaseTransaction}
 	var dest = TransactionRecord{Manifest: manifest}
 	return &dest
 }

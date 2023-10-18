@@ -12,11 +12,11 @@ type DataXdxr struct {
 }
 
 func init() {
-	_ = cache.Register(&DataXdxr{Manifest: Manifest{kind: BaseXdxr}})
+	_ = cache.Register(&DataXdxr{Manifest: Manifest{Kind_: BaseXdxr}})
 }
 
 func (x *DataXdxr) Clone(date string, code string) DataSet {
-	manifest := Manifest{Date: date, Code: code, kind: BaseXdxr}
+	manifest := Manifest{Date: date, Code: code, Kind_: BaseXdxr}
 	var dest = DataXdxr{Manifest: manifest}
 	return &dest
 }

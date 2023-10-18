@@ -17,11 +17,11 @@ type DataQuarterlyReport struct {
 }
 
 func init() {
-	_ = cache.Register(&DataQuarterlyReport{Manifest: Manifest{kind: BaseQuarterlyReports}})
+	_ = cache.Register(&DataQuarterlyReport{Manifest: Manifest{Kind_: BaseQuarterlyReports}})
 }
 
 func (r *DataQuarterlyReport) Clone(date string, code string) DataSet {
-	manifest := Manifest{Date: date, Code: code, kind: BaseQuarterlyReports}
+	manifest := Manifest{Date: date, Code: code, Kind_: BaseQuarterlyReports}
 	var dest = DataQuarterlyReport{Manifest: manifest}
 	return &dest
 }

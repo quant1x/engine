@@ -7,11 +7,11 @@ type Manifest struct {
 	Date     string // 日期
 	Code     string // 证券代码
 	filename string // 文件名
-	kind     cache.Kind
+	Kind_    cache.Kind
 }
 
 func (d Manifest) Kind() cache.Kind {
-	return d.kind
+	return d.Kind_
 }
 
 func (d Manifest) Owner() string {

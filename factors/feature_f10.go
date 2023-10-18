@@ -44,7 +44,7 @@ type F10 struct {
 }
 
 func NewF10(date, code string) *F10 {
-	manifest := Manifest{Date: date, Code: code, kind: FeatureF10}
+	manifest := Manifest{Date: date, Code: code, Kind_: FeatureF10}
 	v := F10{
 		Manifest:     manifest,
 		Date:         date,

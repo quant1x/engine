@@ -12,11 +12,11 @@ type DataKLine struct {
 }
 
 func init() {
-	_ = cache.Register(&DataKLine{Manifest: Manifest{kind: BaseKLine}})
+	_ = cache.Register(&DataKLine{Manifest: Manifest{Kind_: BaseKLine}})
 }
 
 func (k *DataKLine) Clone(date, code string) DataSet {
-	manifest := Manifest{Date: date, Code: code, kind: BaseQuarterlyReports}
+	manifest := Manifest{Date: date, Code: code, Kind_: BaseQuarterlyReports}
 	var dest = DataKLine{Manifest: manifest}
 	return &dest
 }

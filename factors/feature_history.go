@@ -49,7 +49,7 @@ type History struct {
 }
 
 func NewHistory(date, code string) *History {
-	manifest := Manifest{Date: date, Code: code, kind: FeatureHistory}
+	manifest := Manifest{Date: date, Code: code, Kind_: FeatureHistory}
 	v := History{
 		Manifest: manifest,
 		Date:     date,

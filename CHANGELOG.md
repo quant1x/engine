@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.3.7] - 2023-10-18
+### Changed
+- 调整csv字段名.
+- 增加一个轻量的特性接口, 用来扩展子特征.
+
 ## [0.3.6] - 2023-10-18
 ### Changed
 - 调整manifest结构体字段.
@@ -223,8 +228,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.3.6...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.3.7...HEAD
 
+[0.3.7]: https://gitee.com/quant1x/engine/compare/v0.3.6...v0.3.7
 [0.3.6]: https://gitee.com/quant1x/engine/compare/v0.3.5...v0.3.6
 [0.3.5]: https://gitee.com/quant1x/engine/compare/v0.3.4...v0.3.5
 [0.3.4]: https://gitee.com/quant1x/engine/compare/v0.3.3...v0.3.4

@@ -12,11 +12,17 @@ import (
 //	最短3秒内的合并统计数据, 与行情数据保持一致
 //	不可以当作tick数据来使用
 type TransactionRecord struct {
-	DataCache
+	dataManifest
 }
 
 func init() {
-	_ = cache.Register(&TransactionRecord{})
+	_ = cache.Register(&TransactionRecord{dataManifest: dataManifest{kind: BaseTransaction}})
+}
+
+func (r *TransactionRecord) Clone(date string, code string) DataSet {
+	manifest := dataManifest{Date: date, Code: code, kind: BaseTransaction}
+	var dest = TransactionRecord{dataManifest: manifest}
+	return &dest
 }
 
 func (r *TransactionRecord) Print(code string, date ...string) {
@@ -24,30 +30,9 @@ func (r *TransactionRecord) Print(code string, date ...string) {
 	panic("implement me")
 }
 
-func (r *TransactionRecord) Kind() cache.Kind {
-	return BaseTransaction
-}
-
-func (r *TransactionRecord) Key() string {
-	return mapDataSets[r.Kind()].Key()
-}
-
-func (r *TransactionRecord) Name() string {
-	return mapDataSets[r.Kind()].Name()
-}
-
-func (r *TransactionRecord) Owner() string {
-	return mapDataSets[r.Kind()].Owner()
-}
-
-func (r *TransactionRecord) Usage() string {
-	return mapDataSets[r.Kind()].Name()
-}
-
-func (r *TransactionRecord) Init(ctx context.Context, date, securityCode string) error {
+func (r *TransactionRecord) Init(ctx context.Context, date string) error {
 	_ = ctx
 	_ = date
-	_ = securityCode
 	return nil
 }
 
@@ -79,9 +64,4 @@ func (r *TransactionRecord) Repair(date string) {
 func (r *TransactionRecord) Increase(snapshot quotes.Snapshot) {
 	//TODO implement me
 	panic("implement me")
-}
-
-func (r *TransactionRecord) Clone(date string, code string) DataSet {
-	var dest = TransactionRecord{DataCache: DataCache{Date: date, Code: code}}
-	return &dest
 }

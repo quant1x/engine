@@ -12,12 +12,18 @@ import (
 
 // DataQuarterlyReport 季报
 type DataQuarterlyReport struct {
-	DataCache
+	dataManifest
 	cache map[string]dfcf.QuarterlyReport
 }
 
 func init() {
-	_ = cache.Register(&DataQuarterlyReport{})
+	_ = cache.Register(&DataQuarterlyReport{dataManifest: dataManifest{kind: BaseQuarterlyReports}})
+}
+
+func (r *DataQuarterlyReport) Clone(date string, code string) DataSet {
+	manifest := dataManifest{Date: date, Code: code, kind: BaseQuarterlyReports}
+	var dest = DataQuarterlyReport{dataManifest: manifest}
+	return &dest
 }
 
 func (r *DataQuarterlyReport) Print(code string, date ...string) {
@@ -25,39 +31,19 @@ func (r *DataQuarterlyReport) Print(code string, date ...string) {
 	panic("implement me")
 }
 
-func (r *DataQuarterlyReport) Kind() cache.Kind {
-	return BaseQuarterlyReports
-}
-
-func (r *DataQuarterlyReport) Key() string {
-	return mapDataSets[r.Kind()].Key()
-}
-
-func (r *DataQuarterlyReport) Name() string {
-	return mapDataSets[r.Kind()].Name()
-}
-
-func (r *DataQuarterlyReport) Owner() string {
-	return mapDataSets[r.Kind()].Owner()
-}
-
-func (r *DataQuarterlyReport) Usage() string {
-	return mapDataSets[r.Kind()].Name()
-}
-
 func (r *DataQuarterlyReport) Filename(date, code string) string {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (r *DataQuarterlyReport) Init(ctx context.Context, date, securityCode string) error {
-	barIndex, ok := ctx.Value(cache.KBarIndex).(*int)
-	if !ok {
-		*barIndex = 1
+func (r *DataQuarterlyReport) Init(ctx context.Context, date string) error {
+	barIndex := 1
+	value, ok := ctx.Value(cache.KBarIndex).(int)
+	if ok {
+		barIndex = value
 	}
-	*barIndex++
+	barIndex++
 	r.cache = IntegrateQuarterlyReports(barIndex, date)
-	_ = securityCode
 	return nil
 }
 
@@ -83,13 +69,8 @@ func (r *DataQuarterlyReport) Increase(snapshot quotes.Snapshot) {
 	_ = snapshot
 }
 
-func (r *DataQuarterlyReport) Clone(date string, code string) DataSet {
-	var dest = DataQuarterlyReport{DataCache: DataCache{Date: date, Code: code}}
-	return &dest
-}
-
 // IntegrateQuarterlyReports 更新季报数据
-func IntegrateQuarterlyReports(barIndex *int, date string) map[string]dfcf.QuarterlyReport {
+func IntegrateQuarterlyReports(barIndex int, date string) map[string]dfcf.QuarterlyReport {
 	modName := "季报概要信息"
 	logger.Info(modName + ", 任务开始启动...")
 
@@ -99,7 +80,7 @@ func IntegrateQuarterlyReports(barIndex *int, date string) map[string]dfcf.Quart
 		return nil
 	}
 	allReports = append(allReports, reports...)
-	bar := progressbar.NewBar(*barIndex, "执行["+modName+"]", pages-1)
+	bar := progressbar.NewBar(barIndex, "执行["+modName+"]", pages-1)
 	for pageNo := 2; pageNo < pages+1; pageNo++ {
 		bar.Add(1)
 		list, pages, err := dfcf.QuarterlyReports(date, pageNo)

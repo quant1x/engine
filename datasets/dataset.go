@@ -28,6 +28,8 @@ const (
 //	检索的规则是按日期和代码进行查询
 type DataSet interface {
 	cache.Base
+	cache.Initialization
+	cache.Properties
 	cache.DataFile
 	// Update 更新数据
 	Update(date string)

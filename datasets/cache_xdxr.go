@@ -8,37 +8,22 @@ import (
 )
 
 type DataXdxr struct {
-	DataCache
+	dataManifest
 }
 
 func init() {
-	_ = cache.Register(&DataXdxr{})
+	_ = cache.Register(&DataXdxr{dataManifest: dataManifest{kind: BaseXdxr}})
 }
 
-func (x *DataXdxr) Kind() cache.Kind {
-	return BaseXdxr
+func (x *DataXdxr) Clone(date string, code string) DataSet {
+	manifest := dataManifest{Date: date, Code: code, kind: BaseXdxr}
+	var dest = DataXdxr{dataManifest: manifest}
+	return &dest
 }
 
-func (x *DataXdxr) Key() string {
-	return mapDataSets[x.Kind()].Key()
-}
-
-func (x *DataXdxr) Name() string {
-	return mapDataSets[x.Kind()].Name()
-}
-
-func (x *DataXdxr) Owner() string {
-	return mapDataSets[x.Kind()].Owner()
-}
-
-func (x *DataXdxr) Usage() string {
-	return mapDataSets[x.Kind()].Name()
-}
-
-func (x *DataXdxr) Init(ctx context.Context, date, securityCode string) error {
+func (x *DataXdxr) Init(ctx context.Context, date string) error {
 	_ = ctx
 	_ = date
-	_ = securityCode
 	return nil
 }
 
@@ -75,9 +60,4 @@ func (x *DataXdxr) Repair(date string) {
 func (x *DataXdxr) Increase(snapshot quotes.Snapshot) {
 	// 除权除息没有增量计算的逻辑
 	_ = snapshot
-}
-
-func (x *DataXdxr) Clone(date string, code string) DataSet {
-	var dest = DataXdxr{DataCache{Date: date, Code: code}}
-	return &dest
 }

@@ -2,7 +2,6 @@ package factors
 
 import (
 	"context"
-	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets/base"
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/quotes"
@@ -13,12 +12,13 @@ import (
 )
 
 type HousNo1 struct {
-	MA5  float64 `dataframe:"ma5"`
-	MA10 float64 `dataframe:"ma10"`
-	MA20 float64 `dataframe:"ma20"`
+	featureManifest `dataframe:"-"`
+	MA5             float64 `dataframe:"ma5"`
+	MA10            float64 `dataframe:"ma10"`
+	MA20            float64 `dataframe:"ma20"`
 }
 
-func (f *HousNo1) Checkout(securityCode, date string) {
+func (f *HousNo1) Init(ctx context.Context, date string) error {
 	//TODO implement me
 	panic("implement me")
 }
@@ -28,39 +28,39 @@ func (f *HousNo1) Factory(date string, code string) Feature {
 	panic("implement me")
 }
 
-func (f *HousNo1) Kind() cache.Kind {
-	return FeatureHousNo1
-}
+//func (f *HousNo1) Kind() cache.Kind {
+//	return FeatureHousNo1
+//}
+//
+//func (f *HousNo1) Key() string {
+//	return mapFeatures[f.Kind()].Key()
+//}
+//
+//func (f *HousNo1) Name() string {
+//	return mapFeatures[f.Kind()].Name()
+//}
+//
+//func (f *HousNo1) Owner() string {
+//	return mapFeatures[f.Kind()].Owner()
+//}
+//
+//func (f *HousNo1) Usage() string {
+//	return mapFeatures[f.Kind()].Name()
+//}
 
-func (f *HousNo1) Key() string {
-	return mapFeatures[f.Kind()].Key()
-}
-
-func (f *HousNo1) Name() string {
-	return mapFeatures[f.Kind()].Name()
-}
-
-func (f *HousNo1) Owner() string {
-	return mapFeatures[f.Kind()].Owner()
-}
-
-func (f *HousNo1) Usage() string {
-	return mapFeatures[f.Kind()].Name()
-}
-
-func (f *HousNo1) Init(ctx context.Context, date, securityCode string) error {
-	return nil
-}
-
-func (f *HousNo1) GetDate() string {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (f *HousNo1) GetSecurityCode() string {
-	//TODO implement me
-	panic("implement me")
-}
+//func (f *HousNo1) Init(ctx context.Context, date string) error {
+//	return nil
+//}
+//
+//func (f *HousNo1) GetDate() string {
+//	//TODO implement me
+//	panic("implement me")
+//}
+//
+//func (f *HousNo1) GetSecurityCode() string {
+//	//TODO implement me
+//	panic("implement me")
+//}
 
 func (f *HousNo1) FromHistory(history History) Feature {
 	no1 := history.Payloads.No1

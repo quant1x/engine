@@ -8,7 +8,8 @@ import (
 )
 
 var (
-	updateModules = []cmdFlag[bool]{}
+	updateBases    []cmdFlag[bool]
+	updateFeatures []cmdFlag[bool]
 )
 
 // CmdUpdate 更新数据
@@ -29,16 +30,24 @@ var CmdUpdate = &cmder.Command{
 			// 全部更新
 			handleUpdateAll(cacheDate, featureDate)
 		} else if flagBaseData.Value {
-			handleUpdateBaseData(featureDate)
-		} else if flagFeatures.Value {
+			//handleUpdateBaseData(featureDate)
 			keywords := []string{}
-			for _, m := range updateModules {
+			for _, m := range updateBases {
 				if m.Value {
 					keywords = append(keywords, m.Name)
 					break
 				}
 			}
-			handleUpdateFeatures(cacheDate, featureDate, keywords...)
+			handleUpdateBaseDataWithKeywords(cacheDate, featureDate, keywords...)
+		} else if flagFeatures.Value {
+			keywords := []string{}
+			for _, m := range updateFeatures {
+				if m.Value {
+					keywords = append(keywords, m.Name)
+					break
+				}
+			}
+			handleUpdateFeaturesWithKeywords(cacheDate, featureDate, keywords...)
 		}
 	},
 }
@@ -48,20 +57,31 @@ func initUpdate() {
 	commandInit(CmdUpdate, &flagBaseData)
 	commandInit(CmdUpdate, &flagFeatures)
 
-	plugins := cache.Plugins(cache.PluginMaskFeature)
-	updateModules = make([]cmdFlag[bool], len(plugins))
+	plugins := cache.Plugins(cache.PluginMaskBaseData)
+	updateBases = make([]cmdFlag[bool], len(plugins))
 	for i, plugin := range plugins {
 		key := plugin.Key()
 		usage := plugin.Usage()
-		updateModules[i] = cmdFlag[bool]{Name: key, Usage: plugin.Owner() + ": " + usage, Value: false}
-		CmdUpdate.Flags().BoolVar(&(updateModules[i].Value), updateModules[i].Name, updateModules[i].Value, updateModules[i].Usage)
+		updateBases[i] = cmdFlag[bool]{Name: key, Usage: plugin.Owner() + ": " + usage, Value: false}
+		//CmdUpdate.Flags().BoolVar(&(updateFeatures[i].Value), updateFeatures[i].Name, updateFeatures[i].Value, updateFeatures[i].Usage)
+		commandInit(CmdUpdate, &updateBases[i])
+	}
+
+	plugins = cache.Plugins(cache.PluginMaskFeature)
+	updateFeatures = make([]cmdFlag[bool], len(plugins))
+	for i, plugin := range plugins {
+		key := plugin.Key()
+		usage := plugin.Usage()
+		updateFeatures[i] = cmdFlag[bool]{Name: key, Usage: plugin.Owner() + ": " + usage, Value: false}
+		//CmdUpdate.Flags().BoolVar(&(updateFeatures[i].Value), updateFeatures[i].Name, updateFeatures[i].Value, updateFeatures[i].Usage)
+		commandInit(CmdUpdate, &updateFeatures[i])
 	}
 }
 
 // 全部更新
 func handleUpdateAll(cacheDate, featureDate string) {
 	handleUpdateBaseData(featureDate)
-	handleUpdateFeatures(cacheDate, featureDate)
+	handleUpdateFeaturesWithKeywords(cacheDate, featureDate)
 }
 
 // 更新基础数据
@@ -74,7 +94,19 @@ func handleUpdateBaseData(date string) {
 }
 
 // 更新特征组合
-func handleUpdateFeatures(cacheDate, featureDate string, keywords ...string) {
+func handleUpdateBaseDataWithKeywords(cacheDate, featureDate string, keywords ...string) {
+	plugins := cache.PluginsWithName(cache.PluginMaskBaseData, keywords...)
+	if len(plugins) == 0 {
+		// 1. 获取全部注册的数据集插件
+		mask := cache.PluginMaskBaseData
+		//dataSetList := flash.DataSetList()
+		plugins = cache.Plugins(mask)
+	}
+	storages.BaseDataUpdate(barIndex, featureDate, plugins, cache.OpUpdate)
+}
+
+// 更新特征组合
+func handleUpdateFeaturesWithKeywords(cacheDate, featureDate string, keywords ...string) {
 	plugins := cache.PluginsWithName(cache.PluginMaskFeature, keywords...)
 	if len(plugins) == 0 {
 		// 1. 获取全部注册的数据集插件

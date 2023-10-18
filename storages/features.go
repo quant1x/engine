@@ -83,7 +83,7 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 		dataSource := adapter.Factory(featureDate, "")
 		parent := coroutine.Context()
 		ctx := context.WithValue(parent, cache.KBarIndex, barIndex)
-		_ = dataSource.Init(ctx, featureDate, "")
+		_ = dataSource.Init(ctx, featureDate)
 		for _, code := range allCodes {
 			feature := adapter.Factory(cacheDate, code).(factors.Feature)
 			if feature.Kind() != factors.FeatureHistory {

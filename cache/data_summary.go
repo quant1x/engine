@@ -4,8 +4,9 @@ package cache
 type DataSummary struct {
 	kind  Kind   // 类型
 	key   string // 关键字
-	name  string // 描述
+	name  string // 名称
 	owner string // 拥有者
+	usage string // 用法
 }
 
 func Summary(kind Kind, key, name, owner string) DataSummary {
@@ -14,6 +15,7 @@ func Summary(kind Kind, key, name, owner string) DataSummary {
 		key:   key,
 		name:  name,
 		owner: owner,
+		usage: name,
 	}
 }
 
@@ -31,4 +33,8 @@ func (d DataSummary) Name() string {
 
 func (d DataSummary) Owner() string {
 	return d.owner
+}
+
+func (d DataSummary) Usage() string {
+	return d.usage
 }

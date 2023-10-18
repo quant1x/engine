@@ -4,5 +4,5 @@ package datasets
 //
 //	Deprecated: 废弃
 type DataSafetyScore struct {
-	DataCache
+	dataManifest
 }

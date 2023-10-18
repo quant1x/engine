@@ -61,7 +61,7 @@ func BaseDataUpdate(barIndex int, date string, plugins []cache.DataAdapter, op c
 	parent := coroutine.Context()
 	ctx := context.WithValue(parent, cache.KBarIndex, barIndex)
 	for sequence, dataSet := range dataSetList {
-		_ = dataSet.Init(ctx, date, "")
+		_ = dataSet.Init(ctx, date)
 		//format := fmt.Sprintf("%%%ds", maxWidth)
 		//title := fmt.Sprintf(format, dataSet.Name())
 		desc := dataSet.Name()

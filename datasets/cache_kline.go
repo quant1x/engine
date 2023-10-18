@@ -8,18 +8,23 @@ import (
 )
 
 type DataKLine struct {
-	DataCache
+	dataManifest
 }
 
 func init() {
-	_ = cache.Register(&DataKLine{})
+	_ = cache.Register(&DataKLine{dataManifest: dataManifest{kind: BaseKLine}})
 }
 
-func (k *DataKLine) Init(ctx context.Context, date, securityCode string) error {
+func (k *DataKLine) Clone(date, code string) DataSet {
+	manifest := dataManifest{Date: date, Code: code, kind: BaseQuarterlyReports}
+	var dest = DataKLine{dataManifest: manifest}
+	return &dest
+}
+
+func (k *DataKLine) Init(ctx context.Context, date string) error {
 	//_ = barIndex
 	_ = ctx
 	_ = date
-	_ = securityCode
 	return nil
 }
 
@@ -37,25 +42,25 @@ func (k *DataKLine) Check(cacheDate, featureDate string) error {
 	panic("implement me")
 }
 
-func (k *DataKLine) Kind() cache.Kind {
-	return BaseKLine
-}
-
-func (k *DataKLine) Key() string {
-	return mapDataSets[k.Kind()].Key()
-}
-
-func (k *DataKLine) Name() string {
-	return mapDataSets[k.Kind()].Name()
-}
-
-func (k *DataKLine) Owner() string {
-	return mapDataSets[k.Kind()].Owner()
-}
-
-func (k *DataKLine) Usage() string {
-	return mapDataSets[k.Kind()].Name()
-}
+//func (k *DataKLine) Kind() cache.Kind {
+//	return BaseKLine
+//}
+//
+//func (k *DataKLine) Key() string {
+//	return mapDataSets[k.Kind()].Key()
+//}
+//
+//func (k *DataKLine) Name() string {
+//	return mapDataSets[k.Kind()].Name()
+//}
+//
+//func (k *DataKLine) Owner() string {
+//	return mapDataSets[k.Kind()].Owner()
+//}
+//
+//func (k *DataKLine) Usage() string {
+//	return mapDataSets[k.Kind()].Name()
+//}
 
 func (k *DataKLine) Filename(date, code string) string {
 	k.filename = cache.KLineFilename(code)
@@ -88,9 +93,4 @@ func (k *DataKLine) Increase(snapshot quotes.Snapshot) {
 	// 第四步: 如果不符合快照更新, 则忽略
 	_ = snapshot
 	panic("implement me")
-}
-
-func (k *DataKLine) Clone(date, code string) DataSet {
-	var dest = DataKLine{DataCache{Date: date, Code: code}}
-	return &dest
 }

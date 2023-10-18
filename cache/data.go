@@ -1,12 +1,28 @@
 package cache
 
-import (
-	"context"
-)
+import "context"
 
 const (
 	KBarIndex = "barIndex"
 )
+
+//// Trait 基础的特性
+////
+////	这也是一个特征, 为啥起这个名字, 自己可以脑补 哈哈~
+//type Trait interface {
+//	// Kind 数据类型
+//	Kind() Kind
+//	// Owner 提供者
+//	Owner() string
+//	// Key 数据关键词, key与cache落地强关联
+//	Key() string
+//	// Name 特性名称
+//	Name() string
+//	// Usage 控制台参数提示信息, 数据描述(data description)
+//	Usage() string
+//	// Init 初始化, 接受context, 日期和证券代码作为入参
+//	Init(ctx context.Context, date, securityCode string) error
+//}
 
 // Base 缓存的基础接口
 //
@@ -22,8 +38,26 @@ type Base interface {
 	Name() string
 	// Usage 控制台参数提示信息, 数据描述(data description)
 	Usage() string
+}
+
+// Initialization 初始化接口
+type Initialization interface {
 	// Init 初始化, 接受context, 日期和证券代码作为入参
-	Init(ctx context.Context, date, securityCode string) error
+	Init(ctx context.Context, date string) error
+}
+
+// Properties 属性接口
+type Properties interface {
+	// GetDate 日期
+	GetDate() string
+	// GetSecurityCode 证券代码
+	GetSecurityCode() string
+}
+
+// Validator 验证接口
+type Validator interface {
+	// Check 数据校验
+	Check(featureDate string) error
 }
 
 // DataFile 基础数据文件接口
@@ -50,10 +84,6 @@ type Swift interface {
 
 // Future 预备数据的接口
 type Future interface {
-	// GetDate 日期
-	GetDate() string
-	// GetSecurityCode 证券代码
-	GetSecurityCode() string
 	// Update 更新数据
 	//	whole 是否完整的数据, false是加工成半成品数据, 为了配合Increase
 	Update(securityCode, cacheDate, featureDate string, whole bool)

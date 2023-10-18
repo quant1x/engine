@@ -28,40 +28,6 @@ func (f *HousNo1) Factory(date string, code string) Feature {
 	panic("implement me")
 }
 
-//func (f *HousNo1) Kind() cache.Kind {
-//	return FeatureHousNo1
-//}
-//
-//func (f *HousNo1) Key() string {
-//	return mapFeatures[f.Kind()].Key()
-//}
-//
-//func (f *HousNo1) Name() string {
-//	return mapFeatures[f.Kind()].Name()
-//}
-//
-//func (f *HousNo1) Owner() string {
-//	return mapFeatures[f.Kind()].Owner()
-//}
-//
-//func (f *HousNo1) Usage() string {
-//	return mapFeatures[f.Kind()].Name()
-//}
-
-//func (f *HousNo1) Init(ctx context.Context, date string) error {
-//	return nil
-//}
-//
-//func (f *HousNo1) GetDate() string {
-//	//TODO implement me
-//	panic("implement me")
-//}
-//
-//func (f *HousNo1) GetSecurityCode() string {
-//	//TODO implement me
-//	panic("implement me")
-//}
-
 func (f *HousNo1) FromHistory(history History) Feature {
 	no1 := history.Payloads.No1
 	_ = api.Copy(f, &no1)

@@ -4,10 +4,10 @@ import "gitee.com/quant1x/engine/cache"
 
 // Manifest 特征的基础数据
 type Manifest struct {
-	Date     string // 日期
-	Code     string // 证券代码
-	filename string // 文件名
-	Kind_    cache.Kind
+	Date     string     `dataframe:"date"`     // 日期
+	Code     string     `dataframe:"code"`     // 证券代码
+	filename string     `dataframe:"filename"` // 文件名
+	Kind_    cache.Kind `dataframe:"kind"`
 }
 
 func (d Manifest) Kind() cache.Kind {

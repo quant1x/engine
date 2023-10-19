@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.4.2] - 2023-10-19
+### Changed
+- 优化代码结构.
+
 ## [0.4.1] - 2023-10-19
 ### Changed
 - 调整字段名.
@@ -245,8 +249,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.4.1...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.4.2...HEAD
 
+[0.4.2]: https://gitee.com/quant1x/engine/compare/v0.4.1...v0.4.2
 [0.4.1]: https://gitee.com/quant1x/engine/compare/v0.4.0...v0.4.1
 [0.4.0]: https://gitee.com/quant1x/engine/compare/v0.3.9...v0.4.0
 [0.3.9]: https://gitee.com/quant1x/engine/compare/v0.3.8...v0.3.9

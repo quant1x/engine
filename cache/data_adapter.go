@@ -20,8 +20,8 @@ const (
 
 // DataAdapter 数据插件
 type DataAdapter interface {
-	// Base 继承基础特性接口
-	Base
+	// Schema 继承基础特性接口
+	Schema
 	// Print 控制台输出指定日期的数据
 	Print(code string, date ...string)
 }

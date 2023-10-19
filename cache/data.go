@@ -6,10 +6,10 @@ const (
 	KBarIndex = "barIndex"
 )
 
-// Base 缓存的基础接口
+// Schema 缓存的概要信息
 //
 //	这也是一个特征, 为啥起这个名字, 自己可以脑补 哈哈~
-type Base interface {
+type Schema interface {
 	// Kind 数据类型
 	Kind() Kind
 	// Owner 提供者
@@ -36,8 +36,9 @@ type Properties interface {
 	GetSecurityCode() string
 }
 
+// Manifest 提要
 type Manifest interface {
-	Base
+	Schema
 	Properties
 	Initialization
 }

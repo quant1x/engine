@@ -12,16 +12,17 @@ import (
 //	最短3秒内的合并统计数据, 与行情数据保持一致
 //	不可以当作tick数据来使用
 type TransactionRecord struct {
-	Manifest
+	cache.Scheme
 }
 
 func init() {
-	_ = cache.Register(&TransactionRecord{Manifest: Manifest{Kind_: BaseTransaction}})
+	scheme := cache.DataScheme("", "", mapDataSets[BaseTransaction])
+	_ = cache.Register(&TransactionRecord{Scheme: scheme})
 }
 
 func (r *TransactionRecord) Clone(date string, code string) DataSet {
-	manifest := Manifest{Date: date, Code: code, Kind_: BaseTransaction}
-	var dest = TransactionRecord{Manifest: manifest}
+	scheme := cache.DataScheme(date, code, mapDataSets[BaseTransaction])
+	var dest = TransactionRecord{Scheme: scheme}
 	return &dest
 }
 
@@ -53,12 +54,12 @@ func (r *TransactionRecord) Filename(date, code string) string {
 
 func (r *TransactionRecord) Update(date string) {
 	base.UpdateTickStartDate(date)
-	base.GetTickAll(r.Code)
+	base.GetTickAll(r.GetSecurityCode())
 }
 
 func (r *TransactionRecord) Repair(date string) {
 	//base.GetTickAll(r.Code)
-	base.GetTickData(r.Code, date)
+	base.GetTickData(r.GetSecurityCode(), date)
 }
 
 func (r *TransactionRecord) Increase(snapshot quotes.Snapshot) {

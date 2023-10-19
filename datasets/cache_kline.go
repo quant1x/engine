@@ -8,16 +8,18 @@ import (
 )
 
 type DataKLine struct {
-	Manifest
+	//Manifest
+	cache.Scheme
 }
 
 func init() {
-	_ = cache.Register(&DataKLine{Manifest: Manifest{Kind_: BaseKLine}})
+	scheme := cache.DataScheme("", "", mapDataSets[BaseKLine])
+	_ = cache.Register(&DataKLine{Scheme: scheme})
 }
 
 func (k *DataKLine) Clone(date, code string) DataSet {
-	manifest := Manifest{Date: date, Code: code, Kind_: BaseQuarterlyReports}
-	var dest = DataKLine{Manifest: manifest}
+	scheme := cache.DataScheme(date, code, mapDataSets[BaseKLine])
+	var dest = DataKLine{Scheme: scheme}
 	return &dest
 }
 
@@ -63,9 +65,10 @@ func (k *DataKLine) Check(cacheDate, featureDate string) error {
 //}
 
 func (k *DataKLine) Filename(date, code string) string {
-	k.filename = cache.KLineFilename(code)
+	//TODO implement me
+	_ = code
 	_ = date
-	return k.filename
+	panic("implement me")
 }
 
 func (k *DataKLine) Print(code string, date ...string) {
@@ -76,12 +79,12 @@ func (k *DataKLine) Print(code string, date ...string) {
 }
 
 func (k *DataKLine) Update(date string) {
-	base.UpdateAllBasicKLine(k.Code)
+	base.UpdateAllBasicKLine(k.GetSecurityCode())
 	_ = date
 }
 
 func (k *DataKLine) Repair(date string) {
-	base.UpdateAllBasicKLine(k.Code)
+	base.UpdateAllBasicKLine(k.GetSecurityCode())
 	_ = date
 }
 

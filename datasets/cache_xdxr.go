@@ -7,17 +7,19 @@ import (
 	"gitee.com/quant1x/gotdx/quotes"
 )
 
+// DataXdxr 除权除息
 type DataXdxr struct {
-	Manifest
+	cache.Scheme
 }
 
 func init() {
-	_ = cache.Register(&DataXdxr{Manifest: Manifest{Kind_: BaseXdxr}})
+	scheme := cache.DataScheme("", "", mapDataSets[BaseXdxr])
+	_ = cache.Register(&DataXdxr{Scheme: scheme})
 }
 
 func (x *DataXdxr) Clone(date string, code string) DataSet {
-	manifest := Manifest{Date: date, Code: code, Kind_: BaseXdxr}
-	var dest = DataXdxr{Manifest: manifest}
+	scheme := cache.DataScheme(date, code, mapDataSets[BaseXdxr])
+	var dest = DataXdxr{Scheme: scheme}
 	return &dest
 }
 
@@ -27,15 +29,15 @@ func (x *DataXdxr) Init(ctx context.Context, date string) error {
 	return nil
 }
 
-func (x *DataXdxr) Checkout(securityCode, date string) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (x *DataXdxr) Check(cacheDate, featureDate string) error {
-	//TODO implement me
-	panic("implement me")
-}
+//	func (x *DataXdxr) Checkout(securityCode, date string) {
+//		//TODO implement me
+//		panic("implement me")
+//	}
+//
+//	func (x *DataXdxr) Check(cacheDate, featureDate string) error {
+//		//TODO implement me
+//		panic("implement me")
+//	}
 
 func (x *DataXdxr) Print(code string, date ...string) {
 	//TODO implement me
@@ -43,17 +45,19 @@ func (x *DataXdxr) Print(code string, date ...string) {
 }
 
 func (x *DataXdxr) Filename(date, code string) string {
-	x.filename = cache.XdxrFilename(x.Code)
-	return x.filename
+	//TODO implement me
+	_ = code
+	_ = date
+	panic("implement me")
 }
 
 func (x *DataXdxr) Update(date string) {
-	base.UpdateXdxrInfo(x.Code)
+	base.UpdateXdxrInfo(x.GetSecurityCode())
 	_ = date
 }
 
 func (x *DataXdxr) Repair(date string) {
-	base.UpdateXdxrInfo(x.Code)
+	base.UpdateXdxrInfo(x.GetSecurityCode())
 	_ = date
 }
 

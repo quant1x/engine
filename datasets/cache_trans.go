@@ -12,18 +12,28 @@ import (
 //	最短3秒内的合并统计数据, 与行情数据保持一致
 //	不可以当作tick数据来使用
 type TransactionRecord struct {
-	cache.Scheme
+	cache.DataSummary
+	Date string
+	Code string
 }
 
 func init() {
-	scheme := cache.DataScheme("", "", mapDataSets[BaseTransaction])
-	_ = cache.Register(&TransactionRecord{Scheme: scheme})
+	summary := mapDataSets[BaseTransaction]
+	_ = cache.Register(&TransactionRecord{DataSummary: summary})
 }
 
 func (r *TransactionRecord) Clone(date string, code string) DataSet {
-	scheme := cache.DataScheme(date, code, mapDataSets[BaseTransaction])
-	var dest = TransactionRecord{Scheme: scheme}
+	summary := mapDataSets[BaseTransaction]
+	var dest = TransactionRecord{DataSummary: summary, Date: date, Code: code}
 	return &dest
+}
+
+func (r *TransactionRecord) GetDate() string {
+	return r.Date
+}
+
+func (r *TransactionRecord) GetSecurityCode() string {
+	return r.Code
 }
 
 func (r *TransactionRecord) Print(code string, date ...string) {

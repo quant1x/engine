@@ -85,6 +85,9 @@ func (m *ModelNo1) v1Evaluate(securityCode string, result *treemap.Map) {
 
 func (m *ModelNo1) Evaluate(securityCode string, result *treemap.Map) {
 	history := smart.GetL5History(securityCode)
+	if history == nil {
+		return
+	}
 	snapshot := getQuoteSnapshot(securityCode)
 
 	//lastDate := trading.LastTradeDate()

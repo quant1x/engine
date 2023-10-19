@@ -8,19 +8,32 @@ import (
 )
 
 type DataKLine struct {
-	//Manifest
-	cache.Scheme
+	cache.DataSummary
+	Date string
+	Code string
 }
 
 func init() {
-	scheme := cache.DataScheme("", "", mapDataSets[BaseKLine])
-	_ = cache.Register(&DataKLine{Scheme: scheme})
+	scheme := mapDataSets[BaseKLine]
+	_ = cache.Register(&DataKLine{DataSummary: scheme})
 }
 
 func (k *DataKLine) Clone(date, code string) DataSet {
-	scheme := cache.DataScheme(date, code, mapDataSets[BaseKLine])
-	var dest = DataKLine{Scheme: scheme}
+	scheme := mapDataSets[BaseKLine]
+	var dest = DataKLine{
+		DataSummary: scheme,
+		Date:        date,
+		Code:        code,
+	}
 	return &dest
+}
+
+func (k *DataKLine) GetDate() string {
+	return k.Date
+}
+
+func (k *DataKLine) GetSecurityCode() string {
+	return k.Code
 }
 
 func (k *DataKLine) Init(ctx context.Context, date string) error {

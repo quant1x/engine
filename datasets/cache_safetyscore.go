@@ -6,5 +6,5 @@ import "gitee.com/quant1x/engine/cache"
 //
 //	Deprecated: 废弃
 type DataSafetyScore struct {
-	cache.Scheme
+	cache.DataSummary
 }

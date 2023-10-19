@@ -13,10 +13,20 @@ import (
 )
 
 type HousNo1 struct {
-	cache.Scheme `dataframe:"-"`
-	MA5          float64 `dataframe:"ma5"`
-	MA10         float64 `dataframe:"ma10"`
-	MA20         float64 `dataframe:"ma20"`
+	cache.DataSummary `dataframe:"-"`
+	MA5               float64 `dataframe:"ma5"`
+	MA10              float64 `dataframe:"ma10"`
+	MA20              float64 `dataframe:"ma20"`
+}
+
+func (f *HousNo1) GetDate() string {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (f *HousNo1) GetSecurityCode() string {
+	//TODO implement me
+	panic("implement me")
 }
 
 func (f *HousNo1) Init(ctx context.Context, date string) error {

@@ -9,18 +9,28 @@ import (
 
 // DataXdxr 除权除息
 type DataXdxr struct {
-	cache.Scheme
+	cache.DataSummary
+	Date string
+	Code string
 }
 
 func init() {
-	scheme := cache.DataScheme("", "", mapDataSets[BaseXdxr])
-	_ = cache.Register(&DataXdxr{Scheme: scheme})
+	summary := mapDataSets[BaseXdxr]
+	_ = cache.Register(&DataXdxr{DataSummary: summary})
 }
 
 func (x *DataXdxr) Clone(date string, code string) DataSet {
-	scheme := cache.DataScheme(date, code, mapDataSets[BaseXdxr])
-	var dest = DataXdxr{Scheme: scheme}
+	scheme := mapDataSets[BaseXdxr]
+	var dest = DataXdxr{DataSummary: scheme}
 	return &dest
+}
+
+func (x *DataXdxr) GetDate() string {
+	return x.Date
+}
+
+func (x *DataXdxr) GetSecurityCode() string {
+	return x.Code
 }
 
 func (x *DataXdxr) Init(ctx context.Context, date string) error {

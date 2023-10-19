@@ -12,19 +12,29 @@ import (
 
 // DataQuarterlyReport 季报
 type DataQuarterlyReport struct {
-	cache.Scheme
+	cache.DataSummary
+	Date  string
+	Code  string
 	cache map[string]dfcf.QuarterlyReport
 }
 
 func init() {
-	scheme := cache.DataScheme("", "", mapDataSets[BaseQuarterlyReports])
-	_ = cache.Register(&DataQuarterlyReport{Scheme: scheme})
+	scheme := mapDataSets[BaseQuarterlyReports]
+	_ = cache.Register(&DataQuarterlyReport{DataSummary: scheme})
 }
 
 func (r *DataQuarterlyReport) Clone(date string, code string) DataSet {
-	scheme := cache.DataScheme(date, code, mapDataSets[BaseQuarterlyReports])
-	var dest = DataQuarterlyReport{Scheme: scheme}
+	scheme := mapDataSets[BaseQuarterlyReports]
+	var dest = DataQuarterlyReport{DataSummary: scheme, Date: date, Code: code}
 	return &dest
+}
+
+func (r *DataQuarterlyReport) GetDate() string {
+	return r.Date
+}
+
+func (r *DataQuarterlyReport) GetSecurityCode() string {
+	return r.Code
 }
 
 func (r *DataQuarterlyReport) Print(code string, date ...string) {

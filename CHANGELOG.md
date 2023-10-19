@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.4.1] - 2023-10-19
+### Changed
+- 调整字段名.
+
 ## [0.4.0] - 2023-10-19
 ### Changed
 - 调整数据接口归类划分.
@@ -241,8 +245,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.4.0...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.4.1...HEAD
 
+[0.4.1]: https://gitee.com/quant1x/engine/compare/v0.4.0...v0.4.1
 [0.4.0]: https://gitee.com/quant1x/engine/compare/v0.3.9...v0.4.0
 [0.3.9]: https://gitee.com/quant1x/engine/compare/v0.3.8...v0.3.9
 [0.3.8]: https://gitee.com/quant1x/engine/compare/v0.3.7...v0.3.8

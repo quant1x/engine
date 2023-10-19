@@ -1,7 +1,7 @@
 gitee.com/quant1x/gotdx v1.15.9 h1:MmljiPMEArsVcDlZ0qJlPn5XMZakhnem1/2h4a1nyVw=
 gitee.com/quant1x/gotdx v1.15.9/go.mod h1:n+1gS26cyHTE0EeqySSk0HomlvnSrnUVGXARTycujYs=
-gitee.com/quant1x/gox v1.12.7 h1:Mvghne/nb1O++QUUX9SndWgdzxTXJRIh+6kC+9A84Do=
-gitee.com/quant1x/gox v1.12.7/go.mod h1:c3tjg0uu2ApAR3C2Sk7uWBuR020IYaVIefX8P5z5uC4=
+gitee.com/quant1x/gox v1.12.8 h1:p4RbTY1Z2qKApkh9UGQoYPWGME7KRXNgb/2Zym6UKco=
+gitee.com/quant1x/gox v1.12.8/go.mod h1:c3tjg0uu2ApAR3C2Sk7uWBuR020IYaVIefX8P5z5uC4=
 gitee.com/quant1x/pandas v1.1.6 h1:XsIEoBkiNCVLbxLZ0Hb5dvugrOuTY/77kxeVemuKWWw=
 gitee.com/quant1x/pandas v1.1.6/go.mod h1:6bG6zh8JpAX+4q1wdv+Q0juUHb1eJamdlvV0NTEcWOE=
 github.com/chzyer/logex v1.2.0/go.mod h1:9+9sk7u7pGNWYMkh0hdiL++6OeibzJccyQU4p4MedaY=

@@ -36,6 +36,12 @@ type Properties interface {
 	GetSecurityCode() string
 }
 
+type Manifest interface {
+	Base
+	Properties
+	Initialization
+}
+
 // Validator 验证接口
 type Validator interface {
 	// Check 数据校验

@@ -18,9 +18,7 @@ type Trait interface {
 
 // Feature 特征
 type Feature interface {
-	cache.Base
-	cache.Initialization
-	cache.Properties
+	cache.Manifest
 	cache.Future
 	// Factory 工厂
 	Factory(date string, code string) Feature

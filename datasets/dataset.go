@@ -27,10 +27,7 @@ const (
 //	数据集是基础数据, 应当遵循结构简单, 尽量减小缓存的文件数量, 加载迅速
 //	检索的规则是按日期和代码进行查询
 type DataSet interface {
-	cache.Base
-	cache.Initialization
-	cache.Properties
-	cache.DataFile
+	cache.Manifest
 	// Update 更新数据
 	Update(date string)
 	// Repair 回补数据

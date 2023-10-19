@@ -22,7 +22,7 @@ type f10SecurityInfo struct {
 	Capital      float64
 	VolUnit      int
 	DecimalPoint int
-	Name         string
+	Name_        string
 	IpoDate      string
 	SubNew       bool
 	UpdateDate   string
@@ -69,11 +69,11 @@ func checkoutSecurityBasicInfo(securityCode, featureDate string) f10SecurityInfo
 	if found {
 		f10.VolUnit = int(securityInfo.VolUnit)
 		f10.DecimalPoint = int(securityInfo.DecimalPoint)
-		f10.Name = securityInfo.Name
+		f10.Name_ = securityInfo.Name
 	} else {
 		f10.VolUnit = 100
 		f10.DecimalPoint = 2
-		f10.Name = securities.GetStockName(securityCode)
+		f10.Name_ = securities.GetStockName(securityCode)
 	}
 
 	return f10

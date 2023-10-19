@@ -68,7 +68,7 @@ func main() {
 	}
 	rootCmd.Flags().IntVar(&strategyNumber, "strategy", models.DefaultStrategy, "策略编号")
 	command.Init()
-	rootCmd.AddCommand(command.CmdVersion, command.CmdPrint, command.CmdUpdate, command.CmdRepair)
+	rootCmd.AddCommand(command.CmdVersion, command.CmdPrint, command.CmdUpdate, command.CmdRepair, command.CmdService)
 	_ = rootCmd.Execute()
 	fMem, err := os.Create(memProfile)
 	if err != nil {

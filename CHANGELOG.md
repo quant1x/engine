@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.4.4] - 2023-10-19
+### Changed
+- 增加daemon服务命令字.
+
+## [0.4.3] - 2023-10-19
+### Changed
+- 更新依赖版本.
+
 ## [0.4.2] - 2023-10-19
 ### Changed
 - 优化代码结构.
@@ -249,8 +257,10 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.4.2...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.4.4...HEAD
 
+[0.4.4]: https://gitee.com/quant1x/engine/compare/v0.4.3...v0.4.4
+[0.4.3]: https://gitee.com/quant1x/engine/compare/v0.4.2...v0.4.3
 [0.4.2]: https://gitee.com/quant1x/engine/compare/v0.4.1...v0.4.2
 [0.4.1]: https://gitee.com/quant1x/engine/compare/v0.4.0...v0.4.1
 [0.4.0]: https://gitee.com/quant1x/engine/compare/v0.3.9...v0.4.0

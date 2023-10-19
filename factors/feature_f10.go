@@ -2,6 +2,7 @@ package factors
 
 import (
 	"context"
+	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets/tdxweb"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/gotdx/quotes"
@@ -17,7 +18,7 @@ const (
 
 // F10 证券基本面
 type F10 struct {
-	Manifest       `dataframe:"-"`
+	cache.Scheme   `dataframe:"-"`
 	Date           string  `name:"日期" dataframe:"date"`                    // 日期
 	Code           string  `name:"代码" dataframe:"code"`                    // 代码
 	Name_          string  `name:"名称" dataframe:"name"`                    // 名称
@@ -44,9 +45,9 @@ type F10 struct {
 }
 
 func NewF10(date, code string) *F10 {
-	manifest := Manifest{Date: date, Code: code, Kind_: FeatureF10}
+	scheme := cache.DataScheme(date, code, mapFeatures[FeatureF10])
 	v := F10{
-		Manifest:     manifest,
+		Scheme:       scheme,
 		Date:         date,
 		Code:         code,
 		Name_:        securities.GetStockName(code),

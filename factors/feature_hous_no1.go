@@ -2,6 +2,7 @@ package factors
 
 import (
 	"context"
+	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets/base"
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/quotes"
@@ -12,10 +13,10 @@ import (
 )
 
 type HousNo1 struct {
-	Manifest `dataframe:"-"`
-	MA5      float64 `dataframe:"ma5"`
-	MA10     float64 `dataframe:"ma10"`
-	MA20     float64 `dataframe:"ma20"`
+	cache.Scheme `dataframe:"-"`
+	MA5          float64 `dataframe:"ma5"`
+	MA10         float64 `dataframe:"ma10"`
+	MA20         float64 `dataframe:"ma20"`
 }
 
 func (f *HousNo1) Init(ctx context.Context, date string) error {

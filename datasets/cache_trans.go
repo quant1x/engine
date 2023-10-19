@@ -58,7 +58,7 @@ func (r *TransactionRecord) Update(date string) {
 }
 
 func (r *TransactionRecord) Repair(date string) {
-	//base.GetTickAll(r.Code)
+	//base.GetTickAll(r.code)
 	base.GetTickData(r.GetSecurityCode(), date)
 }
 

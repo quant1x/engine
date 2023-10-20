@@ -3,7 +3,7 @@ package command
 import (
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/storages"
+	"gitee.com/quant1x/engine/services"
 	"os"
 	"runtime"
 	"strings"
@@ -34,7 +34,7 @@ func (service *Service) Stop() {
 
 func (service *Service) Run() {
 	// 运行服务
-	storages.DaemonService()
+	services.DaemonService()
 }
 
 // Manage by daemon commands or run the daemon
@@ -50,6 +50,9 @@ func (service *Service) Manage() (string, error) {
 		case "stop":
 			// No need to explicitly stop cron since job will be killed
 			return service.daemon.Stop()
+		case "list":
+			services.List()
+			return "", nil
 		case "status":
 			return service.daemon.Status()
 		default:
@@ -63,7 +66,7 @@ func (service *Service) Manage() (string, error) {
 // CmdService 守护进程
 var CmdService = &cobra.Command{
 	Use:     "service",
-	Example: Application + " service install | uninstall | remove | start | stop | status",
+	Example: Application + " service install | uninstall | remove | start | stop | list | status",
 	Short:   "守护进程/服务",
 	//Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {

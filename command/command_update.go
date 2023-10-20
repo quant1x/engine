@@ -93,7 +93,7 @@ func handleUpdateBaseData(date string) {
 	storages.BaseDataUpdate(barIndex, date, plugins, cache.OpUpdate)
 }
 
-// 更新特征组合
+// 更新基础数据
 func handleUpdateBaseDataWithKeywords(cacheDate, featureDate string, keywords ...string) {
 	plugins := cache.PluginsWithName(cache.PluginMaskBaseData, keywords...)
 	if len(plugins) == 0 {

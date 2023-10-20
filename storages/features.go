@@ -29,15 +29,6 @@ func updateStockFeature(wg *sync.WaitGroup, bar *progressbar.Bar, feature factor
 	wg.Done()
 }
 
-//type featureTask struct {
-//	wg           *sync.WaitGroup
-//	bar          *progressbar.Bar
-//	feature      factors.Feature
-//	securityCode string
-//	cacheDate    string
-//	featureDate  string
-//}
-
 // FeaturesUpdate 更新特征
 func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cache.DataAdapter, op cache.OpKind) {
 	moduleName := "特征数据"

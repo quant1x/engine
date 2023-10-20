@@ -1,6 +1,8 @@
 package cachel5
 
 import (
+	"context"
+	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/util/treemap"
@@ -22,38 +24,7 @@ type FeatureN01 struct {
 	Code string
 }
 
-func NewFeatureNo1(date string, code string) *FeatureN01 {
-	v := FeatureN01{
-		Date: date,
-		Code: code,
-	}
-	return &v
-}
-
-func (f *FeatureN01) Factory(date string, code string) factors.Feature {
-	v := FeatureN01{
-		Date: date,
-		Code: code,
-	}
-	return &v
-}
-
-func (f *FeatureN01) Kind() factors.FeatureKind {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (f *FeatureN01) FeatureName() string {
-	//TODO implement me
-	panic("implement me")
-}
-
 func (f *FeatureN01) Key() string {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (f *FeatureN01) Init(barIndex *int, date string) error {
 	//TODO implement me
 	panic("implement me")
 }
@@ -68,17 +39,17 @@ func (f *FeatureN01) GetSecurityCode() string {
 	panic("implement me")
 }
 
+func (f *FeatureN01) Update(securityCode, cacheDate, featureDate string, whole bool) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (f *FeatureN01) Repair(securityCode, cacheDate, featureDate string, whole bool) {
+	//TODO implement me
+	panic("implement me")
+}
+
 func (f *FeatureN01) FromHistory(history factors.History) factors.Feature {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (f *FeatureN01) Update(code, cacheDate, featureDate string, complete bool) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (f *FeatureN01) Repair(code, cacheDate, featureDate string, complete bool) {
 	//TODO implement me
 	panic("implement me")
 }
@@ -86,4 +57,45 @@ func (f *FeatureN01) Repair(code, cacheDate, featureDate string, complete bool) 
 func (f *FeatureN01) Increase(snapshot quotes.Snapshot) factors.Feature {
 	//TODO implement me
 	panic("implement me")
+}
+
+func (f *FeatureN01) Kind() cache.Kind {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (f *FeatureN01) Owner() string {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (f *FeatureN01) Name() string {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (f *FeatureN01) Usage() string {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (f *FeatureN01) Init(ctx context.Context, date string) error {
+	//TODO implement me
+	panic("implement me")
+}
+
+func NewFeatureNo1(date string, code string) *FeatureN01 {
+	v := FeatureN01{
+		Date: date,
+		Code: code,
+	}
+	return &v
+}
+
+func (f *FeatureN01) Factory(date string, code string) factors.Feature {
+	v := FeatureN01{
+		Date: date,
+		Code: code,
+	}
+	return &v
 }

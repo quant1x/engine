@@ -15,7 +15,7 @@ const (
 	EastmoneyFinanceReportsPageSize = 100
 )
 
-// PreviewQuarterlyReport 财报详情
+// PreviewQuarterlyReport 业绩预报详情
 type PreviewQuarterlyReport struct {
 	SecurityCode        string  `name:"证券代码" json:"SECURITY_CODE"`
 	SecurityName        string  `name:"证券名称" json:"SECURITY_NAME"`

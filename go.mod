@@ -4,7 +4,7 @@ go 1.21.1
 
 require (
 	gitee.com/quant1x/gotdx v1.15.9
-	gitee.com/quant1x/gox v1.12.8
+	gitee.com/quant1x/gox v1.13.0
 	gitee.com/quant1x/pandas v1.1.6
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/spf13/cobra v1.7.0

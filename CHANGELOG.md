@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.4.8] - 2023-10-21
+### Changed
+- 调整等待应用结束的机制.
+- 更新gox版本.
+
 ## [0.4.7] - 2023-10-21
 ### Changed
 - 给pprof增加开关.
@@ -274,8 +279,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.4.7...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.4.8...HEAD
 
+[0.4.8]: https://gitee.com/quant1x/engine/compare/v0.4.7...v0.4.8
 [0.4.7]: https://gitee.com/quant1x/engine/compare/v0.4.6...v0.4.7
 [0.4.6]: https://gitee.com/quant1x/engine/compare/v0.4.5...v0.4.6
 [0.4.5]: https://gitee.com/quant1x/engine/compare/v0.4.4...v0.4.5

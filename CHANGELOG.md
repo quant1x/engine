@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.4.7] - 2023-10-21
+### Changed
+- 给pprof增加开关.
+- Engine增加性能分析工具.
+- 修订业绩预报结构体注释.
+- 修正测试代码.
+
 ## [0.4.6] - 2023-10-20
 ### Changed
 - 基础数据增加实时更新基础K线的函数.
@@ -267,8 +274,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.4.6...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.4.7...HEAD
 
+[0.4.7]: https://gitee.com/quant1x/engine/compare/v0.4.6...v0.4.7
 [0.4.6]: https://gitee.com/quant1x/engine/compare/v0.4.5...v0.4.6
 [0.4.5]: https://gitee.com/quant1x/engine/compare/v0.4.4...v0.4.5
 [0.4.4]: https://gitee.com/quant1x/engine/compare/v0.4.3...v0.4.4

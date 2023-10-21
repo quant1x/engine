@@ -25,7 +25,12 @@ var (
 )
 
 func init() {
-	err := Register("clean", cronInit, cleanStatFiles)
+	// 定时重置缓存
+	err := Register("clean", cronInit, globalReset)
+	if err != nil {
+		logger.Fatal(err)
+	}
+	err = Register("realtime_kline", "", jobRealtimeKLine)
 	if err != nil {
 		logger.Fatal(err)
 	}
@@ -35,7 +40,7 @@ func init() {
 	//}
 }
 
-func cleanStatFiles() {
+func globalReset() {
 	logger.Info("清理过期的更新状态文件...")
 	_ = cleanExpiredStateFiles()
 	gotdx.ReOpen()

@@ -143,30 +143,21 @@ func BatchRealtimeBasicKLine(codes []string) error {
 	today := trading.Today()
 	if lastTradeday != today {
 		// 当天非交易日, 不更新, 直接返回
-		return nil
+		//return nil
 	}
 	if nowServerTime < trading.CN_TradingStartTime || nowServerTime > trading.CN_TradingStopTime {
 		// 非交易时间, 不更新, 直接返回
-		return nil
+		//return nil
 	}
 
-	marketIds := []proto.MarketType{}
-	symbols := []string{}
-
-	for _, code := range codes {
-		id, _, symbol := proto.DetectMarket(code)
-		if len(symbol) == 6 {
-			marketIds = append(marketIds, id)
-			symbols = append(symbols, symbol)
-		}
-	}
 	tdxApi := gotdx.GetTdxApi()
 	var err error
-	var hq *quotes.SecurityQuotesReply
+	var hq []quotes.Snapshot
 	retryTimes := 0
 	for retryTimes < quotes.DefaultRetryTimes {
-		hq, err = tdxApi.GetSecurityQuotes(marketIds, symbols)
-		if err == nil && hq != nil {
+		list, err := tdxApi.GetSnapshot(codes)
+		if err == nil && list != nil && len(list) > 0 {
+			hq = list
 			break
 		}
 		retryTimes++
@@ -175,7 +166,7 @@ func BatchRealtimeBasicKLine(codes []string) error {
 		logger.Errorf("获取即时行情数据失败", err)
 		return err
 	}
-	for _, v := range hq.List {
+	for _, v := range hq {
 		if v.State == quotes.TDX_SECURITY_TRADE_STATE_DELISTING || v.Code == proto.StockDelisting || v.LastClose == float64(0) {
 			// 终止上市的数据略过
 			continue

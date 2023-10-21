@@ -3,6 +3,7 @@ package cache
 import (
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/util/homedir"
+	"github.com/creasty/defaults"
 	"gopkg.in/yaml.v3"
 	"os"
 	"strings"
@@ -25,11 +26,26 @@ var (
 
 // Quant1XConfig Quant1X基础配置
 type Quant1XConfig struct {
-	BaseDir string `json:"basedir"`
+	BaseDir string           `yaml:"basedir"`
+	Runtime RuntimeParameter `yaml:"runtime"`
 }
 
-// 搜索配置文件
-func searchConfig() (baseDir string) {
+type RuntimeParameter struct {
+	Pprof PprofParameter `yaml:"pprof"`
+}
+
+type PprofParameter struct {
+	Port int `yaml:"port" default:"6060"` // pprof web端口
+}
+
+// GetConfigFilename 获取配置文件路径
+func GetConfigFilename() string {
+	return quant1XConfigFilename
+}
+
+// 加载配置文件
+func loadConfig() (config Quant1XConfig) {
+	_ = defaults.Set(&config)
 	for _, v := range listConfigFile {
 		filename, err := homedir.Expand(v)
 		if err != nil {
@@ -40,23 +56,16 @@ func searchConfig() (baseDir string) {
 			if err != nil {
 				continue
 			}
-			config := Quant1XConfig{}
 			err = yaml.Unmarshal(dataBytes, &config)
 			if err != nil {
 				continue
 			}
 			config.BaseDir = strings.TrimSpace(config.BaseDir)
 			if len(config.BaseDir) > 0 {
-				baseDir = config.BaseDir
 				quant1XConfigFilename = filename
 			}
 			break
 		}
 	}
 	return
-}
-
-// GetConfigFilename 获取配置文件路径
-func GetConfigFilename() string {
-	return quant1XConfigFilename
 }

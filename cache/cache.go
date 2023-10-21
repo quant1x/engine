@@ -20,6 +20,8 @@ const (
 )
 
 var (
+	// EngineConfig engine配置信息
+	EngineConfig Quant1XConfig
 	// 根路径
 	cacheRootPath = "~/.quant1x"
 	// cacheLogPath 日志路径
@@ -33,20 +35,22 @@ func init() {
 }
 
 func initCache() {
+	// 加载配置文件
+	EngineConfig = loadConfig()
 	// 搜索配置文件
-	configPath := searchConfig()
-	if len(configPath) > 0 {
-		__path, err := homedir.Expand(configPath)
+	baseDir := EngineConfig.BaseDir
+	if len(baseDir) > 0 {
+		__path, err := homedir.Expand(baseDir)
 		if err == nil {
-			configPath = __path
+			baseDir = __path
 		} else {
 			panic(err)
 		}
 	} else {
-		configPath = cacheRootPath
+		baseDir = cacheRootPath
 	}
 	// 校验配置文件的路径
-	__path, err := homedir.Expand(configPath)
+	__path, err := homedir.Expand(baseDir)
 	if err != nil {
 		panic(err)
 	}
@@ -76,6 +80,9 @@ func initCache() {
 	if err := os.MkdirAll(cacheVariablePath, cacheDirMode); err != nil {
 		panic(err)
 	}
+
+	// 启动性能分析
+	startPprof()
 }
 
 // Reset 重置日志记录器

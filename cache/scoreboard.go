@@ -32,6 +32,6 @@ func (this *ScoreBoard) Add(delta int, take time.Duration) {
 }
 
 func (this *ScoreBoard) String() string {
-	s := fmt.Sprintf("kind: %d, total: %d, crosstime: %s, max: %f, min: %f, speed: %f", this.Kind, this.Count, this.CrossTime, this.Max, this.Min, this.Speed)
+	s := fmt.Sprintf("kind: %d, total: %d, crosstime: %s, max: %d, min: %d, speed: %f", this.Kind, this.Count, this.CrossTime, this.Max, this.Min, this.Speed)
 	return s
 }

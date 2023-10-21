@@ -7,8 +7,16 @@ import (
 	_ "net/http/pprof"
 )
 
+type PprofParameter struct {
+	Enable bool `yaml:"enable" default:"true"` // 是否开启go tool pprof
+	Port   int  `yaml:"port" default:"6060"`   // pprof web端口
+}
+
 // 启动性能分析工具
 func startPprof() {
+	if !EngineConfig.Runtime.Pprof.Enable {
+		return
+	}
 	go func() {
 		addr := fmt.Sprintf("localhost:%d", EngineConfig.Runtime.Pprof.Port)
 		err := http.ListenAndServe(addr, nil)

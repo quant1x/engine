@@ -34,10 +34,6 @@ type RuntimeParameter struct {
 	Pprof PprofParameter `yaml:"pprof"`
 }
 
-type PprofParameter struct {
-	Port int `yaml:"port" default:"6060"` // pprof web端口
-}
-
 // GetConfigFilename 获取配置文件路径
 func GetConfigFilename() string {
 	return quant1XConfigFilename

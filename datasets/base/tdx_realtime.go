@@ -143,11 +143,11 @@ func BatchRealtimeBasicKLine(codes []string) error {
 	today := trading.Today()
 	if lastTradeday != today {
 		// 当天非交易日, 不更新, 直接返回
-		//return nil
+		return nil
 	}
 	if nowServerTime < trading.CN_TradingStartTime || nowServerTime > trading.CN_TradingStopTime {
 		// 非交易时间, 不更新, 直接返回
-		//return nil
+		return nil
 	}
 
 	tdxApi := gotdx.GetTdxApi()

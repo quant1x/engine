@@ -6,7 +6,6 @@ import (
 	"gitee.com/quant1x/gox/coroutine"
 	"gitee.com/quant1x/gox/cron"
 	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/gox/signal"
 	"sync"
 )
 
@@ -48,7 +47,6 @@ func Register(name, spec string, callback func()) error {
 
 // DaemonService 守护进程服务入口
 func DaemonService() {
-	ctx, cancel := coroutine.GetContextWithCancel()
 	// 启动服务
 	logger.Infof("启动定时任务列表")
 	crontab.Start()
@@ -63,17 +61,9 @@ func DaemonService() {
 			logger.Infof(message + "success")
 		}
 	}
-
-	interrupt := signal.Notify()
-	select {
-	case <-ctx.Done():
-		logger.Infof("shutdown...")
-		cancel()
-		break
-	case sig := <-interrupt:
-		logger.Infof("interrupt: %s", sig.String())
-		break
-	}
+	// 等待结束
+	coroutine.WaitForShutdown()
+	// 关闭任务调度
 	crontab.Stop()
 }
 

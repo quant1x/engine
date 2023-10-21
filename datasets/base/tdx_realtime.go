@@ -180,6 +180,8 @@ func BatchRealtimeBasicKLine(codes []string) error {
 			Low:    v.Low,
 			Volume: float64(v.Vol),
 			Amount: v.Amount,
+			Up:     v.BVol,
+			Down:   v.SVol,
 		}
 		cacheKLines := LoadBasicKline(securityCode)
 		cacheLength := len(cacheKLines)

@@ -9,11 +9,11 @@ import (
 	"sync"
 )
 
-// Job 定时任务
+// Task 定时任务
 //
 //	默认每10秒检测1次
 //	排名不分先后
-type Job struct {
+type Task struct {
 	name    string
 	spec    string
 	Service func()
@@ -25,14 +25,27 @@ var (
 
 var (
 	jobMutex sync.Mutex
-	mapJobs  = map[string]Job{}
+	mapJobs  = map[string]Task{}
 	crontab  = cron.New()
 )
 
-// Register 注册任务
+// Register 注册定时任务
 func Register(name, spec string, callback func()) error {
 	jobMutex.Lock()
 	defer jobMutex.Unlock()
+	//// 测试 - begin
+	//funcType := reflect.TypeOf(Register)
+	//if funcType.Kind() == reflect.Func {
+	//	numArgs := funcType.NumIn()
+	//	fmt.Println("Function has", numArgs, "arguments:")
+	//	for i := 0; i < numArgs; i++ {
+	//		argType := funcType.In(i)
+	//		fmt.Println("    Arg", i+1, "type:", argType)
+	//	}
+	//}
+	//v := reflect.ValueOf(callback)
+	//fmt.Println(callback, v.String())
+	//// 测试 - end
 	_, ok := mapJobs[name]
 	if ok {
 		return ErrAlreadyExists
@@ -40,7 +53,7 @@ func Register(name, spec string, callback func()) error {
 	if len(spec) == 0 {
 		spec = "@every 10s"
 	}
-	job := Job{name: name, spec: spec, Service: callback}
+	job := Task{name: name, spec: spec, Service: callback}
 	mapJobs[job.name] = job
 	return nil
 }
@@ -52,9 +65,9 @@ func DaemonService() {
 	crontab.Start()
 
 	for _, v := range mapJobs {
-		message := fmt.Sprintf("Service: %s, Interval: %s", v.name, v.spec)
+		message := fmt.Sprintf("Service: %s, Interval: %s, ", v.name, v.spec)
 		logger.Info(message)
-		_, err := crontab.AddFuncWithSkipIfStillRunning(v.spec, v.Service)
+		_, err := crontab.AddJobWithSkipIfStillRunning(v.spec, v.Service)
 		if err != nil {
 			logger.Infof(message+"failed, err: %s", err.Error())
 		} else {

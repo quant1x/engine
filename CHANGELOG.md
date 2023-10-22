@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.4.9] - 2023-10-22
+### Changed
+- 调整定时任务的实现方式.
+- 更新依赖库版本.
+- 恢复非交易时段的不操作的逻辑.
+- 实时更新K线增加内外盘两个字段.
+- 增加实时更新K线.
+
 ## [0.4.8] - 2023-10-21
 ### Changed
 - 调整等待应用结束的机制.
@@ -279,8 +287,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.4.8...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.4.9...HEAD
 
+[0.4.9]: https://gitee.com/quant1x/engine/compare/v0.4.8...v0.4.9
 [0.4.8]: https://gitee.com/quant1x/engine/compare/v0.4.7...v0.4.8
 [0.4.7]: https://gitee.com/quant1x/engine/compare/v0.4.6...v0.4.7
 [0.4.6]: https://gitee.com/quant1x/engine/compare/v0.4.5...v0.4.6

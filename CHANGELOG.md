@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.5.0] - 2023-10-23
+### Changed
+- 调整实时更新K线的兜底逻辑.
+
 ## [0.4.9] - 2023-10-22
 ### Changed
 - 调整定时任务的实现方式.
@@ -287,8 +291,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.4.9...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.5.0...HEAD
 
+[0.5.0]: https://gitee.com/quant1x/engine/compare/v0.4.9...v0.5.0
 [0.4.9]: https://gitee.com/quant1x/engine/compare/v0.4.8...v0.4.9
 [0.4.8]: https://gitee.com/quant1x/engine/compare/v0.4.7...v0.4.8
 [0.4.7]: https://gitee.com/quant1x/engine/compare/v0.4.6...v0.4.7

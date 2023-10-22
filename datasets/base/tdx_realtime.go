@@ -1,6 +1,7 @@
 package base
 
 import (
+	"encoding/json"
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/gotdx"
@@ -10,6 +11,7 @@ import (
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/errors"
 	"gitee.com/quant1x/gox/logger"
+	"os"
 	"time"
 )
 
@@ -189,11 +191,24 @@ func BatchRealtimeBasicKLine(codes []string) error {
 			continue
 		}
 		// 获取缓存中最后一根K线的日期
+		klineFilename := cache.KLineFilename(securityCode)
 		cacheLastDate := cacheKLines[cacheLength-1].Date
+		if len(cacheLastDate) == 0 {
+			// 如果缓存文件异常, 则删除
+			data, _ := json.Marshal(cacheKLines[cacheLength-1])
+			text := api.Bytes2String(data)
+			logger.Errorf("realtime kline error, code: %s, date=[%s]", securityCode, text)
+			_ = os.Remove(klineFilename)
+			// 全量更新K线
+			UpdateAllBasicKLine(securityCode)
+			continue
+		}
 		ts := trading.TradeRange(cacheLastDate, lastTradeday)
 		if len(ts) > 2 {
 			// 超过2天的差距, 不能用realtime更新K线数据
 			// 只能是当天更新 或者是新增, 跨越2个以上的交易日不更新
+			// 全量更新K线
+			UpdateAllBasicKLine(securityCode)
 			continue
 		}
 		// 数据差异数
@@ -213,9 +228,8 @@ func BatchRealtimeBasicKLine(codes []string) error {
 			klines = cacheKLines
 		}
 		// 连接缓存和实时数据
-		fname := cache.KLineFilename(securityCode)
 		klines = append(klines, kl)
-		err := api.SlicesToCsv(fname, klines)
+		err := api.SlicesToCsv(klineFilename, klines)
 		if err != nil {
 			logger.Errorf("更新K线数据文件失败:%s", v.Code)
 		}

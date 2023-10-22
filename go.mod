@@ -3,7 +3,7 @@ module gitee.com/quant1x/engine
 go 1.21.1
 
 require (
-	gitee.com/quant1x/gotdx v1.16.0
+	gitee.com/quant1x/gotdx v1.16.1
 	gitee.com/quant1x/gox v1.13.3
 	gitee.com/quant1x/pandas v1.1.7
 	github.com/creasty/defaults v1.7.0
@@ -12,8 +12,6 @@ require (
 	google.golang.org/protobuf v1.31.0
 	gopkg.in/yaml.v3 v3.0.1
 )
-
-//replace gitee.com/quant1x/gox v1.12.6 => ../../mymmsc/gox
 
 require (
 	github.com/dlclark/regexp2 v1.10.0 // indirect

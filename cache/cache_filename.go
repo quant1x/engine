@@ -22,6 +22,13 @@ func KLineFilename(code string) string {
 	return filepath
 }
 
+func MinuteFilename(code, date string) string {
+	date = trading.FixTradeDate(date, TDX_FORMAT_PROTOCOL_DATE)
+	cacheId := CacheId(code)
+	filename := fmt.Sprintf("%s/%s/%s/%s.csv", GetMinutePath(), date[0:4], date, cacheId)
+	return filename
+}
+
 // Top10HoldersFilename 前十大流通股股东缓存文件名
 func Top10HoldersFilename(code, date string) string {
 	idPath := CacheIdPath(code)

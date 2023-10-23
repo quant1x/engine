@@ -27,6 +27,8 @@ const (
 //	数据集是基础数据, 应当遵循结构简单, 尽量减小缓存的文件数量, 加载迅速
 //	检索的规则是按日期和代码进行查询
 type DataSet interface {
+	// Clone 克隆一个DataSet, 是所有写操作的基础
+	Clone(date string, code string) DataSet
 	cache.Manifest
 	// Update 更新数据
 	Update(date string)
@@ -34,8 +36,6 @@ type DataSet interface {
 	Repair(date string)
 	// Increase 增量计算, 用快照增量计算特征
 	Increase(snapshot quotes.Snapshot)
-	// Clone 克隆一个DataSet
-	Clone(date string, code string) DataSet
 }
 
 var (
@@ -55,4 +55,18 @@ func GetDataDescript(kind cache.Kind) cache.DataSummary {
 		panic("类型不存在")
 	}
 	return v
+}
+
+type Manifest struct {
+	cache.DataSummary
+	Date string
+	Code string
+}
+
+func (m Manifest) GetDate() string {
+	return m.Date
+}
+
+func (m Manifest) GetSecurityCode() string {
+	return m.Code
 }

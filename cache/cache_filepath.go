@@ -3,6 +3,7 @@ package cache
 const (
 	cacheMetaPath     = "meta"     // 元数据缓存路径
 	cacheDayPath      = "day"      // 日线路径
+	cacheMinutePath   = "minutes"  // 分时路径
 	cacheInfoPath     = "info"     // 信息路径
 	cacheTickPath     = "tick"     // tick路径
 	cacheXdxrPath     = "xdxr"     // 除权除息路径
@@ -21,6 +22,11 @@ func GetMetaPath() string {
 // GetDayPath 历史数据-日线缓存路径
 func GetDayPath() string {
 	return GetRootPath() + "/" + cacheDayPath
+}
+
+// GetMinutePath 分时路径
+func GetMinutePath() string {
+	return GetRootPath() + "/" + cacheMinutePath
 }
 
 // GetFeaturesPath 获取特征路径

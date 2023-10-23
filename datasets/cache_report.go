@@ -19,13 +19,13 @@ type DataQuarterlyReport struct {
 }
 
 func init() {
-	scheme := mapDataSets[BaseQuarterlyReports]
-	_ = cache.Register(&DataQuarterlyReport{DataSummary: scheme})
+	summary := mapDataSets[BaseQuarterlyReports]
+	_ = cache.Register(&DataQuarterlyReport{DataSummary: summary})
 }
 
 func (r *DataQuarterlyReport) Clone(date string, code string) DataSet {
-	scheme := mapDataSets[BaseQuarterlyReports]
-	var dest = DataQuarterlyReport{DataSummary: scheme, Date: date, Code: code}
+	summary := mapDataSets[BaseQuarterlyReports]
+	var dest = DataQuarterlyReport{DataSummary: summary, Date: date, Code: code}
 	return &dest
 }
 

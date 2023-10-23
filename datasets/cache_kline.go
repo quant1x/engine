@@ -14,14 +14,14 @@ type DataKLine struct {
 }
 
 func init() {
-	scheme := mapDataSets[BaseKLine]
-	_ = cache.Register(&DataKLine{DataSummary: scheme})
+	summary := mapDataSets[BaseKLine]
+	_ = cache.Register(&DataKLine{DataSummary: summary})
 }
 
 func (k *DataKLine) Clone(date, code string) DataSet {
-	scheme := mapDataSets[BaseKLine]
+	summary := mapDataSets[BaseKLine]
 	var dest = DataKLine{
-		DataSummary: scheme,
+		DataSummary: summary,
 		Date:        date,
 		Code:        code,
 	}

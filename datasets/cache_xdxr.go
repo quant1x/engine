@@ -21,7 +21,7 @@ func init() {
 
 func (x *DataXdxr) Clone(date string, code string) DataSet {
 	scheme := mapDataSets[BaseXdxr]
-	var dest = DataXdxr{DataSummary: scheme}
+	var dest = DataXdxr{DataSummary: scheme, Date: date, Code: code}
 	return &dest
 }
 

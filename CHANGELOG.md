@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.5.2] - 2023-10-23
+### Changed
+- 修复xdxr缺少date和code的bug.
+
 ## [0.5.1] - 2023-10-23
 ### Changed
 - 调整调度任务代码结构.
@@ -297,8 +301,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.5.1...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.5.2...HEAD
 
+[0.5.2]: https://gitee.com/quant1x/engine/compare/v0.5.1...v0.5.2
 [0.5.1]: https://gitee.com/quant1x/engine/compare/v0.5.0...v0.5.1
 [0.5.0]: https://gitee.com/quant1x/engine/compare/v0.4.9...v0.5.0
 [0.4.9]: https://gitee.com/quant1x/engine/compare/v0.4.8...v0.4.9

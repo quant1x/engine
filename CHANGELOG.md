@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.5.1] - 2023-10-23
+### Changed
+- 调整调度任务代码结构.
+- 调整定时任务的回调函数.
+- 调整服务接口.
+
 ## [0.5.0] - 2023-10-23
 ### Changed
 - 调整实时更新K线的兜底逻辑.
@@ -291,8 +297,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.5.0...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.5.1...HEAD
 
+[0.5.1]: https://gitee.com/quant1x/engine/compare/v0.5.0...v0.5.1
 [0.5.0]: https://gitee.com/quant1x/engine/compare/v0.4.9...v0.5.0
 [0.4.9]: https://gitee.com/quant1x/engine/compare/v0.4.8...v0.4.9
 [0.4.8]: https://gitee.com/quant1x/engine/compare/v0.4.7...v0.4.8

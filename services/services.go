@@ -3,12 +3,15 @@ package services
 import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/cachel5"
+	"gitee.com/quant1x/engine/datasets/base"
+	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/storages"
 	"gitee.com/quant1x/gotdx"
+	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gotdx/trading"
-	"gitee.com/quant1x/gox/cron"
 	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/gox/signal"
+	"runtime/debug"
+	"sync"
 	"time"
 )
 
@@ -48,39 +51,86 @@ func globalReset() {
 	logger.Info("清理过期的更新状态文件...OK")
 }
 
-// v1DaemonService 守护进程服务入口
-func v1DaemonService() {
-	job := cron.New()
-	// 1. 数据初始化
-	// 1.1. 定时清理过期的状态文件
-	job.Start()
-	_, err := job.AddFunc(cronInit, func() {
-		logger.Info("清理过期的更新状态文件...")
-		_ = cleanExpiredStateFiles()
-		gotdx.ReOpen()
-		cachel5.SwitchDate(cache.DefaultCanReadDate())
-		logger.Info("清理过期的更新状态文件...OK")
-	})
-	if err != nil {
-		logger.Fatal(err)
-		return
+// 实时更新K线
+func jobRealtimeKLine() {
+	now := time.Now()
+	updateInRealTime, status := trading.CanUpdateInRealtime()
+	// 14:30:00~15:01:00之间更新数据
+	if updateInRealTime && trading.CheckCallAuctionTail(now) {
+		realtimeUpdateOfKLine()
+	} else {
+		realtimeUpdateOfKLine()
+		logger.Infof("非尾盘交易时段: %d", status)
 	}
-	// 2. 全部更新
-	_, err = job.AddFuncWithSkipIfStillRunning("@every 10s", func() {
-		callbackUpdateAll()
-	})
-	if err != nil {
-		logger.Fatal(err)
-		return
+}
+
+// 更新K线
+func realtimeUpdateOfKLine() {
+	mainStart := time.Now()
+	defer func() {
+		if err := recover(); err != nil {
+			s := string(debug.Stack())
+			logger.Errorf("err=%v, stack=%s", err, s)
+		}
+		elapsedTime := time.Since(mainStart) / time.Millisecond
+		logger.Infof("总耗时: %.3fs", float64(elapsedTime)/1000)
+	}()
+	allCodes := market.GetCodeList()
+	count := len(allCodes)
+	var wg sync.WaitGroup
+	for start := 0; start < count; start += quotes.TDX_SECURITY_QUOTES_MAX {
+		length := count - start
+		if length >= quotes.TDX_SECURITY_QUOTES_MAX {
+			length = quotes.TDX_SECURITY_QUOTES_MAX
+		}
+		subCodes := []string{}
+		for i := 0; i < length; i++ {
+			securityCode := allCodes[start+i]
+			subCodes = append(subCodes, securityCode)
+		}
+		if len(subCodes) == 0 {
+			continue
+		}
+		updateKLine := func(waitGroup *sync.WaitGroup, codes []string) {
+			waitGroup.Done()
+			for i := 0; i < quotes.DefaultRetryTimes; i++ {
+				err := base.BatchRealtimeBasicKLine(codes)
+				if err != nil {
+					logger.Errorf("ZS: 网络异常: %+v, 重试: %d", err, i+1)
+					time.Sleep(time.Second * 1)
+					continue
+				}
+				break
+			}
+		}
+		wg.Add(1)
+		go updateKLine(&wg, subCodes)
 	}
-	// 3. 盘中增量更新
-	// 4. 阻塞
-	interrupt := signal.Notify()
-	select {
-	case sig := <-interrupt:
-		logger.Infof("interrupt: %s", sig.String())
-		break
-	}
+	wg.Wait()
+}
+
+func updateAll() {
+	barIndex := 1
+	currentDate := cache.DefaultCanUpdateDate()
+	cacheDate, featureDate := cache.CorrectDate(currentDate)
+	updateAllBaseData(barIndex, featureDate)
+	updateAllFeatures(barIndex+1, cacheDate, featureDate)
+}
+
+func updateAllBaseData(barIndex int, featureDate string) {
+	// 1. 获取全部注册的数据集插件
+	mask := cache.PluginMaskBaseData
+	plugins := cache.Plugins(mask)
+	// 2. 执行操作
+	storages.BaseDataUpdate(barIndex, featureDate, plugins, cache.OpUpdate)
+}
+
+func updateAllFeatures(barIndex int, cacheDate, featureDate string) {
+	// 1. 获取全部注册的数据集插件
+	mask := cache.PluginMaskFeature
+	//dataSetList := flash.DataSetList()
+	plugins := cache.Plugins(mask)
+	storages.FeaturesUpdate(&barIndex, cacheDate, featureDate, plugins, cache.OpUpdate)
 }
 
 // 更新全部数据
@@ -114,28 +164,4 @@ func callbackUpdateAll() {
 	} else {
 		logger.Infof("非全数据更新时段")
 	}
-}
-
-func updateAll() {
-	barIndex := 1
-	currentDate := cache.DefaultCanUpdateDate()
-	cacheDate, featureDate := cache.CorrectDate(currentDate)
-	updateAllBaseData(barIndex, featureDate)
-	updateAllFeatures(barIndex+1, cacheDate, featureDate)
-}
-
-func updateAllBaseData(barIndex int, featureDate string) {
-	// 1. 获取全部注册的数据集插件
-	mask := cache.PluginMaskBaseData
-	plugins := cache.Plugins(mask)
-	// 2. 执行操作
-	storages.BaseDataUpdate(barIndex, featureDate, plugins, cache.OpUpdate)
-}
-
-func updateAllFeatures(barIndex int, cacheDate, featureDate string) {
-	// 1. 获取全部注册的数据集插件
-	mask := cache.PluginMaskFeature
-	//dataSetList := flash.DataSetList()
-	plugins := cache.Plugins(mask)
-	storages.FeaturesUpdate(&barIndex, cacheDate, featureDate, plugins, cache.OpUpdate)
 }

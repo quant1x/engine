@@ -67,3 +67,19 @@ func TickFilename(code, date string) string {
 	tickPath := fmt.Sprintf("%s/%s/%s/%s.csv", GetTickPath(), date[0:4], date, cacheId)
 	return tickPath
 }
+
+// FundFlowFilename 通过证券代码获取资金流向的缓存文件路径
+func FundFlowFilename(securityCode string) string {
+	cacheId := CacheId(securityCode)
+	length := len(cacheId)
+	filepath := fmt.Sprintf("%s/%s/%s.csv", GetFundFlowPath(), cacheId[:length-3], cacheId)
+	return filepath
+}
+
+// SnapshotFilename 快照数据文件
+func SnapshotFilename(securityCode string) string {
+	cacheId := CacheId(securityCode)
+	length := len(cacheId)
+	filepath := fmt.Sprintf("%s/%s/%s.csv", GetSnapshotPath(), cacheId[:length-3], cacheId)
+	return filepath
+}

@@ -29,7 +29,7 @@ var (
 
 func init() {
 	// 定时重置缓存
-	err := Register("clean", cronInit, globalReset)
+	err := Register("clean", cronInit, jobGlobalReset)
 	if err != nil {
 		logger.Fatal(err)
 	}
@@ -37,13 +37,14 @@ func init() {
 	if err != nil {
 		logger.Fatal(err)
 	}
-	//err = Register("update_all", "", callbackUpdateAll)
-	//if err != nil {
-	//	logger.Fatal(err)
-	//}
+	err = Register("update_all", "", jobUpdateAll)
+	if err != nil {
+		logger.Fatal(err)
+	}
 }
 
-func globalReset() {
+// 任务 - 交易日数据缓存重置
+func jobGlobalReset() {
 	logger.Info("清理过期的更新状态文件...")
 	_ = cleanExpiredStateFiles()
 	gotdx.ReOpen()
@@ -51,7 +52,7 @@ func globalReset() {
 	logger.Info("清理过期的更新状态文件...OK")
 }
 
-// 实时更新K线
+// 任务 - 实时更新K线
 func jobRealtimeKLine() {
 	now := time.Now()
 	updateInRealTime, status := trading.CanUpdateInRealtime()
@@ -59,7 +60,6 @@ func jobRealtimeKLine() {
 	if updateInRealTime && trading.CheckCallAuctionTail(now) {
 		realtimeUpdateOfKLine()
 	} else {
-		realtimeUpdateOfKLine()
 		logger.Infof("非尾盘交易时段: %d", status)
 	}
 }
@@ -133,8 +133,8 @@ func updateAllFeatures(barIndex int, cacheDate, featureDate string) {
 	storages.FeaturesUpdate(&barIndex, cacheDate, featureDate, plugins, cache.OpUpdate)
 }
 
-// 更新全部数据
-func callbackUpdateAll() {
+// 任务 - 更新全部数据
+func jobUpdateAll() {
 	now := time.Now()
 	tm := now.Format(trading.CN_SERVERTIME_FORMAT)
 	today := trading.Today()

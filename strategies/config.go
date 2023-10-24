@@ -47,7 +47,7 @@ const (
 	CACHE_CONFIG_FILENAME = "quant1x.yaml"
 )
 
-var (
+const (
 	// ResourcesPath 资源路径
 	ResourcesPath = "resources"
 )

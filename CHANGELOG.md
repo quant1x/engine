@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.5.4] - 2023-10-24
+### Changed
+- 完善宽表数据.
+- 新增K线宽表数据的基础函数.
+
 ## [0.5.3] - 2023-10-24
 ### Changed
 - 增加分时数据缓存.
@@ -305,8 +310,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.5.3...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.5.4...HEAD
 
+[0.5.4]: https://gitee.com/quant1x/engine/compare/v0.5.3...v0.5.4
 [0.5.3]: https://gitee.com/quant1x/engine/compare/v0.5.2...v0.5.3
 [0.5.2]: https://gitee.com/quant1x/engine/compare/v0.5.1...v0.5.2
 [0.5.1]: https://gitee.com/quant1x/engine/compare/v0.5.0...v0.5.1

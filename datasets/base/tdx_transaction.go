@@ -144,7 +144,7 @@ func GetTickAll(securityCode string) {
 // GetTickData 获取指定日期的分笔成交记录
 func GetTickData(securityCode string, date string) (list []quotes.TickTransaction) {
 	securityCode = proto.CorrectSecurityCode(securityCode)
-	list = checkoutTickData(securityCode, date, false)
+	list = CheckoutTickData(securityCode, date, false)
 	if len(list) == 0 {
 		return list
 	}
@@ -157,11 +157,11 @@ func GetTickData(securityCode string, date string) (list []quotes.TickTransactio
 	return list
 }
 
-// 获取指定日期的分笔成交记录
+// CheckoutTickData 获取指定日期的分笔成交记录
 //
 //	先从缓存获取, 如果缓存不存在, 则从服务器下载
 //	K线附加成交数据
-func checkoutTickData(securityCode string, date string, ignorePreviousData bool) (list []quotes.TickTransaction) {
+func CheckoutTickData(securityCode string, date string, ignorePreviousData bool) (list []quotes.TickTransaction) {
 	securityCode = proto.CorrectSecurityCode(securityCode)
 	// 对齐日期格式: YYYYMMDD
 	tradeDate := trading.FixTradeDate(date, cache.TDX_FORMAT_PROTOCOL_DATE)

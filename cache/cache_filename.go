@@ -6,6 +6,10 @@ import (
 	"gitee.com/quant1x/gox/api"
 )
 
+const (
+	FilenameDate = "20060102" // 缓存文件相关的日期格式
+)
+
 // XdxrFilename XDXR缓存路径
 func XdxrFilename(code string) string {
 	cacheId := CacheId(code)
@@ -22,8 +26,16 @@ func KLineFilename(code string) string {
 	return filepath
 }
 
+// FeatureFilename 特征数据缓存路径
+func FeatureFilename(code string) string {
+	cacheId := CacheId(code)
+	length := len(cacheId)
+	filepath := fmt.Sprintf("%s/%s/%s.csv", GetFeaturesPath(), cacheId[:length-3], cacheId)
+	return filepath
+}
+
 func MinuteFilename(code, date string) string {
-	date = trading.FixTradeDate(date, TDX_FORMAT_PROTOCOL_DATE)
+	date = trading.FixTradeDate(date, FilenameDate)
 	cacheId := CacheId(code)
 	filename := fmt.Sprintf("%s/%s/%s/%s.csv", GetMinutePath(), date[0:4], date, cacheId)
 	return filename
@@ -69,7 +81,7 @@ func ReportsFilename(date string) string {
 
 // TickFilename tick文件比较多, 目录结构${tick}/${YYYY}/${YYYYMMDD}/${CacheIdPath}
 func TickFilename(code, date string) string {
-	date = trading.FixTradeDate(date, TDX_FORMAT_PROTOCOL_DATE)
+	date = trading.FixTradeDate(date, FilenameDate)
 	cacheId := CacheId(code)
 	tickPath := fmt.Sprintf("%s/%s/%s/%s.csv", GetTickPath(), date[0:4], date, cacheId)
 	return tickPath

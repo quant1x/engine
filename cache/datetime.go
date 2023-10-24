@@ -1,6 +1,32 @@
 package cache
 
-import "gitee.com/quant1x/gotdx/trading"
+import (
+	"gitee.com/quant1x/gotdx/trading"
+	"time"
+)
+
+const (
+	TDX_FORMAT_PROTOCOL_DATE = "20060102"   // 通达信协议的日期字符串格式
+	CACHE_DATE               = "20060102"   // 缓存日期
+	INDEX_DATE               = "2006-01-02" // 索引日期格式
+	TDX_DATE                 = "20060102"   // 通达信日期
+	YearOnly                 = "2006"       // 仅年份
+)
+
+func Today() string {
+	now := time.Now()
+	return now.Format(CACHE_DATE)
+}
+
+//// CorrectDate 矫正日期, 统一格式: 20060102
+//func CorrectDate(date string) string {
+//	dt, err := api.ParseTime(date)
+//	if err != nil {
+//		return Today()
+//	}
+//	date = dt.Format(CACHE_DATE)
+//	return date
+//}
 
 // CorrectDate 校正日期
 func CorrectDate(date string) (cacheDate, resourcesDate string) {

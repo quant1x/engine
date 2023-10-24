@@ -80,7 +80,7 @@ func DaemonService() {
 	crontab.Stop()
 }
 
-func List() {
+func PrintJobList() {
 	for _, v := range mapJobs {
 		spec := v.spec
 		message := fmt.Sprintf("Service: %s, Interval: %s", v.name, spec)

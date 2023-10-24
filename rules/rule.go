@@ -2,7 +2,9 @@ package rules
 
 import (
 	"errors"
+	"fmt"
 	"gitee.com/quant1x/engine/models"
+	"gitee.com/quant1x/gox/runtime"
 	bitmap "github.com/bits-and-blooms/bitset"
 	"golang.org/x/exp/maps"
 	"slices"
@@ -16,12 +18,17 @@ const (
 	Pass Kind = 0
 )
 
+//const (
+//	RuleMiss   Kind = iota //规则未命中
+//	RuleHit                // 命中
+//	RuleCancel             // 撤回
+//	RulePassed             // 成功
+//	RuleFailed             // 失败
+//)
+
 const (
-	RuleMiss   Kind = iota //规则未命中
-	RuleHit                // 命中
-	RuleCancel             // 撤回
-	RulePassed             // 成功
-	RuleFailed             // 失败
+	engineBaseRule Kind = 1
+	RuleSubnew          = engineBaseRule + 0 // 次新股
 )
 
 // Rule 规则接口
@@ -57,8 +64,11 @@ func Register(rule Rule) error {
 func Each(snapshot models.QuoteSnapshot) (passed []uint64, failed Kind) {
 	mutex.RLock()
 	defer mutex.RUnlock()
+	if len(mapRules) == 0 {
+		return
+	}
 	var bitset bitmap.BitSet
-	// 规则排序
+	// 规则按照kind排序
 	kinds := maps.Keys(mapRules)
 	slices.Sort(kinds)
 	for _, kind := range kinds {
@@ -72,4 +82,16 @@ func Each(snapshot models.QuoteSnapshot) (passed []uint64, failed Kind) {
 		}
 	}
 	return bitset.Bytes(), failed
+}
+
+func PrintRuleList() {
+	fmt.Println("规则总数:", len(mapRules))
+	// 规则按照kind排序
+	kinds := maps.Keys(mapRules)
+	slices.Sort(kinds)
+	for _, kind := range kinds {
+		if rule, ok := mapRules[kind]; ok {
+			fmt.Printf("kind: %d, name: %s, method: %s\n", rule.Kind(), rule.Name(), runtime.FuncName(rule.Exec))
+		}
+	}
 }

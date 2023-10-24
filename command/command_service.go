@@ -51,7 +51,7 @@ func (service *Service) Manage() (string, error) {
 			// No need to explicitly stop cron since job will be killed
 			return service.daemon.Stop()
 		case "list":
-			services.List()
+			services.PrintJobList()
 			return "", nil
 		case "status":
 			return service.daemon.Status()

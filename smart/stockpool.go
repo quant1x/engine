@@ -27,3 +27,11 @@ type StockPool struct {
 	Tendency       string  `name:"短线趋势" dataframe:"tendency"`
 	UpdateTime     string  `name:"更新时间" dataframe:"update_time"`
 }
+
+//const (
+//	RuleMiss   Kind = iota //规则未命中
+//	RuleHit                // 命中
+//	RuleCancel             // 撤回
+//	RulePassed             // 成功
+//	RuleFailed             // 失败
+//)

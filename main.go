@@ -76,7 +76,7 @@ func main() {
 	rootCmd.Flags().IntVar(&strategies.CountDays, "count", 0, "统计多少天")
 	rootCmd.Flags().IntVar(&strategies.CountTopN, "top", strategies.AllStockTopN(), "输出前排几名")
 	command.Init()
-	rootCmd.AddCommand(command.CmdVersion, command.CmdPrint, command.CmdUpdate, command.CmdRepair, command.CmdService)
+	rootCmd.AddCommand(command.CmdVersion, command.CmdPrint, command.CmdUpdate, command.CmdRepair, command.CmdService, command.CmdBackTesting)
 	_ = rootCmd.Execute()
 	fMem, err := os.Create(memProfile)
 	if err != nil {

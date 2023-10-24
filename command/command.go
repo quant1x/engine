@@ -4,4 +4,5 @@ func Init() {
 	initPrint()
 	initRepair()
 	initUpdate()
+	initBackTesting()
 }

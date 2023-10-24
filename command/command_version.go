@@ -5,7 +5,7 @@ import (
 	cmder "github.com/spf13/cobra"
 )
 
-// CmdVersion CommandVersion 版本
+// CmdVersion 版本
 var CmdVersion = &cmder.Command{
 	Use:   "version",
 	Short: "显示版本号",

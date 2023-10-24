@@ -1,0 +1,22 @@
+basedir: ~/.quant1x # 数据路径
+order:
+  top_n: 3 # 最多输出多少个标的
+  have_etf: false  # 是否包含ETF交易
+rules:
+  sectors_filter: false                  # 是否启用板块过滤, false代表全市场扫描
+  sectors_top_n: 3                       # 最多关联多少个板块, 默认3个
+  price_min: 2.00                        # 2.00 股价最低
+  price_max: 30.00                       # 30.00 股价最高
+  maximum_increase_within_5_days: 20.00  # 20.00 5日累计最大涨幅
+  maximum_increase_within_10_days: 70.00 # 70.00 10日累计最大涨幅
+  max_reduce_amount: -1000               # -1000 最大流出1000万
+  turn_z_max: 200.00                     # 200.00 换手最大值
+  turn_z_min: 1.50                       # 1.50 换手最小值
+  open_rate_max: 2.00                    # 2.00 最大涨幅
+  open_rate_min: -1.00                   # -1.00 最低涨幅
+  quantity_ratio_max: 61.80              # 61.80 最大开盘量比
+  quantity_ratio_min: 3.82               # 3.82 最小开盘量比
+  safety_score_min: 80                   # 80 通达信安全分最小值
+  volume_ratio_max: 1.8                  # 1.800 成交量放大不能超过1.8
+  capital_min: 2                         # 2 亿 流通股本最小值
+  capital_max: 200                       # 200 亿 流通股本最大值

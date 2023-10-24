@@ -145,7 +145,7 @@ func BackTesting(countDays, countTopN int) {
 		tbl := tablewriter.NewWriter(os.Stdout)
 		tbl.SetHeader(tags.GetHeadersByTags(models.Statistics{}))
 		samples = samples[:topN]
-		results := []models.Statistics{}
+		var results []models.Statistics
 		for _, v := range samples {
 			zs := models.Statistics{
 				Date:            date,              // 日期

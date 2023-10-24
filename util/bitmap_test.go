@@ -15,6 +15,7 @@ func TestBitmap(t *testing.T) {
 		bm.Set(v)
 	}
 	bm.Set(5)
+	bm.Set(17)
 	fmt.Println(bm.IsFully())
 	fmt.Println(bm.IsEmpty())
 	fmt.Println("bitmap 中存在的数字:")

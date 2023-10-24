@@ -1,6 +1,9 @@
 package strategies
 
-import "gitee.com/quant1x/engine/models"
+import (
+	"gitee.com/quant1x/engine/models"
+	"gitee.com/quant1x/engine/rules"
+)
 
 var (
 	CountDays int // 统计多少天
@@ -14,5 +17,10 @@ func AllStockTopN() int {
 
 // RuleFilter 过滤条件
 func RuleFilter(snapshot models.QuoteSnapshot) bool {
+	passed, failed := rules.Each(snapshot)
+	if failed != rules.Pass {
+		return false
+	}
+	_ = passed
 	return true
 }

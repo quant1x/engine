@@ -18,6 +18,7 @@ const (
 	BaseMinutes          = cache.PluginMaskBaseData | (baseKind + 4) // 基础数据-分时数据
 	BaseQuarterlyReports = cache.PluginMaskBaseData | (baseKind + 5) // 基础数据-季报
 	BaseSafetyScore      = cache.PluginMaskBaseData | (baseKind + 6) // 基础数据-安全分
+	BaseKLineWide        = cache.PluginMaskBaseData | (baseKind + 7) // 基础数据-宽表
 	//BaseAggregationData  cache.Kind = 1 << 63
 	//BaseTest             DataKind   = 0x8000000000000000
 )
@@ -46,6 +47,7 @@ var (
 		BaseMinutes:          cache.Summary(BaseMinutes, "minutes", "分时数据", cache.DefaultDataProvider),
 		BaseQuarterlyReports: cache.Summary(BaseQuarterlyReports, "reports", "季报", cache.DefaultDataProvider),
 		BaseSafetyScore:      cache.Summary(BaseSafetyScore, "safetyscore", "安全分", cache.DefaultDataProvider),
+		BaseKLineWide:        cache.Summary(BaseKLineWide, "wide", "宽表", cache.DefaultDataProvider),
 	}
 )
 

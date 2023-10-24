@@ -18,12 +18,12 @@ func BasicKLine(securityCode string) pandas.DataFrame {
 	return df
 }
 
-//// KLine 加载日K线宽表
-//func KLine(securityCode string) pandas.DataFrame {
-//	securityCode = proto.CorrectSecurityCode(securityCode)
-//	df := base.GetCacheKLine(securityCode, false)
-//	return df
-//}
+// KLine 加载日K线宽表
+func KLine(securityCode string) pandas.DataFrame {
+	securityCode = proto.CorrectSecurityCode(securityCode)
+	df := GetCacheKLine(securityCode, false)
+	return df
+}
 
 // KLineToWeekly 日线转周线
 //

@@ -1,6 +1,7 @@
 package datasets
 
 import (
+	"context"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets/base"
 	"gitee.com/quant1x/gotdx"
@@ -15,6 +16,52 @@ import (
 	"reflect"
 	"strconv"
 )
+
+type DataWide struct {
+	Manifest
+}
+
+func init() {
+	summary := mapDataSets[BaseKLineWide]
+	_ = cache.Register(&DataWide{Manifest: Manifest{DataSummary: summary}})
+}
+
+func (this *DataWide) Clone(date string, code string) DataSet {
+	summary := mapDataSets[BaseKLineWide]
+	var dest = DataWide{
+		Manifest: Manifest{
+			DataSummary: summary,
+			Date:        date,
+			Code:        code,
+		},
+	}
+	return &dest
+}
+
+func (this *DataWide) Init(ctx context.Context, date string) error {
+	_ = ctx
+	_ = date
+	return nil
+}
+
+func (this *DataWide) Update(date string) {
+	//base.UpdateMinutes(this.GetSecurityCode(), date)
+	GetKLineAll(this.GetSecurityCode())
+}
+
+func (this *DataWide) Repair(date string) {
+	this.Update(date)
+}
+
+func (this *DataWide) Increase(snapshot quotes.Snapshot) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (this *DataWide) Print(code string, date ...string) {
+	_ = code
+	_ = date
+}
 
 var (
 	FBarsProtocolFields = []string{"Open", "Close", "High", "Low", "Vol", "Amount", "DateTime", "UpCount", "DownCount"}

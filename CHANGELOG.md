@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.5.7] - 2023-10-25
+### Changed
+- 优化实时更新K线的时间范围.
+
 ## [0.5.6] - 2023-10-25
 ### Changed
 - 优化规则引擎.
@@ -325,8 +329,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.5.6...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.5.7...HEAD
 
+[0.5.7]: https://gitee.com/quant1x/engine/compare/v0.5.6...v0.5.7
 [0.5.6]: https://gitee.com/quant1x/engine/compare/v0.5.5...v0.5.6
 [0.5.5]: https://gitee.com/quant1x/engine/compare/v0.5.4...v0.5.5
 [0.5.4]: https://gitee.com/quant1x/engine/compare/v0.5.3...v0.5.4

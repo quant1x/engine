@@ -58,7 +58,7 @@ func BaseDataUpdate(barIndex int, date string, plugins []cache.DataAdapter, op c
 			}
 		}
 	}
-
+	logger.Infof("%s: all, begin", moduleName)
 	// 2. 遍历全部数据插件
 	dataSetCount := len(dataSetList)
 	barCache := progressbar.NewBar(barIndex, "执行["+date+":"+moduleName+"]", dataSetCount)
@@ -90,4 +90,5 @@ func BaseDataUpdate(barIndex int, date string, plugins []cache.DataAdapter, op c
 		}
 	}
 	wg.Wait()
+	logger.Infof("%s: all, end", moduleName)
 }

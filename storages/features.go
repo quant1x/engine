@@ -51,10 +51,11 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 			}
 		}
 	}
+	logger.Infof("%s: all, begin", moduleName)
+
 	var wgAdapter sync.WaitGroup
 	cacheCount := len(adapters)
 	barAdapter := progressbar.NewBar(*barIndex, "执行["+moduleName+"]", cacheCount)
-
 	allCodes := market.GetCodeList()
 	allCodes = allCodes[:]
 	codeCount := len(allCodes)
@@ -110,4 +111,5 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 		logger.Infof("%s: %s, end", moduleName, adapter.Name())
 	}
 	wgAdapter.Wait()
+	logger.Infof("%s: all, end", moduleName)
 }

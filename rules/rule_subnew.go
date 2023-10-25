@@ -4,22 +4,22 @@ import (
 	"gitee.com/quant1x/engine/models"
 )
 
-type RSubNew struct{}
+type RuleSubNew struct{}
 
-func (r RSubNew) Kind() Kind {
-	return RuleSubnew
+func (r RuleSubNew) Kind() Kind {
+	return RuleSubNewStock
 }
 
-func (r RSubNew) Name() string {
+func (r RuleSubNew) Name() string {
 	return "次新股"
 }
 
-func (r RSubNew) Exec(snapshot models.QuoteSnapshot) error {
+func (r RuleSubNew) Exec(snapshot models.QuoteSnapshot) error {
 	return ErrExecuteFailed
 }
 
 func init() {
-	err := Register(RSubNew{})
+	err := Register(RuleSubNew{})
 	if err != nil {
 		panic(err)
 	}

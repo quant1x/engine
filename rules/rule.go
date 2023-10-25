@@ -27,15 +27,18 @@ const (
 //)
 
 const (
-	engineBaseRule Kind = 1
-	RuleSubnew          = engineBaseRule + 0 // 次新股
+	engineBaseRule  Kind = 1
+	RuleSubNewStock      = engineBaseRule + 0 // 次新股
 )
 
 // Rule 规则接口
 type Rule interface {
-	Kind() Kind                               // 类型
-	Name() string                             // 名称
-	Exec(snapshot models.QuoteSnapshot) error // 执行
+	// Kind 类型
+	Kind() Kind
+	// Name 名称
+	Name() string
+	// Exec 执行, 返回nil即为成功
+	Exec(snapshot models.QuoteSnapshot) error
 }
 
 var (
@@ -58,6 +61,12 @@ func Register(rule Rule) error {
 	}
 	mapRules[rule.Kind()] = rule
 	return nil
+}
+
+// RegisterFunc 注册规则回调函数
+func RegisterFunc(kind Kind, name string, cb func(snapshot models.QuoteSnapshot) error) error {
+	rule := RuleImpl{kind: kind, name: name, exec: cb}
+	return Register(rule)
 }
 
 // Each 遍历所有规则

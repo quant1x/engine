@@ -9,6 +9,7 @@ import (
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/smart"
 	"gitee.com/quant1x/gox/coroutine"
+	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/text/runewidth"
 	"gitee.com/quant1x/gox/util/treemap"
@@ -58,6 +59,8 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 	allCodes = allCodes[:]
 	codeCount := len(allCodes)
 	for _, adapter := range adapters {
+		logger.Infof("%s: %s, begin", moduleName, adapter.Name())
+
 		wgAdapter.Add(1)
 		var sb cache.ScoreBoard
 		barCode := progressbar.NewBar(*barIndex+1, "执行["+adapter.Name()+"]", codeCount)
@@ -104,6 +107,7 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 		barAdapter.Add(1)
 		wgAdapter.Done()
 		fmt.Println(sb.String())
+		logger.Infof("%s: %s, end", moduleName, adapter.Name())
 	}
 	wgAdapter.Wait()
 }

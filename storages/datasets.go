@@ -6,6 +6,7 @@ import (
 	"gitee.com/quant1x/engine/datasets"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/gox/coroutine"
+	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/text/runewidth"
 	"strings"
@@ -14,6 +15,13 @@ import (
 
 // 更新单个数据集
 func updateOneDataSet(wg *sync.WaitGroup, parent, bar *progressbar.Bar, dataSet datasets.DataSet, date string, op cache.OpKind) {
+	moduleName := "基础数据"
+	if op == cache.OpRepair {
+		moduleName = "修复" + moduleName
+	} else {
+		moduleName = "更新" + moduleName
+	}
+	logger.Infof("%s: %s, begin", moduleName, dataSet.Name())
 	allCodes := market.GetCodeList()
 	for _, code := range allCodes {
 		data := dataSet.Clone(date, code).(datasets.DataSet)
@@ -26,6 +34,7 @@ func updateOneDataSet(wg *sync.WaitGroup, parent, bar *progressbar.Bar, dataSet 
 	}
 	parent.Add(1)
 	wg.Done()
+	logger.Infof("%s: %s, end", moduleName, dataSet.Name())
 }
 
 // BaseDataUpdate 修复数据
@@ -64,6 +73,7 @@ func BaseDataUpdate(barIndex int, date string, plugins []cache.DataAdapter, op c
 		_ = dataSet.Init(ctx, date)
 		//format := fmt.Sprintf("%%%ds", maxWidth)
 		//title := fmt.Sprintf(format, dataSet.Name())
+
 		desc := dataSet.Name()
 		width := runewidth.StringWidth(desc)
 		title := strings.Repeat(" ", maxWidth-width) + desc

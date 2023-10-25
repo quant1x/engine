@@ -3,13 +3,14 @@ module gitee.com/quant1x/engine
 go 1.21.1
 
 require (
-	gitee.com/quant1x/gotdx v1.16.1
+	gitee.com/quant1x/gotdx v1.16.2
 	gitee.com/quant1x/gox v1.13.3
 	gitee.com/quant1x/pandas v1.1.7
 	github.com/bits-and-blooms/bitset v1.10.0
 	github.com/creasty/defaults v1.7.0
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/spf13/cobra v1.7.0
+	golang.org/x/exp v0.0.0-20231006140011-7918f672742d
 	google.golang.org/protobuf v1.31.0
 	gopkg.in/yaml.v3 v3.0.1
 )
@@ -33,7 +34,6 @@ require (
 	github.com/shabbyrobe/xmlwriter v0.0.0-20230525083848-85336ec334fa // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/tealeg/xlsx/v3 v3.3.2 // indirect
-	golang.org/x/exp v0.0.0-20231006140011-7918f672742d // indirect
 	golang.org/x/sys v0.13.0 // indirect
 	golang.org/x/text v0.13.0 // indirect
 	gonum.org/v1/gonum v0.14.0 // indirect

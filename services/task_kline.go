@@ -13,10 +13,9 @@ import (
 
 // 任务 - 实时更新K线
 func jobRealtimeKLine() {
-	now := time.Now()
 	updateInRealTime, status := trading.CanUpdateInRealtime()
 	// 14:30:00~15:01:00之间更新数据
-	if updateInRealTime && trading.CheckCallAuctionTail(now) {
+	if updateInRealTime && isTrading(status) {
 		realtimeUpdateOfKLine()
 	} else {
 		logger.Infof("非尾盘交易时段: %d", status)

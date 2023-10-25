@@ -4,6 +4,7 @@ import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/cachel5"
 	"gitee.com/quant1x/gotdx"
+	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/logger"
 )
 
@@ -37,4 +38,12 @@ func jobGlobalReset() {
 	gotdx.ReOpen()
 	cachel5.SwitchDate(cache.DefaultCanReadDate())
 	logger.Info("清理过期的更新状态文件...OK")
+}
+
+// 状态是否交易中
+func isTrading(status int) bool {
+	if status == trading.ExchangeTrading || status == trading.ExchangeCallAuction {
+		return true
+	}
+	return false
 }

@@ -19,29 +19,29 @@ const (
 // F10 证券基本面
 type F10 struct {
 	cache.DataSummary `dataframe:"-"`
-	Date              string  `name:"日期" dataframe:"date"`                    // 日期
-	Code              string  `name:"代码" dataframe:"code"`                    // 代码
-	Name_             string  `name:"名称" dataframe:"name"`                    // 名称
-	SubNew            bool    `name:"次新股" dataframe:"sub_new"`                // 是否次新股
-	VolUnit           int     `name:"每手" dataframe:"vol_unit"`                // 每手单位
-	DecimalPoint      int     `name:"小数点" dataframe:"decimal_point"`          // 小数点
-	IpoDate           string  `name:"上市日期" dataframe:"ipo_date"`              // 上市日期
-	UpdateDate        string  `name:"更新日期" dataframe:"update_date"`           // 更新日期
-	TotalCapital      float64 `name:"总股本" dataframe:"total_capital"`          // 总股本
-	Capital           float64 `name:"流通股本" dataframe:"capital"`               // 流通股本
-	FreeCapital       float64 `name:"自由流通股本" dataframe:"free_capital"`        // 自由流通股本
-	Top10Capital      float64 `name:"前十大流通股东总股本" dataframe:"top10_capital"`   // 前十大流通股东股本
-	Top10Change       float64 `name:"前十大流通股东总股本变化" dataframe:"top10_change"`  //前十大流通股东股本变化
-	ChangeCapital     float64 `name:"前十大流通股东持仓变化" dataframe:"change_capital"` // 前十大流通股东持仓变化
-	IncreaseRatio     float64 `name:"当期增持比例" dataframe:"increase_ratio"`      // 当期增持比例
-	ReductionRatio    float64 `name:"当期减持比例" dataframe:"reduction_ratio"`     // 当期减持比例
-	BPS               float64 `name:"每股净资产" dataframe:"bps"`                  // 每股净资产
-	BasicEPS          float64 `name:"每股收益" dataframe:"basic_eps"`             // 每股收益
-	SafetyScore       int     `name:"安全分" dataframe:"safety_score"`           // 通达信安全分
-	Increases         int     `name:"增持" dataframe:"increases"`               // 公告-增持
-	Reduces           int     `name:"减持" dataframe:"reduces"`                 // 公告-减持
-	Risk              int     `name:"风险数" dataframe:"risk"`                   // 公告-风险数
-	RiskKeywords      string  `name:"风险关键词" dataframe:"risk_keywords"`        // 公告-风险关键词
+	Date              string  `name:"日期" dataframe:"Date"`                   // 日期
+	Code              string  `name:"代码" dataframe:"Code"`                   // 代码
+	Name_             string  `name:"名称" dataframe:"Name"`                   // 名称
+	SubNew            bool    `name:"次新股" dataframe:"SubNew"`                // 是否次新股
+	VolUnit           int     `name:"每手" dataframe:"VolUnit"`                // 每手单位
+	DecimalPoint      int     `name:"小数点" dataframe:"DecimalPoint"`          // 小数点
+	IpoDate           string  `name:"上市日期" dataframe:"IpoDate"`              // 上市日期
+	UpdateDate        string  `name:"更新日期" dataframe:"UpdateDate"`           // 更新日期
+	TotalCapital      float64 `name:"总股本" dataframe:"TotalCapital"`          // 总股本
+	Capital           float64 `name:"流通股本" dataframe:"Capital"`              // 流通股本
+	FreeCapital       float64 `name:"自由流通股本" dataframe:"FreeCapital"`        // 自由流通股本
+	Top10Capital      float64 `name:"前十大流通股东总股本" dataframe:"Top10Capital"`   // 前十大流通股东股本
+	Top10Change       float64 `name:"前十大流通股东总股本变化" dataframe:"Top10Change"`  //前十大流通股东股本变化
+	ChangeCapital     float64 `name:"前十大流通股东持仓变化" dataframe:"ChangeCapital"` // 前十大流通股东持仓变化
+	IncreaseRatio     float64 `name:"当期增持比例" dataframe:"IncreaseRatio"`      // 当期增持比例
+	ReductionRatio    float64 `name:"当期减持比例" dataframe:"ReductionRatio"`     // 当期减持比例
+	BPS               float64 `name:"每股净资产" dataframe:"BPS"`                 // 每股净资产
+	BasicEPS          float64 `name:"每股收益" dataframe:"BasicEPS"`             // 每股收益
+	SafetyScore       int     `name:"安全分" dataframe:"SafetyScore"`           // 通达信安全分
+	Increases         int     `name:"增持" dataframe:"Increases"`              // 公告-增持
+	Reduces           int     `name:"减持" dataframe:"Reduces"`                // 公告-减持
+	Risk              int     `name:"风险数" dataframe:"Risk"`                  // 公告-风险数
+	RiskKeywords      string  `name:"风险关键词" dataframe:"RiskKeywords"`        // 公告-风险关键词
 }
 
 func NewF10(date, code string) *F10 {

@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.5.6] - 2023-10-25
+### Changed
+- 优化规则引擎.
+- 子命令增加测试参数异常的测试性代码.
+- 增加输出规则列表的子命令.
+- ResourcesPath改为常量.
+- 增加过滤规则功能.
+- 主程序增加回测模块.
+- 修订README中各模块的完成情况.
+- 增加回测功能.
+
 ## [0.5.5] - 2023-10-24
 ### Changed
 - 增加修订application的初始化代码.
@@ -314,8 +325,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.5.5...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.5.6...HEAD
 
+[0.5.6]: https://gitee.com/quant1x/engine/compare/v0.5.5...v0.5.6
 [0.5.5]: https://gitee.com/quant1x/engine/compare/v0.5.4...v0.5.5
 [0.5.4]: https://gitee.com/quant1x/engine/compare/v0.5.3...v0.5.4
 [0.5.3]: https://gitee.com/quant1x/engine/compare/v0.5.2...v0.5.3

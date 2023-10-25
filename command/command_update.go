@@ -76,6 +76,10 @@ func initUpdate() {
 		//CmdUpdate.Flags().BoolVar(&(updateFeatures[i].Value), updateFeatures[i].Name, updateFeatures[i].Value, updateFeatures[i].Usage)
 		commandInit(CmdUpdate, &updateFeatures[i])
 	}
+	CmdUpdate.SetFlagErrorFunc(func(cmd *cmder.Command, err error) error {
+		//flag, value := parseFlagError(err)
+		return nil
+	})
 }
 
 // 全部更新

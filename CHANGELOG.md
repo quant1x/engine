@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.5.9] - 2023-10-25
+### Changed
+- 调整F10的csv字段.
+
 ## [0.5.8] - 2023-10-25
 ### Changed
 - 调整调度任务info级别日志内容.
@@ -333,8 +337,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.5.8...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.5.9...HEAD
 
+[0.5.9]: https://gitee.com/quant1x/engine/compare/v0.5.8...v0.5.9
 [0.5.8]: https://gitee.com/quant1x/engine/compare/v0.5.7...v0.5.8
 [0.5.7]: https://gitee.com/quant1x/engine/compare/v0.5.6...v0.5.7
 [0.5.6]: https://gitee.com/quant1x/engine/compare/v0.5.5...v0.5.6

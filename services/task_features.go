@@ -18,6 +18,7 @@ var (
 
 // 任务 - 更新全部数据
 func jobUpdateAll() {
+	funcName := "jobUpdateAll"
 	now := time.Now()
 	tm := now.Format(trading.CN_SERVERTIME_FORMAT)
 	today := trading.Today()
@@ -45,7 +46,7 @@ func jobUpdateAll() {
 		updateAll()
 		doneUpdate(today, phase)
 	} else {
-		logger.Infof("非全数据更新时段")
+		logger.Infof("%s, 非全数据更新时段", funcName)
 	}
 }
 

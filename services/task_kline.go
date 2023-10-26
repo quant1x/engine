@@ -25,14 +25,11 @@ func jobRealtimeKLine() {
 
 // 更新K线
 func realtimeUpdateOfKLine() {
-	mainStart := time.Now()
 	defer func() {
 		if err := recover(); err != nil {
 			s := string(debug.Stack())
 			logger.Errorf("err=%v, stack=%s", err, s)
 		}
-		elapsedTime := time.Since(mainStart) / time.Millisecond
-		logger.Infof("总耗时: %.3fs", float64(elapsedTime)/1000)
 	}()
 	allCodes := market.GetCodeList()
 	count := len(allCodes)

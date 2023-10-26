@@ -1,8 +1,9 @@
-package models
+package strategies
 
 import (
 	"gitee.com/quant1x/engine/datasets/base"
 	"gitee.com/quant1x/engine/factors"
+	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/smart"
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gotdx/trading"
@@ -25,18 +26,26 @@ const (
 type ModelNo1 struct {
 }
 
-func (m *ModelNo1) Code() ModelKind {
-	return ModelHousNo1
+func (m *ModelNo1) OrderFlag() string {
+	return models.OrderFlagTail
+}
+
+func (m *ModelNo1) Filter(snapshot models.QuoteSnapshot) bool {
+	return RuleFilter(snapshot)
+}
+
+func (m *ModelNo1) Code() models.ModelKind {
+	return models.ModelHousNo1
 }
 
 func (m *ModelNo1) Name() string {
-	return mapStrategies[m.Code()].Name
+	return models.MapStrategies[m.Code()].Name
 }
 
 func (m *ModelNo1) v1Evaluate(securityCode string, result *treemap.Map) {
 	lastDate := trading.LastTradeDate()
 	klines := base.CheckoutKLines(securityCode, lastDate)
-	if len(klines) < KLineMin {
+	if len(klines) < models.KLineMin {
 		return
 	}
 	df := pandas.LoadStructs(klines)
@@ -72,7 +81,7 @@ func (m *ModelNo1) v1Evaluate(securityCode string, result *treemap.Map) {
 	s := factors.BoolIndexOf(d, -1)
 	if s {
 		price := factors.SeriesIndexOf(CLOSE, -1)
-		result.Put(securityCode, ResultInfo{Code: securityCode,
+		result.Put(securityCode, models.ResultInfo{Code: securityCode,
 			Name:         securities.GetStockName(securityCode),
 			Date:         factors.StringIndexOf(DATE, -1),
 			Rate:         0.00,
@@ -88,7 +97,7 @@ func (m *ModelNo1) Evaluate(securityCode string, result *treemap.Map) {
 	if history == nil {
 		return
 	}
-	snapshot := getQuoteSnapshot(securityCode)
+	snapshot := models.GetQuoteSnapshot(securityCode)
 
 	//lastDate := trading.LastTradeDate()
 	//klines := base.CheckoutKLines(securityCode, lastDate)
@@ -133,7 +142,7 @@ func (m *ModelNo1) Evaluate(securityCode string, result *treemap.Map) {
 	if s {
 		price := snapshot.Price
 		date := snapshot.Date
-		result.Put(securityCode, ResultInfo{Code: securityCode,
+		result.Put(securityCode, models.ResultInfo{Code: securityCode,
 			Name:         securities.GetStockName(securityCode),
 			Date:         date,
 			Rate:         0.00,

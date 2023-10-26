@@ -60,7 +60,7 @@ func main() {
 			var model models.Strategy
 			switch strategyNumber {
 			default:
-				model = new(models.ModelNo1)
+				model = new(strategies.ModelNo1)
 			}
 			fmt.Printf("策略模块: %s\n", model.Name())
 			if strategies.CountDays > 0 {

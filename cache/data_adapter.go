@@ -131,6 +131,8 @@ func Plugins(mask ...Kind) (list []DataAdapter) {
 }
 
 func PluginsWithName(pluginType Kind, keywords ...string) (list []DataAdapter) {
+	pluginMutex.Lock()
+	defer pluginMutex.Unlock()
 	if len(keywords) == 0 {
 		return
 	}

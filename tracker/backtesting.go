@@ -97,7 +97,7 @@ func BackTesting(countDays, countTopN int) {
 			securityName := "unknown"
 			f10 := smart.GetL5F10(securityCode)
 			if f10 != nil {
-				securityName = f10.Name_
+				securityName = f10.SecurityName
 			}
 
 			// 下一个交易日开盘价

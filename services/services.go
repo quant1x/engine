@@ -10,7 +10,8 @@ import (
 
 const (
 	// 定制任务初始化cron定位9点
-	cronInit = "0 9 * * *"
+	cronInit            = "0 9 * * *"
+	cronDefaultInterval = "@every 10s"
 )
 
 func init() {
@@ -19,11 +20,16 @@ func init() {
 	if err != nil {
 		logger.Fatal(err)
 	}
-	// 实时更新K线
-	err = Register("realtime_kline", "", jobRealtimeKLine)
+	// 刷新快照
+	err = Register("update_snapshot", "@every 2s", jobUpdateSnapshot)
 	if err != nil {
 		logger.Fatal(err)
 	}
+	//// 实时更新K线
+	//err = Register("realtime_kline", "", jobRealtimeKLine)
+	//if err != nil {
+	//	logger.Fatal(err)
+	//}
 	// 更新全部
 	err = Register("update_all", "", jobUpdateAll)
 	if err != nil {

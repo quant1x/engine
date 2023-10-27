@@ -15,7 +15,7 @@ func (r RuleSubNew) Name() string {
 }
 
 func (r RuleSubNew) Exec(snapshot models.QuoteSnapshot) error {
-	return ErrExecuteFailed
+	return nil
 }
 
 func init() {

@@ -33,25 +33,12 @@ var (
 func Register(name, spec string, callback func()) error {
 	jobMutex.Lock()
 	defer jobMutex.Unlock()
-	//// 测试 - begin
-	//funcType := reflect.TypeOf(Register)
-	//if funcType.Kind() == reflect.Func {
-	//	numArgs := funcType.NumIn()
-	//	fmt.Println("Function has", numArgs, "arguments:")
-	//	for i := 0; i < numArgs; i++ {
-	//		argType := funcType.In(i)
-	//		fmt.Println("    Arg", i+1, "type:", argType)
-	//	}
-	//}
-	//v := reflect.ValueOf(callback)
-	//fmt.Println(callback, v.String())
-	//// 测试 - end
 	_, ok := mapJobs[name]
 	if ok {
 		return ErrAlreadyExists
 	}
 	if len(spec) == 0 {
-		spec = "@every 10s"
+		spec = cronDefaultInterval
 	}
 	job := Task{name: name, spec: spec, Service: callback}
 	mapJobs[job.name] = job
@@ -60,6 +47,7 @@ func Register(name, spec string, callback func()) error {
 
 // DaemonService 守护进程服务入口
 func DaemonService() {
+	jobMutex.Lock()
 	// 启动服务
 	logger.Infof("启动定时任务列表")
 	crontab.Start()
@@ -74,6 +62,7 @@ func DaemonService() {
 			logger.Infof(message + "success")
 		}
 	}
+	jobMutex.Unlock()
 	// 等待结束
 	coroutine.WaitForShutdown()
 	// 关闭任务调度

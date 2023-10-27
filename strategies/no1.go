@@ -98,24 +98,9 @@ func (m *ModelNo1) Evaluate(securityCode string, result *treemap.Map) {
 		return
 	}
 	snapshot := models.GetQuoteSnapshot(securityCode)
-
-	//lastDate := trading.LastTradeDate()
-	//klines := base.CheckoutKLines(securityCode, lastDate)
-	//if len(klines) < KLineMin {
-	//	return
-	//}
-	//df := pandas.LoadStructs(klines)
-	//if df.Err != nil {
-	//	return
-	//}
-	//var (
-	//	DATE  = df.Col("date")
-	//	CLOSE = df.ColAsNDArray("close")
-	//)
-	//days := CLOSE.Len()
-	//if days < 1 {
-	//	return
-	//}
+	if snapshot == nil {
+		return
+	}
 
 	// 取出昨日的数据
 	lastNo1 := history.Last.No1

@@ -35,9 +35,6 @@ func main() {
 	}
 	_ = pprof.StartCPUProfile(fCpu)
 	defer pprof.StopCPUProfile()
-	//go func() {
-	//	log.Println(http.ListenAndServe(":8000", nil))
-	//}()
 	mainStart := time.Now()
 	defer func() {
 		if err := recover(); err != nil {

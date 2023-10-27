@@ -13,11 +13,18 @@ import (
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/text/runewidth"
 	"gitee.com/quant1x/gox/util/treemap"
+	"runtime/debug"
 	"sync"
 	"time"
 )
 
 func updateStockFeature(wg *sync.WaitGroup, bar *progressbar.Bar, feature factors.Feature, code string, cacheDate, featureDate string, op cache.OpKind, p *treemap.Map, sb *cache.ScoreBoard) {
+	defer func() {
+		if err := recover(); err != nil {
+			s := string(debug.Stack())
+			logger.Errorf("err=%v, stack=%s", err, s)
+		}
+	}()
 	now := time.Now()
 	defer sb.Add(1, time.Since(now))
 	if op == cache.OpRepair {

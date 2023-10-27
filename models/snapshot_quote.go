@@ -101,10 +101,9 @@ func BatchSnapShot(codes []string) []QuoteSnapshot {
 		// 补全F10相关
 		f10 := smart.GetL5F10(securityCode)
 		if f10 != nil {
-			snapshot.Name = f10.Name_
+			snapshot.Name = f10.SecurityName
 			snapshot.Capital = f10.Capital
 			snapshot.FreeCapital = f10.FreeCapital
-			//snapshot.OpenTurnZ = 10000 * float64(snapshot.OpenVolume) / float64(snapshot.FreeCapital)
 			snapshot.OpenTurnZ = f10.TurnZ(snapshot.OpenVolume)
 		}
 		// 补全扩展相关

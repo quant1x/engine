@@ -1,6 +1,13 @@
 package models
 
-import "gitee.com/quant1x/gox/util/treemap"
+import (
+	"gitee.com/quant1x/engine/datasets"
+	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/gox/util/treemap"
+	"gitee.com/quant1x/pandas/stat"
+	"gitee.com/quant1x/ta-lib/linear"
+	"sort"
+)
 
 // ModelKind 做多64个策略
 type ModelKind = int
@@ -19,12 +26,21 @@ const (
 	KLineMin        = 89 // K线最少记录数
 )
 
+const (
+	OrderFlagHead = "head" // 早盘订单标志
+	OrderFlagTail = "tail" // 尾盘订单标志
+)
+
 // Strategy 策略/公式指标(features)接口
 type Strategy interface {
 	// Code 策略编号
 	Code() ModelKind
 	// Name 策略名称
 	Name() string
+	// OrderFlag 订单标志
+	OrderFlag() string
+	// Filter 过滤
+	Filter(snapshot QuoteSnapshot) bool
 	// Evaluate 评估 日线数据
 	Evaluate(securityCode string, result *treemap.Map)
 }
@@ -35,7 +51,7 @@ type StrategyWrap struct {
 }
 
 var (
-	mapStrategies = map[ModelKind]StrategyWrap{
+	MapStrategies = map[ModelKind]StrategyWrap{
 		ModelZero:    {Type: ModelZero, Name: "0号策略"},
 		ModelHousNo1: {Type: ModelHousNo1, Name: "1号策略"},
 		ModelTail:    {Type: ModelTail, Name: "尾盘策略"},
@@ -65,4 +81,44 @@ type ResultInfo struct {
 	BlockTopName   string  `name:"领涨股名称" dataframe:"block_top_name"`
 	BlockTopRate   float64 `name:"领涨股涨幅%" dataframe:"block_top_rate"`
 	Tendency       string  `name:"短线趋势" dataframe:"tendency"`
+}
+
+// Predict 预测趋势
+func (this *ResultInfo) Predict() {
+	N := 3
+	df := datasets.BasicKLine(this.Code)
+	if df.Nrow() < N+1 {
+		return
+	}
+	limit := api.RangeFinite(-N)
+	OPEN := df.Col("open").Select(limit)
+	CLOSE := df.Col("close").Select(limit)
+	HIGH := df.Col("high").Select(limit)
+	LOW := df.Col("low").Select(limit)
+	lastClose := stat.AnyToFloat64(CLOSE.IndexOf(-1))
+	po := linear.CurveRegression(OPEN).IndexOf(-1).(stat.DType)
+	pc := linear.CurveRegression(CLOSE).IndexOf(-1).(stat.DType)
+	ph := linear.CurveRegression(HIGH).IndexOf(-1).(stat.DType)
+	pl := linear.CurveRegression(LOW).IndexOf(-1).(stat.DType)
+	if po > lastClose {
+		this.Tendency = "高开"
+	} else if po == lastClose {
+		this.Tendency = "平开"
+	} else {
+		this.Tendency = "低开"
+	}
+	if pl > ph {
+		this.Tendency += ",冲高回落"
+	} else if pl > pc {
+		this.Tendency += ",探底回升"
+	} else if pc < pl {
+		this.Tendency += ",趋势向下"
+	} else {
+		this.Tendency += ",短线向好"
+	}
+
+	fs := []float64{float64(po), float64(pc), float64(ph), float64(pl)}
+	sort.Float64s(fs)
+
+	_ = lastClose
 }

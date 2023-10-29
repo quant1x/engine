@@ -95,8 +95,6 @@ func GetAllSnapshots(barIndex *int) {
 			for _, v := range list {
 				// 修订日期
 				v.Date = currentDate
-				//securityCode := proto.GetSecurityCode(v.Market, v.Code)
-				//v.Code = securityCode
 				snapshots = append(snapshots, v)
 			}
 			break

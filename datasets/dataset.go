@@ -12,13 +12,14 @@ const (
 )
 
 const (
-	BaseXdxr             = cache.PluginMaskBaseData | (baseKind + 1) // 基础数据-除权除息
-	BaseKLine            = cache.PluginMaskBaseData | (baseKind + 2) // 基础数据-基础K线
-	BaseTransaction      = cache.PluginMaskBaseData | (baseKind + 3) // 基础数据-历史成交
-	BaseMinutes          = cache.PluginMaskBaseData | (baseKind + 4) // 基础数据-分时数据
-	BaseQuarterlyReports = cache.PluginMaskBaseData | (baseKind + 5) // 基础数据-季报
-	BaseSafetyScore      = cache.PluginMaskBaseData | (baseKind + 6) // 基础数据-安全分
-	BaseKLineWide        = cache.PluginMaskBaseData | (baseKind + 7) // 基础数据-宽表
+	BaseXdxr                = cache.PluginMaskBaseData | (baseKind + 1) // 基础数据-除权除息
+	BaseKLine               = cache.PluginMaskBaseData | (baseKind + 2) // 基础数据-基础K线
+	BaseTransaction         = cache.PluginMaskBaseData | (baseKind + 3) // 基础数据-历史成交
+	BaseMinutes             = cache.PluginMaskBaseData | (baseKind + 4) // 基础数据-分时数据
+	BaseQuarterlyReports    = cache.PluginMaskBaseData | (baseKind + 5) // 基础数据-季报
+	BaseSafetyScore         = cache.PluginMaskBaseData | (baseKind + 6) // 基础数据-安全分
+	BaseKLineWide           = cache.PluginMaskBaseData | (baseKind + 7) // 基础数据-宽表
+	BasePerformanceForecast = cache.PluginMaskBaseData | (baseKind + 8) // 基础数据-业绩预告
 	//BaseAggregationData  cache.Kind = 1 << 63
 	//BaseTest             DataKind   = 0x8000000000000000
 )
@@ -40,14 +41,16 @@ type DataSet interface {
 }
 
 var (
+	// 数据集集合
 	mapDataSets = map[cache.Kind]cache.DataSummary{
-		BaseXdxr:             cache.Summary(BaseXdxr, "xdxr", "除权除息", cache.DefaultDataProvider),
-		BaseKLine:            cache.Summary(BaseKLine, "day", "日K线", cache.DefaultDataProvider),
-		BaseTransaction:      cache.Summary(BaseTransaction, "trans", "成交数据", cache.DefaultDataProvider),
-		BaseMinutes:          cache.Summary(BaseMinutes, "minutes", "分时数据", cache.DefaultDataProvider),
-		BaseQuarterlyReports: cache.Summary(BaseQuarterlyReports, "reports", "季报", cache.DefaultDataProvider),
-		BaseSafetyScore:      cache.Summary(BaseSafetyScore, "safetyscore", "安全分", cache.DefaultDataProvider),
-		BaseKLineWide:        cache.Summary(BaseKLineWide, "wide", "宽表", cache.DefaultDataProvider),
+		BaseXdxr:                cache.Summary(BaseXdxr, "xdxr", "除权除息", cache.DefaultDataProvider),
+		BaseKLine:               cache.Summary(BaseKLine, "day", "日K线", cache.DefaultDataProvider),
+		BaseTransaction:         cache.Summary(BaseTransaction, "trans", "成交数据", cache.DefaultDataProvider),
+		BaseMinutes:             cache.Summary(BaseMinutes, "minutes", "分时数据", cache.DefaultDataProvider),
+		BaseQuarterlyReports:    cache.Summary(BaseQuarterlyReports, "reports", "季报", cache.DefaultDataProvider),
+		BaseSafetyScore:         cache.Summary(BaseSafetyScore, "safetyscore", "安全分", cache.DefaultDataProvider),
+		BaseKLineWide:           cache.Summary(BaseKLineWide, "wide", "宽表", cache.DefaultDataProvider),
+		BasePerformanceForecast: cache.Summary(BasePerformanceForecast, "forecast", "业绩预告", cache.DefaultDataProvider),
 	}
 )
 

@@ -71,12 +71,20 @@ func QuarterlyReportFilename(code, date string) string {
 	return filename
 }
 
-// ReportsFilename 报告数据文件名
-func ReportsFilename(date string) string {
-	keyword := "reports"
+func quarterlyFilename(date, keyword string) string {
 	path := quarterlyCachePath(date)
 	filename := fmt.Sprintf("%s/%s.csv", path, keyword)
 	return filename
+}
+
+// ReportsFilename 报告数据文件名
+func ReportsFilename(date string) string {
+	return quarterlyFilename(date, "reports")
+}
+
+// PreviewReportFilename 业绩预告文件名
+func PreviewReportFilename(date string) string {
+	return quarterlyFilename(date, "preview")
 }
 
 // TickFilename tick文件比较多, 目录结构${tick}/${YYYY}/${YYYYMMDD}/${CacheIdPath}

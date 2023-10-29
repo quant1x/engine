@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.6.2] - 2023-10-30
+### Changed
+- 增加业绩预告数据.
+
 ## [0.6.1] - 2023-10-29
 ### Changed
 - 优化imports.
@@ -383,8 +387,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.6.1...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.6.2...HEAD
 
+[0.6.2]: https://gitee.com/quant1x/engine/compare/v0.6.1...v0.6.2
 [0.6.1]: https://gitee.com/quant1x/engine/compare/v0.6.0...v0.6.1
 [0.6.0]: https://gitee.com/quant1x/engine/compare/v0.5.9...v0.6.0
 [0.5.9]: https://gitee.com/quant1x/engine/compare/v0.5.8...v0.5.9

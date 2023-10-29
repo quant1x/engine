@@ -30,7 +30,8 @@ type Cache1D[T factors.Feature] struct {
 	Date     string // 日期
 	filename string // 缓存文件名
 	//mapCache    map[string]T
-	mapCache    concurrent.ConcurrentHashMap[string, T]
+	//mapCache    concurrent.ConcurrentHashMap[string, T]
+	mapCache    *concurrent.TreeMap[string, T]
 	replaceDate string // 替换缓存的日期
 	allCodes    []string
 	tShadow     T // 泛型T的影子
@@ -45,13 +46,14 @@ func NewCache1D[T factors.Feature](key string, factory func(date, securityCode s
 		Date:     "",
 		factory:  factory,
 		//mapCache:    map[string]T{},
-		mapCache:    concurrent.NewHashMap[string, T](),
+		//mapCache:    concurrent.NewHashMap[string, T](),
+		mapCache:    concurrent.NewTreeMap[string, T](),
 		replaceDate: "",
 		allCodes:    []string{},
 	}
 	d1.Date = cache.DefaultCanReadDate()
 	d1.allCodes = market.GetCodeList()
-	d1.Checkout(d1.Date)
+	//d1.Checkout(d1.Date)
 	d1.tShadow = d1.factory(d1.Date, defaultSecurityCode)
 	RegisterCacheLoader(key, d1)
 	return d1
@@ -107,7 +109,8 @@ func (this *Cache1D[T]) loadCache(date string) {
 	for _, v := range list {
 		code := v.GetSecurityCode()
 		//this.mapCache[code] = v
-		this.mapCache.Set(code, v)
+		//this.mapCache.Set(code, v)
+		this.mapCache.Put(code, v)
 	}
 }
 
@@ -183,10 +186,7 @@ func (this *Cache1D[T]) Check(cacheDate, featureDate string) {
 func (this *Cache1D[T]) Get(securityCode string, date ...string) *T {
 	this.Checkout(date...)
 	this.once.Do(this.loadDefault)
-	//this.m.RLock()
-	//t, ok := this.mapCache[securityCode]
 	t, ok := this.mapCache.Get(securityCode)
-	//this.m.RUnlock()
 	if ok {
 		return &t
 	}
@@ -197,10 +197,7 @@ func (this *Cache1D[T]) Get(securityCode string, date ...string) *T {
 func (this *Cache1D[T]) Set(securityCode string, newValue T, date ...string) {
 	this.Checkout(date...)
 	this.once.Do(this.loadDefault)
-	//this.m.Lock()
-	//this.mapCache[securityCode] = newValue
-	this.mapCache.Set(securityCode, newValue)
-	//this.m.Unlock()
+	this.mapCache.Put(securityCode, newValue)
 }
 
 // Apply 数据合并
@@ -209,9 +206,6 @@ func (this *Cache1D[T]) Set(securityCode string, newValue T, date ...string) {
 func (this *Cache1D[T]) Apply(merge func(code string, local *T) (updated bool)) {
 	list := []T{}
 	for _, securityCode := range this.allCodes {
-		//this.m.RLock()
-		//v, found := this.mapCache[securityCode]
-		//this.m.RUnlock()
 		v, found := this.mapCache.Get(securityCode)
 		if !found && this.factory != nil {
 			v = this.factory(this.Date, securityCode)
@@ -219,10 +213,7 @@ func (this *Cache1D[T]) Apply(merge func(code string, local *T) (updated bool)) 
 		if merge != nil {
 			ok := merge(securityCode, &v)
 			if ok {
-				//this.m.Lock()
-				//this.mapCache[securityCode] = v
-				//this.m.Unlock()
-				this.mapCache.Set(securityCode, v)
+				this.mapCache.Put(securityCode, v)
 			}
 		}
 		list = append(list, v)
@@ -238,9 +229,6 @@ func (this *Cache1D[T]) Apply(merge func(code string, local *T) (updated bool)) 
 func (this *Cache1D[T]) Merge(p *treemap.Map) {
 	list := []T{}
 	for _, securityCode := range this.allCodes {
-		//this.m.RLock()
-		//v, found := this.mapCache[securityCode]
-		//this.m.RUnlock()
 		v, found := this.mapCache.Get(securityCode)
 		if !found && this.factory != nil {
 			v = this.factory(this.Date, securityCode)
@@ -250,10 +238,7 @@ func (this *Cache1D[T]) Merge(p *treemap.Map) {
 			if ok {
 				_ = api.CopyWithOption(v, tmp, api.Option{})
 				if ok {
-					//this.m.Lock()
-					//this.mapCache[securityCode] = v
-					//this.m.Unlock()
-					this.mapCache.Set(securityCode, v)
+					this.mapCache.Put(securityCode, v)
 				}
 			}
 		}

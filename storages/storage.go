@@ -26,11 +26,12 @@ func getQmtCachePath() string {
 	return path
 }
 
-func OutputStatistics(orderFlag string, top int, date string, v []models.Statistics) {
+func OutputStatistics(model models.Strategy, top int, date string, v []models.Statistics) {
 	df := pandas.LoadStructs(v)
 	if df.Nrow() == 0 {
 		return
 	}
+	orderFlag := model.OrderFlag()
 	date = trading.FixTradeDate(date, cache.FilenameDate)
 	filename := fmt.Sprintf("%s/%s-%d.csv", GetResultCachePath(), date, top)
 	_ = df.WriteCSV(filename)
@@ -52,4 +53,5 @@ func OutputStatistics(orderFlag string, top int, date string, v []models.Statist
 			api.CloseQuietly(file)
 		}
 	}
+	stockPoolMerge(model, date, v)
 }

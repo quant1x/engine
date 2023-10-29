@@ -212,7 +212,7 @@ func BackTesting(countDays, countTopN int) {
 		fmt.Printf("\t==> 溢价超5%%: %d/%d, %.2f%%\n", gtP5, count, 100*float64(gtP5)/float64(count))
 		fmt.Println()
 		allResult = append(allResult, results...)
-		storages.OutputStatistics("tracker", topN, date, results)
+		//storages.OutputStatistics("tracker", topN, date, results)
 	}
 
 	// 合计输出

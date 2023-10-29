@@ -6,7 +6,7 @@ import (
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/strategies"
 	"gitee.com/quant1x/engine/tracker"
-	"gitee.com/quant1x/engine/util/functions"
+	"gitee.com/quant1x/engine/util/runtime"
 	"gitee.com/quant1x/gox/logger"
 	cmder "github.com/spf13/cobra"
 	"log"
@@ -47,7 +47,7 @@ func main() {
 	}()
 	// stock模块内的更新版本号
 	command.UpdateApplicationVersion(MinVersion)
-	functions.GOMAXPROCS()
+	runtime.GOMAXPROCS()
 
 	var rootCmd = &cmder.Command{
 		Use: command.Application,

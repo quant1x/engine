@@ -7,12 +7,10 @@ import (
 	"gitee.com/quant1x/engine/strategies"
 	"gitee.com/quant1x/engine/tracker"
 	"gitee.com/quant1x/engine/util/runtime"
-	"gitee.com/quant1x/gox/logger"
 	cmder "github.com/spf13/cobra"
 	"log"
 	_ "net/http/pprof"
 	"os"
-	"runtime/debug"
 	"runtime/pprof"
 	"time"
 )
@@ -37,11 +35,7 @@ func main() {
 	defer pprof.StopCPUProfile()
 	mainStart := time.Now()
 	defer func() {
-		if err := recover(); err != nil {
-			s := string(debug.Stack())
-			fmt.Printf("\nerr=%v, stack=%s\n", err, s)
-			logger.Fatalf("%s 异常: %+v", command.Application, err)
-		}
+		runtime.CatchPanic()
 		elapsedTime := time.Since(mainStart) / time.Millisecond
 		fmt.Printf("\n总耗时: %.3fs\n", float64(elapsedTime)/1000)
 	}()

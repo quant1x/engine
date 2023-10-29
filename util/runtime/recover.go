@@ -7,7 +7,8 @@ import (
 	"runtime/debug"
 )
 
-func Recover() {
+// CatchPanic 捕获panic
+func CatchPanic() {
 	if err := recover(); err != nil {
 		s := string(debug.Stack())
 		fmt.Printf("\nerr=%v, stack=%s\n", err, s)

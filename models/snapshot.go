@@ -34,7 +34,7 @@ func GetQuoteSnapshot(securityCode string) *quotes.Snapshot {
 // GetStrategySnapshot 从缓存中获取快照
 func GetStrategySnapshot(securityCode string) *QuoteSnapshot {
 	v := GetQuoteSnapshot(securityCode)
-	if v.State != quotes.TDX_SECURITY_TRADE_STATE_NORMAL {
+	if v == nil || v.State != quotes.TDX_SECURITY_TRADE_STATE_NORMAL {
 		// 非正常交易的记录忽略掉
 		return nil
 	}
@@ -52,7 +52,7 @@ func GetStrategySnapshot(securityCode string) *QuoteSnapshot {
 	}
 	history := smart.GetL5History(securityCode)
 	if history != nil {
-		snapshot.QuantityRatio = float64(snapshot.OpenVolume) / history.MV5
+		snapshot.QuantityRatio = float64(snapshot.OpenVolume) / history.GetMV5()
 	}
 	snapshot.OpenBiddingDirection, snapshot.OpenVolumeDirection = v.CheckDirection()
 	return &snapshot
@@ -110,4 +110,53 @@ func GetAllSnapshots(barIndex *int) {
 	if barIndex != nil {
 		*barIndex++
 	}
+}
+
+// GetAllSnapshotsV2 同步快照数据
+func GetAllSnapshotsV2() map[string]quotes.Snapshot {
+	tmpMap := map[string]quotes.Snapshot{}
+	allCodes := securities.AllCodeList()
+	count := len(allCodes)
+	//tdxApi, err := quotes.NewStdApi()
+	//if err != nil {
+	//	logger.Error(err)
+	//	return tmpMap
+	//}
+	//defer tdxApi.Close()
+	tdxApi := gotdx.GetTdxApi()
+	var snapshots []quotes.Snapshot
+	for start := 0; start < count; start += quotes.TDX_SECURITY_QUOTES_MAX {
+		length := count - start
+		if length >= quotes.TDX_SECURITY_QUOTES_MAX {
+			length = quotes.TDX_SECURITY_QUOTES_MAX
+		}
+		var subCodes []string
+		for i := 0; i < length; i++ {
+			securityCode := allCodes[start+i]
+			subCodes = append(subCodes, securityCode)
+		}
+		if len(subCodes) == 0 {
+			continue
+		}
+		currentDate := trading.GetCurrentlyDay()
+		for i := 0; i < quotes.DefaultRetryTimes; i++ {
+			list, err := tdxApi.GetSnapshot(subCodes)
+			if err != nil {
+				logger.Errorf("ZS: 网络异常: %+v, 重试: %d", err, i+1)
+				continue
+			}
+			for _, v := range list {
+				// 修订日期
+				v.Date = currentDate
+				//securityCode := proto.GetSecurityCode(v.Market, v.Code)
+				//v.Code = securityCode
+				snapshots = append(snapshots, v)
+			}
+			break
+		}
+	}
+	for _, v := range snapshots {
+		tmpMap[v.SecurityCode] = v
+	}
+	return tmpMap
 }

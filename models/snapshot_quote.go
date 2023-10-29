@@ -61,6 +61,35 @@ type QuoteSnapshot struct {
 	AverageBiddingVolume  int                  `name:"委托均量"` // 委托均量
 }
 
+func QuoteSnapshotFromProtocol(v quotes.Snapshot) QuoteSnapshot {
+	snapshot := QuoteSnapshot{}
+	_ = api.Copy(&snapshot, &v)
+	securityCode := proto.GetSecurityCode(v.Market, v.Code)
+	snapshot.Code = securityCode
+	snapshot.OpeningChangeRate = num.NetChangeRate(snapshot.LastClose, snapshot.Open)
+	snapshot.ChangeRate = num.NetChangeRate(snapshot.LastClose, snapshot.Price)
+	snapshot.PremiumRate = num.NetChangeRate(snapshot.Open, snapshot.Price)
+	snapshot.OpenBiddingDirection, snapshot.OpenVolumeDirection = v.CheckDirection()
+	// 涨跌力度
+	snapshot.ChangePower = float64(snapshot.OpenVolume) / snapshot.OpeningChangeRate
+	snapshot.AverageBiddingVolume = v.AverageBiddingVolume()
+
+	// 补全F10相关
+	f10 := smart.GetL5F10(securityCode)
+	if f10 != nil {
+		snapshot.Name = f10.SecurityName
+		snapshot.Capital = f10.Capital
+		snapshot.FreeCapital = f10.FreeCapital
+		snapshot.OpenTurnZ = f10.TurnZ(snapshot.OpenVolume)
+	}
+	// 补全扩展相关
+	history := smart.GetL5History(securityCode)
+	if history != nil && history.MV5 > 0 {
+		snapshot.QuantityRatio = float64(snapshot.OpenVolume) / history.GetMV5()
+	}
+	return snapshot
+}
+
 // BatchSnapShot 批量获取即时行情数据快照
 func BatchSnapShot(codes []string) []QuoteSnapshot {
 	tdxApi := gotdx.GetTdxApi()
@@ -86,31 +115,32 @@ func BatchSnapShot(codes []string) []QuoteSnapshot {
 			// 非正常交易的记录忽略掉
 			continue
 		}
-		snapshot := QuoteSnapshot{}
-		_ = api.Copy(&snapshot, &v)
-		securityCode := proto.GetSecurityCode(v.Market, v.Code)
-		snapshot.Code = securityCode
-		snapshot.OpeningChangeRate = num.NetChangeRate(snapshot.LastClose, snapshot.Open)
-		snapshot.ChangeRate = num.NetChangeRate(snapshot.LastClose, snapshot.Price)
-		snapshot.PremiumRate = num.NetChangeRate(snapshot.Open, snapshot.Price)
-		snapshot.OpenBiddingDirection, snapshot.OpenVolumeDirection = v.CheckDirection()
-		// 涨跌力度
-		snapshot.ChangePower = float64(snapshot.OpenVolume) / snapshot.OpeningChangeRate
-		snapshot.AverageBiddingVolume = v.AverageBiddingVolume()
-
-		// 补全F10相关
-		f10 := smart.GetL5F10(securityCode)
-		if f10 != nil {
-			snapshot.Name = f10.SecurityName
-			snapshot.Capital = f10.Capital
-			snapshot.FreeCapital = f10.FreeCapital
-			snapshot.OpenTurnZ = f10.TurnZ(snapshot.OpenVolume)
-		}
-		// 补全扩展相关
-		extend := smart.GetL5History(securityCode)
-		if extend != nil && extend.MV5 > 0 {
-			snapshot.QuantityRatio = float64(snapshot.OpenVolume) / extend.MV5
-		}
+		//snapshot := QuoteSnapshot{}
+		//_ = api.Copy(&snapshot, &v)
+		//securityCode := proto.GetSecurityCode(v.Market, v.Code)
+		//snapshot.Code = securityCode
+		//snapshot.OpeningChangeRate = num.NetChangeRate(snapshot.LastClose, snapshot.Open)
+		//snapshot.ChangeRate = num.NetChangeRate(snapshot.LastClose, snapshot.Price)
+		//snapshot.PremiumRate = num.NetChangeRate(snapshot.Open, snapshot.Price)
+		//snapshot.OpenBiddingDirection, snapshot.OpenVolumeDirection = v.CheckDirection()
+		//// 涨跌力度
+		//snapshot.ChangePower = float64(snapshot.OpenVolume) / snapshot.OpeningChangeRate
+		//snapshot.AverageBiddingVolume = v.AverageBiddingVolume()
+		//
+		//// 补全F10相关
+		//f10 := smart.GetL5F10(securityCode)
+		//if f10 != nil {
+		//	snapshot.Name = f10.SecurityName
+		//	snapshot.Capital = f10.Capital
+		//	snapshot.FreeCapital = f10.FreeCapital
+		//	snapshot.OpenTurnZ = f10.TurnZ(snapshot.OpenVolume)
+		//}
+		//// 补全扩展相关
+		//history := smart.GetL5History(securityCode)
+		//if history != nil && history.MV5 > 0 {
+		//	snapshot.QuantityRatio = float64(snapshot.OpenVolume) / history.GetMV5()
+		//}
+		snapshot := QuoteSnapshotFromProtocol(v)
 
 		list = append(list, snapshot)
 	}

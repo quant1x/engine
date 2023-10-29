@@ -146,3 +146,12 @@ func (this *History) Increase(snapshot quotes.Snapshot) Feature {
 	//TODO implement me
 	panic("implement me")
 }
+
+// GetMV5 前5日分钟均量
+func (this *History) GetMV5() float64 {
+	minutes := trading.Minutes(this.GetDate())
+	if minutes < 1 {
+		minutes = 1
+	}
+	return this.MV5 / float64(minutes)
+}

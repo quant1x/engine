@@ -127,11 +127,15 @@ func BasicKLineForSnapshot(v quotes.Snapshot) {
 	today := trading.Today()
 	if lastTradeday != today {
 		// 当天非交易日, 不更新, 直接返回
-		//return
+		if !cache.Debug {
+			return
+		}
 	}
 	if nowServerTime < trading.CN_TradingStartTime || nowServerTime > trading.CN_TradingStopTime {
 		// 非交易时间, 不更新, 直接返回
-		//return
+		if !cache.Debug {
+			return
+		}
 	}
 	if v.State == quotes.TDX_SECURITY_TRADE_STATE_DELISTING || v.Code == proto.StockDelisting || v.LastClose == float64(0) {
 		// 终止上市的数据略过

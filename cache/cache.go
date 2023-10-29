@@ -11,8 +11,6 @@ const (
 	cacheDirMode os.FileMode = 0755
 	// 文件权限
 	cacheFileMode os.FileMode = 0644
-	// 调试开关
-	debug = false
 	// 文件替换模式, 会用到os.TRUNC
 	cacheReplace = os.O_CREATE | os.O_RDWR | os.O_TRUNC
 	// 更新

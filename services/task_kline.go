@@ -1,14 +1,15 @@
 package services
 
 import (
+	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets/base"
 	"gitee.com/quant1x/engine/market"
-	"gitee.com/quant1x/gotdx/quotes"
+	"gitee.com/quant1x/engine/models"
+	"gitee.com/quant1x/engine/util"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/logger"
+	"gitee.com/quant1x/gox/progressbar"
 	"runtime/debug"
-	"sync"
-	"time"
 )
 
 // 任务 - 实时更新K线
@@ -19,7 +20,11 @@ func jobRealtimeKLine() {
 	if updateInRealTime && isTrading(status) {
 		realtimeUpdateOfKLine()
 	} else {
-		logger.Infof("%s, 非尾盘交易时段: %d", funcName, status)
+		if cache.Debug {
+			realtimeUpdateOfKLine()
+		} else {
+			logger.Infof("%s, 非尾盘交易时段: %d", funcName, status)
+		}
 	}
 }
 
@@ -31,36 +36,26 @@ func realtimeUpdateOfKLine() {
 			logger.Errorf("err=%v, stack=%s", err, s)
 		}
 	}()
+	barIndex := biRealtimeKLine
+	//mapSnapshot := models.GetAllSnapshotsV2()
 	allCodes := market.GetCodeList()
-	count := len(allCodes)
-	var wg sync.WaitGroup
-	for start := 0; start < count; start += quotes.TDX_SECURITY_QUOTES_MAX {
-		length := count - start
-		if length >= quotes.TDX_SECURITY_QUOTES_MAX {
-			length = quotes.TDX_SECURITY_QUOTES_MAX
-		}
-		subCodes := []string{}
-		for i := 0; i < length; i++ {
-			securityCode := allCodes[start+i]
-			subCodes = append(subCodes, securityCode)
-		}
-		if len(subCodes) == 0 {
-			continue
-		}
-		updateKLine := func(waitGroup *sync.WaitGroup, codes []string) {
-			waitGroup.Done()
-			for i := 0; i < quotes.DefaultRetryTimes; i++ {
-				err := base.BatchRealtimeBasicKLine(codes)
-				if err != nil {
-					logger.Errorf("ZS: 网络异常: %+v, 重试: %d", err, i+1)
-					time.Sleep(time.Second * 1)
-					continue
-				}
-				break
+	//var wg sync.WaitGroup
+	wg := util.NewRollingWaitGroup(5)
+	bar := progressbar.NewBar(barIndex, "执行[实时更新K线]", len(allCodes))
+	for _, code := range allCodes {
+		updateKLine := func(waitGroup *util.RollingWaitGroup, securityCode string) {
+			defer waitGroup.Done()
+			bar.Add(1)
+			//if snapshot, ok := mapSnapshot[securityCode]; ok {
+			//	base.BasicKLineForSnapshot(snapshot)
+			//}
+			snapshot := models.GetQuoteSnapshot(securityCode)
+			if snapshot != nil {
+				base.BasicKLineForSnapshot(*snapshot)
 			}
 		}
 		wg.Add(1)
-		go updateKLine(&wg, subCodes)
+		go updateKLine(wg, code)
 	}
 	wg.Wait()
 }

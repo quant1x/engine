@@ -6,6 +6,7 @@ import (
 	"gitee.com/quant1x/gox/coroutine"
 	"gitee.com/quant1x/gox/cron"
 	"gitee.com/quant1x/gox/logger"
+	"strings"
 	"sync"
 )
 
@@ -51,7 +52,7 @@ func DaemonService() {
 	// 启动服务
 	logger.Infof("启动定时任务列表")
 	crontab.Start()
-
+	fmt.Printf("%s", strings.Repeat("\n", 2))
 	for _, v := range mapJobs {
 		message := fmt.Sprintf("Service: %s, Interval: %s, ", v.name, v.spec)
 		logger.Info(message)

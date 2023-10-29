@@ -1,7 +1,6 @@
 package services
 
 import (
-	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/cachel5"
 	"gitee.com/quant1x/gotdx"
@@ -44,7 +43,6 @@ func init() {
 	if err != nil {
 		logger.Fatal(err)
 	}
-	fmt.Println()
 }
 
 // 任务 - 交易日数据缓存重置

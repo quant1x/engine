@@ -47,13 +47,13 @@ func main() {
 	}()
 	// stock模块内的更新版本号
 	command.UpdateApplicationVersion(MinVersion)
-	runtime.GOMAXPROCS()
+	runtime.GoMaxProcs()
 
 	var rootCmd = &cmder.Command{
 		Use: command.Application,
 		Run: func(cmd *cmder.Command, args []string) {
 			//stat.SetAvx2Enabled(modules.CpuAvx2)
-			//runtime.GOMAXPROCS(modules.CpuNum)
+			//runtime.GoMaxProcs(modules.CpuNum)
 			var model models.Strategy
 			switch strategyNumber {
 			default:

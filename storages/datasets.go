@@ -5,23 +5,18 @@ import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets"
 	"gitee.com/quant1x/engine/market"
+	"gitee.com/quant1x/engine/util/runtime"
 	"gitee.com/quant1x/gox/coroutine"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/text/runewidth"
-	"runtime/debug"
 	"strings"
 	"sync"
 )
 
 // 更新单个数据集
 func updateOneDataSet(wg *sync.WaitGroup, parent, bar *progressbar.Bar, dataSet datasets.DataSet, date string, op cache.OpKind) {
-	defer func() {
-		if err := recover(); err != nil {
-			s := string(debug.Stack())
-			logger.Errorf("err=%v, stack=%s", err, s)
-		}
-	}()
+	defer runtime.CatchPanic()
 	moduleName := "基础数据"
 	if op == cache.OpRepair {
 		moduleName = "修复" + moduleName

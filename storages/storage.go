@@ -52,5 +52,4 @@ func OutputStatistics(orderFlag string, top int, date string, v []models.Statist
 			api.CloseQuietly(file)
 		}
 	}
-
 }

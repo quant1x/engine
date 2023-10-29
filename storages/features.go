@@ -8,23 +8,19 @@ import (
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/smart"
+	"gitee.com/quant1x/engine/util"
+	"gitee.com/quant1x/engine/util/runtime"
 	"gitee.com/quant1x/gox/coroutine"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/text/runewidth"
 	"gitee.com/quant1x/gox/util/treemap"
-	"runtime/debug"
 	"sync"
 	"time"
 )
 
-func updateStockFeature(wg *sync.WaitGroup, bar *progressbar.Bar, feature factors.Feature, code string, cacheDate, featureDate string, op cache.OpKind, p *treemap.Map, sb *cache.ScoreBoard) {
-	defer func() {
-		if err := recover(); err != nil {
-			s := string(debug.Stack())
-			logger.Errorf("err=%v, stack=%s", err, s)
-		}
-	}()
+func updateStockFeature(wg *util.RollingWaitGroup, bar *progressbar.Bar, feature factors.Feature, code string, cacheDate, featureDate string, op cache.OpKind, p *treemap.Map, sb *cache.ScoreBoard) {
+	defer runtime.CatchPanic()
 	now := time.Now()
 	defer sb.Add(1, time.Since(now))
 	if op == cache.OpRepair {
@@ -75,13 +71,7 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 		//updateOneFeature(barAdapter, barCode, adapter, cacheDate, featureDate, op, barIndex)
 
 		mapFeature := treemap.NewWithStringComparator()
-		var wg sync.WaitGroup
-		//p, _ := ants.NewPoolWithFunc(quotes.POOL_MAX, func(i interface{}) {
-		//	v := i.(featureTask)
-		//	updateStockFeature(v.wg, v.bar, v.feature, v.securityCode, v.cacheDate, v.featureDate, op, mapFeature)
-		//})
-		//defer p.Release()
-
+		wg := util.NewRollingWaitGroup(5)
 		dataSource := adapter.Factory(featureDate, "")
 		parent := coroutine.Context()
 		ctx := context.WithValue(parent, cache.KBarIndex, barIndex)
@@ -95,16 +85,7 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 				}
 			}
 			wg.Add(1)
-			go updateStockFeature(&wg, barCode, feature, code, cacheDate, featureDate, op, mapFeature, &sb)
-			//go updateStockFeature(&wg, barCode, feature, code, cacheDate, featureDate, op, mapFeature)
-			//_ = p.Invoke(featureTask{
-			//	wg:           &wg,
-			//	bar:          barCode,
-			//	feature:      feature,
-			//	securityCode: code,
-			//	cacheDate:    cacheDate,
-			//	featureDate:  featureDate,
-			//})
+			go updateStockFeature(wg, barCode, feature, code, cacheDate, featureDate, op, mapFeature, &sb)
 		}
 		wg.Wait()
 		// 加载缓存

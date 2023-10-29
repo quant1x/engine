@@ -7,8 +7,8 @@ import (
 	"gitee.com/quant1x/engine/strategies"
 	"gitee.com/quant1x/engine/tracker"
 	"gitee.com/quant1x/engine/util/runtime"
+	"gitee.com/quant1x/gox/logger"
 	cmder "github.com/spf13/cobra"
-	"log"
 	_ "net/http/pprof"
 	"os"
 	"runtime/pprof"
@@ -29,7 +29,7 @@ var (
 func main() {
 	fCpu, err := os.Create(cpuProfile)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 	_ = pprof.StartCPUProfile(fCpu)
 	defer pprof.StopCPUProfile()
@@ -72,7 +72,7 @@ func main() {
 	_ = rootCmd.Execute()
 	fMem, err := os.Create(memProfile)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 	_ = pprof.WriteHeapProfile(fMem)
 	_ = fMem.Close()

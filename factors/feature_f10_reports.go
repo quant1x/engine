@@ -3,6 +3,7 @@ package factors
 import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets/dfcf"
+	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 )
@@ -13,7 +14,8 @@ var (
 
 func loadQuarterlyReports(date string) {
 	var allReports []dfcf.QuarterlyReport
-	filename := cache.ReportsFilename(date)
+	_, qEnd := api.GetQuarterDayByDate(date)
+	filename := cache.ReportsFilename(qEnd)
 	err := api.CsvToSlices(filename, &allReports)
 	if err != nil {
 		logger.Errorf("cache %s failed, error: %+v", filename, err)
@@ -30,12 +32,21 @@ type quarterlyReportSummary struct {
 	BasicEPS float64
 }
 
-func getQuarterlyReportSummary(securityCode string) quarterlyReportSummary {
+func getQuarterlyReportSummary(securityCode, date string) quarterlyReportSummary {
 	var summary quarterlyReportSummary
+	if proto.AssertIndexBySecurityCode(securityCode) {
+		return summary
+	}
 	v, ok := __mapQuarterlyReports[securityCode]
 	if ok {
 		summary.BPS = v.BPS
 		summary.BasicEPS = v.BasicEPS
+		return summary
+	}
+	q := dfcf.GetCacheQuarterlyReportsBySecurityCode(securityCode, date)
+	if q != nil {
+		summary.BPS = q.BPS
+		summary.BasicEPS = q.BasicEPS
 	}
 	return summary
 }

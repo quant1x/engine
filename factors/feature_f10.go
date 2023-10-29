@@ -20,8 +20,8 @@ const (
 type F10 struct {
 	cache.DataSummary `dataframe:"-"`
 	Date              string  `name:"日期" dataframe:"Date"`                   // 日期
-	Code              string  `name:"代码" dataframe:"Code"`                   // 代码
-	Name_             string  `name:"名称" dataframe:"Name"`                   // 名称
+	Code              string  `name:"代码" dataframe:"Code"`                   // 证券代码
+	SecurityName      string  `name:"名称" dataframe:"Name"`                   // 证券名称
 	SubNew            bool    `name:"次新股" dataframe:"SubNew"`                // 是否次新股
 	VolUnit           int     `name:"每手" dataframe:"VolUnit"`                // 每手单位
 	DecimalPoint      int     `name:"小数点" dataframe:"DecimalPoint"`          // 小数点
@@ -50,7 +50,7 @@ func NewF10(date, code string) *F10 {
 		DataSummary:  summary,
 		Date:         date,
 		Code:         code,
-		Name_:        securities.GetStockName(code),
+		SecurityName: securities.GetStockName(code),
 		VolUnit:      100,
 		DecimalPoint: 2,
 		SubNew:       market.IsSubNewStock(code),
@@ -59,7 +59,7 @@ func NewF10(date, code string) *F10 {
 	if ok {
 		v.VolUnit = int(securityInfo.VolUnit)
 		v.DecimalPoint = int(securityInfo.DecimalPoint)
-		v.Name_ = securityInfo.Name
+		v.SecurityName = securityInfo.Name
 	}
 	return &v
 }
@@ -102,7 +102,7 @@ func (this *F10) Update(code, cacheDate, featureDate string, complete bool) {
 	notice := getOneNotice(securityCode, featureDate)
 	_ = api.Copy(this, &notice)
 	// 4. 季报
-	report := getQuarterlyReportSummary(securityCode)
+	report := getQuarterlyReportSummary(securityCode, featureDate)
 	_ = api.Copy(this, &report)
 
 	// 5. 安全分
@@ -127,7 +127,7 @@ func (this *F10) Repair(code, cacheDate, featureDate string, complete bool) {
 	notice := getOneNotice(securityCode, featureDate)
 	_ = api.Copy(this, &notice)
 	// 4. 季报
-	report := getQuarterlyReportSummary(securityCode)
+	report := getQuarterlyReportSummary(securityCode, featureDate)
 	_ = api.Copy(this, &report)
 
 	// 5. 安全分

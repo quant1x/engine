@@ -113,7 +113,8 @@ func IntegrateQuarterlyReports(barIndex int, date string) map[string]dfcf.Quarte
 		for _, v := range allReports {
 			mapReports[v.SecurityCode] = v
 		}
-		filename := cache.ReportsFilename(date)
+		_, qEnd := api.GetQuarterDayByDate(date)
+		filename := cache.ReportsFilename(qEnd)
 		err := api.SlicesToCsv(filename, allReports)
 		if err != nil {
 			logger.Errorf("cache %s failed, error: %+v", filename, err)

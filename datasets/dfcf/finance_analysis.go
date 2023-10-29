@@ -64,7 +64,6 @@ func GetQuarterlyReports(pageNumber ...int) (reports []QuarterlyReport, pages in
 	}
 	_, qEnd := api.GetQuarterDay(4)
 	beginDate := trading.FixTradeDate(qEnd)
-	beginDate = "2022-12-31"
 	params := urlpkg.Values{
 		//"callback":    {"jQuery1123043614175387302234_1685785566671"},
 		//"sortColumns": {"UPDATE_DATE,SECURITY_CODE"},

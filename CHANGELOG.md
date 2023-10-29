@@ -4,6 +4,48 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.6.1] - 2023-10-29
+### Changed
+- 优化imports.
+- 调整存储订单的同时输出到股票池.
+- 调整股票池StockPool的package.
+- 删除废弃的重置证券代码的处理方法.
+- 收敛recover捕获panic异常的方法.
+- 优化debug开关.
+- 调整捕获panic的函数名.
+- 增加Recover函数.
+- 调整GoMaxProcs函数名.
+- 调整GoMaxProcs函数路径.
+- 调整证券名称、季报的处理方法.
+- F10的公告信息只处理证券代码.
+- History增加前5日分钟均量的方法.
+- 优化1d缓存对象.
+- 更新依赖库版本.
+- 更新gotdx版本.
+- 调整季报的处理方法.
+- 增加从单个snapshot更新K线的函数.
+- 新增具有滑动窗口速度控制的WaitGroup.
+- 更新gox版本.
+- 更新gotdx版本.
+- 修复snapshot可能是nil的bug.
+- 增加快照定时任务.
+- 特征数据增加异常捕获.
+- 删除废弃的pprof代码.
+- 更新gox版本.
+- 屏蔽实时更新K线的定时任务.
+- 调度任务启动时增加互斥锁.
+- 调整F10的证券名称字段.
+- 次新股默认规则通过.
+- 策略接口增加订单类型和过滤器.
+- 增加策略文件缓存路径的常量.
+- 数据集更新增加捕获异常.
+- 修复map并发读写的bug.
+- 分时数据增加异常捕获.
+- 更新gotdx版本.
+- 更新依赖库版本.
+- 调整models.
+- 增加leveldb测试代码.
+
 ## [0.6.0] - 2023-10-25
 ### Changed
 - 增加调度任务日志.
@@ -341,8 +383,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.6.0...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.6.1...HEAD
 
+[0.6.1]: https://gitee.com/quant1x/engine/compare/v0.6.0...v0.6.1
 [0.6.0]: https://gitee.com/quant1x/engine/compare/v0.5.9...v0.6.0
 [0.5.9]: https://gitee.com/quant1x/engine/compare/v0.5.8...v0.5.9
 [0.5.8]: https://gitee.com/quant1x/engine/compare/v0.5.7...v0.5.8

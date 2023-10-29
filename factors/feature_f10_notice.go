@@ -2,6 +2,7 @@ package factors
 
 import (
 	"gitee.com/quant1x/engine/datasets/dfcf"
+	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"strings"
@@ -17,6 +18,9 @@ type companyNotice struct {
 
 // 上市公司公告
 func getOneNotice(securityCode, currentDate string) (notice companyNotice) {
+	if !proto.AssertStockBySecurityCode(securityCode) {
+		return
+	}
 	now, _ := api.ParseTime(currentDate)
 	now = now.AddDate(0, -1, 0)
 	beginDate := now.Format(time.DateOnly)
@@ -30,7 +34,7 @@ func getOneNotice(securityCode, currentDate string) (notice companyNotice) {
 	for pageNo := 1; pageNo < pagesCount+1; pageNo++ {
 		list, pages, err := dfcf.StockNotices(securityCode, beginDate, endDate, pageNo)
 		if err != nil || pages < 1 {
-			logger.Error(securityCode, beginDate, endDate, err)
+			logger.Errorf("notice: code=%s, %s=>%s, %s", securityCode, beginDate, endDate, err)
 			break
 		}
 		if pagesCount < pages {

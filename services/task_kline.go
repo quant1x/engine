@@ -36,7 +36,7 @@ func realtimeUpdateOfKLine() {
 			logger.Errorf("err=%v, stack=%s", err, s)
 		}
 	}()
-	barIndex := biRealtimeKLine
+	barIndex := barIndexRealtimeKLine
 	//mapSnapshot := models.GetAllSnapshotsV2()
 	allCodes := market.GetCodeList()
 	//var wg sync.WaitGroup

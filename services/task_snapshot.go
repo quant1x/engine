@@ -33,6 +33,6 @@ func realtimeUpdateSnapshot() {
 			logger.Errorf("err=%v, stack=%s", err, s)
 		}
 	}()
-	barIndex := biUpdateSnapshot
+	barIndex := barIndexUpdateSnapshot
 	models.GetAllSnapshots(&barIndex)
 }

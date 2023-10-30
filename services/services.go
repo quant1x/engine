@@ -14,12 +14,9 @@ const (
 	cronDefaultInterval = "@every 10s"
 )
 
-var (
-	//	barIndex          = 0
-	//	barUpdateSnapshot *progressbar.Bar
-	biUpdateSnapshot = 1
-	//	barRealtimeKLine  *progressbar.Bar
-	biRealtimeKLine = 2
+const (
+	barIndexUpdateSnapshot = 1
+	barIndexRealtimeKLine  = 2
 )
 
 func init() {

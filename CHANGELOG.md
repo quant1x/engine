@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.6.5] - 2023-10-30
+### Changed
+- 调整MV5的计算方法.
+
 ## [0.6.4] - 2023-10-30
 ### Changed
 - 调整精度条bar的序号处理方式.
@@ -396,8 +400,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.6.4...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.6.5...HEAD
 
+[0.6.5]: https://gitee.com/quant1x/engine/compare/v0.6.4...v0.6.5
 [0.6.4]: https://gitee.com/quant1x/engine/compare/v0.6.3...v0.6.4
 [0.6.3]: https://gitee.com/quant1x/engine/compare/v0.6.2...v0.6.3
 [0.6.2]: https://gitee.com/quant1x/engine/compare/v0.6.1...v0.6.2

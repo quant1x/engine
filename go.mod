@@ -6,7 +6,7 @@ require (
 	gitee.com/quant1x/gotdx v1.16.6
 	gitee.com/quant1x/gox v1.13.7
 	gitee.com/quant1x/pandas v1.1.8
-	gitee.com/quant1x/ta-lib v0.1.4
+	gitee.com/quant1x/ta-lib v0.1.5
 	github.com/bits-and-blooms/bitset v1.10.0
 	github.com/creasty/defaults v1.7.0
 	github.com/olekukonko/tablewriter v0.0.5
@@ -37,9 +37,10 @@ require (
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/kr/text v0.2.0 // indirect
-	github.com/mattn/go-runewidth v0.0.9 // indirect
+	github.com/mattn/go-runewidth v0.0.15 // indirect
 	github.com/peterbourgon/diskv/v3 v3.0.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/rogpeppe/fastuuid v1.2.0 // indirect
 	github.com/rogpeppe/go-internal v1.11.0 // indirect
 	github.com/shabbyrobe/xmlwriter v0.0.0-20230525083848-85336ec334fa // indirect

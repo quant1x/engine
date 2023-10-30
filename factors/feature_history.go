@@ -149,9 +149,10 @@ func (this *History) Increase(snapshot quotes.Snapshot) Feature {
 
 // GetMV5 前5日分钟均量
 func (this *History) GetMV5() float64 {
-	minutes := trading.Minutes(this.GetDate())
-	if minutes < 1 {
-		minutes = 1
-	}
+	//minutes := trading.Minutes(this.GetDate())
+	//if minutes < 1 {
+	//	minutes = 1
+	//}
+	minutes := trading.CN_DEFAULT_TOTALFZNUM
 	return this.MV5 / float64(minutes)
 }

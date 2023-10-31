@@ -34,9 +34,9 @@ func init() {
 
 func initCache() {
 	// 加载配置文件
-	EngineConfig = loadConfig()
+	tmpConfig, found := loadConfig()
 	// 搜索配置文件
-	baseDir := EngineConfig.BaseDir
+	baseDir := tmpConfig.BaseDir
 	if len(baseDir) > 0 {
 		__path, err := homedir.Expand(baseDir)
 		if err == nil {
@@ -77,6 +77,12 @@ func initCache() {
 	cacheVariablePath = __varPath
 	if err := os.MkdirAll(cacheVariablePath, cacheDirMode); err != nil {
 		panic(err)
+	}
+	// 检查配置文件并加载配置
+	if !found {
+		EngineConfig = ReadConfig()
+	} else {
+		EngineConfig = tmpConfig
 	}
 
 	// 启动性能分析

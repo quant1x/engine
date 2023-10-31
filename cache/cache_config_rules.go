@@ -1,4 +1,4 @@
-package strategies
+package cache
 
 // RuleParameter 规则参数
 type RuleParameter struct {
@@ -28,10 +28,4 @@ type RuleParameter struct {
 	BiddingVolumeMin            int     `yaml:"bidding_volume_min" default:"100"`                // 5档行情委托平均最小值
 	SentimentHigh               float64 `yaml:"sentiment_high" default:"61.8"`                   // 情绪值最高
 	SentimentLow                float64 `yaml:"sentiment_low" default:"38.2"`                    // 情绪值最低
-}
-
-// OrderParameter 订单参数
-type OrderParameter struct {
-	TopN    int  `yaml:"top_n" default:"3"`        // 最多输出前多少名个股
-	HaveETF bool `yaml:"have_etf" default:"false"` // 是否包含ETF
 }

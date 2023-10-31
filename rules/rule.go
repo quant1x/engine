@@ -18,17 +18,14 @@ const (
 	Pass Kind = 0
 )
 
-//const (
-//	RuleMiss   Kind = iota //规则未命中
-//	RuleHit                // 命中
-//	RuleCancel             // 撤回
-//	RulePassed             // 成功
-//	RuleFailed             // 失败
-//)
-
 const (
 	engineBaseRule  Kind = 1
-	RuleSubNewStock      = engineBaseRule + 0 // 次新股
+	RuleBaseF10          = engineBaseRule + 0 // 基础规则
+	RuleSubNewStock      = engineBaseRule + 1 // 次新股
+)
+
+const (
+	errorRuleBase = 1000 // 基础规则错误码
 )
 
 // Rule 规则接口
@@ -69,8 +66,8 @@ func RegisterFunc(kind Kind, name string, cb func(snapshot models.QuoteSnapshot)
 	return Register(rule)
 }
 
-// Each 遍历所有规则
-func Each(snapshot models.QuoteSnapshot) (passed []uint64, failed Kind) {
+// Filter 遍历所有规则
+func Filter(snapshot models.QuoteSnapshot) (passed []uint64, failed Kind, err error) {
 	mutex.RLock()
 	defer mutex.RUnlock()
 	if len(mapRules) == 0 {
@@ -82,7 +79,7 @@ func Each(snapshot models.QuoteSnapshot) (passed []uint64, failed Kind) {
 	slices.Sort(kinds)
 	for _, kind := range kinds {
 		if rule, ok := mapRules[kind]; ok {
-			err := rule.Exec(snapshot)
+			err = rule.Exec(snapshot)
 			if err != nil {
 				failed = rule.Kind()
 				break
@@ -90,7 +87,7 @@ func Each(snapshot models.QuoteSnapshot) (passed []uint64, failed Kind) {
 			bitset.Set(rule.Kind())
 		}
 	}
-	return bitset.Bytes(), failed
+	return bitset.Bytes(), failed, err
 }
 
 func PrintRuleList() {

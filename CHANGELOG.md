@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.6.6] - 2023-10-31
+### Changed
+- 去除废弃的代码.
+- 升级依赖库版本号.
+- 调整规则和订单配置加载方式.
+- 更新ta-lib版本.
+
 ## [0.6.5] - 2023-10-30
 ### Changed
 - 调整MV5的计算方法.
@@ -400,8 +407,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.6.5...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.6.6...HEAD
 
+[0.6.6]: https://gitee.com/quant1x/engine/compare/v0.6.5...v0.6.6
 [0.6.5]: https://gitee.com/quant1x/engine/compare/v0.6.4...v0.6.5
 [0.6.4]: https://gitee.com/quant1x/engine/compare/v0.6.3...v0.6.4
 [0.6.3]: https://gitee.com/quant1x/engine/compare/v0.6.2...v0.6.3

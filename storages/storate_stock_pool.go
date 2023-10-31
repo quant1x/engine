@@ -26,16 +26,6 @@ func SaveStockPool(list []StockPool) {
 	return
 }
 
-//func fixStockPool(list []StockPool, sp StockPool) {
-//	count := len(list)
-//	for i := 0; i < count; i++ {
-//		s := &(list[i])
-//		if s.Date == sp.Date && s.Code == sp.Code {
-//			// 找到了,
-//		}
-//	}
-//}
-
 func stockPoolMerge(model models.Strategy, date string, orders []models.Statistics) {
 	list := GetStockPool()
 	targets := []StockPool{}

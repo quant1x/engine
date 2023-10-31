@@ -15,9 +15,6 @@ import (
 
 var (
 	__mutexSnapshots sync.RWMutex
-	// 当日缓存数据
-	//__cacheSnapshots = concurrent.NewHashMap[string, quotes.Snapshot]()
-	//__cacheSnapshots = concurrent.NewTreeMap[string, quotes.Snapshot]()
 	__cacheSnapshots = map[string]quotes.Snapshot{}
 )
 

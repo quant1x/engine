@@ -186,6 +186,7 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 		klines = newKLines
 	}
 	if len(klines) > 0 {
+		UpdateCacheKLines(securityCode, klines)
 		fname := cache.KLineFilename(securityCode)
 		_ = api.SlicesToCsv(fname, klines)
 	}

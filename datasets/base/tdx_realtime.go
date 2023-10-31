@@ -196,6 +196,8 @@ func BasicKLineForSnapshot(v quotes.Snapshot) {
 	} else {
 		klines = cacheKLines
 	}
+	// 更新缓存K线
+	UpdateCacheKLines(securityCode, klines)
 	// 连接缓存和实时数据
 	klines = append(klines, kl)
 	err := api.SlicesToCsv(klineFilename, klines)

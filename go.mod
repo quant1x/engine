@@ -3,7 +3,7 @@ module gitee.com/quant1x/engine
 go 1.21.1
 
 require (
-	gitee.com/quant1x/gotdx v1.16.6
+	gitee.com/quant1x/gotdx v1.16.7
 	gitee.com/quant1x/gox v1.13.7
 	gitee.com/quant1x/pandas v1.1.8
 	gitee.com/quant1x/ta-lib v0.1.5
@@ -22,7 +22,7 @@ require (
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b // indirect
 	github.com/campoy/embedmd v1.0.0 // indirect
 	github.com/dlclark/regexp2 v1.10.0 // indirect
-	github.com/dop251/goja v0.0.0-20231014103939-873a1496dc8e // indirect
+	github.com/dop251/goja v0.0.0-20231027120936-b396bb4c349d // indirect
 	github.com/frankban/quicktest v1.14.6 // indirect
 	github.com/go-fonts/liberation v0.3.1 // indirect
 	github.com/go-latex/latex v0.0.0-20230307184459-12ec69307ad9 // indirect

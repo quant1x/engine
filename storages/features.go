@@ -13,8 +13,11 @@ import (
 	"gitee.com/quant1x/gox/coroutine"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
+	"gitee.com/quant1x/gox/tags"
 	"gitee.com/quant1x/gox/text/runewidth"
 	"gitee.com/quant1x/gox/util/treemap"
+	"github.com/olekukonko/tablewriter"
+	"os"
 	"sync"
 	"time"
 )
@@ -62,6 +65,7 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 	allCodes := market.GetCodeList()
 	allCodes = allCodes[:]
 	codeCount := len(allCodes)
+	var metrics []cache.ScoreBoard
 	for _, adapter := range adapters {
 		logger.Infof("%s: %s, begin", moduleName, adapter.Name())
 
@@ -84,6 +88,7 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 					feature = feature.FromHistory(*history)
 				}
 			}
+			sb.Kind = feature.Kind()
 			wg.Add(1)
 			go updateStockFeature(wg, barCode, feature, code, cacheDate, featureDate, op, mapFeature, &sb)
 		}
@@ -95,9 +100,17 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 		// 适配器进度条+1
 		barAdapter.Add(1)
 		wgAdapter.Done()
-		fmt.Println(sb.String())
+		metrics = append(metrics, sb)
 		logger.Infof("%s: %s, end", moduleName, adapter.Name())
 	}
 	wgAdapter.Wait()
 	logger.Infof("%s: all, end", moduleName)
+	// 输出衡量性能的指标列表
+	fmt.Println()
+	table := tablewriter.NewWriter(os.Stdout)
+	table.SetHeader(tags.GetHeadersByTags(cache.ScoreBoard{}))
+	for _, v := range metrics {
+		table.Append(tags.GetValuesByTags(v))
+	}
+	table.Render()
 }

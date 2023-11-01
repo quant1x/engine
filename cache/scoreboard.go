@@ -9,12 +9,12 @@ import (
 // ScoreBoard 记分牌
 type ScoreBoard struct {
 	m         sync.Mutex
-	Kind      Kind          // 类型
-	Count     int           // 总数
-	Max       time.Duration // 最大值
-	Min       time.Duration // 最小值
-	CrossTime time.Duration // 总耗时
-	Speed     float64       // 速度
+	Kind      Kind          `name:"kind"`       // 类型
+	Count     int           `name:"count"`      // 总数
+	Max       time.Duration `name:"max"`        // 最大值
+	Min       time.Duration `name:"min"`        // 最小值
+	CrossTime time.Duration `name:"cross_time"` // 总耗时
+	Speed     float64       `name:"speed"`      // 速度
 }
 
 func (this *ScoreBoard) Add(delta int, take time.Duration) {

@@ -21,6 +21,11 @@ func BoolIndexOf(s stat.Series, n int) bool {
 	return stat.AnyToBool(v)
 }
 
+func IntegerIndexOf(s stat.Series, n int) int {
+	v := s.IndexOf(n)
+	return int(stat.AnyToInt64(v))
+}
+
 func StringIndexOf(s stat.Series, n int) string {
 	v := s.IndexOf(n)
 	return stat.AnyToString(v)

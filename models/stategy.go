@@ -19,6 +19,7 @@ const (
 const (
 	ModelHousNo1 ModelKind = 1 << iota // 1号策略
 	ModelTail                          // 尾盘策略
+	ModelTick                          // 盘中实时策略
 )
 
 const (
@@ -28,6 +29,7 @@ const (
 
 const (
 	OrderFlagHead = "head" // 早盘订单标志
+	OrderFlagTick = "tick" // 实时订单标志
 	OrderFlagTail = "tail" // 尾盘订单标志
 )
 

@@ -6,7 +6,7 @@ require (
 	gitee.com/quant1x/gotdx v1.16.7
 	gitee.com/quant1x/gox v1.13.7
 	gitee.com/quant1x/pandas v1.1.8
-	gitee.com/quant1x/ta-lib v0.1.5
+	gitee.com/quant1x/ta-lib v0.1.6
 	github.com/bits-and-blooms/bitset v1.10.0
 	github.com/creasty/defaults v1.7.0
 	github.com/olekukonko/tablewriter v0.0.5

@@ -7,10 +7,10 @@ require (
 	gitee.com/quant1x/gox v1.13.7
 	gitee.com/quant1x/pandas v1.1.8
 	gitee.com/quant1x/ta-lib v0.1.6
-	github.com/bits-and-blooms/bitset v1.10.0
+	github.com/bits-and-blooms/bitset v1.11.0
 	github.com/creasty/defaults v1.7.0
 	github.com/olekukonko/tablewriter v0.0.5
-	github.com/spf13/cobra v1.7.0
+	github.com/spf13/cobra v1.8.0
 	github.com/syndtr/goleveldb v1.0.0
 	golang.org/x/exp v0.0.0-20231006140011-7918f672742d
 	google.golang.org/protobuf v1.31.0

@@ -30,17 +30,18 @@ var (
 	ErrF10RangeOfBPS                       = exception.New(errorRuleBase+10, "非净增长范围")
 )
 
+// RuleF10 基本面规则
 type RuleF10 struct{}
 
-func (RuleF10) Kind() Kind {
+func (r RuleF10) Kind() Kind {
 	return RuleBaseF10
 }
 
-func (RuleF10) Name() string {
+func (r RuleF10) Name() string {
 	return "基础规则"
 }
 
-func (RuleF10) Exec(snapshot models.QuoteSnapshot) error {
+func (r RuleF10) Exec(snapshot models.QuoteSnapshot) error {
 	// 基础过滤规则, 检测F10基本面
 	securityCode := snapshot.Code
 	//if securityCode == "sz002211" {

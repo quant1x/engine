@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.6.7] - 2023-11-07
+### Changed
+- 更新gotdx版本, 优化除权除息的股本变化处理方法.
+- 修复股本变化的类型中遗漏送配股上市的bug.
+- 更新其它非quant1x组织的依赖库版本.
+- 更新ta-lib版本号.
+- 调整基础过滤规则.
+- 增加盘中实时订单标识.
+- 增加无效周期的常量.
+- 调整记分牌的tag.
+- 增加更新内存中的K线操作.
+- 增加定时任务配置结构体.
+- 去除废弃的代码.
+
 ## [0.6.6] - 2023-10-31
 ### Changed
 - 去除废弃的代码.
@@ -407,8 +421,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.6.6...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.6.7...HEAD
 
+[0.6.7]: https://gitee.com/quant1x/engine/compare/v0.6.6...v0.6.7
 [0.6.6]: https://gitee.com/quant1x/engine/compare/v0.6.5...v0.6.6
 [0.6.5]: https://gitee.com/quant1x/engine/compare/v0.6.4...v0.6.5
 [0.6.4]: https://gitee.com/quant1x/engine/compare/v0.6.3...v0.6.4

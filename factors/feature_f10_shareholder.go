@@ -23,7 +23,7 @@ func checkoutShareHolder(securityCode, featureDate string) *top10ShareHolder {
 	api.SliceSort(xdxrs, func(a, b quotes.XdxrInfo) bool {
 		return a.Date > b.Date
 	})
-	xdxrInfo := checkCapital(xdxrs, featureDate)
+	xdxrInfo := checkoutCapital(xdxrs, featureDate)
 	if xdxrInfo != nil && proto.AssertStockBySecurityCode(securityCode) {
 		list := dfcf.GetCacheShareHolder(securityCode, featureDate)
 		capital := xdxrInfo.HouLiuTong * 10000

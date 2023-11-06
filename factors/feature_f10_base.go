@@ -8,10 +8,9 @@ import (
 	"gitee.com/quant1x/gox/concurrent"
 )
 
-func checkCapital(list []quotes.XdxrInfo, date string) *quotes.XdxrInfo {
+func checkoutCapital(list []quotes.XdxrInfo, date string) *quotes.XdxrInfo {
 	for _, v := range list {
-		// TODO: 股本变化和送配股上市都会引起流通股本及总股本变化
-		if (v.Category == 5 || v.Category == 2) && date >= v.Date {
+		if v.IsCapitalChange() && date >= v.Date {
 			return &v
 		}
 	}
@@ -40,7 +39,7 @@ func checkoutSecurityBasicInfo(securityCode, featureDate string) f10SecurityInfo
 		return a.Date > b.Date
 	})
 	// 计算流通盘
-	cover := checkCapital(list, featureDate)
+	cover := checkoutCapital(list, featureDate)
 	var f10 f10SecurityInfo
 	if cover != nil {
 		f10.TotalCapital = cover.HouZongGuBen * 10000

@@ -18,6 +18,15 @@ func UpdateXdxrInfo(securityCode string) {
 		logger.Errorf("获取除权除息数据失败", err)
 		return
 	}
+	//slices.SortFunc(xdxrInfos, func(a, b quotes.XdxrInfo) int {
+	//	if a.Date == b.Date {
+	//		return 0
+	//	} else if a.Date > b.Date {
+	//		return 1
+	//	} else {
+	//		return -1
+	//	}
+	//})
 	if len(xdxrInfos) > 0 {
 		filename := cache.XdxrFilename(securityCode)
 		_ = api.SlicesToCsv(filename, xdxrInfos)

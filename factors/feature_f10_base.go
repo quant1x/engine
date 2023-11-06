@@ -10,7 +10,8 @@ import (
 
 func checkCapital(list []quotes.XdxrInfo, date string) *quotes.XdxrInfo {
 	for _, v := range list {
-		if v.Category == 5 && date >= v.Date {
+		// TODO: 股本变化和送配股上市都会引起流通股本及总股本变化
+		if (v.Category == 5 || v.Category == 2) && date >= v.Date {
 			return &v
 		}
 	}

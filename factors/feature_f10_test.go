@@ -10,7 +10,7 @@ import (
 )
 
 func TestF10(t *testing.T) {
-	date := "2023-10-17"
+	date := "2023-11-06"
 	cacheDate, featureDate := cache.CorrectDate(date)
 	//cacheDate := "2023-09-28"
 	//featureDate := date
@@ -18,6 +18,7 @@ func TestF10(t *testing.T) {
 	code = "sh000001"
 	code = "sh600859"
 	code = "sz002685"
+	code = "sh603158"
 	f10 := NewF10(cacheDate, code)
 	//barIndex := 1
 	ctx := context.Background()

@@ -24,6 +24,8 @@ type RuleParameter struct {
 	VixMin                      float64 `yaml:"vix_min" default:"0"`                             // 波动率最小值0
 	TurnoverRateMax             float64 `yaml:"turnover_rate_max" default:"20.00"`               // 换手率最大20%
 	TurnoverRateMin             float64 `yaml:"turnover_rate_min" default:"1.00"`                // 换手率最小1%
+	AmplitudeRatioMax           float64 `yaml:"amplitude_ratio_max" default:"15"`                // 振幅 最大
+	AmplitudeRatioMin           float64 `yaml:"amplitude_ratio_max" default:"0"`                 // 振幅 最小
 	BiddingVolumeMax            int     `yaml:"bidding_volume_max" default:"5000"`               // 5档行情委托平均最大值
 	BiddingVolumeMin            int     `yaml:"bidding_volume_min" default:"100"`                // 5档行情委托平均最小值
 	SentimentHigh               float64 `yaml:"sentiment_high" default:"61.8"`                   // 情绪值最高

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.7.1] - 2023-11-13
+### Changed
+- 更新gotdx版本号, 更新内置的板块数据文件.
+
 ## [0.7.0] - 2023-11-13
 ### Changed
 - 修复振幅最小值的key重复的bug.
@@ -435,8 +439,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.7.0...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.7.1...HEAD
 
+[0.7.1]: https://gitee.com/quant1x/engine/compare/v0.7.0...v0.7.1
 [0.7.0]: https://gitee.com/quant1x/engine/compare/v0.6.9...v0.7.0
 [0.6.9]: https://gitee.com/quant1x/engine/compare/v0.6.8...v0.6.9
 [0.6.8]: https://gitee.com/quant1x/engine/compare/v0.6.7...v0.6.8

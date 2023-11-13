@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.6.8] - 2023-11-13
+### Changed
+- 调整部分函数为公开.
+- 增加一个预备的投票模块.
+- 更新依赖库版本.
+
 ## [0.6.7] - 2023-11-07
 ### Changed
 - 更新gotdx版本, 优化除权除息的股本变化处理方法.
@@ -421,8 +427,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.6.7...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.6.8...HEAD
 
+[0.6.8]: https://gitee.com/quant1x/engine/compare/v0.6.7...v0.6.8
 [0.6.7]: https://gitee.com/quant1x/engine/compare/v0.6.6...v0.6.7
 [0.6.6]: https://gitee.com/quant1x/engine/compare/v0.6.5...v0.6.6
 [0.6.5]: https://gitee.com/quant1x/engine/compare/v0.6.4...v0.6.5

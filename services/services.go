@@ -51,8 +51,8 @@ func jobGlobalReset() {
 	logger.Info("清理过期的更新状态文件...OK")
 }
 
-// 状态是否交易中
-func isTrading(status int) bool {
+// IsTrading 状态是否交易中
+func IsTrading(status int) bool {
 	if status == trading.ExchangeTrading || status == trading.ExchangeCallAuction {
 		return true
 	}

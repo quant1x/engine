@@ -17,7 +17,7 @@ func jobRealtimeKLine() {
 	funcName := "jobRealtimeKLine"
 	updateInRealTime, status := trading.CanUpdateInRealtime()
 	// 14:30:00~15:01:00之间更新数据
-	if updateInRealTime && isTrading(status) {
+	if updateInRealTime && IsTrading(status) {
 		realtimeUpdateOfKLine()
 	} else {
 		if cache.Debug {

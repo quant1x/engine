@@ -10,6 +10,12 @@ import (
 
 const (
 	filenameStockPool = "stock_pool.csv"
+	TimeStampMilli    = "2006-01-02 15:04:05.000"
+	TimeStampMicro    = "2006-01-02 15:04:05.000000"
+	TimeStampNano     = "2006-01-02 15:04:05.000000000"
+	//DateTime   = "2006-01-02 15:04:05"
+	//DateOnly   = "2006-01-02"
+	//TimeStamp = "2006-01-02 15:04:05.000"
 )
 
 func GetStockPool() (list []StockPool) {
@@ -27,7 +33,7 @@ func SaveStockPool(list []StockPool) {
 }
 
 func stockPoolMerge(model models.Strategy, date string, orders []models.Statistics) {
-	list := GetStockPool()
+	localStockPool := GetStockPool()
 	targets := []StockPool{}
 	cacheStatistics := map[string]*StockPool{}
 	tradeDate := trading.FixTradeDate(date)
@@ -68,21 +74,24 @@ func stockPoolMerge(model models.Strategy, date string, orders []models.Statisti
 			//BlockTopRate: v.BlockRate,
 			//Tendency       string         `name:"短线趋势" dataframe:"tendency"`
 			//Tendency: v.Tendency,
+			//CreateTime     string         `name:"创建时间" dataframe:"create_time"`
+			CreateTime: v.UpdateTime,
 			//UpdateTime     string         `name:"更新时间" dataframe:"update_time"`
+			UpdateTime: v.UpdateTime,
 		}
 		targets = append(targets, sp)
-		cacheStatistics[sp.Code] = &sp
+		cacheStatistics[sp.Key()] = &sp
 	}
-	count := len(list)
+	count := len(localStockPool)
 	now := time.Now()
-	updateTime := now.Format(time.DateTime)
+	updateTime := now.Format(TimeStampMilli)
 	for i := 0; i < count; i++ {
-		local := &(list[i])
+		local := &(localStockPool[i])
 		// 1. 非当日的跳过
 		if local.Date != tradeDate {
 			continue
 		}
-		v, found := cacheStatistics[local.Code]
+		v, found := cacheStatistics[local.Key()]
 		if found {
 			// 找到了, 标记为已存在
 			v.Status = StrategyAlreadyExists
@@ -102,7 +111,7 @@ func stockPoolMerge(model models.Strategy, date string, orders []models.Statisti
 		newList = append(newList, *v)
 	}
 	if len(newList) > 0 {
-		list = append(list, newList...)
-		SaveStockPool(list)
+		localStockPool = append(localStockPool, newList...)
+		SaveStockPool(localStockPool)
 	}
 }

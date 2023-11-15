@@ -24,5 +24,5 @@ type Statistics struct {
 	Active               int     `name:"活跃度" dataframe:"active"`
 	ChangePower          float64 `name:"力度" dataframe:"change_power"`
 	AverageBiddingVolume int     `name:"委托均量" dataframe:"average_bidding_volume"` // 委托均量
-	UpdateTime           string  `dataframe:"update_time"`
+	UpdateTime           string  `name:"时间戳" dataframe:"update_time"`
 }

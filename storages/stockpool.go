@@ -1,5 +1,9 @@
 package storages
 
+import (
+	"fmt"
+)
+
 // StockPool 股票池
 type StockPool struct {
 	Status         StrategyStatus `name:"策略状态" dataframe:"status"`
@@ -25,7 +29,13 @@ type StockPool struct {
 	BlockTopName   string         `name:"领涨股名称" dataframe:"block_top_name"`
 	BlockTopRate   float64        `name:"领涨股涨幅%" dataframe:"block_top_rate"`
 	Tendency       string         `name:"短线趋势" dataframe:"tendency"`
+	CreateTime     string         `name:"创建时间" dataframe:"create_time"`
 	UpdateTime     string         `name:"更新时间" dataframe:"update_time"`
+}
+
+// Key 索引字段: 日期/策略代码/证券代码
+func (sp StockPool) Key() string {
+	return fmt.Sprintf("%s/%d/%s", sp.Date, sp.StrategyCode, sp.Code)
 }
 
 type StrategyStatus int

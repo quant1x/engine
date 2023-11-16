@@ -12,7 +12,7 @@ require (
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/spf13/cobra v1.8.0
 	github.com/syndtr/goleveldb v1.0.0
-	golang.org/x/exp v0.0.0-20231006140011-7918f672742d
+	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa
 	google.golang.org/protobuf v1.31.0
 	gopkg.in/yaml.v3 v3.0.1
 )
@@ -46,7 +46,7 @@ require (
 	github.com/shabbyrobe/xmlwriter v0.0.0-20230525083848-85336ec334fa // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/tealeg/xlsx/v3 v3.3.4 // indirect
-	golang.org/x/image v0.13.0 // indirect
+	golang.org/x/image v0.14.0 // indirect
 	golang.org/x/sys v0.14.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	gonum.org/v1/gonum v0.14.0 // indirect

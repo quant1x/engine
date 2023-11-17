@@ -90,6 +90,7 @@ func Filter(snapshot models.QuoteSnapshot) (passed []uint64, failed Kind, err er
 	return bitset.Bytes(), failed, err
 }
 
+// PrintRuleList 输出规则列表
 func PrintRuleList() {
 	fmt.Println("规则总数:", len(mapRules))
 	// 规则按照kind排序

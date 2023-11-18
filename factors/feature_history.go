@@ -42,8 +42,8 @@ type History struct {
 	CP                float64        `name:"QSFZ: 股价涨幅" dataframe:"cp"`     // QSFZ: 股价涨幅
 	CV                float64        `name:"QSFZ: 成交量涨幅" dataframe:"cv"`    // QSFZ: 成交量涨幅
 	VP                float64        `name:"QSFZ: 价量比" dataframe:"vp"`      // QSFZ: 价量比
-	VP3               float64        `name:"QSFZ: 3日价量比" dataframe:"vp_3"`  // QSFZ: 3日价量比
-	VP5               float64        `name:"QSFZ: 5日价量比" dataframe:"vp_5"`  // QSFZ: 5日价量比
+	VP3               float64        `name:"QSFZ: 3日价量比" dataframe:"vp3"`   // QSFZ: 3日价量比
+	VP5               float64        `name:"QSFZ: 5日价量比" dataframe:"vp5"`   // QSFZ: 5日价量比
 	Payloads          IncompleteData `name:"payloads" dataframe:"payloads"` // 扩展的半成品数据
 	Last              CompleteData   `name:"last" dataframe:"last"`         // 上一个交易日的数据
 	UpdateTime        string         `name:"更新时间" dataframe:"update_time"`  // 更新时间

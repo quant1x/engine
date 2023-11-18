@@ -26,6 +26,14 @@ const (
 type ModelNo1 struct {
 }
 
+func (m *ModelNo1) Code() models.ModelKind {
+	return models.ModelHousNo1
+}
+
+func (m *ModelNo1) Name() string {
+	return models.MapStrategies[m.Code()].Name
+}
+
 func (m *ModelNo1) OrderFlag() string {
 	return models.OrderFlagTail
 }
@@ -34,12 +42,8 @@ func (m *ModelNo1) Filter(snapshot models.QuoteSnapshot) bool {
 	return RuleFilter(snapshot)
 }
 
-func (m *ModelNo1) Code() models.ModelKind {
-	return models.ModelHousNo1
-}
-
-func (m *ModelNo1) Name() string {
-	return models.MapStrategies[m.Code()].Name
+func (m *ModelNo1) Sort(snapshots []models.QuoteSnapshot) models.SortedStatus {
+	return models.SortDefault
 }
 
 func (m *ModelNo1) v1Evaluate(securityCode string, result *treemap.Map) {

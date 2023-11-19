@@ -20,7 +20,7 @@ const (
 )
 
 func init() {
-	err := models.Register(&ModelNo1{})
+	err := models.Register(ModelNo1{})
 	if err != nil {
 		panic(err)
 	}
@@ -33,27 +33,27 @@ func init() {
 type ModelNo1 struct {
 }
 
-func (m *ModelNo1) Code() models.ModelKind {
+func (m ModelNo1) Code() models.ModelKind {
 	return models.ModelHousNo1
 }
 
-func (m *ModelNo1) Name() string {
+func (m ModelNo1) Name() string {
 	return models.MapStrategies[m.Code()].Name
 }
 
-func (m *ModelNo1) OrderFlag() string {
+func (m ModelNo1) OrderFlag() string {
 	return models.OrderFlagTail
 }
 
-func (m *ModelNo1) Filter(snapshot models.QuoteSnapshot) bool {
+func (m ModelNo1) Filter(snapshot models.QuoteSnapshot) bool {
 	return RuleFilter(snapshot)
 }
 
-func (m *ModelNo1) Sort(snapshots []models.QuoteSnapshot) models.SortedStatus {
+func (m ModelNo1) Sort(snapshots []models.QuoteSnapshot) models.SortedStatus {
 	return models.SortDefault
 }
 
-func (m *ModelNo1) v1Evaluate(securityCode string, result *treemap.Map) {
+func (m ModelNo1) v1Evaluate(securityCode string, result *treemap.Map) {
 	lastDate := trading.LastTradeDate()
 	klines := base.CheckoutKLines(securityCode, lastDate)
 	if len(klines) < models.KLineMin {
@@ -103,7 +103,7 @@ func (m *ModelNo1) v1Evaluate(securityCode string, result *treemap.Map) {
 	}
 }
 
-func (m *ModelNo1) Evaluate(securityCode string, result *treemap.Map) {
+func (m ModelNo1) Evaluate(securityCode string, result *treemap.Map) {
 	history := smart.GetL5History(securityCode)
 	if history == nil {
 		return

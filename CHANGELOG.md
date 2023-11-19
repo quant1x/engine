@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.7.2] - 2023-11-19
+### Changed
+- 优化规则分组.
+- 删除独立的次新股规则.
+- 实现strategy接口的1号策略, 去掉指针接收器的用法.
+- 收敛长期不更新的依赖库到pkg.
+- 拆分策略结果结构体为一个独立的源文件.
+- 调整策略的执行方法, 改用注册的方式。暂时屏蔽回测功能。.
+- 调整no1的方法顺序.
+- 调整history csv字段名.
+- 拟增加数据源切换功能.
+- 增加公开函数的注释.
+- 更新依赖库版本.
+- 更新依赖库版本.
+- 修订股票池.
+
 ## [0.7.1] - 2023-11-13
 ### Changed
 - 更新gotdx版本号, 更新内置的板块数据文件.
@@ -439,8 +455,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.7.1...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.7.2...HEAD
 
+[0.7.2]: https://gitee.com/quant1x/engine/compare/v0.7.1...v0.7.2
 [0.7.1]: https://gitee.com/quant1x/engine/compare/v0.7.0...v0.7.1
 [0.7.0]: https://gitee.com/quant1x/engine/compare/v0.6.9...v0.7.0
 [0.6.9]: https://gitee.com/quant1x/engine/compare/v0.6.8...v0.6.9

@@ -19,13 +19,15 @@ const (
 )
 
 const (
-	engineBaseRule  Kind = 1
-	RuleBaseF10          = engineBaseRule + 0 // 基础规则
-	RuleSubNewStock      = engineBaseRule + 1 // 次新股
+	engineBaseRule Kind = 1
+	KRuleF10            = engineBaseRule + 0 // 基础规则
+	KRuleBase           = engineBaseRule + 1 // 基础规则
 )
 
+// 规则错误码, 每一组规则错误拟100个错误码
 const (
-	errorRuleBase = 1000 // 基础规则错误码
+	errorRuleF10  = (iota + 1) * 100 // F10错误码
+	errorRuleBase                    // 基础规则错误码
 )
 
 // Rule 规则接口

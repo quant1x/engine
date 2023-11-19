@@ -19,6 +19,13 @@ const (
 	MaximumResultDays int = 3
 )
 
+func init() {
+	err := models.Register(&ModelNo1{})
+	if err != nil {
+		panic(err)
+	}
+}
+
 // ModelNo1 1号模型
 //
 //	FormulaNo1 3天内5天线上穿10天线，10天线上穿20天线的个股

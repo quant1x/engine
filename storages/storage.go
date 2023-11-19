@@ -53,5 +53,5 @@ func OutputStatistics(model models.Strategy, top int, date string, v []models.St
 			api.CloseQuietly(file)
 		}
 	}
-	stockPoolMerge(model, date, v)
+	stockPoolMerge(model, date, v, top)
 }

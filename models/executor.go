@@ -6,7 +6,7 @@ import (
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/tags"
 	"gitee.com/quant1x/gox/util/treemap"
-	"github.com/olekukonko/tablewriter"
+	"gitee.com/quant1x/pkg/tablewriter"
 	"os"
 )
 

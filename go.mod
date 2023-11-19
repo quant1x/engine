@@ -6,10 +6,9 @@ require (
 	gitee.com/quant1x/gotdx v1.16.9
 	gitee.com/quant1x/gox v1.13.7
 	gitee.com/quant1x/pandas v1.1.8
+	gitee.com/quant1x/pkg v0.1.0
 	gitee.com/quant1x/ta-lib v0.1.6
 	github.com/bits-and-blooms/bitset v1.11.0
-	github.com/creasty/defaults v1.7.0
-	github.com/olekukonko/tablewriter v0.0.5
 	github.com/spf13/cobra v1.8.0
 	github.com/syndtr/goleveldb v1.0.0
 	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa
@@ -28,7 +27,7 @@ require (
 	github.com/go-latex/latex v0.0.0-20231108140139-5c1ce85aa4ea // indirect
 	github.com/go-pdf/fpdf v0.9.0 // indirect
 	github.com/go-sourcemap/sourcemap v2.1.3+incompatible // indirect
-	github.com/gocarina/gocsv v0.0.0-20230616125104-99d496ca653d // indirect
+	github.com/gocarina/gocsv v0.0.0-20231116093920-b87c2d0e983a // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/btree v1.1.2 // indirect
@@ -37,7 +36,6 @@ require (
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/kr/text v0.2.0 // indirect
-	github.com/mattn/go-runewidth v0.0.15 // indirect
 	github.com/peterbourgon/diskv/v3 v3.0.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect

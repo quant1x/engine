@@ -16,7 +16,7 @@ import (
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/tags"
 	"gitee.com/quant1x/pandas"
-	"github.com/olekukonko/tablewriter"
+	"gitee.com/quant1x/pkg/tablewriter"
 	"os"
 	"sort"
 )
@@ -33,18 +33,19 @@ type GoodCase struct {
 	GtP5 float64 `dataframe:"溢价超5%"`
 }
 
+// SampleFeature 样本特征
 type SampleFeature struct {
-	SecurityCode    string
-	Name            string
-	OpenZf          float64
-	OpenTurnZ       float64
-	LastClose       float64
-	Open            float64
-	Price           float64
-	UpRate          float64
-	OpenPremiumRate float64
-	NextPremiumRate float64
-	QuantityRatio   float64 // 量比
+	SecurityCode      string
+	Name              string
+	OpenChangeRate    float64
+	OpenTurnZ         float64
+	LastClose         float64
+	Open              float64
+	Price             float64
+	UpRate            float64
+	OpenPremiumRate   float64
+	NextPremiumRate   float64
+	OpenQuantityRatio float64 // 量比
 }
 
 // BackTesting 回测
@@ -109,17 +110,17 @@ func BackTesting(countDays, countTopN int) {
 			}
 
 			turn := SampleFeature{
-				Name:            securityName,
-				SecurityCode:    securityCode,
-				QuantityRatio:   snapshot.QuantityRatio,
-				OpenTurnZ:       feature.OpenTurnZ,
-				OpenZf:          num.NetChangeRate(feature.LastClose, feature.Open),
-				LastClose:       feature.LastClose,
-				Open:            feature.Open,
-				Price:           feature.Close,
-				UpRate:          num.NetChangeRate(feature.LastClose, feature.Close),
-				OpenPremiumRate: num.NetChangeRate(feature.Open, feature.Close),
-				NextPremiumRate: num.NetChangeRate(feature.Open, nextOpen),
+				Name:              securityName,
+				SecurityCode:      securityCode,
+				OpenQuantityRatio: snapshot.OpenQuantityRatio,
+				OpenTurnZ:         feature.OpenTurnZ,
+				OpenChangeRate:    num.NetChangeRate(feature.LastClose, feature.Open),
+				LastClose:         feature.LastClose,
+				Open:              feature.Open,
+				Price:             feature.Close,
+				UpRate:            num.NetChangeRate(feature.LastClose, feature.Close),
+				OpenPremiumRate:   num.NetChangeRate(feature.Open, feature.Close),
+				NextPremiumRate:   num.NetChangeRate(feature.Open, nextOpen),
 			}
 			//basicInfo, err := security.GetBasicInfo(securityCode)
 			//if err == nil && basicInfo != nil {
@@ -133,7 +134,7 @@ func BackTesting(countDays, countTopN int) {
 			if a.OpenTurnZ > b.OpenTurnZ {
 				return true
 			}
-			return a.OpenTurnZ == b.OpenTurnZ && a.OpenZf > b.OpenZf
+			return a.OpenTurnZ == b.OpenTurnZ && a.OpenChangeRate > b.OpenChangeRate
 		})
 
 		// 检查有效记录最大数
@@ -148,18 +149,18 @@ func BackTesting(countDays, countTopN int) {
 		var results []models.Statistics
 		for _, v := range samples {
 			zs := models.Statistics{
-				Date:            date,              // 日期
-				Code:            v.SecurityCode,    // 证券代码
-				Name:            v.Name,            // 证券名称
-				OpenRaise:       v.OpenZf,          // 开盘涨幅
-				TurnZ:           v.OpenTurnZ,       // 开盘换手率z
-				QuantityRatio:   v.QuantityRatio,   // 开盘量比
-				LastClose:       v.LastClose,       // 昨日收盘
-				Open:            v.Open,            // 开盘价
-				Price:           v.Price,           // 现价
-				UpRate:          v.UpRate,          // 涨跌幅
-				OpenPremiumRate: v.OpenPremiumRate, // 集合竞价买入, 溢价率
-				NextPremiumRate: v.NextPremiumRate, // 隔日溢价率
+				Date:            date,                // 日期
+				Code:            v.SecurityCode,      // 证券代码
+				Name:            v.Name,              // 证券名称
+				OpenRaise:       v.OpenChangeRate,    // 开盘涨幅
+				TurnZ:           v.OpenTurnZ,         // 开盘换手率z
+				QuantityRatio:   v.OpenQuantityRatio, // 开盘量比
+				LastClose:       v.LastClose,         // 昨日收盘
+				Open:            v.Open,              // 开盘价
+				Price:           v.Price,             // 现价
+				UpRate:          v.UpRate,            // 涨跌幅
+				OpenPremiumRate: v.OpenPremiumRate,   // 集合竞价买入, 溢价率
+				NextPremiumRate: v.NextPremiumRate,   // 隔日溢价率
 			}
 			results = append(results, zs)
 		}

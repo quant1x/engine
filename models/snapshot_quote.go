@@ -5,6 +5,7 @@ import (
 	"gitee.com/quant1x/gotdx"
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/quotes"
+	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/num"
@@ -56,10 +57,15 @@ type QuoteSnapshot struct {
 	Capital               float64              `name:"流通盘"`    // 流通盘
 	FreeCapital           float64              `name:"自由流通股本"` // 自由流通股本
 	OpenTurnZ             float64              `name:"开盘换手Z%"` // 开盘换手
-	QuantityRatio         float64              `name:"开盘量比"`
+	OpenQuantityRatio     float64              `name:"开盘量比"`
+	QuantityRatio         float64              `name:"量比"`
 	ChangePower           float64              `name:"涨跌力度"` // 开盘金额除以开盘涨幅
 	AverageBiddingVolume  int                  `name:"委托均量"` // 委托均量
 }
+
+//func (q QuoteSnapshot) QuantityRelativeRatio() {
+//	return q.OpenQuantityRatio = float64(q.OpenVolume) / history.GetMV5()
+//}
 
 func QuoteSnapshotFromProtocol(v quotes.Snapshot) QuoteSnapshot {
 	snapshot := QuoteSnapshot{}
@@ -85,7 +91,10 @@ func QuoteSnapshotFromProtocol(v quotes.Snapshot) QuoteSnapshot {
 	// 补全扩展相关
 	history := smart.GetL5History(securityCode)
 	if history != nil && history.MV5 > 0 {
-		snapshot.QuantityRatio = float64(snapshot.OpenVolume) / history.GetMV5()
+		lastMinuteVolume := history.GetMV5()
+		snapshot.OpenQuantityRatio = float64(snapshot.OpenVolume) / lastMinuteVolume
+		minuteVolume := float64(snapshot.Vol) / float64(trading.Minutes(snapshot.Date))
+		snapshot.QuantityRatio = minuteVolume / lastMinuteVolume
 	}
 	return snapshot
 }
@@ -138,10 +147,9 @@ func BatchSnapShot(codes []string) []QuoteSnapshot {
 		//// 补全扩展相关
 		//history := smart.GetL5History(securityCode)
 		//if history != nil && history.MV5 > 0 {
-		//	snapshot.QuantityRatio = float64(snapshot.OpenVolume) / history.GetMV5()
+		//	snapshot.OpenQuantityRatio = float64(snapshot.OpenVolume) / history.GetMV5()
 		//}
 		snapshot := QuoteSnapshotFromProtocol(v)
-
 		list = append(list, snapshot)
 	}
 	return list

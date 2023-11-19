@@ -6,6 +6,7 @@ import (
 	"gitee.com/quant1x/gox/num"
 )
 
+// FeatureToSnapshot 特征缓存数据转快照
 func FeatureToSnapshot(feature cache.SecurityFeature, securityCode string) QuoteSnapshot {
 	qs := QuoteSnapshot{
 		//Market            uint8   // 市场
@@ -83,7 +84,7 @@ func FeatureToSnapshot(feature cache.SecurityFeature, securityCode string) Quote
 		//Capital           float64 `name:"流通盘"`    // 流通盘
 		//FreeCapital       float64 `name:"自由流通股本"` // 自由流通股本
 		//OpenTurnZ         float64 `name:"开盘换手Z%"` // 开盘换手
-		//QuantityRatio     float64 `name:"开盘量比"`
+		//OpenQuantityRatio     float64 `name:"开盘量比"`
 	}
 	f10 := smart.GetL5F10(securityCode)
 	if f10 != nil {
@@ -93,7 +94,7 @@ func FeatureToSnapshot(feature cache.SecurityFeature, securityCode string) Quote
 	}
 	extend := smart.GetL5History(securityCode)
 	if extend != nil && extend.MV5 > 0 {
-		qs.QuantityRatio = num.ChangeRate(extend.MV5, qs.OpenVolume)
+		qs.OpenQuantityRatio = num.ChangeRate(extend.MV5, qs.OpenVolume)
 	}
 	return qs
 }

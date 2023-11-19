@@ -49,7 +49,10 @@ func GetStrategySnapshot(securityCode string) *QuoteSnapshot {
 	}
 	history := smart.GetL5History(securityCode)
 	if history != nil {
-		snapshot.QuantityRatio = float64(snapshot.OpenVolume) / history.GetMV5()
+		lastMinuteVolume := history.GetMV5()
+		snapshot.OpenQuantityRatio = float64(snapshot.OpenVolume) / lastMinuteVolume
+		minuteVolume := float64(snapshot.Vol) / float64(trading.Minutes(snapshot.Date))
+		snapshot.QuantityRatio = minuteVolume / lastMinuteVolume
 	}
 	snapshot.OpenBiddingDirection, snapshot.OpenVolumeDirection = v.CheckDirection()
 	return &snapshot

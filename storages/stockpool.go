@@ -29,6 +29,7 @@ type StockPool struct {
 	BlockTopName   string         `name:"领涨股名称" dataframe:"block_top_name"`
 	BlockTopRate   float64        `name:"领涨股涨幅%" dataframe:"block_top_rate"`
 	Tendency       string         `name:"短线趋势" dataframe:"tendency"`
+	OrderStatus    int            `name:"订单状态" dataframe:"order_status"`
 	CreateTime     string         `name:"创建时间" dataframe:"create_time"`
 	UpdateTime     string         `name:"更新时间" dataframe:"update_time"`
 }

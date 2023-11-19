@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/util/homedir"
-	"github.com/creasty/defaults"
+	"gitee.com/quant1x/pkg/defaults"
 	"gopkg.in/yaml.v3"
 	"os"
 	"strings"

@@ -69,7 +69,7 @@ func (r RuleF10) Exec(snapshot models.QuoteSnapshot) error {
 		return ErrRangeOfOpeningTurnZ
 	}
 	// 6. 当日 - 开盘量比
-	if num.IsNaN(snapshot.QuantityRatio) || snapshot.QuantityRatio < RuleParameters.QuantityRatioMin || snapshot.QuantityRatio > RuleParameters.QuantityRatioMax {
+	if num.IsNaN(snapshot.OpenQuantityRatio) || snapshot.OpenQuantityRatio < RuleParameters.QuantityRatioMin || snapshot.OpenQuantityRatio > RuleParameters.QuantityRatioMax {
 		return ErrRangeOfOpeningQuantityRatio
 	}
 	// 7. 当日 - 开盘涨幅

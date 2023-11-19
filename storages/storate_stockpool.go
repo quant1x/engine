@@ -32,12 +32,12 @@ func SaveStockPool(list []StockPool) {
 	return
 }
 
-func stockPoolMerge(model models.Strategy, date string, orders []models.Statistics) {
+func stockPoolMerge(model models.Strategy, date string, orders []models.Statistics, top int) {
 	localStockPool := GetStockPool()
-	targets := []StockPool{}
+	//targets := []StockPool{}
 	cacheStatistics := map[string]*StockPool{}
 	tradeDate := trading.FixTradeDate(date)
-	for _, v := range orders {
+	for i, v := range orders {
 		sp := StockPool{
 			//Status         StrategyStatus `name:"策略状态" dataframe:"status"`
 			//Date           string         `name:"信号日期" dataframe:"date"`
@@ -74,12 +74,17 @@ func stockPoolMerge(model models.Strategy, date string, orders []models.Statisti
 			//BlockTopRate: v.BlockRate,
 			//Tendency       string         `name:"短线趋势" dataframe:"tendency"`
 			//Tendency: v.Tendency,
+			OrderStatus: 0, // 默认订单状态是0
 			//CreateTime     string         `name:"创建时间" dataframe:"create_time"`
 			CreateTime: v.UpdateTime,
 			//UpdateTime     string         `name:"更新时间" dataframe:"update_time"`
 			UpdateTime: v.UpdateTime,
 		}
-		targets = append(targets, sp)
+		if i < top {
+			//  如果是前排个股标志可以买入
+			sp.OrderStatus = 1
+		}
+		//targets = append(targets, sp)
 		cacheStatistics[sp.Key()] = &sp
 	}
 	count := len(localStockPool)
@@ -95,6 +100,7 @@ func stockPoolMerge(model models.Strategy, date string, orders []models.Statisti
 		if found {
 			// 找到了, 标记为已存在
 			v.Status = StrategyAlreadyExists
+			local.OrderStatus = v.OrderStatus
 			continue
 		}
 		// 没找到, 做召回处理

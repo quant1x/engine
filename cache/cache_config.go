@@ -42,8 +42,10 @@ type Quant1XConfig struct {
 	Order   OrderParameter   `yaml:"order"`   // 订单参数
 }
 
+// RuntimeParameter 运行时配置参数
 type RuntimeParameter struct {
-	Pprof PprofParameter `yaml:"pprof"`
+	Pprof   PprofParameter `yaml:"pprof"`
+	Crontab map[string]Job `yaml:"crontab"`
 }
 
 // GetConfigFilename 获取配置文件路径

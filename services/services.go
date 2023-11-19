@@ -19,6 +19,11 @@ const (
 	barIndexRealtimeKLine  = 2
 )
 
+// 定时任务关键字
+const (
+	keyRealTimeKLine = "realtime_kline"
+)
+
 func init() {
 	// 定时重置缓存
 	err := Register("clean", cronInit, jobGlobalReset)
@@ -31,9 +36,16 @@ func init() {
 		logger.Fatal(err)
 	}
 	// 实时更新K线
-	err = Register("realtime_kline", "", jobRealtimeKLine)
-	if err != nil {
-		logger.Fatal(err)
+	jobEnable := true
+	job, ok := cache.EngineConfig.Runtime.Crontab[keyRealTimeKLine]
+	if ok {
+		jobEnable = job.Enable
+	}
+	if jobEnable {
+		err = Register(keyRealTimeKLine, "", jobRealtimeKLine)
+		if err != nil {
+			logger.Fatal(err)
+		}
 	}
 	// 更新全部
 	err = Register("update_all", "", jobUpdateAll)

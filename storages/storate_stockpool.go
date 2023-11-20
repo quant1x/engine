@@ -51,8 +51,9 @@ func stockPoolMerge(model models.Strategy, date string, orders []models.Statisti
 			//Rate           float64        `name:"涨跌幅%" dataframe:"rate"`
 			Rate: v.UpRate,
 			//Buy            float64        `name:"委托价格" dataframe:"buy"`
-			//Buy: v.Price,
+			Buy: v.Price,
 			//Sell           float64        `name:"目标价格" dataframe:"sell"`
+			//Sell: v.Price, // TODO: 缺少卖出策略
 			//StrategyCode   int            `name:"策略编码" dataframe:"strategy_code"`
 			StrategyCode: model.Code(),
 			//StrategyName   string         `name:"策略名称" dataframe:"strategy_name"`
@@ -75,6 +76,8 @@ func stockPoolMerge(model models.Strategy, date string, orders []models.Statisti
 			//Tendency       string         `name:"短线趋势" dataframe:"tendency"`
 			//Tendency: v.Tendency,
 			OrderStatus: 0, // 默认订单状态是0
+			Active:      v.Active,
+			Speed:       v.Speed,
 			//CreateTime     string         `name:"创建时间" dataframe:"create_time"`
 			CreateTime: v.UpdateTime,
 			//UpdateTime     string         `name:"更新时间" dataframe:"update_time"`

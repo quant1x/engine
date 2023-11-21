@@ -49,7 +49,7 @@ func realtimeUpdateOfKLine() {
 			//if snapshot, ok := mapSnapshot[securityCode]; ok {
 			//	base.BasicKLineForSnapshot(snapshot)
 			//}
-			snapshot := models.GetQuoteSnapshot(securityCode)
+			snapshot := models.GetTickFromMemory(securityCode)
 			if snapshot != nil {
 				base.BasicKLineForSnapshot(*snapshot)
 			}

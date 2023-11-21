@@ -14,14 +14,15 @@ import (
 )
 
 var (
-	__mutexSnapshots sync.RWMutex
-	__cacheSnapshots = map[string]quotes.Snapshot{}
+	__mutexTicks sync.RWMutex
+	__cacheTicks = map[string]quotes.Snapshot{}
 )
 
-func GetQuoteSnapshot(securityCode string) *quotes.Snapshot {
-	__mutexSnapshots.RLock()
-	defer __mutexSnapshots.RUnlock()
-	v, found := __cacheSnapshots[securityCode]
+// GetTickFromMemory 获取快照缓存
+func GetTickFromMemory(securityCode string) *quotes.Snapshot {
+	__mutexTicks.RLock()
+	defer __mutexTicks.RUnlock()
+	v, found := __cacheTicks[securityCode]
 	if found {
 		return &v
 	}
@@ -30,7 +31,7 @@ func GetQuoteSnapshot(securityCode string) *quotes.Snapshot {
 
 // GetStrategySnapshot 从缓存中获取快照
 func GetStrategySnapshot(securityCode string) *QuoteSnapshot {
-	v := GetQuoteSnapshot(securityCode)
+	v := GetTickFromMemory(securityCode)
 	if v == nil || v.State != quotes.TDX_SECURITY_TRADE_STATE_NORMAL {
 		// 非正常交易的记录忽略掉
 		return nil
@@ -58,8 +59,8 @@ func GetStrategySnapshot(securityCode string) *QuoteSnapshot {
 	return &snapshot
 }
 
-// GetAllSnapshots 同步快照数据
-func GetAllSnapshots(barIndex *int) {
+// SyncAllSnapshots 同步快照数据
+func SyncAllSnapshots(barIndex *int) {
 	modName := "同步快照数据"
 	allCodes := securities.AllCodeList()
 	count := len(allCodes)
@@ -100,11 +101,11 @@ func GetAllSnapshots(barIndex *int) {
 			break
 		}
 	}
-	__mutexSnapshots.Lock()
+	__mutexTicks.Lock()
 	for _, v := range snapshots {
-		__cacheSnapshots[v.SecurityCode] = v
+		__cacheTicks[v.SecurityCode] = v
 	}
-	__mutexSnapshots.Unlock()
+	__mutexTicks.Unlock()
 	if barIndex != nil {
 		*barIndex++
 	}

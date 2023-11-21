@@ -13,7 +13,7 @@ import (
 // ExecuteStrategy 执行策略
 func ExecuteStrategy(model Strategy, barIndex *int) {
 	// 加载即时行情
-	GetAllSnapshots(barIndex)
+	SyncAllSnapshots(barIndex)
 	fmt.Println()
 	// 执行策略
 	allCodes := market.GetCodeList()

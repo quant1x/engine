@@ -108,7 +108,7 @@ func (m ModelNo1) Evaluate(securityCode string, result *treemap.Map) {
 	if history == nil {
 		return
 	}
-	snapshot := models.GetQuoteSnapshot(securityCode)
+	snapshot := models.GetTickFromMemory(securityCode)
 	if snapshot == nil {
 		return
 	}

@@ -11,6 +11,7 @@ import (
 	"gitee.com/quant1x/gox/num"
 )
 
+// QuoteSnapshot 即时行情快照
 type QuoteSnapshot struct {
 	Date                  string               // 交易日期
 	ServerTime            string               // 时间

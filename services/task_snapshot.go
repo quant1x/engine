@@ -34,5 +34,5 @@ func realtimeUpdateSnapshot() {
 		}
 	}()
 	barIndex := barIndexUpdateSnapshot
-	models.GetAllSnapshots(&barIndex)
+	models.SyncAllSnapshots(&barIndex)
 }

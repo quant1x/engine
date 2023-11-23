@@ -1,4 +1,4 @@
-package util
+package labs
 
 import (
 	"fmt"

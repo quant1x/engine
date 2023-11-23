@@ -11,6 +11,7 @@ import (
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/errors"
 	"gitee.com/quant1x/gox/logger"
+	"gitee.com/quant1x/gox/runtime"
 	"os"
 	"time"
 )
@@ -127,13 +128,13 @@ func BasicKLineForSnapshot(v quotes.Snapshot) {
 	today := trading.Today()
 	if lastTradeday != today {
 		// 当天非交易日, 不更新, 直接返回
-		if !cache.Debug {
+		if !runtime.Debug() {
 			return
 		}
 	}
 	if nowServerTime < trading.CN_TradingStartTime || nowServerTime > trading.CN_TradingStopTime {
 		// 非交易时间, 不更新, 直接返回
-		if !cache.Debug {
+		if !runtime.Debug() {
 			return
 		}
 	}

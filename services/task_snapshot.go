@@ -1,7 +1,6 @@
 package services
 
 import (
-	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/logger"
@@ -17,7 +16,7 @@ func jobUpdateSnapshot() {
 	if updateInRealTime && IsTrading(status) {
 		realtimeUpdateSnapshot()
 	} else {
-		if cache.Debug {
+		if runtime.Debug() {
 			realtimeUpdateSnapshot()
 		} else {
 			logger.Infof("%s, 非交易时段: %d", funcName, status)

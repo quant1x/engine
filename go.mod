@@ -4,7 +4,7 @@ go 1.21.1
 
 require (
 	gitee.com/quant1x/gotdx v1.16.9
-	gitee.com/quant1x/gox v1.13.7
+	gitee.com/quant1x/gox v1.13.8
 	gitee.com/quant1x/pandas v1.1.8
 	gitee.com/quant1x/pkg v0.1.0
 	gitee.com/quant1x/ta-lib v0.1.6
@@ -12,9 +12,12 @@ require (
 	github.com/spf13/cobra v1.8.0
 	github.com/syndtr/goleveldb v1.0.0
 	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa
+	golang.org/x/sys v0.14.0
 	google.golang.org/protobuf v1.31.0
 	gopkg.in/yaml.v3 v3.0.1
 )
+
+replace gitee.com/quant1x/gox v1.13.8 => ../../mymmsc/gox
 
 require (
 	git.sr.ht/~sbinet/gg v0.5.0 // indirect
@@ -45,7 +48,6 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/tealeg/xlsx/v3 v3.3.4 // indirect
 	golang.org/x/image v0.14.0 // indirect
-	golang.org/x/sys v0.14.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	gonum.org/v1/gonum v0.14.0 // indirect
 	gonum.org/v1/plot v0.14.0 // indirect

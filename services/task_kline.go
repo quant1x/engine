@@ -1,7 +1,6 @@
 package services
 
 import (
-	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets/base"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/models"
@@ -9,6 +8,7 @@ import (
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
+	"gitee.com/quant1x/gox/runtime"
 	"runtime/debug"
 )
 
@@ -20,7 +20,7 @@ func jobRealtimeKLine() {
 	if updateInRealTime && IsTrading(status) {
 		realtimeUpdateOfKLine()
 	} else {
-		if cache.Debug {
+		if runtime.Debug() {
 			realtimeUpdateOfKLine()
 		} else {
 			logger.Infof("%s, 非尾盘交易时段: %d", funcName, status)

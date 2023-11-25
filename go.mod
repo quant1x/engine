@@ -4,7 +4,7 @@ go 1.21.1
 
 require (
 	gitee.com/quant1x/gotdx v1.16.9
-	gitee.com/quant1x/gox v1.13.8
+	gitee.com/quant1x/gox v1.13.9
 	gitee.com/quant1x/pandas v1.1.8
 	gitee.com/quant1x/pkg v0.1.0
 	gitee.com/quant1x/ta-lib v0.1.6
@@ -16,8 +16,6 @@ require (
 	google.golang.org/protobuf v1.31.0
 	gopkg.in/yaml.v3 v3.0.1
 )
-
-replace gitee.com/quant1x/gox v1.13.8 => ../../mymmsc/gox
 
 require (
 	git.sr.ht/~sbinet/gg v0.5.0 // indirect

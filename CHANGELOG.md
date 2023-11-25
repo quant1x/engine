@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.7.3] - 2023-11-26
+### Changed
+- 更新gox版本.
+- 废弃部分字段.
+- 删除废弃的测试代码.
+- 剥离部分runtime功能到gox.
+- 调整package.
+- 调整部分快照相关的函数名.
+- 统计结构体增加涨速字段.
+- 股票池结构体增加活跃度和涨速字段.
+- 增加1号策略通达信公式源代码.
+- 配置文件新增定时任务开关.
+
 ## [0.7.2] - 2023-11-19
 ### Changed
 - 优化规则分组.
@@ -455,8 +468,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.7.2...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.7.3...HEAD
 
+[0.7.3]: https://gitee.com/quant1x/engine/compare/v0.7.2...v0.7.3
 [0.7.2]: https://gitee.com/quant1x/engine/compare/v0.7.1...v0.7.2
 [0.7.1]: https://gitee.com/quant1x/engine/compare/v0.7.0...v0.7.1
 [0.7.0]: https://gitee.com/quant1x/engine/compare/v0.6.9...v0.7.0

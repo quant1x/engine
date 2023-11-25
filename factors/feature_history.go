@@ -42,17 +42,10 @@ type History struct {
 	MV20              float64        `name:"20日均量" dataframe:"mv20"`        // 20日均量
 	HIGH              float64        `name:"最高" dataframe:"high"`           // 昨日最高
 	LOW               float64        `name:"最低" dataframe:"low"`            // 昨日最低
-	AveragePprice     float64        `name:"均价" dataframe:"average_pprice"` // 昨日均价
+	AveragePrice      float64        `name:"均价" dataframe:"average_price"`  // 昨日均价
 	Payloads          IncompleteData `name:"payloads" dataframe:"payloads"` // 扩展的半成品数据
 	Last              CompleteData   `name:"last" dataframe:"last"`         // 上一个交易日的数据
 	UpdateTime        string         `name:"更新时间" dataframe:"update_time"`  // 更新时间
-	//QSFZ              bool           `name:"QSFZ: 反转信号" dataframe:"qsfz"`   // QSFZ: 反转信号
-	//CP                float64        `name:"QSFZ: 股价涨幅" dataframe:"cp"`     // QSFZ: 股价涨幅
-	//CV                float64        `name:"QSFZ: 成交量涨幅" dataframe:"cv"`    // QSFZ: 成交量涨幅
-	//VP                float64        `name:"QSFZ: 价量比" dataframe:"vp"`      // QSFZ: 价量比
-	//VP3               float64        `name:"QSFZ: 3日价量比" dataframe:"vp3"`   // QSFZ: 3日价量比
-	//VP5               float64        `name:"QSFZ: 5日价量比" dataframe:"vp5"`   // QSFZ: 5日价量比
-
 }
 
 func NewHistory(date, code string) *History {
@@ -136,7 +129,7 @@ func (this *History) Repair(code, cacheDate, featureDate string, complete bool) 
 	this.HIGH = SeriesIndexOf(HIGH, -1)
 	this.LOW = SeriesIndexOf(LOW, -1)
 	ap := AMOUNT.Div(VOL)
-	this.AveragePprice = SeriesIndexOf(ap, -1)
+	this.AveragePrice = SeriesIndexOf(ap, -1)
 	// 扩展数据 修复
 	{
 		// hous_no1

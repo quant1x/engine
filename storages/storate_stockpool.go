@@ -40,6 +40,7 @@ func stockPoolMerge(model models.Strategy, date string, orders []models.Statisti
 	for i, v := range orders {
 		sp := StockPool{
 			//Status         StrategyStatus `name:"策略状态" dataframe:"status"`
+			Status: StrategyHit,
 			//Date           string         `name:"信号日期" dataframe:"date"`
 			Date: v.Date,
 			//Code           string         `name:"证券代码" dataframe:"code"`
@@ -53,7 +54,7 @@ func stockPoolMerge(model models.Strategy, date string, orders []models.Statisti
 			//Buy            float64        `name:"委托价格" dataframe:"buy"`
 			Buy: v.Price,
 			//Sell           float64        `name:"目标价格" dataframe:"sell"`
-			//Sell: v.Price, // TODO: 缺少卖出策略
+			//Sell: v.Price,
 			//StrategyCode   int            `name:"策略编码" dataframe:"strategy_code"`
 			StrategyCode: model.Code(),
 			//StrategyName   string         `name:"策略名称" dataframe:"strategy_name"`
@@ -101,15 +102,15 @@ func stockPoolMerge(model models.Strategy, date string, orders []models.Statisti
 		}
 		v, found := cacheStatistics[local.Key()]
 		if found {
+			// 相同日期, 策略和证券代码, 视为重复
 			// 找到了, 标记为已存在
 			v.Status = StrategyAlreadyExists
-			local.OrderStatus = v.OrderStatus
+			//local.OrderStatus = v.OrderStatus
 			continue
 		}
 		// 没找到, 做召回处理
 		local.Status.Set(StrategyCancel, true)
 		local.UpdateTime = updateTime
-		_ = v
 	}
 	newList := []StockPool{}
 	for _, v := range cacheStatistics {

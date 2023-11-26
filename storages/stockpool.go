@@ -55,7 +55,7 @@ const (
 )
 
 var (
-	mapStrategies = map[StrategyStatus]string{
+	mapStrategiesOfOrder = map[StrategyStatus]string{
 		StrategyMiss:          "未命中",
 		StrategyHit:           "命中",
 		StrategyCancel:        "召回",

@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.7.4] - 2023-11-27
+### Changed
+- 更新依赖库版本.
+- 修复订单状态被覆盖的bug.
+
 ## [0.7.3] - 2023-11-26
 ### Changed
 - 更新gox版本.
@@ -468,8 +473,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.7.3...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.7.4...HEAD
 
+[0.7.4]: https://gitee.com/quant1x/engine/compare/v0.7.3...v0.7.4
 [0.7.3]: https://gitee.com/quant1x/engine/compare/v0.7.2...v0.7.3
 [0.7.2]: https://gitee.com/quant1x/engine/compare/v0.7.1...v0.7.2
 [0.7.1]: https://gitee.com/quant1x/engine/compare/v0.7.0...v0.7.1

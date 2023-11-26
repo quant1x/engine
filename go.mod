@@ -3,10 +3,10 @@ module gitee.com/quant1x/engine
 go 1.21.1
 
 require (
-	gitee.com/quant1x/gotdx v1.16.9
-	gitee.com/quant1x/gox v1.13.9
+	gitee.com/quant1x/gotdx v1.17.0
+	gitee.com/quant1x/gox v1.14.0
 	gitee.com/quant1x/pandas v1.1.8
-	gitee.com/quant1x/pkg v0.1.0
+	gitee.com/quant1x/pkg v0.1.1
 	gitee.com/quant1x/ta-lib v0.1.6
 	github.com/bits-and-blooms/bitset v1.11.0
 	github.com/spf13/cobra v1.8.0

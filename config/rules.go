@@ -5,6 +5,10 @@ type RuleParameter struct {
 	SectorsFilter               bool    `yaml:"sectors_filter" default:"false"`                  // 是否启用板块过滤, false代表全市场扫描
 	SectorsTopN                 int     `yaml:"sectors_top_n" default:"3"`                       // 最多关联多少个板块, 默认3个
 	StockTopNInSector           int     `yaml:"stock_top_n_in_sector" default:"5"`               // 板块内个股排名前N
+	CapitalMin                  float64 `yaml:"capital_min" default:"2"`                         // 2 * 亿 流通股本最小值
+	CapitalMax                  float64 `yaml:"capital_max" default:"20"`                        // 20 * 亿 流通股本最大值
+	MarketCapMin                float64 `yaml:"market_cap_min" default:"0.5"`                    // 流通市值-最小
+	MarketCapMax                float64 `yaml:"market_cap_max" default:"100"`                    // 流通市值-最大
 	PriceMin                    float64 `yaml:"price_min" default:"2.00"`                        // 2.00 股价最低
 	PriceMax                    float64 `yaml:"price_max" default:"30.00"`                       // 30.00 股价最高
 	MaximumIncreaseWithin5days  float64 `yaml:"maximum_increase_within_5_days" default:"20.00"`  // 20.00 5日累计最大涨幅
@@ -18,8 +22,6 @@ type RuleParameter struct {
 	QuantityRatioMin            float64 `yaml:"quantity_ratio_min"  default:"1.00"`              // 1.00 最小开盘量比
 	SafetyScoreMin              float64 `yaml:"safety_score_min" default:"80"`                   // 80 通达信安全分最小值
 	VolumeRatioMax              float64 `yaml:"volume_ratio_max" default:"3.82"`                 // 1.800 成交量放大不能超过1.8
-	CapitalMin                  float64 `yaml:"capital_min" default:"2"`                         // 2 * 亿 流通股本最小值
-	CapitalMax                  float64 `yaml:"capital_max" default:"20"`                        // 20 * 亿 流通股本最大值
 	VixMax                      float64 `yaml:"vix_max" default:"100"`                           // 波动率最大值100
 	VixMin                      float64 `yaml:"vix_min" default:"0"`                             // 波动率最小值0
 	TurnoverRateMax             float64 `yaml:"turnover_rate_max" default:"20.00"`               // 换手率最大20%

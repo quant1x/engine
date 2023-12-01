@@ -1,4 +1,4 @@
-package cache
+package config
 
 import (
 	"embed"
@@ -53,8 +53,13 @@ func GetConfigFilename() string {
 	return quant1XConfigFilename
 }
 
-// 加载配置文件
-func loadConfig() (config Quant1XConfig, found bool) {
+var (
+	// EngineConfig engine配置信息
+	EngineConfig Quant1XConfig
+)
+
+// LoadConfig 加载配置文件
+func LoadConfig() (config Quant1XConfig, found bool) {
 	_ = defaults.Set(&config)
 	for _, v := range listConfigFile {
 		filename, err := homedir.Expand(v)
@@ -82,11 +87,11 @@ func loadConfig() (config Quant1XConfig, found bool) {
 }
 
 // ReadConfig 读取配置文件
-func ReadConfig() (config Quant1XConfig) {
+func ReadConfig(rootPath string) (config Quant1XConfig) {
 	_ = defaults.Set(&config)
 	target := GetConfigFilename()
 	if !api.FileExist(target) {
-		target = GetRootPath() + "/" + configFilename
+		target = rootPath + "/" + configFilename
 		target, _ = homedir.Expand(target)
 		filename := fmt.Sprintf("%s/%s", ResourcesPath, configFilename)
 		_ = api.Export(resources, filename, target)

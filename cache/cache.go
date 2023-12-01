@@ -1,6 +1,7 @@
 package cache
 
 import (
+	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/util/homedir"
 	"os"
@@ -18,8 +19,6 @@ const (
 )
 
 var (
-	// EngineConfig engine配置信息
-	EngineConfig Quant1XConfig
 	// 根路径
 	cacheRootPath = "~/.quant1x"
 	// cacheLogPath 日志路径
@@ -34,7 +33,7 @@ func init() {
 
 func initCache() {
 	// 加载配置文件
-	tmpConfig, found := loadConfig()
+	tmpConfig, found := config.LoadConfig()
 	// 搜索配置文件
 	baseDir := tmpConfig.BaseDir
 	if len(baseDir) > 0 {
@@ -80,13 +79,13 @@ func initCache() {
 	}
 	// 检查配置文件并加载配置
 	if !found {
-		EngineConfig = ReadConfig()
+		config.EngineConfig = config.ReadConfig(GetRootPath())
 	} else {
-		EngineConfig = tmpConfig
+		config.EngineConfig = tmpConfig
 	}
 
 	// 启动性能分析
-	startPprof()
+	config.StartPprof()
 }
 
 // Reset 重置日志记录器

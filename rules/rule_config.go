@@ -1,7 +1,7 @@
 package rules
 
 import (
-	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/gox/api"
 )
 
@@ -12,19 +12,19 @@ const (
 )
 
 var (
-	RuleParameters  = cache.RuleParameter{}
-	OrderParameters = cache.OrderParameter{}
+	RuleParameters  = config.RuleParameter{}
+	OrderParameters = config.OrderParameter{}
 )
 
 func init() {
 	// 初始化配置
 	//cfg := EngineConfig.ReadConfig()
 	// 加载规则参数
-	_ = api.Copy(&RuleParameters, &cache.EngineConfig.Rules)
+	_ = api.Copy(&RuleParameters, &config.EngineConfig.Rules)
 	RuleParameters.CapitalMin *= Billion
 	RuleParameters.CapitalMax *= Billion
 	RuleParameters.MaxReduceAmount *= TenThousand
 
 	// 加载订单参数
-	_ = api.Copy(&OrderParameters, &cache.EngineConfig.Order)
+	_ = api.Copy(&OrderParameters, &config.EngineConfig.Order)
 }

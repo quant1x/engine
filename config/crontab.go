@@ -1,4 +1,4 @@
-package cache
+package config
 
 // Job 定时任务配置
 type Job struct {

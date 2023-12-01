@@ -1,7 +1,7 @@
 package strategies
 
 import (
-	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/rules"
 )
@@ -13,7 +13,7 @@ var (
 
 // AllStockTopN 最大输出多少只个股
 func AllStockTopN() int {
-	return cache.EngineConfig.Order.TopN
+	return config.EngineConfig.Order.TopN
 }
 
 // RuleFilter 过滤条件

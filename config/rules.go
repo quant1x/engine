@@ -1,4 +1,4 @@
-package cache
+package config
 
 // RuleParameter 规则参数
 type RuleParameter struct {

@@ -1,4 +1,4 @@
-package cache
+package config
 
 import (
 	"fmt"
@@ -12,8 +12,8 @@ type PprofParameter struct {
 	Port   int  `yaml:"port" default:"6060"`   // pprof web端口
 }
 
-// 启动性能分析工具
-func startPprof() {
+// StartPprof 启动性能分析工具
+func StartPprof() {
 	if !EngineConfig.Runtime.Pprof.Enable {
 		return
 	}

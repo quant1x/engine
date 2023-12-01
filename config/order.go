@@ -1,4 +1,4 @@
-package cache
+package config
 
 // OrderParameter 订单参数
 type OrderParameter struct {

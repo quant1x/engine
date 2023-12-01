@@ -3,6 +3,7 @@ package services
 import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/cachel5"
+	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/gotdx"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/logger"
@@ -37,7 +38,7 @@ func init() {
 	}
 	// 实时更新K线
 	jobEnable := true
-	job, ok := cache.EngineConfig.Runtime.Crontab[keyRealTimeKLine]
+	job, ok := config.EngineConfig.Runtime.Crontab[keyRealTimeKLine]
 	if ok {
 		jobEnable = job.Enable
 	}

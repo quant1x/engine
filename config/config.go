@@ -4,6 +4,7 @@ import (
 	"embed"
 	"fmt"
 	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/util/homedir"
 	"gitee.com/quant1x/pkg/defaults"
 	"gopkg.in/yaml.v3"
@@ -70,10 +71,12 @@ func LoadConfig() (config Quant1XConfig, found bool) {
 		if api.FileExist(filename) {
 			dataBytes, err := os.ReadFile(filename)
 			if err != nil {
+				logger.Error(err)
 				continue
 			}
 			err = yaml.Unmarshal(dataBytes, &config)
 			if err != nil {
+				logger.Error(err)
 				continue
 			}
 			config.BaseDir = strings.TrimSpace(config.BaseDir)
@@ -101,10 +104,12 @@ func ReadConfig(rootPath string) (config Quant1XConfig) {
 	if api.FileExist(target) {
 		dataBytes, err := os.ReadFile(target)
 		if err != nil {
+			logger.Error(err)
 			return
 		}
 		err = yaml.Unmarshal(dataBytes, &config)
 		if err != nil {
+			logger.Error(err)
 			return
 		}
 		fixTradingSession(&config)

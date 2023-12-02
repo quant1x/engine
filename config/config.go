@@ -36,10 +36,11 @@ var (
 
 // Quant1XConfig Quant1X基础配置
 type Quant1XConfig struct {
-	BaseDir string           `yaml:"basedir"` // 基础路径
-	Runtime RuntimeParameter `yaml:"runtime"` // 运行时参数
-	Rules   RuleParameter    `yaml:"rules"`   // 规则参数
-	Order   OrderParameter   `yaml:"order"`   // 订单参数
+	BaseDir string                 `yaml:"basedir"` // 基础路径
+	Runtime RuntimeParameter       `yaml:"runtime"` // 运行时参数
+	Rules   RuleParameter          `yaml:"rules"`   // 规则参数
+	Order   OrderParameter         `yaml:"order"`   // 订单参数
+	Trader  PreviewTraderParameter `yaml:"trader"`  // 预览交易参数
 }
 
 // RuntimeParameter 运行时配置参数
@@ -79,6 +80,7 @@ func LoadConfig() (config Quant1XConfig, found bool) {
 			if len(config.BaseDir) > 0 {
 				quant1XConfigFilename = filename
 			}
+			fixTradingSession(&config)
 			found = true
 			break
 		}
@@ -105,6 +107,16 @@ func ReadConfig(rootPath string) (config Quant1XConfig) {
 		if err != nil {
 			return
 		}
+		fixTradingSession(&config)
 	}
 	return
+}
+
+func fixTradingSession(config *Quant1XConfig) {
+	// 增加配置的二次加工
+	// 1. 重置交易时段字段
+	config.Trader.Head.Session = ParseTradingSession(config.Trader.Head.Time)
+	config.Trader.Tail.Session = ParseTradingSession(config.Trader.Tail.Time)
+	config.Trader.Tick.Session = ParseTradingSession(config.Trader.Tick.Time)
+	config.Trader.Sell.Session = ParseTradingSession(config.Trader.Sell.Time)
 }

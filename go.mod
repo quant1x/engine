@@ -5,14 +5,14 @@ go 1.21.1
 require (
 	gitee.com/quant1x/gotdx v1.17.0
 	gitee.com/quant1x/gox v1.14.0
-	gitee.com/quant1x/pandas v1.1.8
+	gitee.com/quant1x/pandas v1.2.0
 	gitee.com/quant1x/pkg v0.1.1
 	gitee.com/quant1x/ta-lib v0.1.6
 	github.com/bits-and-blooms/bitset v1.11.0
 	github.com/spf13/cobra v1.8.0
 	github.com/syndtr/goleveldb v1.0.0
 	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa
-	golang.org/x/sys v0.14.0
+	golang.org/x/sys v0.15.0
 	google.golang.org/protobuf v1.31.0
 	gopkg.in/yaml.v3 v3.0.1
 )

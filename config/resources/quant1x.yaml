@@ -1,5 +1,14 @@
 basedir: ~/.quant1x # 数据路径
-order:
+trader: # 交易配置
+  head:
+    auto: true
+  tail:
+    auto: false
+  tick:
+    auto: true
+  sell:
+    auto: false
+order: # 订单
   top_n: 3 # 最多输出多少个标的
   have_etf: false  # 是否包含ETF交易
 rules:

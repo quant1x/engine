@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.7.5] - 2023-12-03
+### Changed
+- 调整统计参数归于模型.
+- 加载配置文件增加错误日志.
+- 增加市场雷达功能.
+- 增加交易参数配置.
+- 调整目录结构.
+- 增加流通市值.
+- 从cache目录中拆分出config.
+- 新增交易模块.
+- 拟增加权限模块.
+
 ## [0.7.4] - 2023-11-27
 ### Changed
 - 更新依赖库版本.
@@ -473,8 +485,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.7.4...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.7.5...HEAD
 
+[0.7.5]: https://gitee.com/quant1x/engine/compare/v0.7.4...v0.7.5
 [0.7.4]: https://gitee.com/quant1x/engine/compare/v0.7.3...v0.7.4
 [0.7.3]: https://gitee.com/quant1x/engine/compare/v0.7.2...v0.7.3
 [0.7.2]: https://gitee.com/quant1x/engine/compare/v0.7.1...v0.7.2

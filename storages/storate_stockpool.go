@@ -32,7 +32,7 @@ func SaveStockPool(list []StockPool) {
 	return
 }
 
-func stockPoolMerge(model models.Strategy, date string, orders []models.Statistics, top int) {
+func stockPoolMerge(model models.Strategy, date string, orders []models.Statistics, topN int) {
 	localStockPool := GetStockPool()
 	//targets := []StockPool{}
 	cacheStatistics := map[string]*StockPool{}
@@ -84,7 +84,7 @@ func stockPoolMerge(model models.Strategy, date string, orders []models.Statisti
 			//UpdateTime     string         `name:"更新时间" dataframe:"update_time"`
 			UpdateTime: v.UpdateTime,
 		}
-		if i < top {
+		if i < topN {
 			//  如果是前排个股标志可以买入
 			sp.OrderStatus = 1
 		}

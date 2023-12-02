@@ -1,7 +1,7 @@
 package command
 
 import (
-	"gitee.com/quant1x/engine/strategies"
+	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/tracker"
 	cmder "github.com/spf13/cobra"
 )
@@ -22,5 +22,5 @@ var CmdBackTesting = &cmder.Command{
 
 func initBackTesting() {
 	CmdBackTesting.Flags().IntVar(&days, "count", 0, "统计多少天")
-	CmdBackTesting.Flags().IntVar(&topN, "top", strategies.AllStockTopN(), "输出前排几名")
+	CmdBackTesting.Flags().IntVar(&topN, "top", models.AllStockTopN(), "输出前排几名")
 }

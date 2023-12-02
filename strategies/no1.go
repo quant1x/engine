@@ -46,7 +46,7 @@ func (m ModelNo1) OrderFlag() string {
 }
 
 func (m ModelNo1) Filter(snapshot models.QuoteSnapshot) bool {
-	return RuleFilter(snapshot)
+	return GeneralFilter(snapshot)
 }
 
 func (m ModelNo1) Sort(snapshots []models.QuoteSnapshot) models.SortedStatus {

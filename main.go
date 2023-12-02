@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"gitee.com/quant1x/engine/command"
 	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/engine/strategies"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/runtime"
 	cmder "github.com/spf13/cobra"
@@ -72,8 +71,8 @@ func main() {
 	}
 	//rootCmd.Flags().IntVar(&strategyNumber, "strategy", models.DefaultStrategy, "策略编号")
 	rootCmd.Flags().IntVar(&strategyNumber, "strategy", models.DefaultStrategy, models.UsageStrategyList())
-	rootCmd.Flags().IntVar(&strategies.CountDays, "count", 0, "统计多少天")
-	rootCmd.Flags().IntVar(&strategies.CountTopN, "top", strategies.AllStockTopN(), "输出前排几名")
+	rootCmd.Flags().IntVar(&models.CountDays, "count", 0, "统计多少天")
+	rootCmd.Flags().IntVar(&models.CountTopN, "top", models.AllStockTopN(), "输出前排几名")
 	command.Init()
 	rootCmd.AddCommand(command.CmdVersion, command.CmdPrint, command.CmdBackTesting, command.CmdRule)
 	rootCmd.AddCommand(command.CmdUpdate, command.CmdRepair, command.CmdService)

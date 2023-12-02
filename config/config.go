@@ -7,7 +7,7 @@ import (
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/util/homedir"
 	"gitee.com/quant1x/pkg/defaults"
-	"gopkg.in/yaml.v3"
+	"gitee.com/quant1x/pkg/yaml"
 	"os"
 	"strings"
 )

@@ -4,9 +4,9 @@ go 1.21.1
 
 require (
 	gitee.com/quant1x/gotdx v1.17.0
-	gitee.com/quant1x/gox v1.14.0
-	gitee.com/quant1x/pandas v1.2.0
-	gitee.com/quant1x/pkg v0.1.1
+	gitee.com/quant1x/gox v1.14.1
+	gitee.com/quant1x/pandas v1.2.1
+	gitee.com/quant1x/pkg v0.1.2
 	gitee.com/quant1x/ta-lib v0.1.6
 	github.com/bits-and-blooms/bitset v1.11.0
 	github.com/spf13/cobra v1.8.0
@@ -14,7 +14,6 @@ require (
 	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa
 	golang.org/x/sys v0.15.0
 	google.golang.org/protobuf v1.31.0
-	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (
@@ -28,7 +27,6 @@ require (
 	github.com/go-latex/latex v0.0.0-20231108140139-5c1ce85aa4ea // indirect
 	github.com/go-pdf/fpdf v0.9.0 // indirect
 	github.com/go-sourcemap/sourcemap v2.1.3+incompatible // indirect
-	github.com/gocarina/gocsv v0.0.0-20231116093920-b87c2d0e983a // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/btree v1.1.2 // indirect

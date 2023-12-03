@@ -65,7 +65,7 @@ var (
 	_mutexStrategies sync.Mutex
 	_mapStrategies   = map[ModelKind]Strategy{}
 	ErrAlreadyExists = errors.New("strategy is already exists") // 已经存在
-	ErrNotFound      = errors.New("strategy not found")         // 已经存在
+	ErrNotFound      = errors.New("strategy not found")         // 不存在
 )
 
 // Register 注册策略

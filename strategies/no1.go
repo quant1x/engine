@@ -1,15 +1,11 @@
 package strategies
 
 import (
-	"gitee.com/quant1x/engine/datasets/base"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/smart"
 	"gitee.com/quant1x/gotdx/securities"
-	"gitee.com/quant1x/gotdx/trading"
-	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/util/treemap"
-	"gitee.com/quant1x/pandas"
 	. "gitee.com/quant1x/pandas/formula"
 	"gitee.com/quant1x/pandas/stat"
 )
@@ -51,56 +47,6 @@ func (m ModelNo1) Filter(snapshot models.QuoteSnapshot) bool {
 
 func (m ModelNo1) Sort(snapshots []models.QuoteSnapshot) models.SortedStatus {
 	return models.SortDefault
-}
-
-func (m ModelNo1) v1Evaluate(securityCode string, result *treemap.Map) {
-	lastDate := trading.LastTradeDate()
-	klines := base.CheckoutKLines(securityCode, lastDate)
-	if len(klines) < models.KLineMin {
-		return
-	}
-	df := pandas.LoadStructs(klines)
-	if df.Err != nil {
-		return
-	}
-	var (
-		DATE  = df.Col("date")
-		CLOSE = df.ColAsNDArray("close")
-	)
-	days := CLOSE.Len()
-	if days < 1 {
-		return
-	}
-
-	// 取5、10、20日均线
-	ma5 := MA(CLOSE, 5)
-	ma10 := MA(CLOSE, 10)
-	ma20 := MA(CLOSE, 20)
-	if ma5.Len() != days || ma10.Len() != days || ma20.Len() != days {
-		logger.Errorf("[%s]: 均线, 数据没对齐", m.Name())
-		return
-	}
-	// 两个金叉
-	c1 := CROSS(ma5, ma10)
-	c2 := CROSS(ma10, ma20)
-	// 两个统计
-	N := MaximumResultDays
-	r1 := COUNT(c1.Bools(), N)
-	r2 := COUNT(c2.Bools(), N)
-	// 横向对比
-	d := r1.And(r2)
-	s := factors.BoolIndexOf(d, -1)
-	if s {
-		price := factors.SeriesIndexOf(CLOSE, -1)
-		result.Put(securityCode, models.ResultInfo{Code: securityCode,
-			Name:         securities.GetStockName(securityCode),
-			Date:         factors.StringIndexOf(DATE, -1),
-			Rate:         0.00,
-			Buy:          price,
-			Sell:         price * 1.05,
-			StrategyCode: m.Code(),
-			StrategyName: m.Name()})
-	}
 }
 
 func (m ModelNo1) Evaluate(securityCode string, result *treemap.Map) {

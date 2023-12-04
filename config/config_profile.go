@@ -14,11 +14,11 @@ type PprofParameter struct {
 
 // StartPprof 启动性能分析工具
 func StartPprof() {
-	if !EngineConfig.Runtime.Pprof.Enable {
+	if !GlobalConfig.Runtime.Pprof.Enable {
 		return
 	}
 	go func() {
-		addr := fmt.Sprintf("localhost:%d", EngineConfig.Runtime.Pprof.Port)
+		addr := fmt.Sprintf("localhost:%d", GlobalConfig.Runtime.Pprof.Port)
 		err := http.ListenAndServe(addr, nil)
 		logger.Info("启动pprof性能分析工具", err)
 	}()

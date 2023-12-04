@@ -15,7 +15,7 @@ import (
 var (
 	// miniQMT代理服务器地址
 	//urlPrefixMiniQmtProxy = "http://10.211.55.3:18168/qmt"
-	urlPrefixMiniQmtProxy = config.EngineConfig.Trader.ProxyUrl
+	urlPrefixMiniQmtProxy = config.TraderConfig().ProxyUrl
 	// 查询前缀
 	urlPrefixForQuery = urlPrefixMiniQmtProxy + "/query"
 	// 交易前缀

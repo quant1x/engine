@@ -33,3 +33,8 @@ type RuleParameter struct {
 	SentimentHigh               float64 `yaml:"sentiment_high" default:"61.8"`                   // 情绪值最高
 	SentimentLow                float64 `yaml:"sentiment_low" default:"38.2"`                    // 情绪值最低
 }
+
+// RuleConfig 获取交易配置
+func RuleConfig() RuleParameter {
+	return GlobalConfig.Rules
+}

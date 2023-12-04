@@ -7,3 +7,8 @@ type OrderParameter struct {
 	TopN      int    `yaml:"top_n" default:"3"`        // 最多输出前多少名个股
 	HaveETF   bool   `yaml:"have_etf" default:"false"` // 是否包含ETF
 }
+
+// OrderConfig 获取订单配置
+func OrderConfig() OrderParameter {
+	return GlobalConfig.Order
+}

@@ -6,3 +6,8 @@ type Job struct {
 	Trigger string `yaml:"trigger"  default:""` // 触发条件
 	Enable  bool   `yaml:"enable" default:"true"`
 }
+
+// JobConfig 获取定时任务配置
+func JobConfig() map[string]Job {
+	return GlobalConfig.Runtime.Crontab
+}

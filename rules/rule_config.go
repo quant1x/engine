@@ -12,19 +12,24 @@ const (
 )
 
 var (
-	RuleParameters  = config.RuleParameter{}
-	OrderParameters = config.OrderParameter{}
+	RuleParameters  config.RuleParameter
+	OrderParameters config.OrderParameter
 )
 
 func init() {
 	// 初始化配置
-	//cfg := EngineConfig.ReadConfig()
+	rules := config.RuleConfig()
 	// 加载规则参数
-	_ = api.Copy(&RuleParameters, &config.EngineConfig.Rules)
+	_ = api.Copy(&RuleParameters, &rules)
+	// 流通盘
 	RuleParameters.CapitalMin *= Billion
 	RuleParameters.CapitalMax *= Billion
+	// 市值
+	RuleParameters.MarketCapMin *= Billion
+	RuleParameters.MarketCapMax *= Billion
+	// 最大流出
 	RuleParameters.MaxReduceAmount *= TenThousand
 
 	// 加载订单参数
-	_ = api.Copy(&OrderParameters, &config.EngineConfig.Order)
+	_ = api.Copy(&OrderParameters, &config.GlobalConfig.Order)
 }

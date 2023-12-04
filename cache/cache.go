@@ -79,9 +79,9 @@ func initCache() {
 	}
 	// 检查配置文件并加载配置
 	if !found {
-		config.EngineConfig = config.ReadConfig(GetRootPath())
+		config.GlobalConfig = config.ReadConfig(GetRootPath())
 	} else {
-		config.EngineConfig = tmpConfig
+		config.GlobalConfig = tmpConfig
 	}
 
 	// 启动性能分析

@@ -38,7 +38,8 @@ func init() {
 	}
 	// 实时更新K线
 	jobEnable := true
-	job, ok := config.EngineConfig.Runtime.Crontab[keyRealTimeKLine]
+	crontab := config.JobConfig()
+	job, ok := crontab[keyRealTimeKLine]
 	if ok {
 		jobEnable = job.Enable
 	}

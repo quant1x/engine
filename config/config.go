@@ -37,11 +37,11 @@ var (
 
 // Quant1XConfig Quant1X基础配置
 type Quant1XConfig struct {
-	BaseDir string                 `yaml:"basedir"` // 基础路径
-	Runtime RuntimeParameter       `yaml:"runtime"` // 运行时参数
-	Rules   RuleParameter          `yaml:"rules"`   // 规则参数
-	Order   OrderParameter         `yaml:"order"`   // 订单参数
-	Trader  PreviewTraderParameter `yaml:"trader"`  // 预览交易参数
+	BaseDir string           `yaml:"basedir"` // 基础路径
+	Runtime RuntimeParameter `yaml:"runtime"` // 运行时参数
+	Rules   RuleParameter    `yaml:"rules"`   // 规则参数
+	Order   OrderParameter   `yaml:"order"`   // 订单参数
+	Trader  TraderParameter  `yaml:"trader"`  // 预览交易参数
 }
 
 // RuntimeParameter 运行时配置参数
@@ -56,8 +56,8 @@ func GetConfigFilename() string {
 }
 
 var (
-	// EngineConfig engine配置信息
-	EngineConfig Quant1XConfig
+	// GlobalConfig engine配置信息
+	GlobalConfig Quant1XConfig
 )
 
 // LoadConfig 加载配置文件

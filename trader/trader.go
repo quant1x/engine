@@ -132,7 +132,7 @@ func CancelOrder(orderId int) error {
 		"order_id": {fmt.Sprintf("%d", orderId)},
 	}
 	body := params.Encode()
-	logger.Infof("trade-cancel: %s", body)
+	logger.Infof("trader-cancel: %s", body)
 	data, err := http.Post(urlCancelOrder, body)
 	if err != nil {
 		logger.Errorf("trader-cancel: 撤单操作异常: %+v", err)
@@ -144,7 +144,7 @@ func CancelOrder(orderId int) error {
 		logger.Errorf("trader-cancel: 解析json异常: %+v", err)
 		return err
 	}
-	logger.Infof("trade-cancel: %s, response: status=%d", body, detail.Status)
+	logger.Infof("trader-cancel: %s, response: status=%d", body, detail.Status)
 	return nil
 }
 
@@ -160,7 +160,7 @@ func PlaceOrder(direction TradeDirection, model models.Strategy, securityCode st
 		"remark":    {model.OrderFlag()},
 	}
 	body := params.Encode()
-	logger.Infof("trade-order: %s", body)
+	logger.Infof("trader-order: %s", body)
 	data, err := http.Post(urlPlaceOrder, body)
 	if err != nil {
 		logger.Errorf("trader-order: 下单操作异常: %+v", err)

@@ -28,8 +28,9 @@ func loadQuarterlyReports(date string) {
 }
 
 type quarterlyReportSummary struct {
-	BPS      float64
-	BasicEPS float64
+	BPS                float64
+	BasicEPS           float64
+	TOTALOPERATEINCOME float64
 }
 
 func getQuarterlyReportSummary(securityCode, date string) quarterlyReportSummary {
@@ -41,12 +42,14 @@ func getQuarterlyReportSummary(securityCode, date string) quarterlyReportSummary
 	if ok {
 		summary.BPS = v.BPS
 		summary.BasicEPS = v.BasicEPS
+		summary.TOTALOPERATEINCOME = v.TOTALOPERATEINCOME
 		return summary
 	}
 	q := dfcf.GetCacheQuarterlyReportsBySecurityCode(securityCode, date)
 	if q != nil {
 		summary.BPS = q.BPS
 		summary.BasicEPS = q.BasicEPS
+		summary.TOTALOPERATEINCOME = q.TOTALOPERATEINCOME
 	}
 	return summary
 }

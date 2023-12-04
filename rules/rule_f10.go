@@ -25,6 +25,7 @@ var (
 	ErrF10RangeOfSafetyCode                   = exception.New(errorRuleF10+5, "非安全分范围")
 	ErrF10RangeOfBasicEPS                     = exception.New(errorRuleF10+6, "非每股收益范围")
 	ErrF10RangeOfBPS                          = exception.New(errorRuleF10+7, "非净增长范围")
+	ErrF10RangeOfTOTALOPERATEINCOME           = exception.New(errorRuleF10+8, "非营业总收入范围")
 )
 
 // RuleF10 基本面规则
@@ -87,6 +88,10 @@ func (r RuleF10) Exec(snapshot models.QuoteSnapshot) error {
 		//if f10.Reduce > 0 || f10.Increase > 0 || f10.Risk > 0 {
 		//	return false
 		//}
+		// 10.7 营业总收入小于等于1亿
+		if f10.TOTALOPERATEINCOME != 0 && f10.TOTALOPERATEINCOME <= 1*Billion {
+			return ErrF10RangeOfTOTALOPERATEINCOME
+		}
 	}
 	// 规则通过
 	return nil

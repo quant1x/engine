@@ -1,22 +1,6 @@
 package config
 
 // PreviewTraderParameter 预览交易通道参数
-type v1PreviewTraderParameter struct {
-	HeadOrderAuto      bool    `yaml:"head_order_auto" default:"true"`           // head订单自动买入
-	TickOrderAuto      bool    `yaml:"tick_order_auto" default:"true"`           // tick订单自动买入
-	TailOrderAuto      bool    `yaml:"tail_order_auto" default:"true"`           // tail订单自动买入
-	SellOrderAuto      bool    `yaml:"sell_order_auto" default:"true"`           // 是否自动卖出
-	HeadTime           string  `yaml:"head_time" default:"09:27~14:59:30"`       // head订单时间
-	TailTime           string  `yaml:"tail_time" default:"14:45~14:59:30"`       // head订单时间
-	TickTime           string  `yaml:"tick_time" default:"09:39:00~14:56:30"`    // 盘中实时买入tail订单时段
-	AskTime            string  `yaml:"ask_time" default:"09:50~14:59:30"`        // 卖出时段
-	TickOrderMaxAmount float64 `yaml:"tick_order_max_amount" default:"20000.00"` // tick订单最大买入金额
-	TickOrderMinAmount float64 `yaml:"tick_order_min_amount" default:"10000.00"` // tick订单最小买入金额
-	BuyAmountMax       float64 `yaml:"buy_amount_max" default:"20000.00"`        // 早盘最大可买金额
-	BuyAmountMin       float64 `yaml:"buy_amount_min" default:"10000.00"`        // 早盘最小可买金额
-}
-
-// PreviewTraderParameter 预览交易通道参数
 type PreviewTraderParameter struct {
 	Head TradeRule `name:"早盘" yaml:"head" default:"{\"Time\":\"09:30:00~11:30:00\"}"`
 	Tail TradeRule `name:"尾盘" yaml:"tail" default:"{\"Time\":\"14:50:00~14:56:30\"}"`

@@ -32,7 +32,7 @@ func GetSafetyScore(securityCode string) (score int) {
 	_, _, code := proto.DetectMarket(securityCode)
 	if len(code) == 6 {
 		url := fmt.Sprintf("%s%s.json", kUrlRiskAssessment, code)
-		data, err := http.HttpGet(url)
+		data, err := http.Get(url)
 		if err != nil || err == http.NotFound {
 			score = defaultSafetyScoreOfNotFound
 		} else {

@@ -163,7 +163,7 @@ func PlaceOrder(direction TradeDirection, model models.Strategy, securityCode st
 	logger.Infof("trade-order: %s", body)
 	data, err := http.Post(urlPlaceOrder, body)
 	if err != nil {
-		logger.Errorf("trader-order: 撤单操作异常: %+v", err)
+		logger.Errorf("trader-order: 下单操作异常: %+v", err)
 		return -1, err
 	}
 	var detail OrderResult

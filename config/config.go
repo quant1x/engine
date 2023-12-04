@@ -124,4 +124,5 @@ func fixTradingSession(config *Quant1XConfig) {
 	config.Trader.Tail.Session = ParseTradingSession(config.Trader.Tail.Time)
 	config.Trader.Tick.Session = ParseTradingSession(config.Trader.Tick.Time)
 	config.Trader.Sell.Session = ParseTradingSession(config.Trader.Sell.Time)
+	config.Trader.CancelSession = ParseTradingSession(config.Trader.ReservedOfCancel)
 }

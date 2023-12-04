@@ -2,11 +2,13 @@ package config
 
 // PreviewTraderParameter 预览交易通道参数
 type PreviewTraderParameter struct {
-	ProxyUrl string    `name:"代理URL" yaml:"proxy_url" default:"http://127.0.0.1:18168/qmt"` // 禁止使用公网地址
-	Head     TradeRule `name:"早盘" yaml:"head" default:"{\"Time\":\"09:30:00~11:30:00\"}"`
-	Tail     TradeRule `name:"尾盘" yaml:"tail" default:"{\"Time\":\"14:50:00~14:56:30\"}"`
-	Tick     TradeRule `name:"盘中" yaml:"tick" default:""`
-	Sell     TradeRule `name:"卖出" yaml:"sell" default:""`
+	ProxyUrl         string         `name:"代理URL" yaml:"proxy_url" default:"http://127.0.0.1:18168/qmt"` // 禁止使用公网地址
+	Head             TradeRule      `name:"早盘" yaml:"head" default:"{\"Time\":\"09:30:00~11:30:00\"}"`
+	Tail             TradeRule      `name:"尾盘" yaml:"tail" default:"{\"Time\":\"14:50:00~14:56:30\"}"`
+	Tick             TradeRule      `name:"盘中" yaml:"tick" default:""`
+	Sell             TradeRule      `name:"卖出" yaml:"sell" default:""`
+	ReservedOfCancel string         `name:"撤单保留字段" yaml:"cancel" default:"09:15:00~09:19:59,09:25:00~11:29:59,13:00:00~14:59:59"`
+	CancelSession    TradingSession `name:"撤单时段" yaml:"-" default:""`
 }
 
 // TradeRule 交易规则

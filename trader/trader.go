@@ -2,8 +2,13 @@ package trader
 
 import (
 	"encoding/json"
+	"fmt"
+	"gitee.com/quant1x/engine/models"
+	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gox/http"
 	"gitee.com/quant1x/gox/logger"
+	urlpkg "net/url"
+	"strings"
 )
 
 const (
@@ -19,7 +24,29 @@ const (
 	urlHolding = urlPrefixForQuery + "/holding"
 	// 查询委托
 	urlOrders = urlPrefixForQuery + "/order"
+	// 委托
+	urlPlaceOrder = urlPrefixForTrade + "/order"
+	// 撤单
+	urlCancelOrder = urlPrefixForTrade + "/cancel"
 )
+
+type TradeDirection string
+
+const (
+	BUY  TradeDirection = "buy"
+	SELL TradeDirection = "sell"
+)
+
+type ProxyResult struct {
+	Status  int    `json:"status"`
+	Message string `json:"message"`
+}
+
+// OrderResult 结果
+type OrderResult struct {
+	ProxyResult
+	OrderId int `json:"order_id"`
+}
 
 // AccountDetail 账户信息
 type AccountDetail struct {
@@ -29,8 +56,8 @@ type AccountDetail struct {
 	FrozenCash  float64 `name:"冻结" json:"frozen_cash"`
 }
 
-// Position 持仓信息
-type Position struct {
+// PositionDetail 持仓信息
+type PositionDetail struct {
 	StockCode    string  `name:"证券代码" json:"stock_code"`
 	Volume       int     `name:"持仓量" json:"volume"`
 	CanUseVolume int     `name:"可卖" json:"can_use_volume"`
@@ -38,8 +65,8 @@ type Position struct {
 	MarketValue  float64 `name:"市值" json:"market_value"`
 }
 
-// Order 委托订单
-type Order struct {
+// OrderDetail 委托订单
+type OrderDetail struct {
 	StockCode    string  `json:"stock_code"`
 	OrderVolume  int     `json:"order_volume"`
 	TradedVolume int     `json:"traded_volume"`
@@ -68,13 +95,13 @@ func QueryAccount() (*AccountDetail, error) {
 }
 
 // QueryHolding 查询持仓
-func QueryHolding() ([]Position, error) {
+func QueryHolding() ([]PositionDetail, error) {
 	data, err := http.Post(urlHolding, "")
 	if err != nil {
 		logger.Errorf("trader: 查询持仓异常: %+v", err)
 		return nil, err
 	}
-	var detail []Position
+	var detail []PositionDetail
 	err = json.Unmarshal(data, &detail)
 	if err != nil {
 		logger.Errorf("trader: 解析json异常: %+v", err)
@@ -84,17 +111,67 @@ func QueryHolding() ([]Position, error) {
 }
 
 // QueryOrders 查询当日委托
-func QueryOrders() ([]Order, error) {
+func QueryOrders() ([]OrderDetail, error) {
 	data, err := http.Post(urlOrders, "")
 	if err != nil {
-		logger.Errorf("trader: 查询持仓异常: %+v", err)
+		logger.Errorf("trader: 查询委托异常: %+v", err)
 		return nil, err
 	}
-	var detail []Order
+	var detail []OrderDetail
 	err = json.Unmarshal(data, &detail)
 	if err != nil {
 		logger.Errorf("trader: 解析json异常: %+v", err)
 		return nil, err
 	}
 	return detail, nil
+}
+
+// CancelOrder 撤单
+func CancelOrder(orderId int) error {
+	params := urlpkg.Values{
+		"order_id": {fmt.Sprintf("%d", orderId)},
+	}
+	body := params.Encode()
+	logger.Infof("trade-cancel: %s", body)
+	data, err := http.Post(urlCancelOrder, body)
+	if err != nil {
+		logger.Errorf("trader-cancel: 撤单操作异常: %+v", err)
+		return err
+	}
+	var detail OrderResult
+	err = json.Unmarshal(data, &detail)
+	if err != nil {
+		logger.Errorf("trader-cancel: 解析json异常: %+v", err)
+		return err
+	}
+	logger.Infof("trade-cancel: %s, response: status=%d", body, detail.Status)
+	return nil
+}
+
+// PlaceOrder 下委托订单
+func PlaceOrder(direction TradeDirection, model models.Strategy, securityCode string, price float64, volume int) (int, error) {
+	_, mflag, symbol := proto.DetectMarket(securityCode)
+	params := urlpkg.Values{
+		"direction": {string(direction)},
+		"code":      {fmt.Sprintf("%s.%s", symbol, strings.ToUpper(mflag))},
+		"price":     {fmt.Sprintf("%f", price)},
+		"volume":    {fmt.Sprintf("%d", volume)},
+		"strategy":  {fmt.Sprintf("%d", model.Code())},
+		"remark":    {model.OrderFlag()},
+	}
+	body := params.Encode()
+	logger.Infof("trade-order: %s", body)
+	data, err := http.Post(urlPlaceOrder, body)
+	if err != nil {
+		logger.Errorf("trader-order: 撤单操作异常: %+v", err)
+		return -1, err
+	}
+	var detail OrderResult
+	err = json.Unmarshal(data, &detail)
+	if err != nil {
+		logger.Errorf("trader-order: 解析json异常: %+v", err)
+		return -1, err
+	}
+	logger.Infof("trade-order: %s, response: order_id=%d", body, detail.OrderId)
+	return detail.OrderId, nil
 }

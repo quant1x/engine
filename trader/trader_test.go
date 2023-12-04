@@ -2,6 +2,7 @@ package trader
 
 import (
 	"fmt"
+	"gitee.com/quant1x/engine/strategies"
 	"testing"
 )
 
@@ -18,4 +19,21 @@ func TestQueryHolding(t *testing.T) {
 func TestQueryOrders(t *testing.T) {
 	info, err := QueryOrders()
 	fmt.Println(info, err)
+}
+
+func TestTradeCancelOrder(t *testing.T) {
+	orderId := 1086140321
+	err := CancelOrder(orderId)
+	fmt.Println(err)
+}
+
+func TestTradePlaceOrder(t *testing.T) {
+	direction := BUY
+	model := strategies.ModelNo1{}
+	securityCode := "sh600178"
+	price := 13.68
+	volume := 100
+
+	orderId, err := PlaceOrder(direction, model, securityCode, price, volume)
+	fmt.Println(orderId, err)
 }

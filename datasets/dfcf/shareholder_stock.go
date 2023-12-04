@@ -111,7 +111,7 @@ func ShareHolder(securityCode, date string, diffQuarters ...int) (list []Circula
 	}
 
 	url := urlTop10ShareHolder + "?" + params.Encode()
-	data, err := http.HttpGet(url)
+	data, err := http.Get(url)
 	//fmt.Println(api.Bytes2String(data))
 	if err != nil {
 		return

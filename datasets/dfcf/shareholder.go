@@ -114,7 +114,7 @@ func getFreeHoldingAnalyse(pageNumber ...int) ([]HoldingAnalyse, int, error) {
 		"filter":      {fmt.Sprintf("(END_DATE>='%s')", endDate)},
 	}
 	url := kUrlEastmoneyGdfxHoldingAnalyse + "?" + params.Encode()
-	data, err := http.HttpGet(url)
+	data, err := http.Get(url)
 	//fmt.Println(api.Bytes2String(data))
 	var holds = []HoldingAnalyse{}
 	obj, err := fastjson.ParseBytes(data)
@@ -162,7 +162,7 @@ func FreeHoldingAnalyse(pageNumber ...int) ([]CirculatingShareholder, int, error
 		"filter":      {fmt.Sprintf("(END_DATE>='%s')", endDate)},
 	}
 	url := kUrlEastmoneyGdfxHoldingAnalyse + "?" + params.Encode()
-	data, err := http.HttpGet(url)
+	data, err := http.Get(url)
 	var holds = []HoldingAnalyse{}
 	obj, err := fastjson.ParseBytes(data)
 	if err != nil {

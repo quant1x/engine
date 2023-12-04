@@ -186,7 +186,7 @@ func IndividualStocksFundFlow(securityCode, date string) (list []FundFlow) {
 		"_":       {fmt.Sprintf("%d", functions.Timestamp())},
 	}
 	url := urlFundFlow + "?" + params.Encode()
-	data, err := http.HttpGet(url)
+	data, err := http.Get(url)
 	if err != nil {
 		return
 	}

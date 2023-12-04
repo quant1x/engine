@@ -155,7 +155,7 @@ func AllNotices(noticeType EMNoticeType, date string, pageNumber ...int) (notice
 	}
 	url := kUrlEastmoneyNotices + "?" + params.Encode()
 	//url = "https://np-anotice-stock.eastmoney.com/api/security/ann?cb=jQuery112305241416374967685_1683838825141&sr=-1&page_size=50&page_index=1&ann_type=SHA%2CCYB%2CSZA%2CBJA&client_source=web&f_node=0&s_node=0"
-	data, _, err := http.Request(url, http.GET, header)
+	data, _, err := http.Request(url, http.GET, "", header)
 	if err != nil {
 		return
 	}
@@ -280,7 +280,7 @@ func StockNotices(securityCode, beginDate, endDate string, pageNumber ...int) (n
 	}
 	url := kUrlEastmoneyNotices + "?" + params.Encode()
 	//url = "https://np-anotice-stock.eastmoney.com/api/security/ann?cb=jQuery112305241416374967685_1683838825141&sr=-1&page_size=50&page_index=1&ann_type=SHA%2CCYB%2CSZA%2CBJA&client_source=web&f_node=0&s_node=0"
-	data, _, err := http.Request(url, http.GET, header)
+	data, err := http.Get(url, header)
 	if err != nil {
 		return
 	}

@@ -74,7 +74,7 @@ func FinanceReports(date string, pageNumber ...int) (reports []PreviewQuarterlyR
 		//"callback": {"jQuery1123017378221241641723_1683879528446"},
 	}
 	url := kUrlFinanceReports + "?" + params.Encode()
-	data, err := http.HttpGet(url)
+	data, err := http.Get(url)
 	if err != nil {
 		return
 	}

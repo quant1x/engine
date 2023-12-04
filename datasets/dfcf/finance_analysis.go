@@ -80,7 +80,7 @@ func GetQuarterlyReports(pageNumber ...int) (reports []QuarterlyReport, pages in
 	}
 
 	url := urlQuarterlyReportAll + "?" + params.Encode()
-	data, err := http.HttpGet(url)
+	data, err := http.Get(url)
 	//fmt.Println(api.Bytes2String(data))
 	obj, err := fastjson.ParseBytes(data)
 	if err != nil {

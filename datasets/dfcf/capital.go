@@ -909,7 +909,7 @@ func CapitalChange(securityCode string) (list []StockCapital) {
 	}
 
 	url := urlCapitalStockStructure + "?" + params.Encode()
-	data, lastModified, err := http.Request(url, http.GET)
+	data, lastModified, err := http.Request(url, http.GET, "")
 	//fmt.Println(api.Bytes2String(data))
 	if err != nil {
 		return

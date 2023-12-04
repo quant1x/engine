@@ -26,7 +26,7 @@ type QuarterlyReport struct {
 	SecuCode           string  `json:"SECUCODE"`             // 证券代码
 	BasicEPS           float64 `json:"BASIC_EPS"`            // 每股收益
 	DedtctBasicEPS     float64 `json:"DEDUCT_BASIC_EPS"`     // 每股收益(扣除)
-	TOTALOPERATEINCOME float64 `json:"TOTAL_OPERATE_INCOME"` // 营业总收入
+	TotalOperateIncome float64 `json:"TOTAL_OPERATE_INCOME"` // 营业总收入
 	PARENTNETPROFIT    float64 `json:"PARENT_NETPROFIT"`     // 净利润
 	WEIGHTAVGROE       float64 `json:"WEIGHTAVG_ROE"`        // 净资产收益率
 	YSTZ               float64 `json:"YSTZ"`                 // 营业总收入同比增长
@@ -115,7 +115,7 @@ func GetQuarterlyReports(pageNumber ...int) (reports []QuarterlyReport, pages in
 				TRADEMARKET:        v.GetString("TRADE_MARKET"),
 				SECURITYTYPECODE:   v.GetString("SECURITY_TYPE_CODE"),
 				SECURITYTYPE:       v.GetString("SECURITY_TYPE"),
-				TOTALOPERATEINCOME: v.GetFloat64("TOTAL_OPERATE_INCOME"),
+				TotalOperateIncome: v.GetFloat64("TOTAL_OPERATE_INCOME"),
 				PARENTNETPROFIT:    v.GetFloat64("PARENT_NETPROFIT"),
 				WEIGHTAVGROE:       v.GetFloat64("WEIGHTAVG_ROE"),
 				YSTZ:               v.GetFloat64("YSTZ"),

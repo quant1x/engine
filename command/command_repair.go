@@ -108,25 +108,8 @@ func initRepair() {
 }
 
 func handleRepairAll(dates []string) {
-	moduleName := "修复全部数据"
-	count := len(dates)
-	mask := cache.PluginMaskBaseData
-	plugins := cache.Plugins(mask)
-	fmt.Println()
-	fmt.Println()
-	barIndex := 1
-	bar := progressbar.NewBar(barIndex, "执行["+moduleName+"]", count)
-	for _, date := range dates {
-		cacheDate, featureDate := cache.CorrectDate(date)
-		barIndex++
-		//storages.RepairFeatures(&barIndex, cacheDate, featureDate)
-		storages.FeaturesUpdate(&barIndex, cacheDate, featureDate, plugins, cache.OpRepair)
-		_ = cacheDate
-		_ = featureDate
-		bar.Add(1)
-	}
-	logger.Info("任务执行完毕.", time.Now())
-	fmt.Println()
+	handleRepairAllDataSets(dates)
+	handleRepairAllFeatures(dates)
 }
 
 func handleRepairAllDataSets(dates []string) {

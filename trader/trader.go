@@ -38,6 +38,19 @@ type Position struct {
 	MarketValue  float64 `name:"市值" json:"market_value"`
 }
 
+// Order 委托订单
+type Order struct {
+	StockCode    string  `json:"stock_code"`
+	OrderVolume  int     `json:"order_volume"`
+	TradedVolume int     `json:"traded_volume"`
+	Price        float64 `json:"price"`
+	OrderType    int     `json:"order_type"`
+	OrderStatus  int     `json:"order_status"`
+	OrderId      int     `json:"order_id"`
+	OrderSysid   string  `json:"order_sysid"`
+	OrderTime    string  `json:"order_time"`
+}
+
 // QueryAccount 查询账户信息
 func QueryAccount() (*AccountDetail, error) {
 	data, err := http.Post(urlAccount, "")
@@ -71,6 +84,17 @@ func QueryHolding() ([]Position, error) {
 }
 
 // QueryOrders 查询当日委托
-func QueryOrders() {
-
+func QueryOrders() ([]Order, error) {
+	data, err := http.Post(urlOrders, "")
+	if err != nil {
+		logger.Errorf("trader: 查询持仓异常: %+v", err)
+		return nil, err
+	}
+	var detail []Order
+	err = json.Unmarshal(data, &detail)
+	if err != nil {
+		logger.Errorf("trader: 解析json异常: %+v", err)
+		return nil, err
+	}
+	return detail, nil
 }

@@ -14,3 +14,8 @@ func TestQueryHolding(t *testing.T) {
 	info, err := QueryHolding()
 	fmt.Println(info, err)
 }
+
+func TestQueryOrders(t *testing.T) {
+	info, err := QueryOrders()
+	fmt.Println(info, err)
+}

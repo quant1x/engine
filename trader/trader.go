@@ -32,11 +32,16 @@ var (
 	urlCancelOrder = urlPrefixForTrade + "/cancel"
 )
 
-type TradeDirection string
+// Direction 交易方向
+type Direction string
+
+func (d Direction) String() string {
+	return string(d)
+}
 
 const (
-	BUY  TradeDirection = "buy"
-	SELL TradeDirection = "sell"
+	BUY  Direction = "buy"  // 买入
+	SELL Direction = "sell" // 卖出
 )
 
 type ProxyResult struct {
@@ -151,10 +156,10 @@ func CancelOrder(orderId int) error {
 }
 
 // PlaceOrder 下委托订单
-func PlaceOrder(direction TradeDirection, model models.Strategy, securityCode string, price float64, volume int) (int, error) {
+func PlaceOrder(direction Direction, model models.Strategy, securityCode string, price float64, volume int) (int, error) {
 	_, mflag, symbol := proto.DetectMarket(securityCode)
 	params := urlpkg.Values{
-		"direction": {string(direction)},
+		"direction": {direction.String()},
 		"code":      {fmt.Sprintf("%s.%s", symbol, strings.ToUpper(mflag))},
 		"price":     {fmt.Sprintf("%f", price)},
 		"volume":    {fmt.Sprintf("%d", volume)},

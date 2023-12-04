@@ -25,7 +25,7 @@ type QuarterlyReport struct {
 	UpdateDate         string  `json:"UPDATE_DATE"`          // 更新日期
 	SecuCode           string  `json:"SECUCODE"`             // 证券代码
 	BasicEPS           float64 `json:"BASIC_EPS"`            // 每股收益
-	DedtctBasicEPS     float64 `json:"DEDUCT_BASIC_EPS"`     // 每股收益(扣除)
+	DeductBasicEPS     float64 `json:"DEDUCT_BASIC_EPS"`     // 每股收益(扣除)
 	TotalOperateIncome float64 `json:"TOTAL_OPERATE_INCOME"` // 营业总收入
 	PARENTNETPROFIT    float64 `json:"PARENT_NETPROFIT"`     // 净利润
 	WEIGHTAVGROE       float64 `json:"WEIGHTAVG_ROE"`        // 净资产收益率
@@ -98,7 +98,7 @@ func GetQuarterlyReports(pageNumber ...int) (reports []QuarterlyReport, pages in
 				UpdateDate:         v.GetString("UPDATE_DATE"),
 				ReportDate:         v.GetString("REPORTDATE"),
 				BasicEPS:           v.GetFloat64("BASIC_EPS"),
-				DedtctBasicEPS:     v.GetFloat64("DEDUCT_BASIC_EPS"),
+				DeductBasicEPS:     v.GetFloat64("DEDUCT_BASIC_EPS"),
 				BPS:                v.GetFloat64("BPS"),
 				NoticeDate:         v.GetString("NOTICE_DATE"),
 				IsNew:              v.GetString("ISNEW"),

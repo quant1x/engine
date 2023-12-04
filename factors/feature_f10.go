@@ -38,6 +38,7 @@ type F10 struct {
 	TotalOperateIncome float64 `name:"营业总收入" dataframe:"TotalOperateIncome"`  // 当期营业总收入
 	BPS                float64 `name:"每股净资产" dataframe:"BPS"`                 // 每股净资产
 	BasicEPS           float64 `name:"每股收益" dataframe:"BasicEPS"`             // 每股收益
+	DeductBasicEPS     float64 `name:"每股收益(扣除)" dataframe:"DeductBasicEPS"`   // 每股收益(扣除)
 	SafetyScore        int     `name:"安全分" dataframe:"SafetyScore"`           // 通达信安全分
 	Increases          int     `name:"增持" dataframe:"Increases"`              // 公告-增持
 	Reduces            int     `name:"减持" dataframe:"Reduces"`                // 公告-减持

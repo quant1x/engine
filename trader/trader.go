@@ -65,11 +65,17 @@ type AccountDetail struct {
 
 // PositionDetail 持仓信息
 type PositionDetail struct {
-	StockCode    string  `name:"证券代码" json:"stock_code"`
-	Volume       int     `name:"持仓量" json:"volume"`
-	CanUseVolume int     `name:"可卖" json:"can_use_volume"`
-	OpenPrice    float64 `name:"成本价" json:"open_price"`
-	MarketValue  float64 `name:"市值" json:"market_value"`
+	AccountType     int     `name:"账户类型" json:"account_type"`     // 账户类型
+	AccountId       string  `name:"资金账户" json:"account_id"`       // 资金账号
+	StockCode       string  `name:"证券代码" json:"stock_code"`       // 证券代码, 例如"600000.SH"
+	Volume          int     `name:"持仓数量" json:"volume"`           // 持仓数量,股票以'股'为单位, 债券以'张'为单位
+	CanUseVolume    int     `name:"可卖数量" json:"can_use_volume"`   // 可用数量, 股票以'股'为单位, 债券以'张'为单位
+	OpenPrice       float64 `name:"开仓价" json:"open_price"`        // 开仓价
+	MarketValue     float64 `name:"市值" json:"market_value"`       // 市值
+	FrozenVolume    int     `name:"冻结数量" json:"frozen_volume"`    // 冻结数量
+	OnRoadVolume    int     `name:"在途股份" json:"on_road_volume"`   // 在途股份
+	YesterdayVolume int     `name:"昨夜拥股" json:"yesterday_volume"` // 昨夜拥股
+	AvgPrice        float64 `name:"成本价" json:"avg_price"`         // 成本价
 }
 
 // OrderDetail 委托订单

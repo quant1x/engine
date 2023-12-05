@@ -74,15 +74,15 @@ type PositionDetail struct {
 
 // OrderDetail 委托订单
 type OrderDetail struct {
-	StockCode    string  `json:"stock_code"`
-	OrderVolume  int     `json:"order_volume"`
-	TradedVolume int     `json:"traded_volume"`
-	Price        float64 `json:"price"`
-	OrderType    int     `json:"order_type"`
-	OrderStatus  int     `json:"order_status"`
-	OrderId      int     `json:"order_id"`
-	OrderSysid   string  `json:"order_sysid"`
-	OrderTime    string  `json:"order_time"`
+	StockCode    string  `name:"证券代码" json:"stock_code"`
+	OrderVolume  int     `name:"委托量" json:"order_volume"`
+	TradedVolume int     `name:"成交量" json:"traded_volume"`
+	Price        float64 `name:"委托价格" json:"price"`
+	OrderType    int     `name:"订单类型" json:"order_type"`
+	OrderStatus  int     `name:"订单状态" json:"order_status"`
+	OrderId      int     `name:"订单ID" json:"order_id"`
+	OrderSysid   string  `name:"合同编号" json:"order_sysid"`
+	OrderTime    string  `name:"委托时间" json:"order_time"`
 }
 
 // QueryAccount 查询账户信息

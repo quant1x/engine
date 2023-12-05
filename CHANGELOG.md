@@ -4,6 +4,30 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.7.6] - 2023-12-05
+### Changed
+- 新增一个只获取一只股票tick数据的函数, 目的是为了方便单元测试.
+- 优化配置加载方式.
+- 增加撤单时段.
+- 更新依赖库gotdx,pkg版本号.
+- 调整交易方向类型.
+- 修复repair --all 特征数据不生效的bug.
+- F10增加每股收益扣除字段.
+- Proxy服务器地址.
+- F10增加营业总收入.
+- 修订日志中的错误描述.
+- 修订日志中的错误描述.
+- 增加委托和撤单两个函数.
+- 增加查询委托功能.
+- 删除废弃的交易参数结构体.
+- 更新gox版本, http增加post方法支持.
+- 调整http get请求的参数.
+- 调整安全分http请求的方法.
+- 修复错误的注释.
+- 删除废弃的评估方法.
+- 调整控制的最大订单数.
+- 更新依赖库pandas版本号.
+
 ## [0.7.5] - 2023-12-03
 ### Changed
 - 调整统计参数归于模型.
@@ -485,8 +509,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.7.5...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.7.6...HEAD
 
+[0.7.6]: https://gitee.com/quant1x/engine/compare/v0.7.5...v0.7.6
 [0.7.5]: https://gitee.com/quant1x/engine/compare/v0.7.4...v0.7.5
 [0.7.4]: https://gitee.com/quant1x/engine/compare/v0.7.3...v0.7.4
 [0.7.3]: https://gitee.com/quant1x/engine/compare/v0.7.2...v0.7.3

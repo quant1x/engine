@@ -10,7 +10,9 @@ import (
 )
 
 func TestF10(t *testing.T) {
-	date := "2023-11-06"
+	date := "2023-12-05"
+	q := getQuarterlyYearQuarter(date)
+	fmt.Println(q)
 	cacheDate, featureDate := cache.CorrectDate(date)
 	//cacheDate := "2023-09-28"
 	//featureDate := date
@@ -19,6 +21,7 @@ func TestF10(t *testing.T) {
 	code = "sh600859"
 	code = "sz002685"
 	code = "sh603158"
+	code = "sh600178"
 	f10 := NewF10(cacheDate, code)
 	//barIndex := 1
 	ctx := context.Background()

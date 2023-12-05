@@ -27,8 +27,8 @@ type QuarterlyReport struct {
 	BasicEPS           float64 `json:"BASIC_EPS"`            // 每股收益
 	DeductBasicEPS     float64 `json:"DEDUCT_BASIC_EPS"`     // 每股收益(扣除)
 	TotalOperateIncome float64 `json:"TOTAL_OPERATE_INCOME"` // 营业总收入
-	PARENTNETPROFIT    float64 `json:"PARENT_NETPROFIT"`     // 净利润
-	WEIGHTAVGROE       float64 `json:"WEIGHTAVG_ROE"`        // 净资产收益率
+	ParentNetprofit    float64 `json:"PARENT_NETPROFIT"`     // 净利润
+	WeightAvgRoe       float64 `json:"WEIGHTAVG_ROE"`        // 净资产收益率
 	YSTZ               float64 `json:"YSTZ"`                 // 营业总收入同比增长
 	SJLTZ              float64 `json:"SJLTZ"`                // 净利润同比增长
 	BPS                float64 `json:"BPS"`                  // 每股净资产
@@ -43,7 +43,7 @@ type QuarterlyReport struct {
 	ORGCODE            string  `json:"ORG_CODE"`
 	TRADEMARKETZJG     string  `json:"TRADE_MARKET_ZJG"`
 	IsNew              string  `json:"ISNEW"`
-	QDATE              string  `json:"QDATE"`
+	QDATE              string  `name:"报告期" json:"QDATE"` // 季报期
 	DATATYPE           string  `json:"DATATYPE"`
 	DATAYEAR           string  `json:"DATAYEAR"`
 	DATEMMDD           string  `json:"DATEMMDD"`
@@ -116,8 +116,8 @@ func GetQuarterlyReports(pageNumber ...int) (reports []QuarterlyReport, pages in
 				SECURITYTYPECODE:   v.GetString("SECURITY_TYPE_CODE"),
 				SECURITYTYPE:       v.GetString("SECURITY_TYPE"),
 				TotalOperateIncome: v.GetFloat64("TOTAL_OPERATE_INCOME"),
-				PARENTNETPROFIT:    v.GetFloat64("PARENT_NETPROFIT"),
-				WEIGHTAVGROE:       v.GetFloat64("WEIGHTAVG_ROE"),
+				ParentNetprofit:    v.GetFloat64("PARENT_NETPROFIT"),
+				WeightAvgRoe:       v.GetFloat64("WEIGHTAVG_ROE"),
 				YSTZ:               v.GetFloat64("YSTZ"),
 				SJLTZ:              v.GetFloat64("SJLTZ"),
 				MGJYXJJE:           v.GetFloat64("MGJYXJJE"),

@@ -1,7 +1,9 @@
 package dfcf
 
 import (
+	"encoding/json"
 	"fmt"
+	"gitee.com/quant1x/gox/api"
 	"testing"
 )
 
@@ -16,7 +18,10 @@ func TestQuarterlyReports(t *testing.T) {
 
 func TestGetCacheQuarterlyReportsBySecurityCode(t *testing.T) {
 	date := "20231027"
-	code := "sz002685"
+	code := "sh600178"
 	v := GetCacheQuarterlyReportsBySecurityCode(code, date)
 	fmt.Println(v)
+	data, _ := json.Marshal(v)
+	text := api.Bytes2String(data)
+	fmt.Println(text)
 }

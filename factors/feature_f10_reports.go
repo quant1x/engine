@@ -27,11 +27,26 @@ func loadQuarterlyReports(date string) {
 	}
 }
 
+func getQuarterlyYearQuarter(date string) string {
+	q, _, _ := api.GetQuarterByDate(date, 1)
+	return q
+}
+
+// 季报概要
 type quarterlyReportSummary struct {
+	QDate              string
 	BPS                float64
 	BasicEPS           float64
 	TotalOperateIncome float64
 	DeductBasicEPS     float64
+}
+
+func (q *quarterlyReportSummary) Assign(v dfcf.QuarterlyReport) {
+	q.BPS = v.BPS
+	q.BasicEPS = v.BasicEPS
+	q.TotalOperateIncome = v.TotalOperateIncome
+	q.DeductBasicEPS = v.DeductBasicEPS
+	q.QDate = v.QDATE
 }
 
 func getQuarterlyReportSummary(securityCode, date string) quarterlyReportSummary {
@@ -41,18 +56,12 @@ func getQuarterlyReportSummary(securityCode, date string) quarterlyReportSummary
 	}
 	v, ok := __mapQuarterlyReports[securityCode]
 	if ok {
-		summary.BPS = v.BPS
-		summary.BasicEPS = v.BasicEPS
-		summary.TotalOperateIncome = v.TotalOperateIncome
-		summary.DeductBasicEPS = v.DeductBasicEPS
+		summary.Assign(v)
 		return summary
 	}
 	q := dfcf.GetCacheQuarterlyReportsBySecurityCode(securityCode, date)
 	if q != nil {
-		summary.BPS = q.BPS
-		summary.BasicEPS = q.BasicEPS
-		summary.TotalOperateIncome = q.TotalOperateIncome
-		summary.DeductBasicEPS = q.DeductBasicEPS
+		summary.Assign(*q)
 	}
 	return summary
 }

@@ -67,14 +67,12 @@ func initPrint() {
 
 // 输出结构化信息
 func handlePrintData(code, date string, plugin cache.DataAdapter) {
-	fmt.Println()
 	securityCode := proto.CorrectSecurityCode(code)
 	name := securities.GetStockName(securityCode)
 	tradeDate := trading.FixTradeDate(date)
-	fmt.Printf("%s: %s, %s\n", securityCode, name, tradeDate)
+	cacheDate, featureDate := cache.CorrectDate(tradeDate)
+	fmt.Printf("%s: %s, cache: %s, feature: %s\n", securityCode, name, cacheDate, featureDate)
 	plugin.Print(securityCode, tradeDate)
-
-	//fmt.Println()
 }
 
 //// 输出K线概要数据列表

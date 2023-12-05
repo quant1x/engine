@@ -155,3 +155,15 @@ func BatchSnapShot(codes []string) []QuoteSnapshot {
 	}
 	return list
 }
+
+// GetTick 获取一只股票的tick数据
+//
+//	该函数用于测试
+func GetTick(securityCode string) *QuoteSnapshot {
+	list := BatchSnapShot([]string{securityCode})
+	if len(list) > 0 {
+		v := list[0]
+		return &v
+	}
+	return nil
+}

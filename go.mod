@@ -6,8 +6,8 @@ require (
 	gitee.com/quant1x/gotdx v1.17.2
 	gitee.com/quant1x/gox v1.15.1
 	gitee.com/quant1x/pandas v1.2.2
-	gitee.com/quant1x/pkg v0.1.3
-	gitee.com/quant1x/ta-lib v0.1.6
+	gitee.com/quant1x/pkg v0.1.4
+	gitee.com/quant1x/ta-lib v0.1.7
 	github.com/bits-and-blooms/bitset v1.11.0
 	github.com/spf13/cobra v1.8.0
 	github.com/syndtr/goleveldb v1.0.0
@@ -30,7 +30,7 @@ require (
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/btree v1.1.2 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
-	github.com/google/pprof v0.0.0-20231203200248-ad67f76aa53d // indirect
+	github.com/google/pprof v0.0.0-20231205033806-a5a03c77bf08 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/kr/text v0.2.0 // indirect
@@ -43,7 +43,7 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/tealeg/xlsx/v3 v3.3.4 // indirect
 	golang.org/x/image v0.14.0 // indirect
-	golang.org/x/net v0.0.0-20220722155237-a158d28d115b // indirect
+	golang.org/x/net v0.19.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	gonum.org/v1/gonum v0.14.0 // indirect
 	gonum.org/v1/plot v0.14.0 // indirect

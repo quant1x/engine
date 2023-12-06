@@ -1,7 +1,18 @@
 package config
 
+// TraderRole 交易员角色
+type TraderRole int
+
+const (
+	RoleDisable TraderRole = iota // 禁止自动化交易
+	RolePython                    // python脚本自动化交易
+	RoleProxy                     // 代理交易模式
+	RoleManual                    // 人工干预, 作用同
+)
+
 // TraderParameter 预览交易通道参数
 type TraderParameter struct {
+	Role             TraderRole     `name:"角色" yaml:"role" default:"3"`                                  // 交易员角色
 	ProxyUrl         string         `name:"代理URL" yaml:"proxy_url" default:"http://127.0.0.1:18168/qmt"` // 禁止使用公网地址
 	Head             TradeRule      `name:"早盘" yaml:"head" default:"{\"Time\":\"09:30:00~11:30:00\"}"`
 	Tail             TradeRule      `name:"尾盘" yaml:"tail" default:"{\"Time\":\"14:50:00~14:56:30\"}"`

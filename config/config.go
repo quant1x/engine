@@ -117,9 +117,8 @@ func ReadConfig(rootPath string) (config Quant1XConfig) {
 	return
 }
 
+// 重置交易时段字段
 func fixTradingSession(config *Quant1XConfig) {
-	// 增加配置的二次加工
-	// 1. 重置交易时段字段
 	config.Trader.Head.Session = ParseTradingSession(config.Trader.Head.Time)
 	config.Trader.Tail.Session = ParseTradingSession(config.Trader.Tail.Time)
 	config.Trader.Tick.Session = ParseTradingSession(config.Trader.Tick.Time)

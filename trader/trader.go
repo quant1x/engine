@@ -91,6 +91,11 @@ type OrderDetail struct {
 	OrderTime    string  `name:"委托时间" json:"order_time"`
 }
 
+// SecurityCode 获取证券代码
+func (d OrderDetail) SecurityCode() string {
+	return proto.CorrectSecurityCode(d.StockCode)
+}
+
 // QueryAccount 查询账户信息
 func QueryAccount() (*AccountDetail, error) {
 	data, err := http.Post(urlAccount, "")

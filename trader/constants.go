@@ -1,10 +1,5 @@
 package trader
 
-const (
-	qmtPositionsPath     = "qmt"           // 持仓缓存路径
-	qmtPositionsFilename = "positions.csv" // 持仓数据文件名
-)
-
 // 账号类型
 const (
 	FUTURE_ACCOUNT        = 1     // 期货

@@ -4,9 +4,9 @@ import (
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/smart"
+	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/exception"
 	"gitee.com/quant1x/gox/num"
-	"strings"
 )
 
 func init() {
@@ -17,14 +17,16 @@ func init() {
 }
 
 var (
-	ErrF10IgnoreStock                         = exception.New(errorRuleF10+0, "忽略的个股")
-	ErrF10SubNewStock                         = exception.New(errorRuleF10+1, "次新股")
-	ErrF10ScienceAndTechnologyInnovationBoard = exception.New(errorRuleF10+2, "科创板")
-	ErrF10PriceRange                          = exception.New(errorRuleF10+3, "股价控制")
-	ErrF10RangeOfCapital                      = exception.New(errorRuleF10+4, "非流通盘范围")
-	ErrF10RangeOfSafetyCode                   = exception.New(errorRuleF10+5, "非安全分范围")
-	ErrF10RangeOfBasicEPS                     = exception.New(errorRuleF10+6, "非每股收益范围")
-	ErrF10RangeOfBPS                          = exception.New(errorRuleF10+7, "非净增长范围")
+	ErrF10IgnoreStock                 = exception.New(errorRuleF10+0, "忽略的个股")
+	ErrF10SubNewStock                 = exception.New(errorRuleF10+1, "次新股")
+	ErrF10DisableBeijingStockExchange = exception.New(errorRuleF10+2, "禁止北交所")
+	ErrF10DisableChiNextBoard         = exception.New(errorRuleF10+3, "禁止创业板")
+	ErrF10DisableSciTechBoard         = exception.New(errorRuleF10+4, "禁止科创板")
+	ErrF10PriceRange                  = exception.New(errorRuleF10+5, "股价控制")
+	ErrF10RangeOfCapital              = exception.New(errorRuleF10+6, "非流通盘范围")
+	ErrF10RangeOfSafetyCode           = exception.New(errorRuleF10+7, "非安全分范围")
+	ErrF10RangeOfBasicEPS             = exception.New(errorRuleF10+8, "非每股收益范围")
+	ErrF10RangeOfBPS                  = exception.New(errorRuleF10+9, "非净增长范围")
 )
 
 // RuleF10 基本面规则
@@ -46,8 +48,11 @@ func (r RuleF10) Exec(snapshot models.QuoteSnapshot) error {
 		return ErrF10IgnoreStock
 	}
 	// 2. 去掉科创板, 已知有688和689开头的9号公司
-	if strings.HasPrefix(securityCode, "sh68") {
-		return ErrF10ScienceAndTechnologyInnovationBoard
+	//if strings.HasPrefix(securityCode, "sh68") {
+	//	return ErrF10DisableSciTechBoard
+	//}
+	if api.StartsWith(securityCode, RuleParameters.IgnoreCodes) {
+		return ErrF10IgnoreStock
 	}
 	// 3. 去掉次新股
 	if market.IsSubNewStock(securityCode) {

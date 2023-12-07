@@ -70,25 +70,32 @@ type PositionDetail struct {
 	StockCode       string  `name:"证券代码" json:"stock_code"`       // 证券代码, 例如"600000.SH"
 	Volume          int     `name:"持仓数量" json:"volume"`           // 持仓数量,股票以'股'为单位, 债券以'张'为单位
 	CanUseVolume    int     `name:"可卖数量" json:"can_use_volume"`   // 可用数量, 股票以'股'为单位, 债券以'张'为单位
-	OpenPrice       float64 `name:"开仓价" json:"open_price"`        // 开仓价
-	MarketValue     float64 `name:"市值" json:"market_value"`       // 市值
+	OpenPrice       float64 `name:"开仓价" json:"open_price"`         // 开仓价
+	MarketValue     float64 `name:"市值" json:"market_value"`         // 市值
 	FrozenVolume    int     `name:"冻结数量" json:"frozen_volume"`    // 冻结数量
 	OnRoadVolume    int     `name:"在途股份" json:"on_road_volume"`   // 在途股份
 	YesterdayVolume int     `name:"昨夜拥股" json:"yesterday_volume"` // 昨夜拥股
-	AvgPrice        float64 `name:"成本价" json:"avg_price"`         // 成本价
+	AvgPrice        float64 `name:"成本价" json:"avg_price"`          // 成本价
 }
 
 // OrderDetail 委托订单
 type OrderDetail struct {
-	StockCode    string  `name:"证券代码" json:"stock_code"`
-	OrderVolume  int     `name:"委托量" json:"order_volume"`
-	TradedVolume int     `name:"成交量" json:"traded_volume"`
-	Price        float64 `name:"委托价格" json:"price"`
-	OrderType    int     `name:"订单类型" json:"order_type"`
-	OrderStatus  int     `name:"订单状态" json:"order_status"`
-	OrderId      int     `name:"订单ID" json:"order_id"`
-	OrderSysid   string  `name:"合同编号" json:"order_sysid"`
-	OrderTime    string  `name:"委托时间" json:"order_time"`
+	AccountType   int     `name:"账户类型" json:"account_type"`   // 账户类型
+	AccountId     string  `name:"资金账户" json:"account_id"`     // 资金账号
+	OrderTime     string  `name:"委托时间" json:"order_time"`     // 报单时间
+	StockCode     string  `name:"证券代码" json:"stock_code"`     // 证券代码, 例如"600000.SH"
+	OrderType     int     `name:"订单类型" json:"order_type"`     // 委托类型, 23:买, 24:卖
+	Price         float64 `name:"委托价格" json:"price"`          // 报价价格, 如果price_type为指定价, 那price为指定的价格, 否则填0
+	PriceType     int     `name:"报价类型" json:"price_type"`     // 报价类型, 详见帮助手册
+	OrderVolume   int     `name:"委托量" json:"order_volume"`     // 委托数量, 股票以'股'为单位, 债券以'张'为单位
+	OrderId       int     `name:"订单ID" json:"order_id"`         // 委托编号
+	OrderSysid    string  `name:"合同编号" json:"order_sysid"`    // 柜台编号
+	TradedPrice   float64 `name:"成交均价" json:"traded_price"`   // 成交均价
+	TradedVolume  int     `name:"成交数量" json:"traded_volume"`  // 成交数量, 股票以'股'为单位, 债券以'张'为单位
+	OrderStatus   int     `name:"订单状态" json:"order_status"`   // 委托状态
+	StatusMessage string  `name:"委托状态描述" json:"status_msg"` // 委托状态描述, 如废单原因
+	StrategyName  string  `name:"策略名称" json:"strategy_name"`  // 策略名称
+	OrderRemark   string  `name:"委托备注" json:"order_remark"`   // 委托备注
 }
 
 // SecurityCode 获取证券代码

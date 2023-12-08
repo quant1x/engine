@@ -8,14 +8,17 @@ import (
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gox/http"
 	"gitee.com/quant1x/gox/logger"
+	"gitee.com/quant1x/gox/num"
+	"math"
 	urlpkg "net/url"
 	"strings"
 )
 
 var (
+	traderConfig = config.TraderConfig()
 	// miniQMT代理服务器地址
 	//urlPrefixMiniQmtProxy = "http://10.211.55.3:18168/qmt"
-	urlPrefixMiniQmtProxy = config.TraderConfig().ProxyUrl
+	urlPrefixMiniQmtProxy = traderConfig.ProxyUrl
 	// 查询前缀
 	urlPrefixForQuery = urlPrefixMiniQmtProxy + "/query"
 	// 交易前缀
@@ -70,32 +73,32 @@ type PositionDetail struct {
 	StockCode       string  `name:"证券代码" json:"stock_code"`       // 证券代码, 例如"600000.SH"
 	Volume          int     `name:"持仓数量" json:"volume"`           // 持仓数量,股票以'股'为单位, 债券以'张'为单位
 	CanUseVolume    int     `name:"可卖数量" json:"can_use_volume"`   // 可用数量, 股票以'股'为单位, 债券以'张'为单位
-	OpenPrice       float64 `name:"开仓价" json:"open_price"`         // 开仓价
-	MarketValue     float64 `name:"市值" json:"market_value"`         // 市值
+	OpenPrice       float64 `name:"开仓价" json:"open_price"`        // 开仓价
+	MarketValue     float64 `name:"市值" json:"market_value"`       // 市值
 	FrozenVolume    int     `name:"冻结数量" json:"frozen_volume"`    // 冻结数量
 	OnRoadVolume    int     `name:"在途股份" json:"on_road_volume"`   // 在途股份
 	YesterdayVolume int     `name:"昨夜拥股" json:"yesterday_volume"` // 昨夜拥股
-	AvgPrice        float64 `name:"成本价" json:"avg_price"`          // 成本价
+	AvgPrice        float64 `name:"成本价" json:"avg_price"`         // 成本价
 }
 
 // OrderDetail 委托订单
 type OrderDetail struct {
-	AccountType   int     `name:"账户类型" json:"account_type"`   // 账户类型
-	AccountId     string  `name:"资金账户" json:"account_id"`     // 资金账号
-	OrderTime     string  `name:"委托时间" json:"order_time"`     // 报单时间
-	StockCode     string  `name:"证券代码" json:"stock_code"`     // 证券代码, 例如"600000.SH"
-	OrderType     int     `name:"订单类型" json:"order_type"`     // 委托类型, 23:买, 24:卖
-	Price         float64 `name:"委托价格" json:"price"`          // 报价价格, 如果price_type为指定价, 那price为指定的价格, 否则填0
-	PriceType     int     `name:"报价类型" json:"price_type"`     // 报价类型, 详见帮助手册
-	OrderVolume   int     `name:"委托量" json:"order_volume"`     // 委托数量, 股票以'股'为单位, 债券以'张'为单位
-	OrderId       int     `name:"订单ID" json:"order_id"`         // 委托编号
-	OrderSysid    string  `name:"合同编号" json:"order_sysid"`    // 柜台编号
-	TradedPrice   float64 `name:"成交均价" json:"traded_price"`   // 成交均价
-	TradedVolume  int     `name:"成交数量" json:"traded_volume"`  // 成交数量, 股票以'股'为单位, 债券以'张'为单位
-	OrderStatus   int     `name:"订单状态" json:"order_status"`   // 委托状态
-	StatusMessage string  `name:"委托状态描述" json:"status_msg"` // 委托状态描述, 如废单原因
-	StrategyName  string  `name:"策略名称" json:"strategy_name"`  // 策略名称
-	OrderRemark   string  `name:"委托备注" json:"order_remark"`   // 委托备注
+	AccountType   int     `name:"账户类型" json:"account_type"`  // 账户类型
+	AccountId     string  `name:"资金账户" json:"account_id"`    // 资金账号
+	OrderTime     string  `name:"委托时间" json:"order_time"`    // 报单时间
+	StockCode     string  `name:"证券代码" json:"stock_code"`    // 证券代码, 例如"600000.SH"
+	OrderType     int     `name:"订单类型" json:"order_type"`    // 委托类型, 23:买, 24:卖
+	Price         float64 `name:"委托价格" json:"price"`         // 报价价格, 如果price_type为指定价, 那price为指定的价格, 否则填0
+	PriceType     int     `name:"报价类型" json:"price_type"`    // 报价类型, 详见帮助手册
+	OrderVolume   int     `name:"委托量" json:"order_volume"`   // 委托数量, 股票以'股'为单位, 债券以'张'为单位
+	OrderId       int     `name:"订单ID" json:"order_id"`      // 委托编号
+	OrderSysid    string  `name:"合同编号" json:"order_sysid"`   // 柜台编号
+	TradedPrice   float64 `name:"成交均价" json:"traded_price"`  // 成交均价
+	TradedVolume  int     `name:"成交数量" json:"traded_volume"` // 成交数量, 股票以'股'为单位, 债券以'张'为单位
+	OrderStatus   int     `name:"订单状态" json:"order_status"`  // 委托状态
+	StatusMessage string  `name:"委托状态描述" json:"status_msg"`  // 委托状态描述, 如废单原因
+	StrategyName  string  `name:"策略名称" json:"strategy_name"` // 策略名称
+	OrderRemark   string  `name:"委托备注" json:"order_remark"`  // 委托备注
 }
 
 // SecurityCode 获取证券代码
@@ -199,4 +202,56 @@ func PlaceOrder(direction Direction, model models.Strategy, securityCode string,
 	}
 	logger.Infof("trade-order: %s, response: order_id=%d", body, detail.OrderId)
 	return detail.OrderId, nil
+}
+
+// 计算买入总费用
+func calculate_buy_fee(price float64, volume int) float64 {
+	vol := float64(volume)
+	// 1. 印花税, 按照成交金额计算, 买入没有, 卖出, 0.1%
+	_stamp_duty_fee := num.Decimal(vol * price * traderConfig.StampDutyRateForBuy)
+	// 2. 过户费, 按照股票数量, 双向, 0.06%
+	_transfer_fee := num.Decimal(vol * traderConfig.TransferRate)
+	// 3. 券商佣金, 按照成交金额计算, 双向, 0.025%
+	_commission_fee := num.Decimal(vol * price * traderConfig.CommissionRate)
+	if _commission_fee < traderConfig.CommissionMin {
+		_commission_fee = traderConfig.CommissionMin
+	}
+	// 4. 股票市值
+	_stock_fee := num.Decimal(vol * price)
+	_fee := (_stamp_duty_fee + _transfer_fee + _commission_fee + _stock_fee)
+	return _fee
+}
+
+// 根据资金量计算指定股价可以买多少股
+//
+//	结果是100股的整数倍
+func calculate_stock_volumes(securityCode string, fund, price float64) int {
+	// 1. 印花税, 按照成交金额计算, 买入没有, 卖出, 0.1%
+	// stamp_duty = volume * price * stamp_duty_rate
+	_stamp_duty_fee := price * traderConfig.StampDutyRateForBuy
+	//# 2. 过户费, 按照股票数量, 双向, 0.06%
+	//# transfer_fee = volume * transfer_rate
+	_transfer_fee := traderConfig.TransferRate
+	//# 3. 券商佣金, 按照成交金额计算, 双向, 0.025%
+	//# commissions = volume * price * commission_rate
+	_commission_fee := price * traderConfig.CommissionRate
+	//# 4. 股票市值
+	//# _stock_fee= volume * price
+	_stock_fee := price
+	_fee := (_stamp_duty_fee + _transfer_fee + _commission_fee + _stock_fee)
+	// 股数
+	_vol := fund / _fee
+	// 手数
+	_vol = math.Floor(_vol / 100)
+	// 转成整数
+	volume := int(_vol) * 100
+	//# 5. 复核券商佣金, 如果低于最低佣金, 则按照最低佣金计算
+	_commission_fee = price * float64(volume) * traderConfig.CommissionRate
+	_fee = calculate_buy_fee(price, volume)
+	if _fee > fund {
+		volume = volume - 100
+	}
+	logger.Infof("%s: 综合费用=%.02f, 委托价格=%.02f, 数量=%.02f, 其中印花说=%.02f, 过户费=%.02f, 佣金=%.02f, 股票=%.02f", securityCode, _fee, price,
+		volume, _stamp_duty_fee, _transfer_fee, _commission_fee, _stock_fee)
+	return volume
 }

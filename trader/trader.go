@@ -201,38 +201,3 @@ func PlaceOrder(direction Direction, model models.Strategy, securityCode string,
 	logger.Infof("trade-order: %s, response: order_id=%d", body, detail.OrderId)
 	return detail.OrderId, nil
 }
-
-//
-//// 根据资金量计算指定股价可以买多少股
-////
-////	结果是100股的整数倍
-//func calculate_stock_volumes(securityCode string, fund, price float64) int {
-//	// 1. 印花税, 按照成交金额计算, 买入没有, 卖出, 0.1%
-//	// stamp_duty = volume * price * stamp_duty_rate
-//	_stamp_duty_fee := price * traderConfig.StampDutyRateForBuy
-//	//# 2. 过户费, 按照股票数量, 双向, 0.06%
-//	//# transfer_fee = volume * transfer_rate
-//	_transfer_fee := traderConfig.TransferRate
-//	//# 3. 券商佣金, 按照成交金额计算, 双向, 0.025%
-//	//# commissions = volume * price * commission_rate
-//	_commission_fee := price * traderConfig.CommissionRate
-//	//# 4. 股票市值
-//	//# _stock_fee= volume * price
-//	_stock_fee := price
-//	_fee := (_stamp_duty_fee + _transfer_fee + _commission_fee + _stock_fee)
-//	// 股数
-//	_vol := fund / _fee
-//	// 手数
-//	_vol = math.Floor(_vol / 100)
-//	// 转成整数
-//	volume := int(_vol) * 100
-//	//# 5. 复核券商佣金, 如果低于最低佣金, 则按照最低佣金计算
-//	_commission_fee = price * float64(volume) * traderConfig.CommissionRate
-//	_fee = calculate_buy_fee(price, volume)
-//	if _fee > fund {
-//		volume = volume - 100
-//	}
-//	logger.Infof("%s: 综合费用=%.02f, 委托价格=%.02f, 数量=%.02f, 其中印花说=%.02f, 过户费=%.02f, 佣金=%.02f, 股票=%.02f", securityCode, _fee, price,
-//		volume, _stamp_duty_fee, _transfer_fee, _commission_fee, _stock_fee)
-//	return volume
-//}

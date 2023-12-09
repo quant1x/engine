@@ -8,7 +8,7 @@
 GOVERSION=$(go env GOVERSION)
 GOOS=$(go env GOOS)
 GOARCH=$(go env GOARCH)
-echo "================< go env >================"
+echo "----------------< go env >----------------"
 echo "   GOOS: ${GOOS}"
 echo " GOARCH: ${GOARCH}"
 echo "version: ${GOVERSION:2}"
@@ -17,7 +17,7 @@ export GO111MODULE=auto
 export GOPRIVATE=gitee.com
 export GOPROXY=https://goproxy.cn,direct
 
-echo "================< project env >================"
+echo "----------------< project env >----------------"
 version=$(git describe --tags `git rev-list --tags --max-count=1`)
 version=${version:1}
 echo "version: ${version}"

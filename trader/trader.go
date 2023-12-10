@@ -40,9 +40,16 @@ func (d Direction) String() string {
 	return string(d)
 }
 
+// 交易类型标志
+func (d Direction) Flag() string {
+	flag := d.String()
+	return flag[0:1]
+}
+
 const (
 	BUY  Direction = "buy"  // 买入
 	SELL Direction = "sell" // 卖出
+	JUNK Direction = "junk" // 废单
 )
 
 type ProxyResult struct {
@@ -182,8 +189,8 @@ func PlaceOrder(direction Direction, model models.Strategy, securityCode string,
 		"code":      {fmt.Sprintf("%s.%s", symbol, strings.ToUpper(mflag))},
 		"price":     {fmt.Sprintf("%f", price)},
 		"volume":    {fmt.Sprintf("%d", volume)},
-		"strategy":  {fmt.Sprintf("%d", model.Code())},
-		"remark":    {model.OrderFlag()},
+		"strategy":  {models.QmtStrategyName(model)},
+		"remark":    {models.QmtOrderRemark(model)},
 	}
 	body := params.Encode()
 	logger.Infof("trader-order: %s", body)

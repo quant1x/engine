@@ -13,11 +13,11 @@ func TestStockPool(t *testing.T) {
 	}
 	sp.Status.Set(StrategyPassed, true)
 	list := []StockPool{sp}
-	api.SlicesToCsv(filename, list)
+	_ = api.SlicesToCsv(filename, list)
 
 	list1 := []StockPool{}
 
-	api.CsvToSlices(filename, &list1)
+	_ = api.CsvToSlices(filename, &list1)
 	sp = list1[0]
 	fmt.Println(sp.Status.IsCancel())
 }

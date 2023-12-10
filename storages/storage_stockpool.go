@@ -2,9 +2,12 @@ package storages
 
 import (
 	"fmt"
+	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/models"
+	"gitee.com/quant1x/engine/trader"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
+	"sync"
 	"time"
 )
 
@@ -13,9 +16,10 @@ const (
 	TimeStampMilli    = "2006-01-02 15:04:05.000"
 	TimeStampMicro    = "2006-01-02 15:04:05.000000"
 	TimeStampNano     = "2006-01-02 15:04:05.000000000"
-	//DateTime   = "2006-01-02 15:04:05"
-	//DateOnly   = "2006-01-02"
-	//TimeStamp = "2006-01-02 15:04:05.000"
+)
+
+var (
+	poolMutex sync.Mutex
 )
 
 func GetStockPool() (list []StockPool) {
@@ -33,6 +37,8 @@ func SaveStockPool(list []StockPool) {
 }
 
 func stockPoolMerge(model models.Strategy, date string, orders []models.Statistics, topN int) {
+	poolMutex.Lock()
+	defer poolMutex.Unlock()
 	localStockPool := GetStockPool()
 	//targets := []StockPool{}
 	cacheStatistics := map[string]*StockPool{}
@@ -122,6 +128,80 @@ func stockPoolMerge(model models.Strategy, date string, orders []models.Statisti
 	}
 	if len(newList) > 0 {
 		localStockPool = append(localStockPool, newList...)
+		checkOrderForBuy(localStockPool, model, date)
 		SaveStockPool(localStockPool)
 	}
+}
+
+// 策略订单是否已完成
+func strategyOrderIsFinished(model models.Strategy) bool {
+	strategyId := model.Code()
+	strategyName := models.QmtStrategyName(model)
+	tradeRule := config.GetTradeRule(strategyId)
+	if tradeRule == nil || !tradeRule.Enable() {
+		return true
+	}
+	orders, err := trader.QueryOrders()
+	if err != nil {
+		return true
+	}
+	total := 0
+	for _, v := range orders {
+		if v.StrategyName == strategyName && v.OrderType == trader.STOCK_BUY {
+			total++
+		}
+	}
+	return total >= tradeRule.Total
+}
+
+// 检查买入订单
+func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool {
+	tradeRule := config.GetTradeRule(model.Code())
+	if tradeRule != nil && tradeRule.Enable() {
+		total := 0
+		length := len(list)
+		for i := 0; i < length && total < tradeRule.Total; i++ {
+			v := &(list[i])
+			if v.Date == date && v.StrategyCode == model.Code() && v.OrderStatus == 1 {
+				total += 1
+				securityCode := v.Code
+				direction := trader.BUY
+				price := v.Buy
+				// 1. 检查买入已完成状态
+				ok := checkOrderStatus(date, securityCode, direction)
+				if ok {
+					continue
+				}
+				// 2. 首先推送订单已完成状态
+				_ = pushOrderStatus(date, securityCode, direction)
+				if !trading.DateIsTradingDay() {
+					// 非交易日
+					continue
+				}
+				if !tradeRule.Session.IsTrading() {
+					// 非交易时段
+					continue
+				}
+				// 3. 执行买入
+				fund := trader.CalculateAvailableFund(tradeRule)
+				if fund <= trader.InvalidFee {
+					continue
+				}
+				// 4. 计算买入费用
+				tradeFee := trader.EvaluateFeeForBuy(securityCode, fund, price)
+				if tradeFee.Volume <= trader.InvalidVolume {
+					continue
+				}
+				// 5. 执行买入
+				orderId, err := trader.PlaceOrder(direction, model, securityCode, tradeFee.Price, tradeFee.Volume)
+				if err != nil {
+					continue
+				}
+				// 6. 保存订单ID
+				v.OrderId = orderId
+			}
+		}
+		return total >= tradeRule.Total
+	}
+	return false
 }

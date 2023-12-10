@@ -3,6 +3,7 @@ package models
 import (
 	"errors"
 	"fmt"
+	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/gox/util/treemap"
 	"golang.org/x/exp/maps"
 	"slices"
@@ -24,7 +25,7 @@ const (
 
 const (
 	DefaultStrategy = ModelHousNo1
-	KLineMin        = 89 // K线最少记录数
+	KLineMin        = cache.KLineMin // K线最少记录数
 )
 
 const (
@@ -59,6 +60,17 @@ type Strategy interface {
 	Sort([]QuoteSnapshot) SortedStatus
 	// Evaluate 评估 日线数据
 	Evaluate(securityCode string, result *treemap.Map)
+}
+
+// QmtStrategyName 获取用于QMT系统的策略名称
+func QmtStrategyName(s Strategy) string {
+	id := s.Code()
+	return fmt.Sprintf("S%d", id)
+}
+
+// QmtOrderRemark 获取用于QMT系统的订单备注
+func QmtOrderRemark(s Strategy) string {
+	return s.OrderFlag()
 }
 
 var (

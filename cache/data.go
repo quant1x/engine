@@ -4,6 +4,7 @@ import "context"
 
 const (
 	KBarIndex = "barIndex"
+	KLineMin  = 120 // K线最少记录数
 )
 
 // Schema 缓存的概要信息

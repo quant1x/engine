@@ -119,9 +119,9 @@ func ReadConfig(rootPath string) (config Quant1XConfig) {
 
 // 重置交易时段字段
 func fixTradingSession(config *Quant1XConfig) {
-	config.Trader.Head.Session = ParseTradingSession(config.Trader.Head.Time)
-	config.Trader.Tail.Session = ParseTradingSession(config.Trader.Tail.Time)
-	config.Trader.Tick.Session = ParseTradingSession(config.Trader.Tick.Time)
+	//config.Trader.Head.Session = ParseTradingSession(config.Trader.Head.Time)
+	//config.Trader.Tail.Session = ParseTradingSession(config.Trader.Tail.Time)
+	//config.Trader.Tick.Session = ParseTradingSession(config.Trader.Tick.Time)
 	config.Trader.Sell.Session = ParseTradingSession(config.Trader.Sell.Time)
 	config.Trader.CancelSession = ParseTradingSession(config.Trader.ReservedOfCancel)
 }

@@ -7,9 +7,9 @@ import (
 )
 
 const (
-	InvalidFee    = float64(-1) // 无效的费用
-	InvalidVolume = int(0)      // 无效的股数
-	UnknownVolume = int(1)      // 未知的股数
+	InvalidFee    = float64(0) // 无效的费用
+	InvalidVolume = int(0)     // 无效的股数
+	UnknownVolume = int(1)     // 未知的股数
 )
 
 // 计算买入总费用

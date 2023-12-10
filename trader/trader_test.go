@@ -2,7 +2,9 @@ package trader
 
 import (
 	"fmt"
+	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/strategies"
+	"gitee.com/quant1x/gox/util/treemap"
 	"testing"
 )
 
@@ -36,4 +38,42 @@ func TestTradePlaceOrder(t *testing.T) {
 
 	orderId, err := PlaceOrder(direction, model, securityCode, price, volume)
 	fmt.Println(orderId, err)
+}
+
+func TestCalculateFundForStrategy(t *testing.T) {
+	var model models.Strategy
+	model = new(TestModel)
+	fund := CalculateFundForStrategy(model)
+	fmt.Println(fund)
+}
+
+type TestModel struct{}
+
+func (TestModel) Code() models.ModelKind {
+	return 81
+}
+
+func (TestModel) Name() string {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (TestModel) OrderFlag() string {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (TestModel) Filter(snapshot models.QuoteSnapshot) bool {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (TestModel) Sort(snapshots []models.QuoteSnapshot) models.SortedStatus {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (TestModel) Evaluate(securityCode string, result *treemap.Map) {
+	//TODO implement me
+	panic("implement me")
 }

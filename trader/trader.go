@@ -201,3 +201,14 @@ func PlaceOrder(direction Direction, model models.Strategy, securityCode string,
 	logger.Infof("trade-order: %s, response: order_id=%d", body, detail.OrderId)
 	return detail.OrderId, nil
 }
+
+// 计算策略标的的可用资金
+func CalculateFundForStrategy(model models.Strategy) float64 {
+	strategyCode := model.Code()
+	rule := config.GetTradeRule(strategyCode)
+	if rule == nil {
+		return InvalidFee
+	}
+	fund := CalculateAvailableFund(rule)
+	return fund
+}

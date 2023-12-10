@@ -90,7 +90,7 @@ func (this *History) Repair(code, cacheDate, featureDate string, complete bool) 
 	securityCode := proto.CorrectSecurityCode(this.Code)
 	tradeDate := trading.FixTradeDate(featureDate)
 	klines := base.CheckoutKLines(securityCode, tradeDate)
-	if len(klines) == 0 {
+	if len(klines) < cache.KLineMin {
 		return
 	}
 	df := pandas.LoadStructs(klines)

@@ -27,7 +27,7 @@ func calculateTheoreticalFund() (theoretical, cash float64) {
 	if err != nil {
 		return
 	}
-	// 2. 查询持仓可卖的股票, TODO: y如果确定了可卖出的市值, 怎么保证当日必须卖出?
+	// 2. 查询持仓可卖的股票 TODO: 如果确定了可卖出的市值, 怎么保证当日必须卖出?
 	// positions = self.query_positions()
 	positions, err := QueryHolding()
 	if err != nil {

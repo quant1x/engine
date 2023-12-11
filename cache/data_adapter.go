@@ -38,7 +38,7 @@ type Depend interface {
 }
 
 var (
-	ErrAlreadyExists = errors.New("plugin is already exists")
+	ErrAlreadyExists = errors.New("the plugin already exists")
 )
 
 var (

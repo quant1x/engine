@@ -1,5 +1,12 @@
 package config
 
+import (
+	"gitee.com/quant1x/engine/market"
+	"gitee.com/quant1x/gotdx/securities"
+	"gitee.com/quant1x/gox/api"
+	"slices"
+)
+
 // TraderRole 交易员角色
 type TraderRole int
 
@@ -46,7 +53,7 @@ func (t TraderParameter) ResetPositionRatio() {
 	var unassignedStrategies []*TradeRule
 	for i := 0; i < strategy_count; i++ {
 		v := &(t.Strategies[i])
-		if !v.Enable() {
+		if !v.BuyEnable() {
 			continue
 		}
 		// 校对个股最大资金
@@ -77,27 +84,76 @@ func (t TraderParameter) ResetPositionRatio() {
 
 // TradeRule 交易规则
 type TradeRule struct {
-	Id      int            `name:"策略编码" yaml:"id" default:"-1"`                                    // 策略ID, -1无效
-	Auto    bool           `name:"是否自动执行" yaml:"auto" default:"false"`                             // 是否自动执行
-	Name    string         `name:"策略名称" yaml:"name"`                                               // 策略名称
-	Flag    string         `name:"订单标识" yaml:"flag"`                                               // 订单标识,分早盘,尾盘和盘中
-	Time    string         `name:"时间范围" yaml:"time" default:"09:30:00~11:30:00,13:00:00~14:56:30"` // 预览-执行操作的时间段
-	Session TradingSession `name:"交易时段" yaml:"-"`                                                  // 可操作的交易时段
-	Weight  float64        `name:"持仓占比" yaml:"weight" default:"0"`                                 // 策略权重, 默认0, 由系统自动分配
-	Total   int            `name:"订单数上限" yaml:"total" default:"3"`                                 // 订单总数, 默认是3
-	FeeMax  float64        `name:"最大费用" yaml:"fee_max" default:"20000.00"`                         // 可投入资金-最大
-	FeeMin  float64        `name:"最小费用" yaml:"fee_min" default:"10000.00"`                         // 可投入资金-最小
+	Id                  int            `name:"策略编码" yaml:"id" default:"-1"`                                    // 策略ID, -1无效
+	Auto                bool           `name:"是否自动执行" yaml:"auto" default:"false"`                             // 是否自动执行
+	Name                string         `name:"策略名称" yaml:"name"`                                               // 策略名称
+	Flag                string         `name:"订单标识" yaml:"flag"`                                               // 订单标识,分早盘,尾盘和盘中
+	Time                string         `name:"时间范围" yaml:"time" default:"09:30:00~11:30:00,13:00:00~14:56:30"` // 预览-执行操作的时间段
+	Session             TradingSession `name:"交易时段" yaml:"-"`                                                  // 可操作的交易时段
+	Weight              float64        `name:"持仓占比" yaml:"weight" default:"0"`                                 // 策略权重, 默认0, 由系统自动分配
+	Total               int            `name:"订单数上限" yaml:"total" default:"3"`                                 // 订单总数, 默认是3
+	FeeMax              float64        `name:"最大费用" yaml:"fee_max" default:"20000.00"`                         // 可投入资金-最大
+	FeeMin              float64        `name:"最小费用" yaml:"fee_min" default:"10000.00"`                         // 可投入资金-最小
+	Sectors             []string       `name:"板块" yaml:"sectors" default:""`                                   // 板块, 策略适用的板块列表
+	IgnoreMarginTrading bool           `name:"剔除两融" yaml:"ignore_margin_trading" default:"true"`               // 剔除两融标的, 默认是剔除
 }
 
-func (t *TradeRule) Enable() bool {
-	return t.Auto && t.Total > 0 || t.Id >= 0
+// BuyEnable 获取可买入状态
+func (t *TradeRule) BuyEnable() bool {
+	return t.Auto && t.Total > 0 && t.Id >= 0
 }
 
+// SellEnable 获取可卖出状态
+func (t *TradeRule) SellEnable() bool {
+	return t.Auto && t.Id >= 0
+}
+
+// IsCookieCutterForSell 是否一刀切卖出
+func (t *TradeRule) IsCookieCutterForSell() bool {
+	return t.SellEnable() && t.Total == 0
+}
+
+// NumberOfTargets 获得可买入标的总数
 func (t *TradeRule) NumberOfTargets() int {
-	if !t.Enable() {
+	if !t.BuyEnable() {
 		return 0
 	}
 	return t.Total
+}
+
+func (t *TradeRule) StockList() []string {
+	var codes []string
+	for _, v := range t.Sectors {
+		blockInfo := securities.GetBlockInfo(v)
+		if blockInfo != nil {
+			codes = append(codes, blockInfo.ConstituentStocks...)
+		}
+	}
+	if len(codes) == 0 {
+		codes = market.GetCodeList()
+	}
+	codes = api.SliceUnique(codes, func(a string, b string) int {
+		if a < b {
+			return -1
+		} else if a > b {
+			return 1
+		} else {
+			return 0
+		}
+	})
+
+	if t.IgnoreMarginTrading {
+		// 过滤两融
+		marginTradingList := securities.MarginTradingList()
+		codes = api.Filter(codes, func(s string) bool {
+			if slices.Contains(marginTradingList, s) {
+				return false
+			}
+			return true
+		})
+	}
+
+	return codes
 }
 
 // TraderConfig 获取交易配置
@@ -116,4 +172,10 @@ func GetTradeRule(code int) *TradeRule {
 		}
 	}
 	return nil
+}
+
+// GetSellRule 获取卖出规则
+func GetSellRule() TradeRule {
+	params := TraderConfig()
+	return params.Sell
 }

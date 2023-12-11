@@ -3,6 +3,7 @@ package services
 import (
 	"errors"
 	"fmt"
+	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/gox/coroutine"
 	"gitee.com/quant1x/gox/cron"
 	"gitee.com/quant1x/gox/logger"
@@ -15,13 +16,14 @@ import (
 //	默认每10秒检测1次
 //	排名不分先后
 type Task struct {
-	name    string
-	spec    string
-	Service func()
+	name    string // 任务名称
+	spec    string // 出发条件
+	Service func() // 任务函数
 }
 
 var (
-	ErrAlreadyExists = errors.New("job is already exists")
+	ErrAlreadyExists = errors.New("the job already exists") // 任务已经存在
+	ErrForbidden     = errors.New("the job was forbidden")  // 任务被禁止
 )
 
 var (
@@ -39,7 +41,20 @@ func Register(name, spec string, callback func()) error {
 		return ErrAlreadyExists
 	}
 	if len(spec) == 0 {
-		spec = cronDefaultInterval
+		spec = CronDefaultInterval
+	}
+	enable := true
+	jobParam := config.GetJobParameter(name)
+	if jobParam != nil {
+		enable = jobParam.Enable
+		trigger := strings.TrimSpace(jobParam.Trigger)
+		if len(trigger) > 0 {
+			spec = trigger
+		}
+	}
+	if !enable {
+		// 配置禁止任务, 不能返回错误
+		return nil
 	}
 	job := Task{name: name, spec: spec, Service: callback}
 	mapJobs[job.name] = job
@@ -71,6 +86,7 @@ func DaemonService() {
 	crontab.Stop()
 }
 
+// PrintJobList 输出定时任务列表
 func PrintJobList() {
 	for _, v := range mapJobs {
 		spec := v.spec

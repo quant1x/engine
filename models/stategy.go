@@ -76,8 +76,8 @@ func QmtOrderRemark(s Strategy) string {
 var (
 	_mutexStrategies sync.Mutex
 	_mapStrategies   = map[ModelKind]Strategy{}
-	ErrAlreadyExists = errors.New("strategy is already exists") // 已经存在
-	ErrNotFound      = errors.New("strategy not found")         // 不存在
+	ErrAlreadyExists = errors.New("the strategy already exists") // 已经存在
+	ErrNotFound      = errors.New("the strategy was not found")  // 不存在
 )
 
 // Register 注册策略

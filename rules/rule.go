@@ -46,8 +46,8 @@ var (
 )
 
 var (
-	ErrAlreadyExists = errors.New("rule is already exists") // 规则已经存在
-	ErrExecuteFailed = errors.New("rule execute failed")    // 规则执行失败
+	ErrAlreadyExists = errors.New("the rule already exists")   // 规则已经存在
+	ErrExecuteFailed = errors.New("the rule execution failed") // 规则执行失败
 )
 
 // Register 注册规则

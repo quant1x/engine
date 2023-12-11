@@ -94,18 +94,23 @@ type TradeRule struct {
 	Total               int            `name:"订单数上限" yaml:"total" default:"3"`                                 // 订单总数, 默认是3
 	FeeMax              float64        `name:"最大费用" yaml:"fee_max" default:"20000.00"`                         // 可投入资金-最大
 	FeeMin              float64        `name:"最小费用" yaml:"fee_min" default:"10000.00"`                         // 可投入资金-最小
-	Sectors             []string       `name:"板块" yaml:"sectors" default:""`                                   // 板块, 策略适用的板块列表
+	Sectors             []string       `name:"板块" yaml:"sectors" default:""`                                   // 板块, 策略适用的板块列表, 默认板块为空, 即全部个股
 	IgnoreMarginTrading bool           `name:"剔除两融" yaml:"ignore_margin_trading" default:"true"`               // 剔除两融标的, 默认是剔除
+}
+
+// Enable 策略是否有效
+func (t *TradeRule) Enable() bool {
+	return t.Auto && t.Id >= 0
 }
 
 // BuyEnable 获取可买入状态
 func (t *TradeRule) BuyEnable() bool {
-	return t.Auto && t.Total > 0 && t.Id >= 0
+	return t.Enable() && t.Total > 0
 }
 
 // SellEnable 获取可卖出状态
 func (t *TradeRule) SellEnable() bool {
-	return t.Auto && t.Id >= 0
+	return t.Enable()
 }
 
 // IsCookieCutterForSell 是否一刀切卖出

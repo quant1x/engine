@@ -5,19 +5,8 @@ import (
 	"gitee.com/quant1x/gotdx/securities"
 )
 
-// GetCodeList 加载全部股票代码
-func GetCodeList() []string {
-	allCodes := make([]string, 0)
-	// 添加指数代码
-	allCodes = append(allCodes, securities.IndexList()...)
-
-	// 板块信息
-	blocks := securities.BlockList()
-	for _, v := range blocks {
-		allCodes = append(allCodes, v.Code)
-	}
-
-	// 更新代码
+func GetStockCodeList() []string {
+	var allCodes []string
 	// 上海
 	// sh600000-sh609999
 	{
@@ -103,5 +92,21 @@ func GetCodeList() []string {
 	//	}
 	//}
 
+	return allCodes
+}
+
+// GetCodeList 加载全部股票代码
+func GetCodeList() []string {
+	allCodes := make([]string, 0)
+	// 添加指数代码
+	allCodes = append(allCodes, securities.IndexList()...)
+
+	// 板块信息
+	blocks := securities.BlockList()
+	for _, v := range blocks {
+		allCodes = append(allCodes, v.Code)
+	}
+	stockCodes := GetStockCodeList()
+	allCodes = append(allCodes, stockCodes...)
 	return allCodes
 }

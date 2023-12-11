@@ -12,6 +12,7 @@ const (
 
 // TraderParameter 预览交易通道参数
 type TraderParameter struct {
+	AccountId            string         `name:"账号ID" yaml:"account_id" dataframe:"888xxxxxxx"`                                        // 账号ID
 	StampDutyRateForBuy  float64        `name:"买入印花税" yaml:"stamp_duty_rate_for_buy" default:"0.0000"`                                // 印花说-买入, 没有
 	StampDutyRateForSell float64        `name:"卖出印花税" yaml:"stamp_duty_rate_for_sell" default:"0.0010"`                               // 印花说-卖出, 默认是千分之1
 	TransferRate         float64        `name:"过户费" yaml:"transfer_rate" default:"0.0006"`                                            // 过户费, 双向, 默认是万分之6

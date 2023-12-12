@@ -12,6 +12,7 @@ import (
 
 // ExecuteStrategy 执行策略
 func ExecuteStrategy(model Strategy, barIndex *int) {
+	fmt.Printf("策略模块: %s\n", model.Name())
 	// 加载即时行情
 	SyncAllSnapshots(barIndex)
 	fmt.Println()

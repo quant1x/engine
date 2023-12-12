@@ -1,6 +1,6 @@
 module gitee.com/quant1x/engine
 
-go 1.21.1
+go 1.21.5
 
 require (
 	gitee.com/quant1x/gotdx v1.17.5

@@ -1,8 +1,7 @@
 package command
 
 import (
-	"os"
-	"path/filepath"
+	"gitee.com/quant1x/gox/runtime"
 )
 
 var (
@@ -12,9 +11,7 @@ var (
 )
 
 func init() {
-	path, _ := os.Executable()
-	_, exec := filepath.Split(path)
-	Application = exec
+	Application = runtime.ApplicationName()
 }
 
 // UpdateApplicationName 更新应用(Application)名称

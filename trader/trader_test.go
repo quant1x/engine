@@ -50,7 +50,7 @@ func TestCalculateFundForStrategy(t *testing.T) {
 type TestModel struct{}
 
 func (TestModel) Code() models.ModelKind {
-	return 81
+	return 82
 }
 
 func (TestModel) Name() string {

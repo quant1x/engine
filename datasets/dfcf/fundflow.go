@@ -3,7 +3,7 @@ package dfcf
 import (
 	"encoding/json"
 	"fmt"
-	"gitee.com/quant1x/engine/util/functions"
+	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
@@ -183,7 +183,7 @@ func IndividualStocksFundFlow(securityCode, date string) (list []FundFlow) {
 		"fields1": {"f1,f2,f3,f7"},
 		"fields2": {"f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61,f62,f63,f64,f65"},
 		"ut":      {"b2884a393a59ad64002292a3e90d46a5"},
-		"_":       {fmt.Sprintf("%d", functions.Timestamp())},
+		"_":       {fmt.Sprintf("%d", utils.Timestamp())},
 	}
 	url := urlFundFlow + "?" + params.Encode()
 	data, err := http.Get(url)

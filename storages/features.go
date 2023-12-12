@@ -8,7 +8,6 @@ import (
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/smart"
-	"gitee.com/quant1x/engine/util"
 	"gitee.com/quant1x/gox/coroutine"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
@@ -22,7 +21,7 @@ import (
 	"time"
 )
 
-func updateStockFeature(wg *util.RollingWaitGroup, bar *progressbar.Bar, feature factors.Feature, code string, cacheDate, featureDate string, op cache.OpKind, p *treemap.Map, sb *cache.ScoreBoard) {
+func updateStockFeature(wg *coroutine.RollingWaitGroup, bar *progressbar.Bar, feature factors.Feature, code string, cacheDate, featureDate string, op cache.OpKind, p *treemap.Map, sb *cache.ScoreBoard) {
 	defer runtime.CatchPanic()
 	now := time.Now()
 	defer sb.Add(1, time.Since(now))
@@ -75,7 +74,7 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 		//updateOneFeature(barAdapter, barCode, adapter, cacheDate, featureDate, op, barIndex)
 
 		mapFeature := treemap.NewWithStringComparator()
-		wg := util.NewRollingWaitGroup(5)
+		wg := coroutine.NewRollingWaitGroup(5)
 		dataSource := adapter.Factory(featureDate, "")
 		parent := coroutine.Context()
 		ctx := context.WithValue(parent, cache.KBarIndex, barIndex)

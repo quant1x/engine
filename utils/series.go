@@ -1,4 +1,4 @@
-package factors
+package utils
 
 import (
 	"gitee.com/quant1x/pandas/stat"

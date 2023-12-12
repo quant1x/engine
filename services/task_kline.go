@@ -4,8 +4,8 @@ import (
 	"gitee.com/quant1x/engine/datasets/base"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/engine/util"
 	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/gox/coroutine"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/runtime"
@@ -40,10 +40,10 @@ func realtimeUpdateOfKLine() {
 	//mapSnapshot := models.GetAllSnapshotsV2()
 	allCodes := market.GetCodeList()
 	//var wg sync.WaitGroup
-	wg := util.NewRollingWaitGroup(5)
+	wg := coroutine.NewRollingWaitGroup(5)
 	bar := progressbar.NewBar(barIndex, "执行[实时更新K线]", len(allCodes))
 	for _, code := range allCodes {
-		updateKLine := func(waitGroup *util.RollingWaitGroup, securityCode string) {
+		updateKLine := func(waitGroup *coroutine.RollingWaitGroup, securityCode string) {
 			defer waitGroup.Done()
 			bar.Add(1)
 			//if snapshot, ok := mapSnapshot[securityCode]; ok {

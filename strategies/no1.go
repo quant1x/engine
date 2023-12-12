@@ -4,6 +4,7 @@ import (
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/smart"
+	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gox/util/treemap"
 	. "gitee.com/quant1x/pandas/formula"
@@ -80,7 +81,7 @@ func (m ModelNo1) Evaluate(securityCode string, result *treemap.Map) {
 	c2 := CROSS(s10, s20)
 	// 横向对比
 	d := c1.And(c2)
-	s := factors.BoolIndexOf(d, -1)
+	s := utils.BoolIndexOf(d, -1)
 	if s {
 		price := snapshot.Price
 		date := snapshot.Date

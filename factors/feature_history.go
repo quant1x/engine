@@ -4,6 +4,7 @@ import (
 	"context"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets/base"
+	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gotdx/trading"
@@ -104,32 +105,32 @@ func (this *History) Repair(code, cacheDate, featureDate string, complete bool) 
 	)
 	//MA3        float64 // 3日均价
 	ma3 := MA(CLOSE, 3)
-	this.MA3 = SeriesIndexOf(ma3, -1)
+	this.MA3 = utils.SeriesIndexOf(ma3, -1)
 	//	MV3        float64 // 3日均量
 	mv3 := MA(VOL, 3)
-	this.MV3 = SeriesIndexOf(mv3, -1)
+	this.MV3 = utils.SeriesIndexOf(mv3, -1)
 	//	MA5        float64 // 5日均价
 	ma5 := MA(CLOSE, 5)
-	this.MA5 = SeriesIndexOf(ma5, -1)
+	this.MA5 = utils.SeriesIndexOf(ma5, -1)
 	//	MV5        float64 // 5日均量
 	mv5 := MA(VOL, 5)
-	this.MV5 = SeriesIndexOf(mv5, -1)
+	this.MV5 = utils.SeriesIndexOf(mv5, -1)
 	//	MA10       float64 // 10日均价
 	ma10 := MA(CLOSE, 10)
-	this.MA10 = SeriesIndexOf(ma10, -1)
+	this.MA10 = utils.SeriesIndexOf(ma10, -1)
 	//	MV10       float64 // 10日均量
 	mv10 := MA(VOL, 10)
-	this.MV10 = SeriesIndexOf(mv10, -1)
+	this.MV10 = utils.SeriesIndexOf(mv10, -1)
 	//	MA20       float64 // 20日均价
 	ma20 := MA(CLOSE, 20)
-	this.MA20 = SeriesIndexOf(ma20, -1)
+	this.MA20 = utils.SeriesIndexOf(ma20, -1)
 	//	MV20       float64 // 20日均量
 	mv20 := MA(VOL, 20)
-	this.MV20 = SeriesIndexOf(mv20, -1)
-	this.HIGH = SeriesIndexOf(HIGH, -1)
-	this.LOW = SeriesIndexOf(LOW, -1)
+	this.MV20 = utils.SeriesIndexOf(mv20, -1)
+	this.HIGH = utils.SeriesIndexOf(HIGH, -1)
+	this.LOW = utils.SeriesIndexOf(LOW, -1)
 	ap := AMOUNT.Div(VOL)
-	this.AveragePrice = SeriesIndexOf(ap, -1)
+	this.AveragePrice = utils.SeriesIndexOf(ap, -1)
 	// 扩展数据 修复
 	{
 		// hous_no1

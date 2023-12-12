@@ -1,4 +1,4 @@
-package functions
+package utils
 
 // GetPages 计算页数
 func GetPages(pageSize, count int) (pages int) {

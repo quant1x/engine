@@ -3,7 +3,7 @@ package dfcf
 import (
 	"encoding/json"
 	"fmt"
-	"gitee.com/quant1x/engine/util/functions"
+	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/exception"
@@ -295,7 +295,7 @@ func StockNotices(securityCode, beginDate, endDate string, pageNumber ...int) (n
 		return
 	}
 	//pages = int(math.Ceil(float64(raw.Data.TotalHits) / float64(EastmoneyNoticesPageSize)))
-	pages = functions.GetPages(pageSize, raw.Data.TotalHits)
+	pages = utils.GetPages(pageSize, raw.Data.TotalHits)
 
 	for _, v := range raw.Data.List {
 		marketCode := proto.MarketIdShenZhen

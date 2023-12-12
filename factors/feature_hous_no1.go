@@ -4,6 +4,7 @@ import (
 	"context"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets/base"
+	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gotdx/trading"
@@ -71,11 +72,11 @@ func (f *HousNo1) Repair(code, cacheDate, featureDate string, complete bool) {
 		offset = 0
 	}
 	ma5 := MA(CLOSE, 5-offset)
-	f.MA5 = SeriesIndexOf(ma5, -1)
+	f.MA5 = utils.SeriesIndexOf(ma5, -1)
 	ma10 := MA(CLOSE, 10-offset)
-	f.MA10 = SeriesIndexOf(ma10, -1)
+	f.MA10 = utils.SeriesIndexOf(ma10, -1)
 	ma20 := MA(CLOSE, 20-offset)
-	f.MA20 = SeriesIndexOf(ma20, -1)
+	f.MA20 = utils.SeriesIndexOf(ma20, -1)
 	_ = df
 }
 

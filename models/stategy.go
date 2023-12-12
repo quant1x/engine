@@ -18,9 +18,10 @@ const (
 )
 
 const (
-	ModelHousNo1 ModelKind = 1 << iota // 1号策略
-	ModelTail                          // 尾盘策略
-	ModelTick                          // 盘中实时策略
+	ModelHousNo1             ModelKind = 1 << iota // 1号策略
+	ModelTail                                      // 尾盘策略
+	ModelTick                                      // 盘中实时策略
+	ModelOneSizeFitsAllSales ModelKind = 117       // 卖出策略一刀切(Panic sell, cookie-cutter, One size fits all sales)
 )
 
 const (
@@ -32,6 +33,7 @@ const (
 	OrderFlagHead = "head" // 早盘订单标志
 	OrderFlagTick = "tick" // 实时订单标志
 	OrderFlagTail = "tail" // 尾盘订单标志
+	OrderFlagSell = "sell" // 卖出订单标志
 )
 
 // SortedStatus 排序模式
@@ -63,14 +65,14 @@ type Strategy interface {
 }
 
 // QmtStrategyName 获取用于QMT系统的策略名称
-func QmtStrategyName(s Strategy) string {
-	id := s.Code()
+func QmtStrategyName(model Strategy) string {
+	id := model.Code()
 	return fmt.Sprintf("S%d", id)
 }
 
 // QmtOrderRemark 获取用于QMT系统的订单备注
-func QmtOrderRemark(s Strategy) string {
-	return s.OrderFlag()
+func QmtOrderRemark(model Strategy) string {
+	return model.OrderFlag()
 }
 
 var (

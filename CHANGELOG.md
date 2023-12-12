@@ -4,6 +4,57 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.7.7] - 2023-12-12
+### Changed
+- 实现一刀切的功能.
+- 拆分下单委托函数, 支持直接填充策略名和订单备注.
+- 更新依赖库版本.
+- 新增计算涨跌停板价格的函数.
+- 拟增加持仓列表功能.
+- 调整测试代码.
+- 策略方面, 增加一个特殊的卖出策略117(一刀切), 新增QMT体系中的策略名函数和订单备注函数.
+- 调整订单状态机.
+- 更新gotdx版本.
+- 优化策略有效性判断.
+- 按策略关联板块以及是否过滤两融.
+- 修订TODO注释.
+- 基础数据, 拟增加两融标的.
+- 新增矫正策略交易时段的处理.
+- 新增配置测试代码.
+- 拆分出股票代码列表的函数.
+- 交易员参数增加账户ID.
+- 修订数据适配器相关的错误信息.
+- 删除废弃的时间类测试代码.
+- 调整定时任务的配置方式.
+- 修订规则的错误信息.
+- 调整策略的错误信息.
+- 新增通过配置调整定时任务的开关和触发条件.
+- 更新依赖库版本.
+- 增加进入股票后直接向qmt proxy发起委托下单.
+- 特征数据增加K线数据的最低要求限制的检查.
+- 统一最低要求K线数量的常量为120.
+- 增加账户和策略可用资金的计算方法.
+- 优化编译脚本.
+- 调整分割线.
+- 增加mac和windows平台的amd64编译搅脚本.
+- 优化买入卖出交易费用的计算方法.
+- 增加通过预算输出交易费用对象.
+- 拆分出交易配置对象.
+- 新增交易费用结构体.
+- 交易配置增加费率.
+- 规则增加过滤股票代码前缀.
+- 调整订单结构.
+- 更新依赖库gox版本号.
+- 调整交易参数.
+- 交易员参数增加交易角色.
+- 调整qmt持仓字段.
+- 增加持仓结构.
+- 增加qmt的常量.
+- 订单字段增加tag式注释.
+- F10增加财务数据报告期.
+- 调整print指令, 增加输出缓存日期和特征日期.
+- 更新依赖库pkg, ta-lib版本号.
+
 ## [0.7.6] - 2023-12-05
 ### Changed
 - 新增一个只获取一只股票tick数据的函数, 目的是为了方便单元测试.
@@ -509,8 +560,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.7.6...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.7.7...HEAD
 
+[0.7.7]: https://gitee.com/quant1x/engine/compare/v0.7.6...v0.7.7
 [0.7.6]: https://gitee.com/quant1x/engine/compare/v0.7.5...v0.7.6
 [0.7.5]: https://gitee.com/quant1x/engine/compare/v0.7.4...v0.7.5
 [0.7.4]: https://gitee.com/quant1x/engine/compare/v0.7.3...v0.7.4

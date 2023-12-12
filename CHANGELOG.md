@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.7.8] - 2023-12-13
+### Changed
+- 调整util工具包.
+- 执行策略前输出策略概要.
+- 收敛获取应用程序文件名的方法.
+- 更新依赖库版本.
+- 增加doc文档说明性源文件.
+- 使用go 1.21.5.
+
 ## [0.7.7] - 2023-12-12
 ### Changed
 - 实现一刀切的功能.
@@ -560,8 +569,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.7.7...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.7.8...HEAD
 
+[0.7.8]: https://gitee.com/quant1x/engine/compare/v0.7.7...v0.7.8
 [0.7.7]: https://gitee.com/quant1x/engine/compare/v0.7.6...v0.7.7
 [0.7.6]: https://gitee.com/quant1x/engine/compare/v0.7.5...v0.7.6
 [0.7.5]: https://gitee.com/quant1x/engine/compare/v0.7.4...v0.7.5

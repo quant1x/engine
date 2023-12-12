@@ -2,7 +2,9 @@ package market
 
 import (
 	"fmt"
+	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/securities"
+	"gitee.com/quant1x/gox/num"
 )
 
 func GetStockCodeList() []string {
@@ -109,4 +111,12 @@ func GetCodeList() []string {
 	stockCodes := GetStockCodeList()
 	allCodes = append(allCodes, stockCodes...)
 	return allCodes
+}
+
+// PriceLimit 计算涨停板和跌停板的价格
+func PriceLimit(securityCode string, lastClose float64) (limitUp, limitDown float64) {
+	limitRate := proto.MarketLimit(securityCode)
+	priceLimitUp := num.Decimal(lastClose * (1.000 + limitRate))
+	priceLimitDown := num.Decimal(lastClose * (1.000 - limitRate))
+	return priceLimitUp, priceLimitDown
 }

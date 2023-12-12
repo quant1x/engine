@@ -7,6 +7,7 @@ import (
 	"gitee.com/quant1x/engine/trader"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/gox/logger"
 	"sync"
 	"time"
 )
@@ -138,7 +139,7 @@ func strategyOrderIsFinished(model models.Strategy) bool {
 	strategyId := model.Code()
 	strategyName := models.QmtStrategyName(model)
 	tradeRule := config.GetTradeRule(strategyId)
-	if tradeRule == nil || !tradeRule.Enable() {
+	if tradeRule == nil || !tradeRule.BuyEnable() {
 		return true
 	}
 	orders, err := trader.QueryOrders()
@@ -156,24 +157,32 @@ func strategyOrderIsFinished(model models.Strategy) bool {
 
 // 检查买入订单
 func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool {
+	tradeDate := trading.FixTradeDate(date)
 	tradeRule := config.GetTradeRule(model.Code())
-	if tradeRule != nil && tradeRule.Enable() {
-		total := 0
+	if tradeRule != nil && tradeRule.BuyEnable() {
+		direction := trader.BUY
+		numberOfStrategy := CountStrategyOrders(tradeDate, model, direction)
+		if numberOfStrategy >= tradeRule.Total {
+			logger.Warnf("%s %s: 计划买入=%d, 已完成=%d. ", tradeDate, model.Name(), tradeRule.Total, numberOfStrategy)
+			return true
+		}
 		length := len(list)
-		for i := 0; i < length && total < tradeRule.Total; i++ {
+		for i := 0; i < length && numberOfStrategy < tradeRule.Total; i++ {
 			v := &(list[i])
-			if v.Date == date && v.StrategyCode == model.Code() && v.OrderStatus == 1 {
-				total += 1
+			if v.Date != tradeDate {
+				continue
+			}
+			if v.StrategyCode == model.Code() && v.OrderStatus == 1 {
+				numberOfStrategy += 1
 				securityCode := v.Code
-				direction := trader.BUY
 				price := v.Buy
 				// 1. 检查买入已完成状态
-				ok := checkOrderStatus(date, securityCode, direction)
+				ok := CheckOrderState(date, model, securityCode, direction)
 				if ok {
 					continue
 				}
 				// 2. 首先推送订单已完成状态
-				_ = pushOrderStatus(date, securityCode, direction)
+				_ = PushOrderState(date, model, securityCode, direction)
 				if !trading.DateIsTradingDay() {
 					// 非交易日
 					continue
@@ -201,7 +210,7 @@ func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool
 				v.OrderId = orderId
 			}
 		}
-		return total >= tradeRule.Total
+		return numberOfStrategy >= tradeRule.Total
 	}
 	return false
 }

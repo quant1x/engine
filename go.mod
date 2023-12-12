@@ -3,11 +3,11 @@ module gitee.com/quant1x/engine
 go 1.21.5
 
 require (
-	gitee.com/quant1x/gotdx v1.17.5
-	gitee.com/quant1x/gox v1.15.2
-	gitee.com/quant1x/pandas v1.2.2
-	gitee.com/quant1x/pkg v0.1.4
-	gitee.com/quant1x/ta-lib v0.1.7
+	gitee.com/quant1x/gotdx v1.17.6
+	gitee.com/quant1x/gox v1.15.5
+	gitee.com/quant1x/pandas v1.2.3
+	gitee.com/quant1x/pkg v0.1.5
+	gitee.com/quant1x/ta-lib v0.1.8
 	github.com/bits-and-blooms/bitset v1.12.0
 	github.com/spf13/cobra v1.8.0
 	github.com/syndtr/goleveldb v1.0.0
@@ -30,7 +30,7 @@ require (
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/btree v1.1.2 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
-	github.com/google/pprof v0.0.0-20231205033806-a5a03c77bf08 // indirect
+	github.com/google/pprof v0.0.0-20231212022811-ec68065c825e // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/kr/text v0.2.0 // indirect

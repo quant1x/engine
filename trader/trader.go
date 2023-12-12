@@ -183,14 +183,21 @@ func CancelOrder(orderId int) error {
 
 // PlaceOrder 下委托订单
 func PlaceOrder(direction Direction, model models.Strategy, securityCode string, price float64, volume int) (int, error) {
+	strategyName := models.QmtStrategyName(model)
+	orderRemark := models.QmtOrderRemark(model)
+	return DirectOrder(direction, strategyName, orderRemark, securityCode, price, volume)
+}
+
+// 直接下单(透传)
+func DirectOrder(direction Direction, strategyName, orderRemark, securityCode string, price float64, volume int) (int, error) {
 	_, mflag, symbol := proto.DetectMarket(securityCode)
 	params := urlpkg.Values{
 		"direction": {direction.String()},
 		"code":      {fmt.Sprintf("%s.%s", symbol, strings.ToUpper(mflag))},
 		"price":     {fmt.Sprintf("%f", price)},
 		"volume":    {fmt.Sprintf("%d", volume)},
-		"strategy":  {models.QmtStrategyName(model)},
-		"remark":    {models.QmtOrderRemark(model)},
+		"strategy":  {strategyName},
+		"remark":    {orderRemark},
 	}
 	body := params.Encode()
 	logger.Infof("trader-order: %s", body)

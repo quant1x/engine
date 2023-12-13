@@ -67,7 +67,12 @@ type Strategy interface {
 // QmtStrategyName 获取用于QMT系统的策略名称
 func QmtStrategyName(model Strategy) string {
 	id := model.Code()
-	return fmt.Sprintf("S%d", id)
+	return QmtStrategyNameFromId(id)
+}
+
+// QmtStrategyNameFromId 通过策略ID返回用于在QMT系统中表示的string类型的策略名称
+func QmtStrategyNameFromId(strategyCode int) string {
+	return fmt.Sprintf("S%d", strategyCode)
 }
 
 // QmtOrderRemark 获取用于QMT系统的订单备注

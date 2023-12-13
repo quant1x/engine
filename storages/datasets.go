@@ -15,7 +15,7 @@ import (
 )
 
 // 更新单个数据集
-func updateOneDataSet(wg *sync.WaitGroup, parent, bar *progressbar.Bar, dataSet datasets.DataSet, date string, op cache.OpKind) {
+func updateOneDataSet(wg *sync.WaitGroup, parent, bar *progressbar.Bar, dataSet datasets.DataSet, date string, op cache.OpKind, allCodes []string) {
 	defer runtime.CatchPanic()
 	moduleName := "基础数据"
 	if op == cache.OpRepair {
@@ -24,7 +24,6 @@ func updateOneDataSet(wg *sync.WaitGroup, parent, bar *progressbar.Bar, dataSet 
 		moduleName = "更新" + moduleName
 	}
 	logger.Infof("%s: %s, begin", moduleName, dataSet.Name())
-	allCodes := market.GetCodeList()
 	for _, code := range allCodes {
 		data := dataSet.Clone(date, code).(datasets.DataSet)
 		if op == cache.OpUpdate {
@@ -86,9 +85,9 @@ func BaseDataUpdate(barIndex int, date string, plugins []cache.DataAdapter, op c
 		barCode := progressbar.NewBar(barNo, "执行["+title+"]", codeCount)
 		wg.Add(1)
 		if cache.UseGoroutine {
-			go updateOneDataSet(&wg, barCache, barCode, dataSet, date, op)
+			go updateOneDataSet(&wg, barCache, barCode, dataSet, date, op, allCodes)
 		} else {
-			updateOneDataSet(&wg, barCache, barCode, dataSet, date, op)
+			updateOneDataSet(&wg, barCache, barCode, dataSet, date, op, allCodes)
 		}
 	}
 	wg.Wait()

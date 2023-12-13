@@ -2,6 +2,7 @@ package config
 
 import (
 	"gitee.com/quant1x/engine/market"
+	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gox/api"
 	"slices"
@@ -96,6 +97,11 @@ type TradeRule struct {
 	FeeMin              float64        `name:"最小费用" yaml:"fee_min" default:"10000.00"`                         // 可投入资金-最小
 	Sectors             []string       `name:"板块" yaml:"sectors" default:""`                                   // 板块, 策略适用的板块列表, 默认板块为空, 即全部个股
 	IgnoreMarginTrading bool           `name:"剔除两融" yaml:"ignore_margin_trading" default:"true"`               // 剔除两融标的, 默认是剔除
+	HoldingPeriod       int            `name:"持仓周期" yaml:"holding_period" default:"1"`                         // 持仓周期, 默认为1天, 即T+1日触发117号策略
+}
+
+func (t *TradeRule) QmtStrategyName() string {
+	return models.QmtStrategyNameFromId(t.Id)
 }
 
 // Enable 策略是否有效

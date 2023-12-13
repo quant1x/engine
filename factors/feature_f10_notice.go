@@ -63,7 +63,8 @@ func getOneNotice(securityCode, currentDate string) (notice companyNotice) {
 					}
 				}
 				tmpArr := strings.Split(keywords, ",")
-				api.Unique(api.StringSlice{P: &tmpArr})
+				//api.Unique(api.StringSlice{P: &tmpArr})
+				tmpArr = api.Unique(tmpArr)
 				tmpNotice.Keywords = strings.Join(tmpArr, ",")
 				tmpNotice.Increase += v.Increase
 				tmpNotice.Reduce += v.Reduce

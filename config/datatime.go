@@ -86,20 +86,46 @@ type TradingSession struct {
 	sessions []TimeRange
 }
 
-// IsTrading 是否交易时段
-func (s TradingSession) IsTrading(timestamp ...string) bool {
+// Size 获取时段总数
+func (s TradingSession) Size() int {
+	return len(s.sessions)
+}
+
+// Index 判断timestamp是第几个交易时段
+func (s TradingSession) Index(timestamp ...string) int {
 	var tm string
 	if len(timestamp) > 0 {
 		tm = strings.TrimSpace(timestamp[0])
 	} else {
 		tm = getTimestamp()
 	}
-	for _, timeRange := range s.sessions {
+	for i, timeRange := range s.sessions {
 		if timeRange.IsTrading(tm) {
-			return true
+			return i
 		}
 	}
-	return false
+	return -1
+}
+
+// IsTrading 是否交易时段
+func (s TradingSession) IsTrading(timestamp ...string) bool {
+	index := s.Index(timestamp...)
+	if index < 0 {
+		return false
+	}
+	return true
+}
+
+// IsTodayLastSession 当前时段是否今天最后一个交易时段
+//
+//	备选函数名 IsTodayFinalSession
+func (s TradingSession) IsTodayLastSession(timestamp ...string) bool {
+	n := s.Size()
+	index := s.Index(timestamp...)
+	if index+1 < n {
+		return false
+	}
+	return true
 }
 
 func (s TradingSession) String() string {

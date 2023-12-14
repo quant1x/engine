@@ -28,7 +28,7 @@ const (
 	keyCronRealTimeKLine    = "realtime_kline"  //  实时更新K线
 	keyCronUpdateSnapshot   = "update_snapshot" // 更新快照
 	keyCronUpdateAll        = "update_all"      // 更新全部数据, 包括基础数据和特征数据
-	keyCronCookieCutterSell = "sell_117"        // 一刀切卖出
+	keyCronCookieCutterSell = "sell_117"        // 一刀切卖出, one-size-fits-all
 )
 
 func init() {

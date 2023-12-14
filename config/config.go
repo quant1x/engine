@@ -56,59 +56,81 @@ var (
 
 // LoadConfig 加载配置文件
 func LoadConfig() (config Quant1XConfig, found bool) {
-	configPreRun(&config)
 	for _, v := range listConfigFile {
 		filename, err := homedir.Expand(v)
 		if err != nil {
 			continue
 		}
-		if api.FileExist(filename) {
-			dataBytes, err := os.ReadFile(filename)
-			if err != nil {
-				logger.Error(err)
-				continue
-			}
-			err = yaml.Unmarshal(dataBytes, &config)
-			if err != nil {
-				logger.Error(err)
-				continue
-			}
-			config.BaseDir = strings.TrimSpace(config.BaseDir)
-			if len(config.BaseDir) > 0 {
-				quant1XConfigFilename = filename
-			}
-			configPostRun(&config)
-			found = true
-			break
+		//if api.FileExist(filename) {
+		//	dataBytes, err := os.ReadFile(filename)
+		//	if err != nil {
+		//		logger.Error(err)
+		//		continue
+		//	}
+		//	err = yaml.Unmarshal(dataBytes, &config)
+		//	if err != nil {
+		//		logger.Error(err)
+		//		continue
+		//	}
+		//	config.BaseDir = strings.TrimSpace(config.BaseDir)
+		//	if len(config.BaseDir) > 0 {
+		//		quant1XConfigFilename = filename
+		//	}
+		//	configPostRun(&config)
+		//	found = true
+		//	break
+		//}
+		err = parseYamlConfig(filename, &config)
+		if err != nil {
+			panic(err)
 		}
+		//config.BaseDir = strings.TrimSpace(config.BaseDir)
+		//if len(config.BaseDir) > 0 {
+		//	quant1XConfigFilename = filename
+		//}
+		found = true
+		break
 	}
 	return
 }
 
 // ReadConfig 读取配置文件
 func ReadConfig(rootPath string) (config Quant1XConfig) {
-	configPreRun(&config)
 	target := GetConfigFilename()
+	// 如果文件不存在, 导出默认配置
 	if !api.FileExist(target) {
 		target = rootPath + "/" + configFilename
 		target, _ = homedir.Expand(target)
 		filename := fmt.Sprintf("%s/%s", ResourcesPath, configFilename)
 		_ = api.Export(resources, filename, target)
 	}
-	if api.FileExist(target) {
-		dataBytes, err := os.ReadFile(target)
-		if err != nil {
-			logger.Error(err)
-			return
-		}
-		err = yaml.Unmarshal(dataBytes, &config)
-		if err != nil {
-			logger.Error(err)
-			return
-		}
-		configPostRun(&config)
+	err := parseYamlConfig(target, &config)
+	if err != nil {
+		panic(err)
 	}
 	return
+}
+
+func parseYamlConfig(filename string, config *Quant1XConfig) error {
+	configPreRun(config)
+	if api.FileExist(filename) {
+		dataBytes, err := os.ReadFile(filename)
+		if err != nil {
+			logger.Error(err)
+			return err
+		}
+		err = yaml.Unmarshal(dataBytes, config)
+		if err != nil {
+			logger.Error(err)
+			return err
+		}
+		config.BaseDir = strings.TrimSpace(config.BaseDir)
+		if len(config.BaseDir) > 0 {
+			quant1XConfigFilename = filename
+		}
+		configPostRun(config)
+	}
+	return nil
 }
 
 // 配置加载前执行

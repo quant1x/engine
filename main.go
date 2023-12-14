@@ -12,8 +12,10 @@ import (
 )
 
 var (
-	MinVersion = "1.0.0" // 版本号
-
+	MinVersion = "1.0.0" // 应用版本号
+	//TdxVersion    = "1.0.0" // gotdx版本号
+	//PandasVersion = "1.0.0" // pandas版本号
+	//TaLibVersion  = "1.0.0" // ta-lib版本号
 )
 
 var (

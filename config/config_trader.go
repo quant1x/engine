@@ -7,6 +7,17 @@ import (
 	"slices"
 )
 
+// 重置交易时段字段
+func fixTradingSession(config *Quant1XConfig) {
+	length := len(config.Trader.Strategies)
+	for i := 0; i < length; i++ {
+		tradeRule := &(config.Trader.Strategies[i])
+		tradeRule.Session = ParseTradingSession(tradeRule.Time)
+	}
+	config.Trader.Sell.Session = ParseTradingSession(config.Trader.Sell.Time)
+	config.Trader.CancelSession = ParseTradingSession(config.Trader.ReservedOfCancel)
+}
+
 // TraderRole 交易员角色
 type TraderRole int
 

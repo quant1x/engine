@@ -14,7 +14,6 @@ func fixTradingSession(config *Quant1XConfig) {
 		tradeRule := &(config.Trader.Strategies[i])
 		tradeRule.Session = ParseTradingSession(tradeRule.Time)
 	}
-	config.Trader.Sell.Session = ParseTradingSession(config.Trader.Sell.Time)
 	config.Trader.CancelSession = ParseTradingSession(config.Trader.ReservedOfCancel)
 }
 
@@ -43,7 +42,6 @@ type TraderParameter struct {
 	Role                 TraderRole     `name:"角色" yaml:"role" default:"3"`                                                           // 交易员角色, 默认是需要人工干预, 系统不做自动交易处理
 	ProxyUrl             string         `name:"代理URL" yaml:"proxy_url" default:"http://127.0.0.1:18168/qmt"`                          // 禁止使用公网地址
 	Strategies           []TradeRule    `name:"策略集合" yaml:"strategies"`                                                               // 策略集合
-	Sell                 TradeRule      `name:"卖出" yaml:"sell" default:""`                                                            // 卖出策略配置
 	ReservedOfCancel     string         `name:"撤单保留字段" yaml:"cancel" default:"09:15:00~09:19:59,09:25:00~11:29:59,13:00:00~14:59:59"` // 预览-可撤单配置
 	CancelSession        TradingSession `name:"撤单时段" yaml:"-" default:""`                                                             // 可撤单配置
 }
@@ -195,8 +193,8 @@ func GetTradeRule(code int) *TradeRule {
 	return nil
 }
 
-// GetSellRule 获取卖出规则
-func GetSellRule() TradeRule {
-	params := TraderConfig()
-	return params.Sell
-}
+//// GetSellRule 获取卖出规则
+//func GetSellRule() TradeRule {
+//	params := TraderConfig()
+//	return params.Sell
+//}

@@ -44,12 +44,6 @@ type Quant1XConfig struct {
 	Trader  TraderParameter  `yaml:"trader"`  // 预览交易参数
 }
 
-// RuntimeParameter 运行时配置参数
-type RuntimeParameter struct {
-	Pprof   PprofParameter          `yaml:"pprof"`
-	Crontab map[string]JobParameter `yaml:"crontab"`
-}
-
 // GetConfigFilename 获取配置文件路径
 func GetConfigFilename() string {
 	return quant1XConfigFilename
@@ -62,7 +56,7 @@ var (
 
 // LoadConfig 加载配置文件
 func LoadConfig() (config Quant1XConfig, found bool) {
-	_ = defaults.Set(&config)
+	configPreRun(&config)
 	for _, v := range listConfigFile {
 		filename, err := homedir.Expand(v)
 		if err != nil {
@@ -83,7 +77,7 @@ func LoadConfig() (config Quant1XConfig, found bool) {
 			if len(config.BaseDir) > 0 {
 				quant1XConfigFilename = filename
 			}
-			fixTradingSession(&config)
+			configPostRun(&config)
 			found = true
 			break
 		}
@@ -93,7 +87,7 @@ func LoadConfig() (config Quant1XConfig, found bool) {
 
 // ReadConfig 读取配置文件
 func ReadConfig(rootPath string) (config Quant1XConfig) {
-	_ = defaults.Set(&config)
+	configPreRun(&config)
 	target := GetConfigFilename()
 	if !api.FileExist(target) {
 		target = rootPath + "/" + configFilename
@@ -112,18 +106,20 @@ func ReadConfig(rootPath string) (config Quant1XConfig) {
 			logger.Error(err)
 			return
 		}
-		fixTradingSession(&config)
+		configPostRun(&config)
 	}
 	return
 }
 
-// 重置交易时段字段
-func fixTradingSession(config *Quant1XConfig) {
-	length := len(config.Trader.Strategies)
-	for i := 0; i < length; i++ {
-		tradeRule := &(config.Trader.Strategies[i])
-		tradeRule.Session = ParseTradingSession(tradeRule.Time)
+// 配置加载前执行
+func configPreRun(config *Quant1XConfig) {
+	err := defaults.Set(config)
+	if err != nil {
+		panic(err)
 	}
-	config.Trader.Sell.Session = ParseTradingSession(config.Trader.Sell.Time)
-	config.Trader.CancelSession = ParseTradingSession(config.Trader.ReservedOfCancel)
+}
+
+// 配置加载后执行
+func configPostRun(config *Quant1XConfig) {
+	fixTradingSession(config)
 }

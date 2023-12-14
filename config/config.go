@@ -61,33 +61,13 @@ func LoadConfig() (config Quant1XConfig, found bool) {
 		if err != nil {
 			continue
 		}
-		//if api.FileExist(filename) {
-		//	dataBytes, err := os.ReadFile(filename)
-		//	if err != nil {
-		//		logger.Error(err)
-		//		continue
-		//	}
-		//	err = yaml.Unmarshal(dataBytes, &config)
-		//	if err != nil {
-		//		logger.Error(err)
-		//		continue
-		//	}
-		//	config.BaseDir = strings.TrimSpace(config.BaseDir)
-		//	if len(config.BaseDir) > 0 {
-		//		quant1XConfigFilename = filename
-		//	}
-		//	configPostRun(&config)
-		//	found = true
-		//	break
-		//}
+		if !api.FileExist(filename) {
+			continue
+		}
 		err = parseYamlConfig(filename, &config)
 		if err != nil {
 			panic(err)
 		}
-		//config.BaseDir = strings.TrimSpace(config.BaseDir)
-		//if len(config.BaseDir) > 0 {
-		//	quant1XConfigFilename = filename
-		//}
 		found = true
 		break
 	}

@@ -30,6 +30,14 @@ func TestCountOrderFlag(t *testing.T) {
 	fmt.Println(v)
 }
 
+func TestGetOrderDateFirstBuy(t *testing.T) {
+	date := "2023-12-13"
+	strategyName := "S82"
+	direction := trader.BUY
+	v := FetchListForFirstPurchase(date, strategyName, direction)
+	fmt.Println(v)
+}
+
 type TestModel82 struct{}
 
 func (TestModel82) Code() models.ModelKind {

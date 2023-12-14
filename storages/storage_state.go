@@ -16,6 +16,10 @@ import (
 	"strings"
 )
 
+const (
+	orderStateFileExtension = ".done"
+)
+
 var (
 	orderConfig = config.OrderConfig()
 )
@@ -32,11 +36,17 @@ func state_filepath(state_date string) string {
 	return flagPath
 }
 
+// 获取状态文件前缀
+func state_prefix(state_date, qmtStrategyName string, direction trader.Direction) string {
+	qmtStrategyName = strings.ToLower(qmtStrategyName)
+	prefix := fmt.Sprintf("%s-%s-%s-%s", state_date, orderConfig.AccountId, qmtStrategyName, direction.Flag())
+	return prefix
+}
+
 // 订单状态文件前缀
 func order_state_prefix(state_date string, model models.Strategy, direction trader.Direction) string {
 	qmtStrategyName := models.QmtStrategyName(model)
-	qmtStrategyName = strings.ToLower(qmtStrategyName)
-	prefix := fmt.Sprintf("%s-%s-%s-%s", state_date, orderConfig.AccountId, qmtStrategyName, direction.Flag())
+	prefix := state_prefix(state_date, qmtStrategyName, direction)
 	return prefix
 }
 
@@ -67,11 +77,38 @@ func PushOrderState(date string, model models.Strategy, code string, direction t
 func CountStrategyOrders(date string, model models.Strategy, direction trader.Direction) int {
 	stateDate := trading.FixTradeDate(date, cache.CACHE_DATE)
 	orderFlagPath := state_filepath(stateDate)
-	prefix := order_state_prefix(stateDate, model, direction)
-	files, err := filepath.Glob(orderFlagPath + "/" + prefix + "-*.done")
+	filenamePrefix := order_state_prefix(stateDate, model, direction)
+	files, err := filepath.Glob(orderFlagPath + "/" + filenamePrefix + "-*.done")
 	if err != nil {
 		logger.Error(err)
 		return 0
 	}
 	return len(files)
+}
+
+// FetchListForFirstPurchase 获取指定日期交易的个股列表
+func FetchListForFirstPurchase(date, qmtStrategyName string, direction trader.Direction) []string {
+	stateDate := trading.FixTradeDate(date, cache.CACHE_DATE)
+	orderFlagPath := state_filepath(stateDate)
+	filenamePrefix := state_prefix(stateDate, qmtStrategyName, direction)
+	var list []string
+	prefix := orderFlagPath + "/" + filenamePrefix + "-"
+	pattern := prefix + "*" + orderStateFileExtension
+	files, err := filepath.Glob(pattern)
+	if err != nil {
+		logger.Error(err)
+		return list
+	}
+	for _, filename := range files {
+		after, found := strings.CutPrefix(filename, prefix)
+		if !found {
+			continue
+		}
+		before, found := strings.CutSuffix(after, orderStateFileExtension)
+		if !found {
+			continue
+		}
+		list = append(list, before)
+	}
+	return list
 }

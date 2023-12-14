@@ -155,14 +155,6 @@ func lazyLoadLocalPositions() {
 	}
 }
 
-//func PositionsAdd(direction Direction, model models.Strategy, securityCode string, price float64, volume int) {
-//	periodicOnce.Do(lazyLoadLocalPositions)
-//	position, ok := mapPositions.Get(securityCode)
-//	if direction == BUY {
-//
-//	}
-//}
-
 // SyncPositions 同步持仓
 func SyncPositions() {
 	periodicOnce.Do(lazyLoadLocalPositions)

@@ -98,7 +98,7 @@ func cookieCutterSell() {
 			// 卖出
 			isNeedToSell = true
 			//orderRemark = fmt.Sprintf("T%d-C", sellRule.HoldingPeriod)
-			orderRemark = "LASTDAY"
+			orderRemark = "LASTDAY:"
 			if floatProfitLossRatio > 0 {
 				orderRemark = orderRemark + ">0"
 			} else if floatProfitLossRatio == 0 {
@@ -120,7 +120,7 @@ func cookieCutterSell() {
 			if lastPrice > history.HIGH && lastPrice >= ma5 && floatProfitLossRatio > 0 {
 				// 卖出
 				isNeedToSell = true
-				orderRemark = ">H>MA5>0"
+				orderRemark = "PL:P>H>MA5>0"
 			}
 		}
 		// 18168

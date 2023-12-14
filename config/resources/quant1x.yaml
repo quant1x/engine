@@ -1,19 +1,46 @@
 basedir: ~/.quant1x # 数据路径
 trader: # 交易配置
-  head:
-    auto: true
-  tail:
-    auto: false
-  tick:
-    auto: true
+  account_id: "888xxxxxxx" # 账号
+  proxy_url: http://127.0.0.1:18168/qmt # miniQMT Proxy地址
+  stamp_duty_rate_for_buy: 0.0000 # 买入印花税率
+  stamp_duty_rate_for_sell: 0.0010 # 卖出印花税率
+  transfer_rate: 0.0006 # 过户费
+  commission_rate: 0.00025 # 佣金率
+  commission_min: 5.0000 # 佣金最低
+  position_ratio: 0.5000 # 买入总占比
+  keep_cash: 10000.00 # 预留备用金
+  buy_amount_max: 250000.00 # 最大可买金额
+  buy_amount_min: 1000.00 # 最小可买金额
+  strategies:
+    - id: 1
+      name: 1号策略
+      auto: false
+      flag: tick
+      time: 09:39:00~14:56:30  # 交易时间段
+      total: 6
+      fee_max: 20000.00
+      fee_min: 1000.00
+      sectors: [ "880847","880785","880884","880887","880880" ] # 行业龙头880847, 近期多板880785, 最近异动880884, 户数减少880887, 近期强势 880880
+      ignore_margin_trading: true # 是否剔除两融
+      holding_period: 1           # 持股周期, 默认是1天, 即T+1卖出
+      sell_strategy: 117          # 关联卖出策略
+    - id: 117
+      name: 一刀切卖出
+      auto: false
+      flag: sell
+      time: 09:50:00~09:50:99,10:50:00~10:50:99 # 交易时间段
+      total: 0 # 卖出策略中股票总是为0, 视为全部卖出
   sell:
     auto: false
-order: # 订单
-  top_n: 3 # 最多输出多少个标的
+  ask_time: 09:50:00~14:59:30 # 卖出时段
+order:
+  account_id: "8881247681" # 账号
+  top_n: 6         # 最多输出前多少名个股
   have_etf: false  # 是否包含ETF交易
 rules:
   sectors_filter: false                  # 是否启用板块过滤, false代表全市场扫描
-  sectors_top_n: 3                       # 最多关联多少个板块, 默认3个
+  sectors_top_n: 10                      # 板块排名前多少名
+  stock_top_n_in_sector: 50              # 板块内选前多少名
   price_min: 2.00                        # 2.00 股价最低
   price_max: 30.00                       # 30.00 股价最高
   maximum_increase_within_5_days: 20.00  # 20.00 5日累计最大涨幅
@@ -22,10 +49,17 @@ rules:
   turn_z_max: 200.00                     # 200.00 换手最大值
   turn_z_min: 1.50                       # 1.50 换手最小值
   open_rate_max: 2.00                    # 2.00 最大涨幅
-  open_rate_min: -1.00                   # -1.00 最低涨幅
+  open_rate_min: -2.00                   # -1.00 最低涨幅
   quantity_ratio_max: 61.80              # 61.80 最大开盘量比
-  quantity_ratio_min: 3.82               # 3.82 最小开盘量比
+  quantity_ratio_min: 1.00               # 3.82 最小开盘量比
   safety_score_min: 80                   # 80 通达信安全分最小值
-  volume_ratio_max: 1.8                  # 1.800 成交量放大不能超过1.8
-  capital_min: 2                         # 2 亿 流通股本最小值
+  volume_ratio_max: 3.82                 # 1.800 成交量放大不能超过1.8
+  capital_min: 1                         # 2 亿 流通股本最小值
   capital_max: 200                       # 200 亿 流通股本最大值
+runtime:
+  crontab:
+    realtime_kline:
+      enable: false
+    sell_117:
+      enable: true
+      trigger: '@every 1s'

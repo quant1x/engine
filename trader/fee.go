@@ -12,6 +12,42 @@ const (
 	UnknownVolume = int(1)     // 未知的股数
 )
 
+// 价格笼子
+//
+//	价格笼子是买卖股票申报价格限制的一种制度
+//	对于主板, 本次新增2%有效申报价格范围要求, 同时增加10个申报价格最小变动单位的安排
+//	A股最小交易变动单位是0.01元，10个也就是0.1元
+//	买入价取两者高值，卖出价取两者低值.
+const (
+	validDeclarationPriceRange  = float64(0.02) // 价格限制比例
+	minimumPriceFluctuationUnit = float64(0.10) // 价格浮动最大值
+)
+
+// CalculateBuyPriceLimit 计算合适的买入价格
+//
+//	价格笼子, +2%和+0.10哪个大
+//	目前使用, 当前价格+0.05
+func CalculateBuyPriceLimit(price float64) float64 {
+	// 价格笼子, +2%和+0.10哪个大
+	buyLimit := max(price*(1+validDeclarationPriceRange), price+minimumPriceFluctuationUnit)
+	// 当前价格+0.05
+	buyLimit = price + 0.05
+	// 最后修订价格
+	buyLimit = num.Decimal(buyLimit)
+	return buyLimit
+}
+
+// CalculateSellPriceLimit 计算卖出价格笼子
+func CalculateSellPriceLimit(price float64) float64 {
+	// 价格笼子, -2%和-0.10哪个小
+	buyLimit := min(price*(1-validDeclarationPriceRange), price-minimumPriceFluctuationUnit)
+	// 当前价格-0.01
+	buyLimit = price - 0.01
+	// 最后修订价格
+	buyLimit = num.Decimal(buyLimit)
+	return buyLimit
+}
+
 // 计算买入总费用
 //
 //	@param direction 交易方向

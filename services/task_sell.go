@@ -86,6 +86,7 @@ func cookieCutterSell() {
 			}
 			// 5.10.2 计算5日均线
 			ma5 := realtime.IncrementalMovingAverage(history.MA4, 5, lastPrice)
+			// 5.10.3 股价高于前一天最高价, 且站上5日线以及盈利的情况下
 			if lastPrice > history.HIGH && lastPrice >= ma5 && floatProfitLossRatio > 0 {
 				// 卖出
 				isNeedToSell = true

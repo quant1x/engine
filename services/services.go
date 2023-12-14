@@ -24,10 +24,11 @@ const (
 
 // 定时任务关键字
 const (
-	keyCronReset          = "clean"           // 定时清理重置数据状态
-	keyCronRealTimeKLine  = "realtime_kline"  //  实时更新K线
-	keyCronUpdateSnapshot = "update_snapshot" // 更新快照
-	keyCronUpdateAll      = "update_all"      // 更新全部数据, 包括基础数据和特征数据
+	keyCronReset            = "clean"           // 定时清理重置数据状态
+	keyCronRealTimeKLine    = "realtime_kline"  //  实时更新K线
+	keyCronUpdateSnapshot   = "update_snapshot" // 更新快照
+	keyCronUpdateAll        = "update_all"      // 更新全部数据, 包括基础数据和特征数据
+	keyCronCookieCutterSell = "sell_117"        // 一刀切卖出
 )
 
 func init() {
@@ -49,6 +50,12 @@ func init() {
 
 	// 更新全部
 	err = Register(keyCronUpdateAll, CronDefaultInterval, jobUpdateAll)
+	if err != nil {
+		logger.Fatal(err)
+	}
+
+	// 一刀切卖出
+	err = Register(keyCronCookieCutterSell, CronDefaultInterval, jobOneSizeFitsAllSales)
 	if err != nil {
 		logger.Fatal(err)
 	}

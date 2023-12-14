@@ -12,9 +12,26 @@ import (
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/num"
+	"gitee.com/quant1x/gox/runtime"
 	"slices"
 )
+
+// 任务 - 卖出117
+func jobOneSizeFitsAllSales() {
+	funcName, _, _ := runtime.Caller()
+	updateInRealTime, status := trading.CanUpdateInRealtime()
+	if updateInRealTime && IsTrading(status) {
+		cookieCutterSell()
+	} else {
+		if runtime.Debug() {
+			cookieCutterSell()
+		} else {
+			logger.Infof("%s, 非交易时段: %d", funcName, status)
+		}
+	}
+}
 
 // 一刀切卖出
 func cookieCutterSell() {

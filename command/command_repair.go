@@ -76,8 +76,11 @@ var CmdRepair = &cmder.Command{
 					handleRepairFeaturesWithPlugins(dates, plugins)
 				}
 			}
-
+		} else {
+			fmt.Println("Error: 非全部修复, 必须携带--features或--base")
+			_ = cmd.Usage()
 		}
+
 	},
 }
 

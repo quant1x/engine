@@ -48,6 +48,9 @@ var CmdUpdate = &cmder.Command{
 				}
 			}
 			handleUpdateFeaturesWithKeywords(cacheDate, featureDate, keywords...)
+		} else {
+			fmt.Println("Error: 非全部更新, 必须携带--features或--base")
+			_ = cmd.Usage()
 		}
 	},
 }

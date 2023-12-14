@@ -3,10 +3,8 @@ package main
 import (
 	"fmt"
 	"gitee.com/quant1x/engine/command"
-	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/runtime"
-	cmder "github.com/spf13/cobra"
 	_ "net/http/pprof"
 	"os"
 	"runtime/pprof"
@@ -14,8 +12,8 @@ import (
 )
 
 var (
-	MinVersion     = "1.0.0" // 版本号
-	strategyNumber = 0       // 策略编号
+	MinVersion = "1.0.0" // 版本号
+
 )
 
 var (
@@ -41,42 +39,12 @@ func main() {
 	command.UpdateApplicationVersion(MinVersion)
 	runtime.GoMaxProcs()
 
-	var rootCmd = &cmder.Command{
-		Use: command.Application,
-		Run: func(cmd *cmder.Command, args []string) {
-			//stat.SetAvx2Enabled(modules.CpuAvx2)
-			//runtime.GoMaxProcs(modules.CpuNum)
-			//var model models.Strategy
-			//switch strategyNumber {
-			//default:
-			//	model = new(strategies.ModelNo1)
-			//}
-			//fmt.Printf("策略模块: %s\n", model.Name())
-			//if strategies.CountDays > 0 {
-			//	tracker.BackTesting(strategies.CountDays, strategies.CountTopN)
-			//} else {
-			//	// 执行策略
-			//	barIndex := 1
-			//	models.ExecuteStrategy(model, &barIndex)
-			//}
-
-			model, err := models.CheckoutStrategy(strategyNumber)
-			if err != nil {
-				fmt.Println(err)
-				return
-			}
-			barIndex := 1
-			models.ExecuteStrategy(model, &barIndex)
-		},
+	// 命令字
+	cmd := command.GlobalFlags()
+	err = cmd.Execute()
+	if err != nil {
+		fmt.Println(err)
 	}
-	//rootCmd.Flags().IntVar(&strategyNumber, "strategy", models.DefaultStrategy, "策略编号")
-	rootCmd.Flags().IntVar(&strategyNumber, "strategy", models.DefaultStrategy, models.UsageStrategyList())
-	rootCmd.Flags().IntVar(&models.CountDays, "count", 0, "统计多少天")
-	rootCmd.Flags().IntVar(&models.CountTopN, "top", models.AllStockTopN(), "输出前排几名")
-	command.Init()
-	rootCmd.AddCommand(command.CmdVersion, command.CmdPrint, command.CmdBackTesting, command.CmdRule)
-	rootCmd.AddCommand(command.CmdUpdate, command.CmdRepair, command.CmdService)
-	_ = rootCmd.Execute()
 	fMem, err := os.Create(memProfile)
 	if err != nil {
 		logger.Fatal(err)

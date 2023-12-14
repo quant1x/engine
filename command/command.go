@@ -1,15 +1,58 @@
 package command
 
 import (
+	"fmt"
+	"gitee.com/quant1x/engine/models"
+	"gitee.com/quant1x/gox/runtime"
+	cmder "github.com/spf13/cobra"
 	"strings"
 )
 
-func Init() {
+var (
+	strategyNumber = 0 // 策略编号
+	businessDebug  = runtime.Debug()
+)
+
+var engineCmd = &cmder.Command{
+	Use: Application,
+	Run: func(cmd *cmder.Command, args []string) {
+		model, err := models.CheckoutStrategy(strategyNumber)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		barIndex := 1
+		models.ExecuteStrategy(model, &barIndex)
+	},
+	PersistentPreRun: func(cmd *cmder.Command, args []string) {
+		// 重置全局调试状态
+		runtime.SetDebug(businessDebug)
+	},
+	PersistentPostRun: func(cmd *cmder.Command, args []string) {
+		//
+	},
+}
+
+// 初始化全部子命令
+func initSubCommands() {
 	initPrint()
 	initRepair()
 	initUpdate()
 	initRule()
 	initBackTesting()
+}
+
+// GlobalFlags engine支持的全部命令
+func GlobalFlags() *cmder.Command {
+	initSubCommands()
+	engineCmd.Flags().IntVar(&strategyNumber, "strategy", models.DefaultStrategy, models.UsageStrategyList())
+	engineCmd.Flags().IntVar(&models.CountDays, "count", 0, "统计多少天")
+	engineCmd.Flags().IntVar(&models.CountTopN, "top", models.AllStockTopN(), "输出前排几名")
+	engineCmd.PersistentFlags().BoolVar(&businessDebug, "debug", businessDebug, "打开业务调试开关, 慎重使用!")
+	//command.Init()
+	engineCmd.AddCommand(CmdVersion, CmdPrint, CmdBackTesting, CmdRule)
+	engineCmd.AddCommand(CmdUpdate, CmdRepair, CmdService)
+	return engineCmd
 }
 
 func parseFlagError(err error) (flag, value string) {

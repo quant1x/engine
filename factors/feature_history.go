@@ -33,8 +33,10 @@ type History struct {
 	cache.DataSummary `dataframe:"-"`
 	Date              string         `name:"日期" dataframe:"date"`           // 日期, 数据落地的日期
 	Code              string         `name:"代码" dataframe:"code"`           // 代码
+	MA2               float64        `name:"2日均价" dataframe:"ma2"`          // 2日均价
 	MA3               float64        `name:"3日均价" dataframe:"ma3"`          // 3日均价
 	MV3               float64        `name:"3日均量" dataframe:"mv3"`          // 3日均量
+	MA4               float64        `name:"4日均价" dataframe:"ma4"`          // 4日均价
 	MA5               float64        `name:"5日均价" dataframe:"ma5"`          // 5日均价
 	MV5               float64        `name:"5日均量" dataframe:"mv5"`          // 5日均量
 	MA10              float64        `name:"10日均价" dataframe:"ma10"`        // 10日均价
@@ -103,12 +105,16 @@ func (this *History) Repair(code, cacheDate, featureDate string, complete bool) 
 		VOL    = df.ColAsNDArray("volume")
 		AMOUNT = df.ColAsNDArray("amount")
 	)
+	ma2 := MA(CLOSE, 2)
+	this.MA2 = utils.SeriesIndexOf(ma2, -1)
 	//MA3        float64 // 3日均价
 	ma3 := MA(CLOSE, 3)
 	this.MA3 = utils.SeriesIndexOf(ma3, -1)
 	//	MV3        float64 // 3日均量
 	mv3 := MA(VOL, 3)
 	this.MV3 = utils.SeriesIndexOf(mv3, -1)
+	ma4 := MA(CLOSE, 4)
+	this.MA4 = utils.SeriesIndexOf(ma4, -1)
 	//	MA5        float64 // 5日均价
 	ma5 := MA(CLOSE, 5)
 	this.MA5 = utils.SeriesIndexOf(ma5, -1)

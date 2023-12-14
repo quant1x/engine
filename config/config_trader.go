@@ -2,7 +2,6 @@ package config
 
 import (
 	"gitee.com/quant1x/engine/market"
-	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gox/api"
 	"slices"
@@ -49,10 +48,10 @@ func (t TraderParameter) TotalNumberOfTargets() int {
 
 // ResetPositionRatio 重置仓位占比
 func (t TraderParameter) ResetPositionRatio() {
-	remaining_ratio := 1.00
-	strategy_count := len(t.Strategies)
+	remainingRatio := 1.00
+	strategyCount := len(t.Strategies)
 	var unassignedStrategies []*TradeRule
-	for i := 0; i < strategy_count; i++ {
+	for i := 0; i < strategyCount; i++ {
 		v := &(t.Strategies[i])
 		if !v.BuyEnable() {
 			continue
@@ -69,14 +68,14 @@ func (t TraderParameter) ResetPositionRatio() {
 			v.Weight = 1.00
 		}
 		if v.Weight > 0 {
-			remaining_ratio -= v.Weight
+			remainingRatio -= v.Weight
 		} else {
 			unassignedStrategies = append(unassignedStrategies, v)
 		}
 	}
-	remaining_count := len(unassignedStrategies)
-	if remaining_ratio > 0 && remaining_count > 0 {
-		averageFundPercentage := remaining_ratio / float64(remaining_count)
+	remainingCount := len(unassignedStrategies)
+	if remainingRatio > 0 && remainingCount > 0 {
+		averageFundPercentage := remainingRatio / float64(remainingCount)
 		for _, v := range unassignedStrategies {
 			v.Weight = averageFundPercentage
 		}
@@ -98,10 +97,11 @@ type TradeRule struct {
 	Sectors             []string       `name:"板块" yaml:"sectors" default:""`                                   // 板块, 策略适用的板块列表, 默认板块为空, 即全部个股
 	IgnoreMarginTrading bool           `name:"剔除两融" yaml:"ignore_margin_trading" default:"true"`               // 剔除两融标的, 默认是剔除
 	HoldingPeriod       int            `name:"持仓周期" yaml:"holding_period" default:"1"`                         // 持仓周期, 默认为1天, 即T+1日触发117号策略
+	SellStrategy        int            `name:"卖出策略" yaml:"sell_strategy" default:"117"`                        // 卖出策略, 默认117
 }
 
 func (t *TradeRule) QmtStrategyName() string {
-	return models.QmtStrategyNameFromId(t.Id)
+	return QmtStrategyNameFromId(t.Id)
 }
 
 // Enable 策略是否有效
@@ -163,7 +163,6 @@ func (t *TradeRule) StockList() []string {
 			return true
 		})
 	}
-
 	return codes
 }
 

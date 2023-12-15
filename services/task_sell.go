@@ -49,6 +49,10 @@ func cookieCutterSell() {
 	if !trading.DateIsTradingDay() {
 		return
 	}
+	// 3.1 判断是否交易时段
+	if !sellRule.Session.IsTrading() {
+		return
+	}
 	// 4. 查询持仓可卖的股票
 	positions, err := trader.QueryHolding()
 	if err != nil {

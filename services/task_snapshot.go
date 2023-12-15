@@ -32,6 +32,5 @@ func realtimeUpdateSnapshot() {
 			logger.Errorf("err=%v, stack=%s", err, s)
 		}
 	}()
-	barIndex := barIndexUpdateSnapshot
-	models.SyncAllSnapshots(&barIndex)
+	models.SyncAllSnapshots(nil)
 }

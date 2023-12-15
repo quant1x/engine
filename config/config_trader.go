@@ -44,6 +44,10 @@ type TraderParameter struct {
 	Strategies           []TradeRule    `name:"策略集合" yaml:"strategies"`                                                               // 策略集合
 	ReservedOfCancel     string         `name:"撤单保留字段" yaml:"cancel" default:"09:15:00~09:19:59,09:25:00~11:29:59,13:00:00~14:59:59"` // 预览-可撤单配置
 	CancelSession        TradingSession `name:"撤单时段" yaml:"-" default:""`                                                             // 可撤单配置
+	//HeadOrderAuto        bool           `name:"早盘自动买入" yaml:"head_order_auto" default:"false"`                                        // 早盘订单是否自动买入
+	//TickOrderAuto        bool           `name:"盘中自动买入" yaml:"tick_order_auto" default:"false"`                                        // 盘中订单是否自动买入
+	//TailOrderAuto        bool           `name:"尾盘自动买入" yaml:"tail_order_auto" default:"false"`                                        // 尾盘订单是否自动买入
+	//SellOrderAuto        bool           `name:"自动卖出" yaml:"sell_order_auto" default:"false"`                                          // 是否自动卖出
 }
 
 // TotalNumberOfTargets 统计标的总数

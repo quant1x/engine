@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.8.0] - 2023-12-16
+### Changed
+- 新增黑白名单功能.
+- 增加文档.
+
 ## [0.7.9] - 2023-12-15
 ### Changed
 - 优化获取当前交易日期的方法.
@@ -606,8 +611,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.7.9...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.8.0...HEAD
 
+[0.8.0]: https://gitee.com/quant1x/engine/compare/v0.7.9...v0.8.0
 [0.7.9]: https://gitee.com/quant1x/engine/compare/v0.7.8...v0.7.9
 [0.7.8]: https://gitee.com/quant1x/engine/compare/v0.7.7...v0.7.8
 [0.7.7]: https://gitee.com/quant1x/engine/compare/v0.7.6...v0.7.7

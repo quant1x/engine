@@ -1,0 +1,25 @@
+!theme cerulean
+'更多皮肤 https://moretop.gitee.io/plantuml/themes
+skinparam backgroundColor #FCFCFC
+
+@startuml
+participant Stock as stock
+queue       TCPPool as pool
+control    IPPool as ips
+database   TDX as tdx
+stock -> stock: 业务处理
+stock -> pool: 获取一个connection
+pool -> pool: ping
+pool -> pool: ping成功, 从queue返回一个connect
+pool -->stock: 取得一个可用的connection
+pool -> pool: ping失败，创建新的链接
+pool -> ips: 获取一个ip地址
+ips --> ips: 顺序获取下一个可用ip，控制只有一个IP正在保持连接
+ips --> pool: 返回一个ip地址
+pool -> pool: 创建新的链接
+pool -->stock: 取得一个可用的connection
+stock ->tdx: 业务请求
+tdx-->stock: 业务返回
+stock ->pool: 返还connection
+pool->pool: 放入已打开的链接队列，进行心跳
+@enduml

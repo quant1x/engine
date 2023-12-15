@@ -1,0 +1,23 @@
+@startuml
+title A股 - 尾盘(14:57~15:01)
+robust "券商QMT" as QMT
+concise "量化策略工具" as Quant
+concise "数据引擎" as Stock
+scale 30 as 60 pixels
+
+@14:56:00
+Stock is 初始化
+
+@14:57:00
+Stock is "集合竞价收盘, 计算板块情绪"
+Quant is Waiting #LightCyan;line:Aqua
+QMT is Waiting
+
+@15:01:00
+Stock is "计算指数情绪"
+
+@15:02:00
+Stock is 缓存
+highlight 14:57:00 to 15:01:00 #Yellow;line:DimGrey : 数据采集阶段
+highlight 15:01:00 to 15:02:00 #Gold;line:DimGrey : 收盘缓存
+@enduml

@@ -1,0 +1,41 @@
+@startuml
+title A股 - 早盘(09:15~09:30)
+concise "券商QMT" as QMT
+concise "量化策略工具" as Quant
+concise "数据引擎" as Stock
+scale 60 as 60 pixels
+
+@09:13:00
+Stock is 数据初始化
+
+@09:15:00
+Stock is "集合竞价阶段"
+Quant is Waiting #LightCyan;line:Aqua
+QMT is Waiting
+
+@09:20:00
+Stock is "集合竞价开盘阶段, 计算个股竞价"
+
+@09:25:00
+Stock is 计算板块竞价.
+
+@09:27:31
+Stock is 缓存
+Quant is 计算情绪 #Gold
+
+@09:29:00
+Stock is ok
+
+@09:29:00
+Quant is 缓存
+Quant ->QMT: 输出订单
+
+@09:30:00
+QMT is 执行交易指令 #Red
+Quant is ok
+
+@09:31:00
+highlight 09:15:00 to 09:27:30 #Yellow;line:DimGrey : 数据采集阶段
+highlight 09:27:31 to 09:28:55 #Gold;line:DimGrey : 执行策略
+
+@enduml

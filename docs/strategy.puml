@@ -1,0 +1,34 @@
+@startuml
+
+start
+:加载板块列表;
+if (板块总数大于0) then (true)
+  :板块排序：金额和涨幅;
+  if (选出板块前5?) then (yes)
+    :前5板块内个股排序：涨幅和竞价换手，依赖Tick数据准确性;
+    if (板块内个股数等于0，最大3只?) then (no)
+      stop
+    endif
+
+    if (是否0策略?) then (yes)
+      :推荐不超过15只个股;
+    else (no)
+      :全量的个股列表;
+    endif
+    :执行策略x号策略,输出结果集;
+  endif
+else (false)
+endif
+
+if (曲线回归命中数等于0?) then (yes)
+  :返回;
+else
+  if (量能检测命中?) then (yes)
+    :置信区间检测;
+  else (no)
+  endif
+endif
+:输出结果集;
+stop
+
+@enduml

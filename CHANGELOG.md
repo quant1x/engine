@@ -4,6 +4,43 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.7.9] - 2023-12-15
+### Changed
+- 优化获取当前交易日期的方法.
+- 服务方式运行更新快照去掉进度条.
+- 屏蔽废弃的功能函数.
+- 新增漏掉的卖出时段判断.
+- 新增861号卖出策略编码ID的常量.
+- 拟增加各Flag订单的总开关.
+- 删除独立的卖出策略配置sell.
+- 更新依赖库版本.
+- 修订卖出策略中订单备注的信息.
+- 修订卖出策略中订单备注的信息.
+- 优化配置加载过程.
+- 修订一刀切的常量名, 用Sell替代Sale.
+- 修订配置文件的处理方法.
+- 修订最新的配置项的默认配置文件.
+- 拆分出runtime配置项, runtime参数增加debug开关, 默认关闭.
+- 收敛engine中的所有command, 目的是为了统一处理debug开关.
+- 调整卖出定时任务.
+- 细化卖出策略.
+- 增加增量计算均线的函数.
+- 合并部分小功能代码.
+- 删除废弃的代码.
+- 更新依赖库版本.
+- 新增价格笼子的计算方法.
+- 新增拉取指定日期内策略首次买入的个股列表.
+- 优化qmt策略名称的处理方法.
+- 优化和调整交易规则结构.
+- History增加2日均线和4日均线.
+- 调整去重函数.
+- 新增qmt相关的功能函数.
+- 交易时段新增判断是否当天的最后一个交易时段.
+- 交易规则增加持股周期字段.
+- 新增通过策略编码获取用于qmt系统的string类型的策略名, 大写S作为前缀后面跟quant1x系统的策略编码.
+- 修复code list可能存在变化的情况引发进度条异常的bug.
+- 更新pandas版本号.
+
 ## [0.7.8] - 2023-12-13
 ### Changed
 - 调整util工具包.
@@ -569,8 +606,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.7.8...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.7.9...HEAD
 
+[0.7.9]: https://gitee.com/quant1x/engine/compare/v0.7.8...v0.7.9
 [0.7.8]: https://gitee.com/quant1x/engine/compare/v0.7.7...v0.7.8
 [0.7.7]: https://gitee.com/quant1x/engine/compare/v0.7.6...v0.7.7
 [0.7.6]: https://gitee.com/quant1x/engine/compare/v0.7.5...v0.7.6

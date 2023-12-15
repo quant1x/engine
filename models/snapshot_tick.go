@@ -68,6 +68,7 @@ func SyncAllSnapshots(barIndex *int) {
 	if barIndex != nil {
 		bar = progressbar.NewBar(*barIndex, "执行["+modName+"]", count)
 	}
+	currentDate := trading.GetCurrentlyDay()
 	tdxApi := gotdx.GetTdxApi()
 	var snapshots []quotes.Snapshot
 	for start := 0; start < count; start += quotes.TDX_SECURITY_QUOTES_MAX {
@@ -86,7 +87,6 @@ func SyncAllSnapshots(barIndex *int) {
 		if len(subCodes) == 0 {
 			continue
 		}
-		currentDate := trading.GetCurrentlyDay()
 		for i := 0; i < quotes.DefaultRetryTimes; i++ {
 			list, err := tdxApi.GetSnapshot(subCodes)
 			if err != nil {

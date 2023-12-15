@@ -22,7 +22,8 @@ const (
 	ModelHousNo1             ModelKind = 1 << iota // 1号策略
 	ModelTail                                      // 尾盘策略
 	ModelTick                                      // 盘中实时策略
-	ModelOneSizeFitsAllSells ModelKind = 117       // 卖出策略一刀切(Panic sell, cookie-cutter, One size fits all sales)
+	ModelOneSizeFitsAllSells ModelKind = 117       // 卖出策略: 一刀切(Panic sell, cookie-cutter, One size fits all sales)
+	ModelNoShareHolding      ModelKind = 861       // 卖出策略: 不留了
 )
 
 const (

@@ -40,6 +40,7 @@ func initSubCommands() {
 	initUpdate()
 	initRule()
 	initBackTesting()
+	initSafes()
 }
 
 // GlobalFlags engine支持的全部命令
@@ -51,7 +52,7 @@ func GlobalFlags() *cmder.Command {
 	engineCmd.PersistentFlags().BoolVar(&businessDebug, "debug", businessDebug, "打开业务调试开关, 慎重使用!")
 	//command.Init()
 	engineCmd.AddCommand(CmdVersion, CmdPrint, CmdBackTesting, CmdRule)
-	engineCmd.AddCommand(CmdUpdate, CmdRepair, CmdService)
+	engineCmd.AddCommand(CmdUpdate, CmdRepair, CmdService, CmdSafes)
 	return engineCmd
 }
 

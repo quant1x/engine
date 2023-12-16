@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"gitee.com/quant1x/engine/command"
+	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/runtime"
 	_ "net/http/pprof"
@@ -25,12 +26,14 @@ var (
 
 // 更新日线数据工具
 func main() {
-	fCpu, err := os.Create(cpuProfile)
-	if err != nil {
-		logger.Fatal(err)
+	if config.PprofEnable() {
+		fCpu, err := os.Create(cpuProfile)
+		if err != nil {
+			logger.Fatal(err)
+		}
+		_ = pprof.StartCPUProfile(fCpu)
+		defer pprof.StopCPUProfile()
 	}
-	_ = pprof.StartCPUProfile(fCpu)
-	defer pprof.StopCPUProfile()
 	mainStart := time.Now()
 	defer func() {
 		runtime.CatchPanic()
@@ -43,14 +46,16 @@ func main() {
 
 	// 命令字
 	cmd := command.GlobalFlags()
-	err = cmd.Execute()
+	err := cmd.Execute()
 	if err != nil {
 		fmt.Println(err)
 	}
-	fMem, err := os.Create(memProfile)
-	if err != nil {
-		logger.Fatal(err)
+	if config.PprofEnable() {
+		fMem, err := os.Create(memProfile)
+		if err != nil {
+			logger.Fatal(err)
+		}
+		_ = pprof.WriteHeapProfile(fMem)
+		_ = fMem.Close()
 	}
-	_ = pprof.WriteHeapProfile(fMem)
-	_ = fMem.Close()
 }

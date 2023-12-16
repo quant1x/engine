@@ -8,13 +8,18 @@ import (
 )
 
 type PprofParameter struct {
-	Enable bool `yaml:"enable" default:"true"` // 是否开启go tool pprof
-	Port   int  `yaml:"port" default:"6060"`   // pprof web端口
+	Enable bool `yaml:"enable" default:"false"` // 是否开启go tool pprof
+	Port   int  `yaml:"port" default:"6060"`    // pprof web端口
+}
+
+// PprofEnable 获取配置中pprof开关
+func PprofEnable() bool {
+	return GlobalConfig.Runtime.Pprof.Enable
 }
 
 // StartPprof 启动性能分析工具
 func StartPprof() {
-	if !GlobalConfig.Runtime.Pprof.Enable {
+	if !PprofEnable() {
 		return
 	}
 	go func() {

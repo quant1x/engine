@@ -13,8 +13,8 @@ var (
 
 // CmdSafes 安全类-黑白名单
 var CmdSafes = &cmder.Command{
-	Use:     "safe",
-	Example: Application + " safe --code=sh000001 --type=1",
+	Use:     "safes",
+	Example: Application + " safes --code=sh000001 --type=1",
 	Short:   "黑白名单",
 	Run: func(cmd *cmder.Command, args []string) {
 		if len(safesSecurityCode) == 0 {

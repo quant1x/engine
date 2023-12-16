@@ -5,9 +5,9 @@ import (
 	cmder "github.com/spf13/cobra"
 )
 
-// CmdRule 规则
-var CmdRule = &cmder.Command{
-	Use:   "rule",
+// CmdRules 规则
+var CmdRules = &cmder.Command{
+	Use:   "rules",
 	Short: "规则",
 	Args: func(cmd *cmder.Command, args []string) error {
 		return nil
@@ -23,8 +23,8 @@ var CmdRule = &cmder.Command{
 	},
 }
 
-func initRule() {
-	//CmdRule.SetFlagErrorFunc(func(cmd *cmder.Command, err error) error {
+func initRules() {
+	//CmdRules.SetFlagErrorFunc(func(cmd *cmder.Command, err error) error {
 	//	args := os.Args[1:]
 	//	cmd_, flags, err := cmd.Parent().Find(args)
 	//	fmt.Println(cmd_, flags, err)

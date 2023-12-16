@@ -2,6 +2,7 @@ package storages
 
 import (
 	"fmt"
+	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/trader"
@@ -14,9 +15,6 @@ import (
 
 const (
 	filenameStockPool = "stock_pool.csv"
-	TimeStampMilli    = "2006-01-02 15:04:05.000"
-	TimeStampMicro    = "2006-01-02 15:04:05.000000"
-	TimeStampNano     = "2006-01-02 15:04:05.000000000"
 )
 
 var (
@@ -100,7 +98,7 @@ func stockPoolMerge(model models.Strategy, date string, orders []models.Statisti
 	}
 	count := len(localStockPool)
 	now := time.Now()
-	updateTime := now.Format(TimeStampMilli)
+	updateTime := now.Format(cache.TimeStampMilli)
 	for i := 0; i < count; i++ {
 		local := &(localStockPool[i])
 		// 1. 非当日的跳过

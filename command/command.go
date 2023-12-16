@@ -38,9 +38,9 @@ func initSubCommands() {
 	initPrint()
 	initRepair()
 	initUpdate()
-	initRule()
-	initBackTesting()
+	initRules()
 	initSafes()
+	initBackTesting()
 }
 
 // GlobalFlags engine支持的全部命令
@@ -50,8 +50,7 @@ func GlobalFlags() *cmder.Command {
 	engineCmd.Flags().IntVar(&models.CountDays, "count", 0, "统计多少天")
 	engineCmd.Flags().IntVar(&models.CountTopN, "top", models.AllStockTopN(), "输出前排几名")
 	engineCmd.PersistentFlags().BoolVar(&businessDebug, "debug", businessDebug, "打开业务调试开关, 慎重使用!")
-	//command.Init()
-	engineCmd.AddCommand(CmdVersion, CmdPrint, CmdBackTesting, CmdRule)
+	engineCmd.AddCommand(CmdVersion, CmdPrint, CmdBackTesting, CmdRules)
 	engineCmd.AddCommand(CmdUpdate, CmdRepair, CmdService, CmdSafes)
 	return engineCmd
 }

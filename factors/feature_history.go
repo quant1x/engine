@@ -49,6 +49,7 @@ type History struct {
 	Payloads          IncompleteData `name:"payloads" dataframe:"payloads"` // 扩展的半成品数据
 	Last              CompleteData   `name:"last" dataframe:"last"`         // 上一个交易日的数据
 	UpdateTime        string         `name:"更新时间" dataframe:"update_time"`  // 更新时间
+	State             uint64         `name:"样本状态" dataframe:"样本状态"`
 }
 
 func NewHistory(date, code string) *History {
@@ -143,18 +144,21 @@ func (this *History) Repair(code, cacheDate, featureDate string, complete bool) 
 		this.Payloads.No1.Repair(securityCode, cacheDate, featureDate, false)
 		this.Last.No1.Repair(securityCode, cacheDate, featureDate, true)
 	}
-	_ = code
 	_ = OPEN
-	_ = CLOSE
-	_ = HIGH
-	_ = LOW
-	_ = VOL
-	_ = complete
+	this.UpdateTime = GetTimestamp()
+	this.State |= this.Kind()
 }
 
 func (this *History) Increase(snapshot quotes.Snapshot) Feature {
 	//TODO implement me
 	panic("implement me")
+}
+
+func (this *History) ValidateSample() error {
+	if this.State > 0 {
+		return nil
+	}
+	return ErrInvalidFeatureSample
 }
 
 // GetMV5 前5日分钟均量

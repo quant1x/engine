@@ -46,6 +46,8 @@ type F10 struct {
 	Reduces              int     `name:"减持" dataframe:"Reduces"`                 // 公告-减持
 	Risk                 int     `name:"风险数" dataframe:"Risk"`                   // 公告-风险数
 	RiskKeywords         string  `name:"风险关键词" dataframe:"RiskKeywords"`         // 公告-风险关键词
+	UpdateTime           string  `name:"更新时间" dataframe:"update_time"`           // 更新时间
+	State                uint64  `name:"样本状态" dataframe:"样本状态"`
 }
 
 func NewF10(date, code string) *F10 {
@@ -114,8 +116,9 @@ func (this *F10) Update(code, cacheDate, featureDate string, complete bool) {
 	safetyScore := tdxweb.GetSafetyScore(securityCode)
 	this.SafetyScore = safetyScore
 
-	_ = code
-	_ = cacheDate
+	this.UpdateTime = GetTimestamp()
+	this.State |= this.Kind()
+
 	_ = complete
 }
 
@@ -139,14 +142,22 @@ func (this *F10) Repair(code, cacheDate, featureDate string, complete bool) {
 	//safetyScore := tdxweb.GetSafetyScore(securityCode)
 	//this.SafetyScore = safetyScore
 
-	_ = code
-	_ = cacheDate
+	this.UpdateTime = GetTimestamp()
+	this.State |= this.Kind()
+
 	_ = complete
 }
 
 func (this *F10) Increase(snapshot quotes.Snapshot) Feature {
 	//TODO implement me
 	panic("implement me")
+}
+
+func (this *F10) ValidateSample() error {
+	if this.State > 0 {
+		return nil
+	}
+	return ErrInvalidFeatureSample
 }
 
 func (this *F10) TurnZ(v any) float64 {

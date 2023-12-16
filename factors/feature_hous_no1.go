@@ -20,38 +20,38 @@ type HousNo1 struct {
 	MA20              float64 `dataframe:"ma20"`
 }
 
-func (f *HousNo1) GetDate() string {
+func (this *HousNo1) GetDate() string {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (f *HousNo1) GetSecurityCode() string {
+func (this *HousNo1) GetSecurityCode() string {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (f *HousNo1) Init(ctx context.Context, date string) error {
+func (this *HousNo1) Init(ctx context.Context, date string) error {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (f *HousNo1) Factory(date string, code string) Feature {
+func (this *HousNo1) Factory(date string, code string) Feature {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (f *HousNo1) FromHistory(history History) Feature {
+func (this *HousNo1) FromHistory(history History) Feature {
 	no1 := history.Payloads.No1
-	_ = api.Copy(f, &no1)
-	return f
+	_ = api.Copy(this, &no1)
+	return this
 }
 
-func (f *HousNo1) Update(code, cacheDate, featureDate string, complete bool) {
+func (this *HousNo1) Update(code, cacheDate, featureDate string, complete bool) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (f *HousNo1) Repair(code, cacheDate, featureDate string, complete bool) {
+func (this *HousNo1) Repair(code, cacheDate, featureDate string, complete bool) {
 	securityCode := proto.CorrectSecurityCode(code)
 	tradeDate := trading.FixTradeDate(featureDate)
 	klines := base.CheckoutKLines(securityCode, tradeDate)
@@ -72,19 +72,26 @@ func (f *HousNo1) Repair(code, cacheDate, featureDate string, complete bool) {
 		offset = 0
 	}
 	ma5 := MA(CLOSE, 5-offset)
-	f.MA5 = utils.SeriesIndexOf(ma5, -1)
+	this.MA5 = utils.SeriesIndexOf(ma5, -1)
 	ma10 := MA(CLOSE, 10-offset)
-	f.MA10 = utils.SeriesIndexOf(ma10, -1)
+	this.MA10 = utils.SeriesIndexOf(ma10, -1)
 	ma20 := MA(CLOSE, 20-offset)
-	f.MA20 = utils.SeriesIndexOf(ma20, -1)
+	this.MA20 = utils.SeriesIndexOf(ma20, -1)
 	_ = df
 }
 
-func (f *HousNo1) Increase(snapshot quotes.Snapshot) Feature {
+func (this *HousNo1) Increase(snapshot quotes.Snapshot) Feature {
 	tmp := HousNo1{}
 
-	tmp.MA5 = (f.MA5*4 + snapshot.Price) / 5
-	tmp.MA10 = (f.MA10*9 + snapshot.Price) / 10
-	tmp.MA20 = (f.MA20*19 + snapshot.Price) / 20
+	tmp.MA5 = (this.MA5*4 + snapshot.Price) / 5
+	tmp.MA10 = (this.MA10*9 + snapshot.Price) / 10
+	tmp.MA20 = (this.MA20*19 + snapshot.Price) / 20
 	return &tmp
+}
+
+func (this *HousNo1) ValidateSample() error {
+	if this.MA20 > 0 {
+		return nil
+	}
+	return ErrInvalidFeatureSample
 }

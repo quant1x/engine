@@ -1,8 +1,10 @@
 package factors
 
 import (
+	"errors"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/gotdx/quotes"
+	"time"
 )
 
 // Trait 基础的特性
@@ -14,6 +16,8 @@ type Trait interface {
 	// Increase 增量计算
 	//	用快照增量计算特征
 	Increase(snapshot quotes.Snapshot) Feature
+	// ValidateSample 验证样本
+	ValidateSample() error
 }
 
 // Feature 特征
@@ -52,3 +56,15 @@ var (
 		FeatureHousNo2: cache.Summary(FeatureHousNo2, "", "2号策略数据", cache.DefaultDataProvider),
 	}
 )
+
+var (
+	ErrInvalidFeatureSample = errors.New("无效的特征数据样本")
+)
+
+// GetTimestamp 时间戳
+//
+//	格式: YYYY-MM-DD hh:mm:ss.SSS
+func GetTimestamp() string {
+	now := time.Now()
+	return now.Format(cache.TimeStampMilli)
+}

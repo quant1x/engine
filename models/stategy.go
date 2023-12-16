@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/config"
-	"gitee.com/quant1x/gox/util/treemap"
+	"gitee.com/quant1x/gox/concurrent"
 	"golang.org/x/exp/maps"
 	"slices"
 	"sync"
@@ -63,7 +63,7 @@ type Strategy interface {
 	// Sort 排序
 	Sort([]QuoteSnapshot) SortedStatus
 	// Evaluate 评估 日线数据
-	Evaluate(securityCode string, result *treemap.Map)
+	Evaluate(securityCode string, result *concurrent.TreeMap[string, ResultInfo])
 }
 
 // QmtStrategyName 获取用于QMT系统的策略名称

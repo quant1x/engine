@@ -6,7 +6,7 @@ import (
 	"gitee.com/quant1x/engine/smart"
 	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/gotdx/securities"
-	"gitee.com/quant1x/gox/util/treemap"
+	"gitee.com/quant1x/gox/concurrent"
 	. "gitee.com/quant1x/pandas/formula"
 	"gitee.com/quant1x/pandas/stat"
 )
@@ -47,10 +47,11 @@ func (m ModelNo1) Filter(snapshot models.QuoteSnapshot) bool {
 }
 
 func (m ModelNo1) Sort(snapshots []models.QuoteSnapshot) models.SortedStatus {
+	_ = snapshots
 	return models.SortDefault
 }
 
-func (m ModelNo1) Evaluate(securityCode string, result *treemap.Map) {
+func (m ModelNo1) Evaluate(securityCode string, result *concurrent.TreeMap[string, models.ResultInfo]) {
 	history := smart.GetL5History(securityCode)
 	if history == nil {
 		return

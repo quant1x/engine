@@ -3,9 +3,9 @@ package models
 import (
 	"fmt"
 	"gitee.com/quant1x/engine/market"
+	"gitee.com/quant1x/gox/concurrent"
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/tags"
-	"gitee.com/quant1x/gox/util/treemap"
 	"gitee.com/quant1x/pkg/tablewriter"
 	"os"
 )
@@ -20,7 +20,7 @@ func ExecuteStrategy(model Strategy, barIndex *int) {
 	allCodes := market.GetCodeList()
 	count := len(allCodes)
 	bar := progressbar.NewBar(*barIndex, "执行["+model.Name()+"]", count)
-	results := treemap.NewWithStringComparator()
+	results := concurrent.NewTreeMap[string, ResultInfo]()
 	for _, securityCode := range allCodes {
 		// 此处可以增加过滤规则
 		model.Evaluate(securityCode, results)
@@ -30,9 +30,8 @@ func ExecuteStrategy(model Strategy, barIndex *int) {
 	fmt.Println()
 	table := tablewriter.NewWriter(os.Stdout)
 	table.SetHeader(tags.GetHeadersByTags(ResultInfo{}))
-	results.Each(func(key interface{}, value interface{}) {
-		row := value.(ResultInfo)
-		table.Append(tags.GetValuesByTags(row))
+	results.Each(func(key string, value ResultInfo) {
+		table.Append(tags.GetValuesByTags(value))
 	})
 	table.Render()
 }

@@ -4,7 +4,18 @@ import (
 	"gitee.com/quant1x/pandas/stat"
 )
 
+func IndexReverse(s stat.Series) stat.Series {
+	var indexes []int
+	rows := s.Len()
+	s.Apply(func(idx int, v any) {
+		indexes = append(indexes, rows-idx)
+	})
+	return stat.NewSeries(indexes...)
+}
+
 // SeriesIndexOf 获取序列第n索引的值
+//
+// Deprecated: 推荐使用 Float64IndexOf
 func SeriesIndexOf(s stat.Series, n int) float64 {
 	v := s.IndexOf(n)
 	return stat.AnyToFloat64(v)
@@ -16,9 +27,19 @@ func SeriesChangeRate(base, v stat.Series) stat.Series {
 	return chg
 }
 
+func StringIndexOf(s stat.Series, n int) string {
+	v := s.IndexOf(n)
+	return stat.AnyToString(v)
+}
+
 func BoolIndexOf(s stat.Series, n int) bool {
 	v := s.IndexOf(n)
 	return stat.AnyToBool(v)
+}
+
+func Float64IndexOf(s stat.Series, n int) float64 {
+	v := s.IndexOf(n)
+	return stat.AnyToFloat64(v)
 }
 
 func IntegerIndexOf(s stat.Series, n int) int {
@@ -26,16 +47,7 @@ func IntegerIndexOf(s stat.Series, n int) int {
 	return int(stat.AnyToInt64(v))
 }
 
-func StringIndexOf(s stat.Series, n int) string {
+func Int64IndexOf(s stat.Series, n int) int64 {
 	v := s.IndexOf(n)
-	return stat.AnyToString(v)
-}
-
-func IndexReverse(s stat.Series) stat.Series {
-	var indexes []int
-	rows := s.Len()
-	s.Apply(func(idx int, v any) {
-		indexes = append(indexes, rows-idx)
-	})
-	return stat.NewSeries(indexes...)
+	return stat.AnyToInt64(v)
 }

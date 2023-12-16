@@ -4,13 +4,17 @@ import (
 	"fmt"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/gox/runtime"
+	"gitee.com/quant1x/pandas/stat"
 	cmder "github.com/spf13/cobra"
+	goruntime "runtime"
 	"strings"
 )
 
 var (
-	strategyNumber = 0 // 策略编号
-	businessDebug  = runtime.Debug()
+	strategyNumber      = 0                      // 策略编号
+	businessDebug       = runtime.Debug()        // 业务调试开关
+	cpuAvx2        bool = false                  // AVX2加速状态
+	cpuNum         int  = goruntime.NumCPU() / 2 // cpu数量
 )
 
 var engineCmd = &cmder.Command{
@@ -27,6 +31,10 @@ var engineCmd = &cmder.Command{
 	PersistentPreRun: func(cmd *cmder.Command, args []string) {
 		// 重置全局调试状态
 		runtime.SetDebug(businessDebug)
+		// AVX2 加速
+		stat.SetAvx2Enabled(cpuAvx2)
+		// 设置CPU最大核数
+		runtime.GoMaxProcs(cpuNum)
 	},
 	PersistentPostRun: func(cmd *cmder.Command, args []string) {
 		//
@@ -50,6 +58,8 @@ func GlobalFlags() *cmder.Command {
 	engineCmd.Flags().IntVar(&models.CountDays, "count", 0, "统计多少天")
 	engineCmd.Flags().IntVar(&models.CountTopN, "top", models.AllStockTopN(), "输出前排几名")
 	engineCmd.PersistentFlags().BoolVar(&businessDebug, "debug", businessDebug, "打开业务调试开关, 慎重使用!")
+	engineCmd.PersistentFlags().BoolVar(&cpuAvx2, "avx2", false, "Avx2 加速开关")
+	engineCmd.PersistentFlags().IntVar(&cpuNum, "cpu", cpuNum, "设置CPU最大核数")
 	engineCmd.AddCommand(CmdVersion, CmdPrint, CmdBackTesting, CmdRules)
 	engineCmd.AddCommand(CmdUpdate, CmdRepair, CmdService, CmdSafes)
 	return engineCmd

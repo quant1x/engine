@@ -11,6 +11,9 @@ const (
 	INDEX_DATE               = "2006-01-02" // 索引日期格式
 	TDX_DATE                 = "20060102"   // 通达信日期
 	YearOnly                 = "2006"       // 仅年份
+	TimeStampMilli           = "2006-01-02 15:04:05.000"
+	TimeStampMicro           = "2006-01-02 15:04:05.000000"
+	TimeStampNano            = "2006-01-02 15:04:05.000000000"
 )
 
 func Today() string {

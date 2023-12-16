@@ -12,11 +12,11 @@ import (
 	"time"
 )
 
+// 系统构建时传入的值
+// go build -ldflags "-X 'main.MinVersion=${version}'"
+
 var (
 	MinVersion = "1.0.0" // 应用版本号
-	//TdxVersion    = "1.0.0" // gotdx版本号
-	//PandasVersion = "1.0.0" // pandas版本号
-	//TaLibVersion  = "1.0.0" // ta-lib版本号
 )
 
 var (
@@ -45,8 +45,8 @@ func main() {
 	runtime.GoMaxProcs()
 
 	// 命令字
-	cmd := command.GlobalFlags()
-	err := cmd.Execute()
+	rootCommand := command.GlobalFlags()
+	err := rootCommand.Execute()
 	if err != nil {
 		fmt.Println(err)
 	}

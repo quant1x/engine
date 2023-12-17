@@ -39,8 +39,12 @@ type History struct {
 	MA4               float64        `name:"4日均价" dataframe:"ma4"`          // 4日均价
 	MA5               float64        `name:"5日均价" dataframe:"ma5"`          // 5日均价
 	MV5               float64        `name:"5日均量" dataframe:"mv5"`          // 5日均量
+	MA9               float64        `name:"9日均价" dataframe:"ma9"`          // 9日均价
+	MV9               float64        `name:"9日均量" dataframe:"mv9"`          // 9日均量
 	MA10              float64        `name:"10日均价" dataframe:"ma10"`        // 10日均价
 	MV10              float64        `name:"10日均量" dataframe:"mv10"`        // 10日均量
+	MA19              float64        `name:"19日均价" dataframe:"ma19"`        // 19日均价
+	MV19              float64        `name:"19日均量" dataframe:"mv19"`        // 19日均量
 	MA20              float64        `name:"20日均价" dataframe:"ma20"`        // 20日均价
 	MV20              float64        `name:"20日均量" dataframe:"mv20"`        // 20日均量
 	HIGH              float64        `name:"最高" dataframe:"high"`           // 昨日最高
@@ -122,12 +126,24 @@ func (this *History) Repair(code, cacheDate, featureDate string, complete bool) 
 	//	MV5        float64 // 5日均量
 	mv5 := MA(VOL, 5)
 	this.MV5 = utils.SeriesIndexOf(mv5, -1)
+	//	MA9       float64 // 9日均价
+	ma9 := MA(CLOSE, 9)
+	this.MA9 = utils.SeriesIndexOf(ma9, -1)
+	//	MV9       float64 // 9日均量
+	mv9 := MA(VOL, 9)
+	this.MV9 = utils.SeriesIndexOf(mv9, -1)
 	//	MA10       float64 // 10日均价
 	ma10 := MA(CLOSE, 10)
 	this.MA10 = utils.SeriesIndexOf(ma10, -1)
 	//	MV10       float64 // 10日均量
 	mv10 := MA(VOL, 10)
 	this.MV10 = utils.SeriesIndexOf(mv10, -1)
+	//	MA19       float64 // 19日均价
+	ma19 := MA(CLOSE, 19)
+	this.MA19 = utils.SeriesIndexOf(ma19, -1)
+	//	MV19       float64 // 19日均量
+	mv19 := MA(VOL, 19)
+	this.MV19 = utils.SeriesIndexOf(mv19, -1)
 	//	MA20       float64 // 20日均价
 	ma20 := MA(CLOSE, 20)
 	this.MA20 = utils.SeriesIndexOf(ma20, -1)

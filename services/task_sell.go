@@ -100,7 +100,6 @@ func cookieCutterSell() {
 		if isFinal && sellRule.Session.IsTodayLastSession() {
 			// 卖出
 			isNeedToSell = true
-			//orderRemark = fmt.Sprintf("T%d-C", sellRule.HoldingPeriod)
 			orderRemark = "LASTDAY:"
 			if floatProfitLossRatio > 0 {
 				orderRemark = orderRemark + ">0"

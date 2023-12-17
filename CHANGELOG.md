@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.8.1] - 2023-12-17
+### Changed
+- 调整获取最新数据的行数,明确数据类型.
+- History增加9和19日的均价、均量线.
+- 调整策略Strategy的评估接口, result参数改用泛型treemap.
+- 增加使用go build -ldflags构建时传入的版本号的提示性注释.
+- 新增命令行永久flag, avx2加速和cpu核数控制.
+- 调整series函数.
+- 增加交易时段测试代码.
+- 性能分析默认调整为关闭状态.
+- 特征数据增加验证样本的方法.
+- 移除时间戳格式.
+- 增加3个可能用到的时间戳格式.
+
 ## [0.8.0] - 2023-12-16
 ### Changed
 - 新增黑白名单功能.
@@ -611,8 +625,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.8.0...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.8.1...HEAD
 
+[0.8.1]: https://gitee.com/quant1x/engine/compare/v0.8.0...v0.8.1
 [0.8.0]: https://gitee.com/quant1x/engine/compare/v0.7.9...v0.8.0
 [0.7.9]: https://gitee.com/quant1x/engine/compare/v0.7.8...v0.7.9
 [0.7.8]: https://gitee.com/quant1x/engine/compare/v0.7.7...v0.7.8

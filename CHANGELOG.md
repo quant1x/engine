@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.8.2] - 2023-12-18
+### Changed
+- 优化部分代码.
+- 删除废弃的代码.
+- 更新依赖库版本.
+- 买入和卖出检查是否黑白名单.
+- 删除废弃的代码.
+- 简化一刀切卖出规则.
+- 更新依赖库版本, gotdx的snapshot增加本地时间戳字段, 用以观察本地时钟和服务器的差距.
+- 修订编译脚本, 从go.mod中读取module.
+- 去除多余的echo.
+
 ## [0.8.1] - 2023-12-17
 ### Changed
 - 调整获取最新数据的行数,明确数据类型.
@@ -625,8 +637,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.8.1...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.8.2...HEAD
 
+[0.8.2]: https://gitee.com/quant1x/engine/compare/v0.8.1...v0.8.2
 [0.8.1]: https://gitee.com/quant1x/engine/compare/v0.8.0...v0.8.1
 [0.8.0]: https://gitee.com/quant1x/engine/compare/v0.7.9...v0.8.0
 [0.7.9]: https://gitee.com/quant1x/engine/compare/v0.7.8...v0.7.9

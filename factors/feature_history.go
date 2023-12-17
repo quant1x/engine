@@ -47,8 +47,12 @@ type History struct {
 	MV19              float64        `name:"19日均量" dataframe:"mv19"`        // 19日均量
 	MA20              float64        `name:"20日均价" dataframe:"ma20"`        // 20日均价
 	MV20              float64        `name:"20日均量" dataframe:"mv20"`        // 20日均量
+	OPEN              float64        `name:"开盘" dataframe:"open"`           // 昨日开盘
+	CLOSE             float64        `name:"收盘" dataframe:"close"`          // 昨日收盘
 	HIGH              float64        `name:"最高" dataframe:"high"`           // 昨日最高
 	LOW               float64        `name:"最低" dataframe:"low"`            // 昨日最低
+	VOL               float64        `name:"成交量" dataframe:"vol"`           // 昨日成交量
+	AMOUNT            float64        `name:"成交额" dataframe:"amount"`        // 昨日成交额
 	AveragePrice      float64        `name:"均价" dataframe:"average_price"`  // 昨日均价
 	Payloads          IncompleteData `name:"payloads" dataframe:"payloads"` // 扩展的半成品数据
 	Last              CompleteData   `name:"last" dataframe:"last"`         // 上一个交易日的数据
@@ -150,8 +154,16 @@ func (this *History) Repair(code, cacheDate, featureDate string, complete bool) 
 	//	MV20       float64 // 20日均量
 	mv20 := MA(VOL, 20)
 	this.MV20 = utils.Float64IndexOf(mv20, -1)
+	//OPEN              float64        `name:"开盘" dataframe:"open"`           // 开盘价
+	this.OPEN = utils.Float64IndexOf(OPEN, -1)
+	//CLOSE             float64        `name:"收盘" dataframe:"close"`          // 收盘价
+	this.CLOSE = utils.Float64IndexOf(CLOSE, -1)
 	this.HIGH = utils.Float64IndexOf(HIGH, -1)
 	this.LOW = utils.Float64IndexOf(LOW, -1)
+	//VOL               float64        `name:"成交量" dataframe:"vol"`           // 昨日成交量
+	this.VOL = utils.Float64IndexOf(VOL, -1)
+	//AMOUNT            float64        `name:"成交额" dataframe:"amount"`        // 昨日成交额
+	this.AMOUNT = utils.Float64IndexOf(AMOUNT, -1)
 	ap := AMOUNT.Div(VOL)
 	this.AveragePrice = utils.Float64IndexOf(ap, -1)
 	// 扩展数据 修复

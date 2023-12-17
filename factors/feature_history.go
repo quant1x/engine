@@ -111,49 +111,49 @@ func (this *History) Repair(code, cacheDate, featureDate string, complete bool) 
 		AMOUNT = df.ColAsNDArray("amount")
 	)
 	ma2 := MA(CLOSE, 2)
-	this.MA2 = utils.SeriesIndexOf(ma2, -1)
+	this.MA2 = utils.Float64IndexOf(ma2, -1)
 	//MA3        float64 // 3日均价
 	ma3 := MA(CLOSE, 3)
-	this.MA3 = utils.SeriesIndexOf(ma3, -1)
+	this.MA3 = utils.Float64IndexOf(ma3, -1)
 	//	MV3        float64 // 3日均量
 	mv3 := MA(VOL, 3)
-	this.MV3 = utils.SeriesIndexOf(mv3, -1)
+	this.MV3 = utils.Float64IndexOf(mv3, -1)
 	ma4 := MA(CLOSE, 4)
-	this.MA4 = utils.SeriesIndexOf(ma4, -1)
+	this.MA4 = utils.Float64IndexOf(ma4, -1)
 	//	MA5        float64 // 5日均价
 	ma5 := MA(CLOSE, 5)
-	this.MA5 = utils.SeriesIndexOf(ma5, -1)
+	this.MA5 = utils.Float64IndexOf(ma5, -1)
 	//	MV5        float64 // 5日均量
 	mv5 := MA(VOL, 5)
-	this.MV5 = utils.SeriesIndexOf(mv5, -1)
+	this.MV5 = utils.Float64IndexOf(mv5, -1)
 	//	MA9       float64 // 9日均价
 	ma9 := MA(CLOSE, 9)
-	this.MA9 = utils.SeriesIndexOf(ma9, -1)
+	this.MA9 = utils.Float64IndexOf(ma9, -1)
 	//	MV9       float64 // 9日均量
 	mv9 := MA(VOL, 9)
-	this.MV9 = utils.SeriesIndexOf(mv9, -1)
+	this.MV9 = utils.Float64IndexOf(mv9, -1)
 	//	MA10       float64 // 10日均价
 	ma10 := MA(CLOSE, 10)
-	this.MA10 = utils.SeriesIndexOf(ma10, -1)
+	this.MA10 = utils.Float64IndexOf(ma10, -1)
 	//	MV10       float64 // 10日均量
 	mv10 := MA(VOL, 10)
-	this.MV10 = utils.SeriesIndexOf(mv10, -1)
+	this.MV10 = utils.Float64IndexOf(mv10, -1)
 	//	MA19       float64 // 19日均价
 	ma19 := MA(CLOSE, 19)
-	this.MA19 = utils.SeriesIndexOf(ma19, -1)
+	this.MA19 = utils.Float64IndexOf(ma19, -1)
 	//	MV19       float64 // 19日均量
 	mv19 := MA(VOL, 19)
-	this.MV19 = utils.SeriesIndexOf(mv19, -1)
+	this.MV19 = utils.Float64IndexOf(mv19, -1)
 	//	MA20       float64 // 20日均价
 	ma20 := MA(CLOSE, 20)
-	this.MA20 = utils.SeriesIndexOf(ma20, -1)
+	this.MA20 = utils.Float64IndexOf(ma20, -1)
 	//	MV20       float64 // 20日均量
 	mv20 := MA(VOL, 20)
-	this.MV20 = utils.SeriesIndexOf(mv20, -1)
-	this.HIGH = utils.SeriesIndexOf(HIGH, -1)
-	this.LOW = utils.SeriesIndexOf(LOW, -1)
+	this.MV20 = utils.Float64IndexOf(mv20, -1)
+	this.HIGH = utils.Float64IndexOf(HIGH, -1)
+	this.LOW = utils.Float64IndexOf(LOW, -1)
 	ap := AMOUNT.Div(VOL)
-	this.AveragePrice = utils.SeriesIndexOf(ap, -1)
+	this.AveragePrice = utils.Float64IndexOf(ap, -1)
 	// 扩展数据 修复
 	{
 		// hous_no1

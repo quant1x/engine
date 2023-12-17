@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.8.3] - 2023-12-18
+### Changed
+- History增加昨日开盘,收盘,成交量和成交额.
+
 ## [0.8.2] - 2023-12-18
 ### Changed
 - 优化部分代码.
@@ -637,8 +641,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.8.2...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.8.3...HEAD
 
+[0.8.3]: https://gitee.com/quant1x/engine/compare/v0.8.2...v0.8.3
 [0.8.2]: https://gitee.com/quant1x/engine/compare/v0.8.1...v0.8.2
 [0.8.1]: https://gitee.com/quant1x/engine/compare/v0.8.0...v0.8.1
 [0.8.0]: https://gitee.com/quant1x/engine/compare/v0.7.9...v0.8.0

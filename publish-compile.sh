@@ -44,7 +44,7 @@ function compile() {
     echo "   GOOS: ${GOOS}"
     echo " GOARCH: ${GOARCH}"
     echo "正在编译应用:${app} => ${BIN}/${app}${EXT}..."
-    env GOOS=$GOOS GOARCH=$GOARCH go build -ldflags "-s -w -X 'main.MinVersion=${version}'" -o ${BIN}/${app}${EXT} gitee.com/quant1x/engine
+    env GOOS=$GOOS GOARCH=$GOARCH go build -ldflags "-s -w -X 'main.MinVersion=${version}'" -o ${BIN}/${app}${EXT} ${module}
     echo "正在编译应用:${app} => ${BIN}/${app}${EXT}...OK"
 }
 

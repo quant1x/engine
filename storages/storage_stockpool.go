@@ -173,13 +173,19 @@ func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool
 			if v.StrategyCode == model.Code() && v.OrderStatus == 1 {
 				numberOfStrategy += 1
 				securityCode := v.Code
+				// 1. 检查是否禁止买入
+				if !trader.CheckForBuy(securityCode) {
+					// 禁止卖出, 则返回
+					logger.Infof("%s[%d]: %s ProhibitForSelling", model.Name(), model.Code(), securityCode)
+					continue
+				}
 				price := v.Buy
-				// 1. 检查买入已完成状态
+				// 2. 检查买入已完成状态
 				ok := CheckOrderState(date, model, securityCode, direction)
 				if ok {
 					continue
 				}
-				// 2. 首先推送订单已完成状态
+				// 3. 首先推送订单已完成状态
 				_ = PushOrderState(date, model, securityCode, direction)
 				if !trading.DateIsTradingDay() {
 					// 非交易日
@@ -189,22 +195,22 @@ func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool
 					// 非交易时段
 					continue
 				}
-				// 3. 执行买入
+				// 4. 执行买入
 				fund := trader.CalculateAvailableFund(tradeRule)
 				if fund <= trader.InvalidFee {
 					continue
 				}
-				// 4. 计算买入费用
+				// 5. 计算买入费用
 				tradeFee := trader.EvaluateFeeForBuy(securityCode, fund, price)
 				if tradeFee.Volume <= trader.InvalidVolume {
 					continue
 				}
-				// 5. 执行买入
+				// 6. 执行买入
 				orderId, err := trader.PlaceOrder(direction, model, securityCode, tradeFee.Price, tradeFee.Volume)
 				if err != nil {
 					continue
 				}
-				// 6. 保存订单ID
+				// 7. 保存订单ID
 				v.OrderId = orderId
 			}
 		}

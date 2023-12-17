@@ -71,9 +71,14 @@ func cookieCutterSell() {
 		if position.CanUseVolume < 1 {
 			continue
 		}
-		// 6.2 对齐证券代码
+		// 6.2 对齐证券代码, 检查黑白名单
 		stockCode := position.StockCode
 		securityCode := proto.CorrectSecurityCode(stockCode)
+		if !trader.CheckForSell(securityCode) {
+			// 禁止卖出, 则返回
+			logger.Infof("%s[%d]: %s ProhibitForBuying", sellRule.Name, sellRule.Id, securityCode)
+			continue
+		}
 		// 6.3 获取快照
 		snapshot := models.GetTickFromMemory(securityCode)
 		if snapshot == nil {
@@ -87,6 +92,7 @@ func cookieCutterSell() {
 		limitUp, _ := market.PriceLimit(securityCode, lastClose)
 		// 6.6 如果涨停, 则不出
 		if lastPrice >= limitUp {
+			logger.Infof("%s[%d]: %s LimitUp, skip", sellRule.Name, sellRule.Id, securityCode)
 			continue
 		}
 		// 6.7 持仓成本

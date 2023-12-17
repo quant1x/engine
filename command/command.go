@@ -11,10 +11,10 @@ import (
 )
 
 var (
-	strategyNumber      = 0                      // 策略编号
-	businessDebug       = runtime.Debug()        // 业务调试开关
-	cpuAvx2        bool = false                  // AVX2加速状态
-	cpuNum         int  = goruntime.NumCPU() / 2 // cpu数量
+	strategyNumber = 0                      // 策略编号
+	businessDebug  = runtime.Debug()        // 业务调试开关
+	cpuAvx2        = false                  // AVX2加速状态
+	cpuNum         = goruntime.NumCPU() / 2 // cpu数量
 )
 
 var engineCmd = &cmder.Command{

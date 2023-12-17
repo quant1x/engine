@@ -5,7 +5,7 @@ import (
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/trader"
 	"gitee.com/quant1x/gotdx/trading"
-	"gitee.com/quant1x/gox/util/treemap"
+	"gitee.com/quant1x/gox/concurrent"
 	"testing"
 )
 
@@ -64,7 +64,7 @@ func (TestModel82) Sort(snapshots []models.QuoteSnapshot) models.SortedStatus {
 	panic("implement me")
 }
 
-func (TestModel82) Evaluate(securityCode string, result *treemap.Map) {
+func (TestModel82) Evaluate(securityCode string, result *concurrent.TreeMap[string, models.ResultInfo]) {
 	//TODO implement me
 	panic("implement me")
 }

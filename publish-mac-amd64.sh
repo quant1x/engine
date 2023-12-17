@@ -6,7 +6,6 @@ p1=$(cd $(dirname $0);pwd)
 
 source ./publish-compile.sh
 
-echo "----------------< go env >----------------"
 # darwin amd64
 GOOS=darwin
 GOARCH=amd64

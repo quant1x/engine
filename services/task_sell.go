@@ -81,13 +81,12 @@ func cookieCutterSell() {
 		}
 		// 6.4 现价
 		lastPrice := num.Decimal(snapshot.Price)
-		high := num.Decimal(snapshot.High)
 		// 昨日收盘
 		lastClose := num.Decimal(snapshot.LastClose)
 		// 6.5 计算涨停价
 		limitUp, _ := market.PriceLimit(securityCode, lastClose)
-		// 6.6 如果涨停或者曾涨停, 不出
-		if lastPrice >= limitUp || high >= limitUp {
+		// 6.6 如果涨停, 则不出
+		if lastPrice >= limitUp {
 			continue
 		}
 		// 6.7 持仓成本

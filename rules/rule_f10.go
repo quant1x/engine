@@ -1,8 +1,8 @@
 package rules
 
 import (
+	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
-	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/smart"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/exception"
@@ -41,7 +41,7 @@ func (r RuleF10) Name() string {
 	return "基本面"
 }
 
-func (r RuleF10) Exec(snapshot models.QuoteSnapshot) error {
+func (r RuleF10) Exec(snapshot factors.QuoteSnapshot) error {
 	// 基础过滤规则, 检测F10基本面
 	securityCode := snapshot.Code
 	// 1. 去掉需要忽略的个股

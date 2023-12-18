@@ -2,9 +2,10 @@ package storages
 
 import (
 	"fmt"
+	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/gotdx/trading"
-	"gitee.com/quant1x/gox/util/treemap"
+	"gitee.com/quant1x/gox/concurrent"
 	"testing"
 )
 
@@ -22,17 +23,17 @@ func (m TestModel) OrderFlag() string {
 	return models.OrderFlagTick
 }
 
-func (m TestModel) Filter(snapshot models.QuoteSnapshot) bool {
+func (m TestModel) Filter(snapshot factors.QuoteSnapshot) bool {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (m TestModel) Sort(snapshots []models.QuoteSnapshot) models.SortedStatus {
+func (m TestModel) Sort(snapshots []factors.QuoteSnapshot) models.SortedStatus {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (m TestModel) Evaluate(securityCode string, result *treemap.Map) {
+func (m TestModel) Evaluate(securityCode string, result *concurrent.TreeMap[string, models.ResultInfo]) {
 	//TODO implement me
 	panic("implement me")
 }

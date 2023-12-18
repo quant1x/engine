@@ -2,6 +2,7 @@ package storages
 
 import (
 	"fmt"
+	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/trader"
 	"gitee.com/quant1x/gotdx/trading"
@@ -54,12 +55,12 @@ func (TestModel82) OrderFlag() string {
 	panic("implement me")
 }
 
-func (TestModel82) Filter(snapshot models.QuoteSnapshot) bool {
+func (TestModel82) Filter(snapshot factors.QuoteSnapshot) bool {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (TestModel82) Sort(snapshots []models.QuoteSnapshot) models.SortedStatus {
+func (TestModel82) Sort(snapshots []factors.QuoteSnapshot) models.SortedStatus {
 	//TODO implement me
 	panic("implement me")
 }

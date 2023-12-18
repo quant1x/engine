@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/gox/concurrent"
 	"golang.org/x/exp/maps"
 	"slices"
@@ -59,9 +60,9 @@ type Strategy interface {
 	// OrderFlag 订单标志
 	OrderFlag() string
 	// Filter 过滤
-	Filter(snapshot QuoteSnapshot) bool
+	Filter(snapshot factors.QuoteSnapshot) bool
 	// Sort 排序
-	Sort([]QuoteSnapshot) SortedStatus
+	Sort([]factors.QuoteSnapshot) SortedStatus
 	// Evaluate 评估 日线数据
 	Evaluate(securityCode string, result *concurrent.TreeMap[string, ResultInfo])
 }

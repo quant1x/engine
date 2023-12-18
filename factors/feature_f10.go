@@ -5,7 +5,6 @@ import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasets/tdxweb"
 	"gitee.com/quant1x/engine/market"
-	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/num"
@@ -148,7 +147,7 @@ func (this *F10) Repair(code, cacheDate, featureDate string, complete bool) {
 	_ = complete
 }
 
-func (this *F10) Increase(snapshot quotes.Snapshot) Feature {
+func (this *F10) Increase(snapshot QuoteSnapshot) Feature {
 	//TODO implement me
 	panic("implement me")
 }

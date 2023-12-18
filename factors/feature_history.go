@@ -6,7 +6,6 @@ import (
 	"gitee.com/quant1x/engine/datasets/base"
 	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/gotdx/proto"
-	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/pandas"
@@ -177,7 +176,7 @@ func (this *History) Repair(code, cacheDate, featureDate string, complete bool) 
 	this.State |= this.Kind()
 }
 
-func (this *History) Increase(snapshot quotes.Snapshot) Feature {
+func (this *History) Increase(snapshot QuoteSnapshot) Feature {
 	//TODO implement me
 	panic("implement me")
 }

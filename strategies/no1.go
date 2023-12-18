@@ -42,11 +42,11 @@ func (m ModelNo1) OrderFlag() string {
 	return models.OrderFlagTail
 }
 
-func (m ModelNo1) Filter(snapshot models.QuoteSnapshot) bool {
+func (m ModelNo1) Filter(snapshot factors.QuoteSnapshot) bool {
 	return GeneralFilter(snapshot)
 }
 
-func (m ModelNo1) Sort(snapshots []models.QuoteSnapshot) models.SortedStatus {
+func (m ModelNo1) Sort(snapshots []factors.QuoteSnapshot) models.SortedStatus {
 	_ = snapshots
 	return models.SortDefault
 }
@@ -56,7 +56,7 @@ func (m ModelNo1) Evaluate(securityCode string, result *concurrent.TreeMap[strin
 	if history == nil {
 		return
 	}
-	snapshot := models.GetTickFromMemory(securityCode)
+	snapshot := models.GetStrategySnapshot(securityCode)
 	if snapshot == nil {
 		return
 	}

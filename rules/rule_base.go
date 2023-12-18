@@ -1,7 +1,7 @@
 package rules
 
 import (
-	"gitee.com/quant1x/engine/models"
+	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/gox/exception"
 	"gitee.com/quant1x/gox/num"
 )
@@ -30,7 +30,7 @@ func (r RuleBase) Name() string {
 	return "基础规则"
 }
 
-func (r RuleBase) Exec(snapshot models.QuoteSnapshot) error {
+func (r RuleBase) Exec(snapshot factors.QuoteSnapshot) error {
 	// 基础过滤规则
 	securityCode := snapshot.Code
 	// 1. 开盘换手Z的逻辑

@@ -1,6 +1,7 @@
 package models
 
 import (
+	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/smart"
 	"gitee.com/quant1x/gotdx"
 	"gitee.com/quant1x/gotdx/quotes"
@@ -30,13 +31,13 @@ func GetTickFromMemory(securityCode string) *quotes.Snapshot {
 }
 
 // GetStrategySnapshot 从缓存中获取快照
-func GetStrategySnapshot(securityCode string) *QuoteSnapshot {
+func GetStrategySnapshot(securityCode string) *factors.QuoteSnapshot {
 	v := GetTickFromMemory(securityCode)
 	if v == nil || v.State != quotes.TDX_SECURITY_TRADE_STATE_NORMAL {
 		// 非正常交易的记录忽略掉
 		return nil
 	}
-	snapshot := QuoteSnapshot{}
+	snapshot := factors.QuoteSnapshot{}
 	_ = api.Copy(&snapshot, &v)
 	snapshot.Name = securities.GetStockName(securityCode)
 	snapshot.Code = securityCode

@@ -2,13 +2,14 @@ package models
 
 import (
 	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/smart"
 	"gitee.com/quant1x/gox/num"
 )
 
 // FeatureToSnapshot 特征缓存数据转快照
-func FeatureToSnapshot(feature cache.SecurityFeature, securityCode string) QuoteSnapshot {
-	qs := QuoteSnapshot{
+func FeatureToSnapshot(feature cache.SecurityFeature, securityCode string) factors.QuoteSnapshot {
+	qs := factors.QuoteSnapshot{
 		//Market            uint8   // 市场
 		//Code              string  `name:"证券代码"`  // 代码
 		Code: securityCode,

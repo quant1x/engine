@@ -3,7 +3,7 @@ package rules
 import (
 	"errors"
 	"fmt"
-	"gitee.com/quant1x/engine/models"
+	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/gox/runtime"
 	bitmap "github.com/bits-and-blooms/bitset"
 	"golang.org/x/exp/maps"
@@ -37,7 +37,7 @@ type Rule interface {
 	// Name 名称
 	Name() string
 	// Exec 执行, 返回nil即为成功
-	Exec(snapshot models.QuoteSnapshot) error
+	Exec(snapshot factors.QuoteSnapshot) error
 }
 
 var (
@@ -63,13 +63,13 @@ func Register(rule Rule) error {
 }
 
 // RegisterFunc 注册规则回调函数
-func RegisterFunc(kind Kind, name string, cb func(snapshot models.QuoteSnapshot) error) error {
+func RegisterFunc(kind Kind, name string, cb func(snapshot factors.QuoteSnapshot) error) error {
 	rule := RuleImpl{kind: kind, name: name, exec: cb}
 	return Register(rule)
 }
 
 // Filter 遍历所有规则
-func Filter(snapshot models.QuoteSnapshot) (passed []uint64, failed Kind, err error) {
+func Filter(snapshot factors.QuoteSnapshot) (passed []uint64, failed Kind, err error) {
 	mutex.RLock()
 	defer mutex.RUnlock()
 	if len(mapRules) == 0 {

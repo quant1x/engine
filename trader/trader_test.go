@@ -2,6 +2,7 @@ package trader
 
 import (
 	"fmt"
+	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/strategies"
 	"gitee.com/quant1x/gox/concurrent"
@@ -63,12 +64,12 @@ func (TestModel) OrderFlag() string {
 	panic("implement me")
 }
 
-func (TestModel) Filter(snapshot models.QuoteSnapshot) bool {
+func (TestModel) Filter(snapshot factors.QuoteSnapshot) bool {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (TestModel) Sort(snapshots []models.QuoteSnapshot) models.SortedStatus {
+func (TestModel) Sort(snapshots []factors.QuoteSnapshot) models.SortedStatus {
 	//TODO implement me
 	panic("implement me")
 }

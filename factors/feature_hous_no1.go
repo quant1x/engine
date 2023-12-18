@@ -6,7 +6,6 @@ import (
 	"gitee.com/quant1x/engine/datasets/base"
 	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/gotdx/proto"
-	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/pandas"
@@ -80,7 +79,7 @@ func (this *HousNo1) Repair(code, cacheDate, featureDate string, complete bool) 
 	_ = df
 }
 
-func (this *HousNo1) Increase(snapshot quotes.Snapshot) Feature {
+func (this *HousNo1) Increase(snapshot QuoteSnapshot) Feature {
 	tmp := HousNo1{}
 
 	tmp.MA5 = (this.MA5*4 + snapshot.Price) / 5

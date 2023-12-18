@@ -3,7 +3,6 @@ package factors
 import (
 	"errors"
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/gotdx/quotes"
 	"time"
 )
 
@@ -15,7 +14,7 @@ type Trait interface {
 	FromHistory(history History) Feature
 	// Increase 增量计算
 	//	用快照增量计算特征
-	Increase(snapshot quotes.Snapshot) Feature
+	Increase(snapshot QuoteSnapshot) Feature
 	// ValidateSample 验证样本
 	ValidateSample() error
 }

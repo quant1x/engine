@@ -27,6 +27,7 @@ var (
 	ErrF10RangeOfSafetyCode           = exception.New(errorRuleF10+7, "非安全分范围")
 	ErrF10RangeOfBasicEPS             = exception.New(errorRuleF10+8, "非每股收益范围")
 	ErrF10RangeOfBPS                  = exception.New(errorRuleF10+9, "非净增长范围")
+	ErrF10RangeOfMarketCap            = exception.New(errorRuleF10+10, "非市值范围")
 )
 
 // RuleF10 基本面规则
@@ -68,6 +69,11 @@ func (r RuleF10) Exec(snapshot models.QuoteSnapshot) error {
 		// 10.1 流通股本控制
 		if f10.Capital != 0 && (f10.Capital < RuleParameters.CapitalMin || f10.Capital > RuleParameters.CapitalMax) {
 			return ErrF10RangeOfCapital
+		}
+		// 10.1.1 市值控制
+		marketValue := f10.TotalCapital * snapshot.LastClose
+		if marketValue < RuleParameters.MarketCapMin || marketValue > RuleParameters.MarketCapMax {
+			return ErrF10RangeOfMarketCap
 		}
 		// 10.2 安全分太低
 		if f10.SafetyScore != 0 && float64(f10.SafetyScore) < RuleParameters.SafetyScoreMin {

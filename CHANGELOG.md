@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.8.4] - 2023-12-18
+### Changed
+- F10增加市值控制.
+- 调整最小市值默认值为5亿.
+- 修订测试策略的接口实现.
+
 ## [0.8.3] - 2023-12-18
 ### Changed
 - History增加昨日开盘,收盘,成交量和成交额.
@@ -641,8 +647,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.8.3...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.8.4...HEAD
 
+[0.8.4]: https://gitee.com/quant1x/engine/compare/v0.8.3...v0.8.4
 [0.8.3]: https://gitee.com/quant1x/engine/compare/v0.8.2...v0.8.3
 [0.8.2]: https://gitee.com/quant1x/engine/compare/v0.8.1...v0.8.2
 [0.8.1]: https://gitee.com/quant1x/engine/compare/v0.8.0...v0.8.1

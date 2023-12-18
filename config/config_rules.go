@@ -8,7 +8,7 @@ type RuleParameter struct {
 	IgnoreCodes                 []string `yaml:"ignore_codes" default:"[\"sh68\",\"bj\"]"`        // 忽略的证券代码段, 默认忽略科创板和北交所全部
 	CapitalMin                  float64  `yaml:"capital_min" default:"2"`                         // 2 * 亿 流通股本最小值
 	CapitalMax                  float64  `yaml:"capital_max" default:"20"`                        // 20 * 亿 流通股本最大值
-	MarketCapMin                float64  `yaml:"market_cap_min" default:"0.5"`                    // 流通市值-最小
+	MarketCapMin                float64  `yaml:"market_cap_min" default:"5"`                      // 流通市值-最小
 	MarketCapMax                float64  `yaml:"market_cap_max" default:"100"`                    // 流通市值-最大
 	PriceMin                    float64  `yaml:"price_min" default:"2.00"`                        // 2.00 股价最低
 	PriceMax                    float64  `yaml:"price_max" default:"30.00"`                       // 30.00 股价最高

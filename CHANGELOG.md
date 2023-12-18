@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.8.5] - 2023-12-19
+### Changed
+- 统一engine中关于行情快照结构体的定义.
+- 整理部分代码.
+
 ## [0.8.4] - 2023-12-18
 ### Changed
 - F10增加市值控制.
@@ -647,8 +652,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.8.4...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.8.5...HEAD
 
+[0.8.5]: https://gitee.com/quant1x/engine/compare/v0.8.4...v0.8.5
 [0.8.4]: https://gitee.com/quant1x/engine/compare/v0.8.3...v0.8.4
 [0.8.3]: https://gitee.com/quant1x/engine/compare/v0.8.2...v0.8.3
 [0.8.2]: https://gitee.com/quant1x/engine/compare/v0.8.1...v0.8.2

@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.8.7] - 2023-12-20
+### Changed
+- 调整117号卖出策略的逻辑.
+- 调整交易规则中的止盈字段字段名.
+- 调整box的字段注释.
+- 交易规则增加止盈止损.
+- 调整规则中市值的范围.
+- 调整box部分字段注释.
+- 清除废弃的代码.
+
 ## [0.8.6] - 2023-12-19
 ### Changed
 - 开放exchange和box特征数据.
@@ -657,8 +667,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.8.6...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.8.7...HEAD
 
+[0.8.7]: https://gitee.com/quant1x/engine/compare/v0.8.6...v0.8.7
 [0.8.6]: https://gitee.com/quant1x/engine/compare/v0.8.5...v0.8.6
 [0.8.5]: https://gitee.com/quant1x/engine/compare/v0.8.4...v0.8.5
 [0.8.4]: https://gitee.com/quant1x/engine/compare/v0.8.3...v0.8.4

@@ -25,12 +25,12 @@ type KLineBox struct {
 	HalfLow        float64 // box: 半量最低
 	Sell           bool    // box: 卖出
 	TendencyPeriod int     // box: 趋势周期
-	QSFZ           bool    // 趋势反转
-	QSCP           float64 // 趋势反转
-	QSCV           float64 // 趋势反转
-	QSVP           float64 // 趋势反转
-	QSVP3          float64 // 趋势反转
-	QSVP5          float64 // 趋势反转
+	QSFZ           bool    // qsfz: 信号
+	QSCP           float64 // qsfz: cp
+	QSCV           float64 // qsfz: cv
+	QSVP           float64 // qsfz: vp
+	QSVP3          float64 // qsfz: vp3
+	QSVP5          float64 // qsfz: vp5
 	DkCol          float64 // dkqs: 能量柱, 通达信分时指标DkCol
 	DkD            float64 // dkqs: 多头力量
 	DkK            float64 // dkqs: 空头力量

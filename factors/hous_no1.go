@@ -3,7 +3,7 @@ package factors
 import (
 	"context"
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/datasets/base"
+	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/trading"

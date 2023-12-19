@@ -3,7 +3,6 @@ package models
 import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/engine/smart"
 	"gitee.com/quant1x/gox/num"
 )
 
@@ -87,13 +86,13 @@ func FeatureToSnapshot(feature cache.SecurityFeature, securityCode string) facto
 		//OpenTurnZ         float64 `name:"开盘换手Z%"` // 开盘换手
 		//OpenQuantityRatio     float64 `name:"开盘量比"`
 	}
-	f10 := smart.GetL5F10(securityCode)
+	f10 := factors.GetL5F10(securityCode)
 	if f10 != nil {
 		qs.Capital = f10.Capital
 		qs.FreeCapital = f10.FreeCapital
 		qs.OpenTurnZ = 10000 * num.ChangeRate(qs.FreeCapital, qs.OpenVolume)
 	}
-	extend := smart.GetL5History(securityCode)
+	extend := factors.GetL5History(securityCode)
 	if extend != nil && extend.MV5 > 0 {
 		qs.OpenQuantityRatio = num.ChangeRate(extend.MV5, qs.OpenVolume)
 	}

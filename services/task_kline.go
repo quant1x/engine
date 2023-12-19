@@ -1,7 +1,7 @@
 package services
 
 import (
-	"gitee.com/quant1x/engine/datasets/base"
+	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/gotdx/trading"

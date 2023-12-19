@@ -3,7 +3,7 @@ package factors
 import (
 	"context"
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/datasets/base"
+	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/trading"
@@ -22,7 +22,7 @@ type CompleteData struct {
 }
 
 const (
-	CacheL5KeyHistory = "history"
+	cacheL5KeyHistory = "history"
 )
 
 // History 历史整合数据
@@ -60,7 +60,7 @@ type History struct {
 }
 
 func NewHistory(date, code string) *History {
-	summary := mapFeatures[FeatureHistory]
+	summary := __mapFeatures[FeatureHistory]
 	v := History{
 		DataSummary: summary,
 		Date:        date,

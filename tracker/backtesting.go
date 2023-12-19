@@ -3,10 +3,9 @@ package tracker
 import (
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/cachel5"
+	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/engine/smart"
 	"gitee.com/quant1x/engine/storages"
 	"gitee.com/quant1x/engine/strategies"
 	"gitee.com/quant1x/gotdx/proto"
@@ -65,7 +64,7 @@ func BackTesting(countDays, countTopN int) {
 	mapStock := map[string][]cache.SecurityFeature{}
 	for i, date := range dates {
 		// 切换策略数据的缓存日期
-		cachel5.SwitchDate(date)
+		factors.SwitchDate(date)
 		samples := []SampleFeature{}
 		total := len(codes)
 		bar := progressbar.NewBar(1, "执行["+date+"涨幅扫描]", total)
@@ -96,7 +95,7 @@ func BackTesting(countDays, countTopN int) {
 
 			// 获取证券名称
 			securityName := "unknown"
-			f10 := smart.GetL5F10(securityCode)
+			f10 := factors.GetL5F10(securityCode)
 			if f10 != nil {
 				securityName = f10.SecurityName
 			}

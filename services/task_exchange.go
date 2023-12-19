@@ -2,11 +2,9 @@ package services
 
 import (
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/cachel5"
-	"gitee.com/quant1x/engine/features"
+	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/engine/smart"
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
@@ -43,7 +41,7 @@ func resetSnapshotCache() {
 	if date > snapshotDate {
 		maps.Clear(mapSnapshot)
 		snapshotDate = date
-		cachel5.SwitchDate(snapshotDate)
+		factors.SwitchDate(snapshotDate)
 	}
 }
 
@@ -73,9 +71,9 @@ func realtimeUpdateExchangeAndSnapshot() {
 		v.Date = currentDate
 		//cacheSnapshots := []flash.Exchange{}
 		securityCode := v.SecurityCode
-		exchange := features.GetL5Exchange(securityCode)
+		exchange := factors.GetL5Exchange(securityCode)
 		if exchange == nil {
-			exchange = &features.Exchange{
+			exchange = &factors.Exchange{
 				Date: currentDate,
 				Code: securityCode,
 			}
@@ -86,7 +84,7 @@ func realtimeUpdateExchangeAndSnapshot() {
 		exchange.OpenVolume = int64(v.OpenVolume)
 		exchange.CloseVolume = int64(v.CloseVolume)
 		// 计算开盘换手z和收盘换手z
-		f10 := smart.GetL5F10(securityCode)
+		f10 := factors.GetL5F10(securityCode)
 		if f10 != nil {
 			exchange.OpenTurnZ = f10.TurnZ(exchange.OpenVolume)
 			exchange.CloseTurnZ = f10.TurnZ(exchange.CloseVolume)
@@ -137,7 +135,7 @@ func realtimeUpdateExchangeAndSnapshot() {
 		//cacheSnapshots = append(cacheSnapshots, *exchange)
 
 		// 6. 更新内存中的数据
-		features.UpdateL5Exchange(exchange)
+		factors.UpdateL5Exchange(exchange)
 		// 7. 刷新缓存
 		cacheList, ok := mapSnapshot[securityCode]
 		if !ok {
@@ -159,7 +157,7 @@ func realtimeUpdateExchangeAndSnapshot() {
 	}
 	logger.Infof("%s: begin-2", moduleName)
 	// 刷新exchange快照本地cache
-	features.RefreshL5Exchange()
+	factors.RefreshL5Exchange()
 	logger.Infof("%s: begin-3", moduleName)
 	timestamp := time.Now()
 	if trading.CheckCallAuctionOpenFinished(timestamp) || trading.CheckCallAuctionCloseFinished(timestamp) {

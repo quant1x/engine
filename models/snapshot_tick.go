@@ -2,7 +2,6 @@ package models
 
 import (
 	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/engine/smart"
 	"gitee.com/quant1x/gotdx"
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gotdx/securities"
@@ -43,13 +42,13 @@ func GetStrategySnapshot(securityCode string) *factors.QuoteSnapshot {
 	snapshot.Code = securityCode
 	snapshot.OpeningChangeRate = num.NetChangeRate(snapshot.LastClose, snapshot.Open)
 	snapshot.ChangeRate = num.NetChangeRate(snapshot.LastClose, snapshot.Price)
-	f10 := smart.GetL5F10(securityCode)
+	f10 := factors.GetL5F10(securityCode)
 	if f10 != nil {
 		snapshot.Capital = f10.Capital
 		snapshot.FreeCapital = f10.FreeCapital
 		snapshot.OpenTurnZ = 10000 * float64(snapshot.OpenVolume) / float64(snapshot.FreeCapital)
 	}
-	history := smart.GetL5History(securityCode)
+	history := factors.GetL5History(securityCode)
 	if history != nil {
 		lastMinuteVolume := history.GetMV5()
 		snapshot.OpenQuantityRatio = float64(snapshot.OpenVolume) / lastMinuteVolume

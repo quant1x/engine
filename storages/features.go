@@ -4,10 +4,8 @@ import (
 	"context"
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/cachel5"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
-	"gitee.com/quant1x/engine/smart"
 	"gitee.com/quant1x/gox/coroutine"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
@@ -44,10 +42,10 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 		moduleName = "更新" + moduleName
 	}
 	moduleName += cacheDate
-	var adapters []cachel5.CacheAdapter
+	var adapters []factors.CacheAdapter
 	maxWidth := 0
 	for _, plugin := range plugins {
-		adapter, ok := plugin.(cachel5.CacheAdapter)
+		adapter, ok := plugin.(factors.CacheAdapter)
 		if ok {
 			adapters = append(adapters, adapter)
 			width := runewidth.StringWidth(adapter.Name())
@@ -82,7 +80,7 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 		for _, code := range allCodes {
 			feature := adapter.Factory(cacheDate, code).(factors.Feature)
 			if feature.Kind() != factors.FeatureHistory {
-				history := smart.GetL5History(code, cacheDate)
+				history := factors.GetL5History(code, cacheDate)
 				if history != nil {
 					feature = feature.FromHistory(*history)
 				}

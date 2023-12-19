@@ -3,7 +3,7 @@ package command
 import (
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/datasets"
+	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gotdx/trading"
@@ -89,7 +89,7 @@ func printKline(securityCode string, tradeDate string) {
 	securityCode = proto.CorrectSecurityCode(securityCode)
 	name := securities.GetStockName(securityCode)
 	fmt.Printf("%s: %s, %s\n", securityCode, name, tradeDate)
-	df := datasets.BasicKLine(securityCode)
+	df := factors.BasicKLine(securityCode)
 	fmt.Println(df)
 }
 

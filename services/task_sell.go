@@ -3,10 +3,10 @@ package services
 import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/realtime"
-	"gitee.com/quant1x/engine/smart"
 	"gitee.com/quant1x/engine/storages"
 	"gitee.com/quant1x/engine/trader"
 	"gitee.com/quant1x/gotdx/proto"
@@ -116,7 +116,7 @@ func cookieCutterSell() {
 		// 6.10 股价高于前面一天最高价，且大于等于5日线，如果是获利的，卖出
 		if !isNeedToSell {
 			// 6.10.1 获取历史特征数据
-			history := smart.GetL5History(securityCode)
+			history := factors.GetL5History(securityCode)
 			if history == nil {
 				continue
 			}

@@ -2,7 +2,7 @@ package services
 
 import (
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/cachel5"
+	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/storages"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/logger"
@@ -42,7 +42,7 @@ func jobUpdateAll() {
 		}
 	}
 	if bUpdated && len(phase) > 0 {
-		cachel5.SwitchDate(cache.DefaultCanReadDate())
+		factors.SwitchDate(cache.DefaultCanReadDate())
 		updateAll()
 		doneUpdate(today, phase)
 	} else {

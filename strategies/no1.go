@@ -3,7 +3,6 @@ package strategies
 import (
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/engine/smart"
 	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gox/concurrent"
@@ -52,7 +51,7 @@ func (m ModelNo1) Sort(snapshots []factors.QuoteSnapshot) models.SortedStatus {
 }
 
 func (m ModelNo1) Evaluate(securityCode string, result *concurrent.TreeMap[string, models.ResultInfo]) {
-	history := smart.GetL5History(securityCode)
+	history := factors.GetL5History(securityCode)
 	if history == nil {
 		return
 	}

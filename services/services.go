@@ -2,7 +2,7 @@ package services
 
 import (
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/cachel5"
+	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/gotdx"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/logger"
@@ -74,7 +74,7 @@ func jobGlobalReset() {
 	logger.Info("清理过期的更新状态文件...")
 	_ = cleanExpiredStateFiles()
 	gotdx.ReOpen()
-	cachel5.SwitchDate(cache.DefaultCanReadDate())
+	factors.SwitchDate(cache.DefaultCanReadDate())
 	logger.Info("清理过期的更新状态文件...OK")
 }
 

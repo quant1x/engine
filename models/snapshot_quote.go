@@ -2,7 +2,6 @@ package models
 
 import (
 	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/engine/smart"
 	"gitee.com/quant1x/gotdx"
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/quotes"
@@ -26,7 +25,7 @@ func QuoteSnapshotFromProtocol(v quotes.Snapshot) factors.QuoteSnapshot {
 	snapshot.AverageBiddingVolume = v.AverageBiddingVolume()
 
 	// 补全F10相关
-	f10 := smart.GetL5F10(securityCode)
+	f10 := factors.GetL5F10(securityCode)
 	if f10 != nil {
 		snapshot.Name = f10.SecurityName
 		snapshot.Capital = f10.Capital
@@ -34,7 +33,7 @@ func QuoteSnapshotFromProtocol(v quotes.Snapshot) factors.QuoteSnapshot {
 		snapshot.OpenTurnZ = f10.TurnZ(snapshot.OpenVolume)
 	}
 	// 补全扩展相关
-	history := smart.GetL5History(securityCode)
+	history := factors.GetL5History(securityCode)
 	if history != nil && history.MV5 > 0 {
 		lastMinuteVolume := history.GetMV5()
 		snapshot.OpenQuantityRatio = float64(snapshot.OpenVolume) / lastMinuteVolume

@@ -3,7 +3,6 @@ package rules
 import (
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
-	"gitee.com/quant1x/engine/smart"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/exception"
 	"gitee.com/quant1x/gox/num"
@@ -64,7 +63,7 @@ func (r RuleF10) Exec(snapshot factors.QuoteSnapshot) error {
 		return ErrF10PriceRange
 	}
 	// 10. F10数据
-	f10 := smart.GetL5F10(securityCode)
+	f10 := factors.GetL5F10(securityCode)
 	if f10 != nil {
 		// 10.1 流通股本控制
 		if f10.Capital != 0 && (f10.Capital < RuleParameters.CapitalMin || f10.Capital > RuleParameters.CapitalMax) {

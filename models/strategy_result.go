@@ -1,7 +1,7 @@
 package models
 
 import (
-	"gitee.com/quant1x/engine/datasets"
+	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/pandas/stat"
 	"gitee.com/quant1x/ta-lib/linear"
@@ -36,7 +36,7 @@ type ResultInfo struct {
 // Predict 预测趋势
 func (this *ResultInfo) Predict() {
 	N := 3
-	df := datasets.BasicKLine(this.Code)
+	df := factors.BasicKLine(this.Code)
 	if df.Nrow() < N+1 {
 		return
 	}

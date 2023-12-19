@@ -3,7 +3,7 @@ package storages
 import (
 	"context"
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/datasets"
+	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/gox/coroutine"
 	"gitee.com/quant1x/gox/logger"
@@ -15,7 +15,7 @@ import (
 )
 
 // 更新单个数据集
-func updateOneDataSet(wg *sync.WaitGroup, parent, bar *progressbar.Bar, dataSet datasets.DataSet, date string, op cache.OpKind, allCodes []string) {
+func updateOneDataSet(wg *sync.WaitGroup, parent, bar *progressbar.Bar, dataSet factors.DataSet, date string, op cache.OpKind, allCodes []string) {
 	defer runtime.CatchPanic()
 	moduleName := "基础数据"
 	if op == cache.OpRepair {
@@ -25,7 +25,7 @@ func updateOneDataSet(wg *sync.WaitGroup, parent, bar *progressbar.Bar, dataSet 
 	}
 	logger.Infof("%s: %s, begin", moduleName, dataSet.Name())
 	for _, code := range allCodes {
-		data := dataSet.Clone(date, code).(datasets.DataSet)
+		data := dataSet.Clone(date, code).(factors.DataSet)
 		if op == cache.OpUpdate {
 			data.Update(date)
 		} else if op == cache.OpRepair {
@@ -46,11 +46,11 @@ func BaseDataUpdate(barIndex int, date string, plugins []cache.DataAdapter, op c
 	} else {
 		moduleName = "更新" + moduleName
 	}
-	var dataSetList []datasets.DataSet
+	var dataSetList []factors.DataSet
 	// 1.1 缓存数据集名称的最大宽度
 	maxWidth := 0
 	for _, plugin := range plugins {
-		dataSet, ok := plugin.(datasets.DataSet)
+		dataSet, ok := plugin.(factors.DataSet)
 		if ok {
 			dataSetList = append(dataSetList, dataSet)
 			width := runewidth.StringWidth(dataSet.Name())

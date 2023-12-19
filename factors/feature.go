@@ -6,6 +6,10 @@ import (
 	"time"
 )
 
+const (
+	InvalidPeriod = -1 // 无效的周期
+)
+
 // Trait 基础的特性
 //
 //	这也是一个特征, 为啥起这个名字, 自己可以脑补 哈哈~

@@ -34,16 +34,6 @@ func lazyInitFeatures() {
 	}
 }
 
-// CacheList 缓存列表
-func CacheList() []cachel5.CacheAdapter {
-	__l5Once.Do(lazyInitFeatures)
-	list := []cachel5.CacheAdapter{
-		__l5F10,
-		__l5History,
-	}
-	return list
-}
-
 func CacheHistory() *cachel5.Cache1D[*factors.History] {
 	__l5Once.Do(lazyInitFeatures)
 	return __l5History

@@ -37,18 +37,13 @@ func realtimeUpdateOfKLine() {
 		}
 	}()
 	barIndex := barIndexRealtimeKLine
-	//mapSnapshot := models.GetAllSnapshotsV2()
 	allCodes := market.GetCodeList()
-	//var wg sync.WaitGroup
 	wg := coroutine.NewRollingWaitGroup(5)
 	bar := progressbar.NewBar(barIndex, "执行[实时更新K线]", len(allCodes))
 	for _, code := range allCodes {
 		updateKLine := func(waitGroup *coroutine.RollingWaitGroup, securityCode string) {
 			defer waitGroup.Done()
 			bar.Add(1)
-			//if snapshot, ok := mapSnapshot[securityCode]; ok {
-			//	base.BasicKLineForSnapshot(snapshot)
-			//}
 			snapshot := models.GetTickFromMemory(securityCode)
 			if snapshot != nil {
 				base.BasicKLineForSnapshot(*snapshot)

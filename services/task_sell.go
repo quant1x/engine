@@ -58,8 +58,7 @@ func cookieCutterSell() {
 	if err != nil {
 		return
 	}
-	// 5. 确定最早的持仓日期
-	//firstDate := getEarlierDate(sellRule.HoldingPeriod)
+	// 5. 确定持股到期的个股列表
 	finalCodeList := checkoutCanSellStockList(sellStrategyCode)
 	// 6. 遍历持仓
 	direction := trader.SELL
@@ -99,14 +98,13 @@ func cookieCutterSell() {
 		avgPrice := position.OpenPrice
 		// 6.8 盈亏比
 		floatProfitLossRatio := num.NetChangeRate(avgPrice, lastPrice)
-		_ = floatProfitLossRatio
 		// 6.9 确定是否规则内最后一天持股
 		isFinal := slices.Contains(finalCodeList, securityCode)
 		// 117. 最后一天持股, 且是最后一个交易时段, 则卖出
 		if isFinal && sellRule.Session.IsTodayLastSession() {
 			// 卖出
 			isNeedToSell = true
-			orderRemark = "LASTDAY:"
+			orderRemark = "LASTDAY:P"
 			if floatProfitLossRatio > 0 {
 				orderRemark = orderRemark + ">0"
 			} else if floatProfitLossRatio == 0 {
@@ -124,11 +122,23 @@ func cookieCutterSell() {
 			}
 			// 6.10.2 计算5日均线
 			ma5 := realtime.IncrementalMovingAverage(history.MA4, 5, lastPrice)
+			// 风险收益比（Risk/Reward Ratio）
+			orderRemark = "RISK:P"
 			// 6.10.3 股价高于前一天最高价, 且站上5日线以及盈利的情况下
 			if lastPrice > history.HIGH && lastPrice >= ma5 && floatProfitLossRatio > 0 {
 				// 卖出
 				isNeedToSell = true
-				orderRemark = "PL:P>H>MA5>0"
+				orderRemark = ">H>MA5>0"
+			} else {
+				//6.11 如果股价触及止盈比例, 则卖出
+				// 止盈
+				if floatProfitLossRatio > sellRule.TakeProfitRatio {
+					isNeedToSell = true
+					orderRemark += ">TPR"
+				} else if floatProfitLossRatio < sellRule.StopLossRatio {
+					isNeedToSell = true
+					orderRemark += "<SLR"
+				}
 			}
 		}
 		// 18168
@@ -150,7 +160,7 @@ func cookieCutterSell() {
 
 // 获得T+HoldingPeriod的具体日期
 func getEarlierDate(period int) string {
-	dates := trading.LastNDate(trading.Today(), period)
+	dates := trading.LastNDate(trading.LastTradeDate(), period)
 	earlier_date := trading.FixTradeDate(dates[0], cache.CACHE_DATE)
 	return earlier_date
 }

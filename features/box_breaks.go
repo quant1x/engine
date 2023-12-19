@@ -37,9 +37,9 @@ type KLineBox struct {
 	DkB            bool    // dkqs: 买入
 	DkS            bool    // dkqs: 卖出
 	DxDivergence   float64 // madx: 综合发散度评估值
-	DxDm0          float64 // madx: 超短线均线发散度
-	DxDm1          float64 // madx:   短线均线发散度
-	DxDm2          float64 // madx:   中线均线发散度
+	DxDm0          float64 // madx: 均线发散度-超短线
+	DxDm1          float64 // madx: 均线发散度-短线
+	DxDm2          float64 // madx: 均线发散度-中线
 	DxB            bool    // madx: 买入
 }
 

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.9.0] - 2023-12-20
+### Changed
+- 交易规则增加可止盈和可止损的判断方法.
+
 ## [0.8.9] - 2023-12-20
 ### Changed
 - 调整ta-lib版本号.
@@ -676,8 +680,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.8.9...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.9.0...HEAD
 
+[0.9.0]: https://gitee.com/quant1x/engine/compare/v0.8.9...v0.9.0
 [0.8.9]: https://gitee.com/quant1x/engine/compare/v0.8.8...v0.8.9
 [0.8.8]: https://gitee.com/quant1x/engine/compare/v0.8.7...v0.8.8
 [0.8.7]: https://gitee.com/quant1x/engine/compare/v0.8.6...v0.8.7

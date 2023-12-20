@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.8.9] - 2023-12-20
+### Changed
+- 调整ta-lib版本号.
+
 ## [0.8.8] - 2023-12-20
 ### Changed
 - 统一数据到factors目录.
@@ -672,8 +676,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.8.8...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.8.9...HEAD
 
+[0.8.9]: https://gitee.com/quant1x/engine/compare/v0.8.8...v0.8.9
 [0.8.8]: https://gitee.com/quant1x/engine/compare/v0.8.7...v0.8.8
 [0.8.7]: https://gitee.com/quant1x/engine/compare/v0.8.6...v0.8.7
 [0.8.6]: https://gitee.com/quant1x/engine/compare/v0.8.5...v0.8.6

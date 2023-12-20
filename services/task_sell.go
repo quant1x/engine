@@ -131,12 +131,13 @@ func cookieCutterSell() {
 				orderRemark = ">H>MA5>0"
 			} else {
 				//6.11 如果股价触及止盈比例, 则卖出
-				// 止盈
-				if floatProfitLossRatio > sellRule.TakeProfitRatio {
+				if sellRule.Session.CanTakeProfit() && floatProfitLossRatio > sellRule.TakeProfitRatio {
 					isNeedToSell = true
+					// 止盈
 					orderRemark += ">TPR"
-				} else if floatProfitLossRatio < sellRule.StopLossRatio {
+				} else if sellRule.Session.CanStopLoss() && floatProfitLossRatio < sellRule.StopLossRatio {
 					isNeedToSell = true
+					// 止损
 					orderRemark += "<SLR"
 				}
 			}

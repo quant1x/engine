@@ -19,7 +19,7 @@ var (
 	timeRangeRegexp  = regexp.MustCompile(timeRangePattern)
 )
 
-func getTimestamp() string {
+func getTradingTimestamp() string {
 	now := time.Now()
 	return now.Format(formatOfTimestamp)
 }
@@ -57,7 +57,7 @@ func (r TimeRange) IsTrading(timestamp ...string) bool {
 	if len(timestamp) > 0 {
 		tm = strings.TrimSpace(timestamp[0])
 	} else {
-		tm = getTimestamp()
+		tm = getTradingTimestamp()
 	}
 	if tm >= r.begin && tm <= r.end {
 		return true
@@ -97,7 +97,7 @@ func (s TradingSession) Index(timestamp ...string) int {
 	if len(timestamp) > 0 {
 		tm = strings.TrimSpace(timestamp[0])
 	} else {
-		tm = getTimestamp()
+		tm = getTradingTimestamp()
 	}
 	for i, timeRange := range s.sessions {
 		if timeRange.IsTrading(tm) {
@@ -125,6 +125,31 @@ func (s TradingSession) IsTodayLastSession(timestamp ...string) bool {
 	if index+1 < n {
 		return false
 	}
+	return true
+}
+
+// CanStopLoss 当前时段是否可以进行止损操作
+//
+//	如果是3个时段, 止损操作在第2时段, 如果是4个时段, 止损在第3个
+//	如果是2个时段, 则是第2个时段, 也就是最后一个时段
+func (s TradingSession) CanStopLoss(timestamp ...string) bool {
+	n := s.Size()
+	index := s.Index(timestamp...)
+	// 1个时段, 立即止损
+	c1 := n == 1
+	// 2个时段, 在第二个时间止损
+	c2 := n == 2 && index == 1
+	// 3个以上时段, 在倒数第2个时段止损
+	c3 := n >= 3 && index+2 == n
+	if c1 || c2 || c3 {
+		return true
+	}
+	return false
+}
+
+// CanTakeProfit 当前时段是否可以止盈
+func (s TradingSession) CanTakeProfit(timestamp ...string) bool {
+	_ = timestamp
 	return true
 }
 

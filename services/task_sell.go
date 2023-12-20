@@ -128,7 +128,7 @@ func cookieCutterSell() {
 			if lastPrice > history.HIGH && lastPrice >= ma5 && floatProfitLossRatio > 0 {
 				// 卖出
 				isNeedToSell = true
-				orderRemark = ">H>MA5>0"
+				orderRemark += ">H>MA5>0"
 			} else {
 				//6.11 如果股价触及止盈比例, 则卖出
 				if sellRule.Session.CanTakeProfit() && floatProfitLossRatio > sellRule.TakeProfitRatio {

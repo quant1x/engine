@@ -50,3 +50,8 @@ func TestStructPtr(t *testing.T) {
 		fmt.Printf("Element %d address: %v\n", i, elemAddr)
 	}
 }
+
+func Test_checkoutCanSellStockList(t *testing.T) {
+	v := checkoutCanSellStockList(117)
+	fmt.Println(v)
+}

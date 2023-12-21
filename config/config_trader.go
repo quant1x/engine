@@ -101,7 +101,7 @@ type TradeRule struct {
 	SellStrategy        int            `name:"卖出策略" yaml:"sell_strategy" default:"117"`                        // 卖出策略, 默认117
 	TakeProfitRatio     float64        `name:"止盈比例" yaml:"take_profit_ratio" default:"15.00"`                  // 止盈比例, 默认15%
 	StopLossRatio       float64        `name:"止损比例" yaml:"stop_loss_ratio" default:"-2.00"`                    // 止损比例, 默认-2%
-	GapDown             bool           `name:"跳空低开" yaml:"gap_down" default:"false"`                           // 买入是否允许跳空低开
+	GapDown             bool           `name:"跳空低开" yaml:"gap_down" default:"true"`                            // 买入是否允许跳空低开, 默认是允许
 }
 
 func (t *TradeRule) QmtStrategyName() string {

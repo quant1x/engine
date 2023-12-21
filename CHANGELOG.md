@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.9.2] - 2023-12-21
+### Changed
+- 修复数字范围间隔符号不能用-的bug.
+
 ## [0.9.1] - 2023-12-21
 ### Changed
 - 调整规则配置, 增加NumberRange功能.
@@ -686,8 +690,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.9.1...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.9.2...HEAD
 
+[0.9.2]: https://gitee.com/quant1x/engine/compare/v0.9.1...v0.9.2
 [0.9.1]: https://gitee.com/quant1x/engine/compare/v0.9.0...v0.9.1
 [0.9.0]: https://gitee.com/quant1x/engine/compare/v0.8.9...v0.9.0
 [0.8.9]: https://gitee.com/quant1x/engine/compare/v0.8.8...v0.8.9

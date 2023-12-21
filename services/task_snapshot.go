@@ -10,7 +10,7 @@ import (
 
 // 任务 - 更新快照
 func jobUpdateSnapshot() {
-	funcName, _, _ := runtime.Caller()
+	//funcName, _, _ := runtime.Caller()
 	updateInRealTime, status := trading.CanUpdateInRealtime()
 	// 14:30:00~15:01:00之间更新数据
 	if updateInRealTime && IsTrading(status) {
@@ -18,9 +18,10 @@ func jobUpdateSnapshot() {
 	} else {
 		if runtime.Debug() {
 			realtimeUpdateSnapshot()
-		} else {
-			logger.Infof("%s, 非交易时段: %d", funcName, status)
 		}
+		//else {
+		//	logger.Infof("%s, 非交易时段: %d", funcName, status)
+		//}
 	}
 }
 

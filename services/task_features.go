@@ -5,7 +5,6 @@ import (
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/storages"
 	"gitee.com/quant1x/gotdx/trading"
-	"gitee.com/quant1x/gox/logger"
 	"time"
 )
 
@@ -18,7 +17,7 @@ var (
 
 // 任务 - 更新全部数据
 func jobUpdateAll() {
-	funcName := "jobUpdateAll"
+	//funcName := "jobUpdateAll"
 	now := time.Now()
 	tm := now.Format(trading.CN_SERVERTIME_FORMAT)
 	today := trading.Today()
@@ -45,9 +44,10 @@ func jobUpdateAll() {
 		factors.SwitchDate(cache.DefaultCanReadDate())
 		updateAll()
 		doneUpdate(today, phase)
-	} else {
-		logger.Infof("%s, 非全数据更新时段", funcName)
 	}
+	//else {
+	//	logger.Infof("%s, 非全数据更新时段", funcName)
+	//}
 }
 
 func updateAll() {

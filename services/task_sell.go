@@ -20,16 +20,11 @@ import (
 
 // 任务 - 卖出117
 func jobOneSizeFitsAllSales() {
-	funcName, _, _ := runtime.Caller()
 	updateInRealTime, status := trading.CanUpdateInRealtime()
 	if updateInRealTime && IsTrading(status) {
 		cookieCutterSell()
-	} else {
-		if runtime.Debug() {
-			cookieCutterSell()
-		} else {
-			logger.Infof("%s, 非交易时段: %d", funcName, status)
-		}
+	} else if runtime.Debug() {
+		cookieCutterSell()
 	}
 }
 
@@ -98,6 +93,7 @@ func cookieCutterSell() {
 		avgPrice := position.OpenPrice
 		// 6.8 盈亏比
 		floatProfitLossRatio := num.NetChangeRate(avgPrice, lastPrice)
+		logger.Infof("%s[%d]: %s profit-loss-ratio: %.02f", sellRule.Name, sellRule.Id, securityCode, floatProfitLossRatio)
 		// 6.9 确定是否规则内最后一天持股
 		isFinal := slices.Contains(finalCodeList, securityCode)
 		// 117. 最后一天持股, 且是最后一个交易时段, 则卖出

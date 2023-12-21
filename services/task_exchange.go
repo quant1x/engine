@@ -17,7 +17,7 @@ import (
 
 // 更新快照
 func jobUpdateExchangeAndSnapshot() {
-	funcName, _, _ := runtime.Caller()
+	//funcName, _, _ := runtime.Caller()
 	now := time.Now()
 	updateInRealTime, _ := trading.CanUpdateInRealtime()
 	// 09:15:00~09:27:00, 14:57:00~15:01:00之间更新数据
@@ -27,7 +27,7 @@ func jobUpdateExchangeAndSnapshot() {
 		if runtime.Debug() {
 			realtimeUpdateExchangeAndSnapshot()
 		}
-		logger.Infof("%s, 非集合竞价时段", funcName)
+		//logger.Infof("%s, 非集合竞价时段", funcName)
 	}
 }
 

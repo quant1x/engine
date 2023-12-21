@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.9.3] - 2023-12-21
+### Changed
+- 交易规则中板块列表支持前缀带减号, 表明要剔除的板块成分股.
+- 默认允许跳空低开.
+- 交易规则增加买入是否支持跳空低开.
+- 测试增加一刀切获取持股到期日的个股列表.
+
 ## [0.9.2] - 2023-12-21
 ### Changed
 - 修复数字范围间隔符号不能用-的bug.
@@ -690,8 +697,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.9.2...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.9.3...HEAD
 
+[0.9.3]: https://gitee.com/quant1x/engine/compare/v0.9.2...v0.9.3
 [0.9.2]: https://gitee.com/quant1x/engine/compare/v0.9.1...v0.9.2
 [0.9.1]: https://gitee.com/quant1x/engine/compare/v0.9.0...v0.9.1
 [0.9.0]: https://gitee.com/quant1x/engine/compare/v0.8.9...v0.9.0

@@ -5,6 +5,7 @@ import (
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gox/api"
 	"slices"
+	"strings"
 )
 
 // TraderRole 交易员角色
@@ -136,17 +137,32 @@ func (t *TradeRule) NumberOfTargets() int {
 	return t.Total
 }
 
+// StockList 取得可以交易的证券代码列表
 func (t *TradeRule) StockList() []string {
 	var codes []string
+	var excludeCodes []string
 	for _, v := range t.Sectors {
-		blockInfo := securities.GetBlockInfo(v)
+		sectorCode := v
+		exclude := strings.HasPrefix(sectorCode, "-")
+		if exclude {
+			sectorCode = sectorCode[1:]
+		}
+		blockInfo := securities.GetBlockInfo(sectorCode)
 		if blockInfo != nil {
-			codes = append(codes, blockInfo.ConstituentStocks...)
+			if exclude {
+				excludeCodes = append(excludeCodes, blockInfo.ConstituentStocks...)
+			} else {
+				codes = append(codes, blockInfo.ConstituentStocks...)
+			}
 		}
 	}
 	if len(codes) == 0 {
-		codes = market.GetCodeList()
+		codes = market.GetStockCodeList()
 	}
+	// 过滤需要忽略的板块成份股
+	codes = api.Filter(codes, func(s string) bool {
+		return !slices.Contains(excludeCodes, s)
+	})
 	codes = api.SliceUnique(codes, func(a string, b string) int {
 		if a < b {
 			return -1

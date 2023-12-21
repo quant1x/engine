@@ -9,7 +9,7 @@ import (
 
 // 值范围正则表达式
 var (
-	valueRangePattern = "[~-]\\s*"
+	valueRangePattern = "[~]\\s*"
 	valueRangeRegexp  = regexp.MustCompile(valueRangePattern)
 )
 

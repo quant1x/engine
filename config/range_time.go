@@ -4,8 +4,15 @@ import (
 	"fmt"
 	"gitee.com/quant1x/gox/exception"
 	"gitee.com/quant1x/pkg/yaml"
+	"regexp"
 	"strings"
 	"time"
+)
+
+// 值范围正则表达式
+var (
+	stringRangePattern = "[~-]\\s*"
+	stringRangeRegexp  = regexp.MustCompile(stringRangePattern)
 )
 
 var (
@@ -32,7 +39,7 @@ func (this TimeRange) String() string {
 
 func (this *TimeRange) Parse(text string) error {
 	text = strings.TrimSpace(text)
-	arr := valueRangeRegexp.Split(text, -1)
+	arr := stringRangeRegexp.Split(text, -1)
 	if len(arr) != 2 {
 		return ErrTimeFormat
 	}

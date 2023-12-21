@@ -5,7 +5,14 @@ import (
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/pandas/stat"
 	"gitee.com/quant1x/pkg/yaml"
+	"regexp"
 	"strings"
+)
+
+// 值范围正则表达式
+var (
+	numberRangePattern = "[~]\\s*"
+	numberRangeRegexp  = regexp.MustCompile(numberRangePattern)
 )
 
 // NumberRange 数值范围
@@ -20,7 +27,7 @@ func (this NumberRange) String() string {
 
 func (this *NumberRange) Parse(text string) error {
 	text = strings.TrimSpace(text)
-	arr := valueRangeRegexp.Split(text, -1)
+	arr := numberRangeRegexp.Split(text, -1)
 	if len(arr) != 2 {
 		return ErrRangeFormat
 	}

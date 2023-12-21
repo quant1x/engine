@@ -59,19 +59,19 @@ func (r RuleF10) Exec(snapshot factors.QuoteSnapshot) error {
 		return ErrF10SubNewStock
 	}
 	// 4. 股价控制
-	if num.IsNaN(snapshot.LastClose) || snapshot.LastClose < RuleParameters.PriceMin || snapshot.LastClose > RuleParameters.PriceMax {
+	if num.IsNaN(snapshot.LastClose) || !RuleParameters.Price.Validate(snapshot.LastClose) {
 		return ErrF10PriceRange
 	}
 	// 10. F10数据
 	f10 := factors.GetL5F10(securityCode)
 	if f10 != nil {
 		// 10.1 流通股本控制
-		if f10.Capital != 0 && (f10.Capital < RuleParameters.CapitalMin || f10.Capital > RuleParameters.CapitalMax) {
+		if f10.Capital != 0 && !RuleParameters.Capital.Validate(f10.Capital/Billion) {
 			return ErrF10RangeOfCapital
 		}
 		// 10.1.1 市值控制
-		marketValue := f10.TotalCapital * snapshot.LastClose
-		if marketValue < RuleParameters.MarketCapMin || marketValue > RuleParameters.MarketCapMax {
+		marketValue := f10.TotalCapital * snapshot.LastClose / Billion
+		if !RuleParameters.MarketCap.Validate(marketValue) {
 			return ErrF10RangeOfMarketCap
 		}
 		// 10.2 安全分太低

@@ -22,13 +22,13 @@ func init() {
 	// 加载规则参数
 	_ = api.Copy(&RuleParameters, &rules)
 	// 流通盘
-	RuleParameters.CapitalMin *= Billion
-	RuleParameters.CapitalMax *= Billion
+	//RuleParameters.CapitalMin *= Billion
+	//RuleParameters.CapitalMax *= Billion
 	// 市值
-	RuleParameters.MarketCapMin *= Billion
-	RuleParameters.MarketCapMax *= Billion
+	//RuleParameters.MarketCapMin *= Billion
+	//RuleParameters.MarketCapMax *= Billion
 	// 最大流出
-	RuleParameters.MaxReduceAmount *= TenThousand
+	//RuleParameters.MaxReduceAmount *= TenThousand
 
 	// 加载订单参数
 	_ = api.Copy(&OrderParameters, &config.GlobalConfig.Order)

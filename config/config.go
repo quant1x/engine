@@ -6,7 +6,6 @@ import (
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/util/homedir"
-	"gitee.com/quant1x/pkg/defaults"
 	"gitee.com/quant1x/pkg/yaml"
 	"os"
 	"strings"
@@ -92,7 +91,6 @@ func ReadConfig(rootPath string) (config Quant1XConfig) {
 }
 
 func parseYamlConfig(filename string, config *Quant1XConfig) error {
-	configPreRun(config)
 	if api.FileExist(filename) {
 		dataBytes, err := os.ReadFile(filename)
 		if err != nil {
@@ -108,20 +106,6 @@ func parseYamlConfig(filename string, config *Quant1XConfig) error {
 		if len(config.BaseDir) > 0 {
 			quant1XConfigFilename = filename
 		}
-		configPostRun(config)
 	}
 	return nil
-}
-
-// 配置加载前执行
-func configPreRun(config *Quant1XConfig) {
-	err := defaults.Set(config)
-	if err != nil {
-		panic(err)
-	}
-}
-
-// 配置加载后执行
-func configPostRun(config *Quant1XConfig) {
-	fixTradingSession(config)
 }

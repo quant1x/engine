@@ -2,17 +2,30 @@ package config
 
 import (
 	"gitee.com/quant1x/pandas/stat"
+	"regexp"
 	"strings"
 	_ "unsafe"
+)
+
+// 值范围正则表达式
+var (
+	valueRangePattern = "[~-]\\s*"
+	valueRangeRegexp  = regexp.MustCompile(valueRangePattern)
+)
+
+// 数组正则表达式
+var (
+	arrayPattern = "[,]\\s*"
+	arrayRegexp  = regexp.MustCompile(arrayPattern)
 )
 
 type ValueType interface {
 	~int | ~float64 | ~string
 }
 
-func ParseRange[T ValueType](text string) ValueRange[T] {
+func ParseRange[T ValueType](text string) v1ValueRange[T] {
 	text = strings.TrimSpace(text)
-	arr := timeRangeRegexp.Split(text, -1)
+	arr := valueRangeRegexp.Split(text, -1)
 	if len(arr) != 2 {
 		panic(ErrTimeFormat)
 	}
@@ -22,21 +35,21 @@ func ParseRange[T ValueType](text string) ValueRange[T] {
 	if begin > end {
 		begin, end = end, begin
 	}
-	r := ValueRange[T]{
+	r := v1ValueRange[T]{
 		begin: begin,
 		end:   end,
 	}
 	return r
 }
 
-// ValueRange 数值范围
-type ValueRange[T ValueType] struct {
+// v1ValueRange 数值范围
+type v1ValueRange[T ValueType] struct {
 	begin T // 最小值
 	end   T // 最大值
 }
 
 // In 检查是否包含在范围内
-func (r ValueRange[T]) In(v T) bool {
+func (r v1ValueRange[T]) In(v T) bool {
 	if v < r.begin || v > r.end {
 		return false
 	}

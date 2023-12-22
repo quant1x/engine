@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.9.4] - 2023-12-22
+### Changed
+- 修复每次解析文本是session数组没有重置的bug.
+
 ## [0.9.3] - 2023-12-21
 ### Changed
 - 交易规则中板块列表支持前缀带减号, 表明要剔除的板块成分股.
@@ -697,8 +701,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.9.3...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.9.4...HEAD
 
+[0.9.4]: https://gitee.com/quant1x/engine/compare/v0.9.3...v0.9.4
 [0.9.3]: https://gitee.com/quant1x/engine/compare/v0.9.2...v0.9.3
 [0.9.2]: https://gitee.com/quant1x/engine/compare/v0.9.1...v0.9.2
 [0.9.1]: https://gitee.com/quant1x/engine/compare/v0.9.0...v0.9.1

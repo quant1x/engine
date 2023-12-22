@@ -59,38 +59,38 @@ func (r RuleF10) Exec(snapshot factors.QuoteSnapshot) error {
 	if num.IsNaN(snapshot.LastClose) || !RuleParameters.Price.Validate(snapshot.LastClose) {
 		return ErrF10PriceRange
 	}
-	// 10. F10数据
+	// 5. F10数据
 	f10 := factors.GetL5F10(securityCode)
 	if f10 != nil {
-		// 10.1 流通股本控制
+		// 5.1 流通股本控制
 		if f10.Capital != 0 && !RuleParameters.Capital.Validate(f10.Capital/Billion) {
 			return ErrF10RangeOfCapital
 		}
-		// 10.1.1 市值控制
+		// 5.1.1 市值控制
 		marketValue := f10.TotalCapital * snapshot.LastClose / Billion
 		if !RuleParameters.MarketCap.Validate(marketValue) {
 			return ErrF10RangeOfMarketCap
 		}
-		// 10.2 安全分太低
+		// 5.2 安全分太低
 		if f10.SafetyScore != 0 && float64(f10.SafetyScore) < RuleParameters.SafetyScoreMin {
 			return ErrF10RangeOfSafetyCode
 		}
-		// 10.3 季报不理想
+		// 5.3 季报不理想
 		if f10.BasicEPS != 0 && f10.BasicEPS < 0 {
 			return ErrF10RangeOfBasicEPS
 		}
-		// 10.4 净增长小于0
+		// 5.4 净增长小于0
 		if f10.BPS != 0 && f10.BPS < 0 {
 			return ErrF10RangeOfBPS
 		}
-		//// 10.5 处理季报有增减持数据, 两个季度前十大流通股总数对比
+		//// 5.5 处理季报有增减持数据, 两个季度前十大流通股总数对比
 		//reportDate, _ := api.ParseTime(f10.UpdateDate)
 		//after := reportDate.AddDate(0, 2, 0).After(time.Now())
 		//// 两月内减持的剔掉, 或者减持统计超过1%
 		//if after && (f10.Top10Capital < 0 || f10.ReductionRatio < -1.00) {
 		//	return false
 		//}
-		//// 10.6. 处理上市公司公告
+		//// 5.6. 处理上市公司公告
 		//if f10.Reduce > 0 || f10.Increase > 0 || f10.Risk > 0 {
 		//	return false
 		//}

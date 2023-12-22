@@ -47,10 +47,7 @@ func (r RuleF10) Exec(snapshot factors.QuoteSnapshot) error {
 	if market.IsNeedIgnore(securityCode) {
 		return ErrF10IgnoreStock
 	}
-	// 2. 去掉科创板, 已知有688和689开头的9号公司
-	//if strings.HasPrefix(securityCode, "sh68") {
-	//	return ErrF10DisableSciTechBoard
-	//}
+	// 2. 过滤指定的代码前缀
 	if api.StartsWith(securityCode, RuleParameters.IgnoreCodes) {
 		return ErrF10IgnoreStock
 	}

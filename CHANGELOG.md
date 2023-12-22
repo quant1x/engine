@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.9.5] - 2023-12-22
+### Changed
+- 调整过滤规则注释中的逻辑序号.
+- 删除废弃的科创板过滤规则.
+
 ## [0.9.4] - 2023-12-22
 ### Changed
 - 修复每次解析文本是session数组没有重置的bug.
@@ -701,8 +706,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.9.4...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.9.5...HEAD
 
+[0.9.5]: https://gitee.com/quant1x/engine/compare/v0.9.4...v0.9.5
 [0.9.4]: https://gitee.com/quant1x/engine/compare/v0.9.3...v0.9.4
 [0.9.3]: https://gitee.com/quant1x/engine/compare/v0.9.2...v0.9.3
 [0.9.2]: https://gitee.com/quant1x/engine/compare/v0.9.1...v0.9.2

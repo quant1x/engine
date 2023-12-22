@@ -25,6 +25,7 @@ func (this TradingSession) String() string {
 }
 
 func (this *TradingSession) Parse(text string) error {
+	var sessions []TimeRange
 	text = strings.TrimSpace(text)
 	arr := arrayRegexp.Split(text, -1)
 	for _, v := range arr {
@@ -33,9 +34,9 @@ func (this *TradingSession) Parse(text string) error {
 		if err != nil {
 			return err
 		}
-		this.sessions = append(this.sessions, tr)
+		sessions = append(sessions, tr)
 	}
-	slices.SortFunc(this.sessions, func(a, b TimeRange) int {
+	slices.SortFunc(sessions, func(a, b TimeRange) int {
 		if a.begin < b.begin {
 			return -1
 		} else if a.begin > b.begin {
@@ -48,6 +49,10 @@ func (this *TradingSession) Parse(text string) error {
 			return 1
 		}
 	})
+	if len(sessions) == 0 {
+		return ErrTimeFormat
+	}
+	this.sessions = sessions
 	return nil
 }
 

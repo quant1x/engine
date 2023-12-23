@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.9.6] - 2023-12-24
+### Changed
+- 调整特征源文件名, 保持前缀feature.
+- 删除部分废弃的代码.
+- 删除protobuf的测试代码, 放弃rpc的想法.
+- 适配gox新版本的http函数.
+
 ## [0.9.5] - 2023-12-22
 ### Changed
 - 调整过滤规则注释中的逻辑序号.
@@ -706,8 +713,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.9.5...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.9.6...HEAD
 
+[0.9.6]: https://gitee.com/quant1x/engine/compare/v0.9.5...v0.9.6
 [0.9.5]: https://gitee.com/quant1x/engine/compare/v0.9.4...v0.9.5
 [0.9.4]: https://gitee.com/quant1x/engine/compare/v0.9.3...v0.9.4
 [0.9.3]: https://gitee.com/quant1x/engine/compare/v0.9.2...v0.9.3

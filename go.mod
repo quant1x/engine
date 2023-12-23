@@ -3,15 +3,15 @@ module gitee.com/quant1x/engine
 go 1.21.5
 
 require (
-	gitee.com/quant1x/gotdx v1.17.9
-	gitee.com/quant1x/gox v1.15.8
-	gitee.com/quant1x/pandas v1.2.5
-	gitee.com/quant1x/pkg v0.1.6
+	gitee.com/quant1x/gotdx v1.18.0
+	gitee.com/quant1x/gox v1.16.2
+	gitee.com/quant1x/pandas v1.2.6
+	gitee.com/quant1x/pkg v0.1.7
 	gitee.com/quant1x/ta-lib v0.3.0
 	github.com/bits-and-blooms/bitset v1.12.0
 	github.com/spf13/cobra v1.8.0
 	github.com/syndtr/goleveldb v1.0.0
-	golang.org/x/exp v0.0.0-20231206192017-f3f8817b8deb
+	golang.org/x/exp v0.0.0-20231219180239-dc181d75b848
 	golang.org/x/sys v0.15.0
 	google.golang.org/protobuf v1.31.0
 )

@@ -3,7 +3,7 @@ module gitee.com/quant1x/engine
 go 1.21.5
 
 require (
-	gitee.com/quant1x/gotdx v1.18.0
+	gitee.com/quant1x/gotdx v1.18.1
 	gitee.com/quant1x/gox v1.16.2
 	gitee.com/quant1x/pandas v1.2.6
 	gitee.com/quant1x/pkg v0.1.7
@@ -13,7 +13,6 @@ require (
 	github.com/syndtr/goleveldb v1.0.0
 	golang.org/x/exp v0.0.0-20231219180239-dc181d75b848
 	golang.org/x/sys v0.15.0
-	google.golang.org/protobuf v1.31.0
 )
 
 require (

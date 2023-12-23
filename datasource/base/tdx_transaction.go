@@ -20,11 +20,6 @@ const (
 	TickDefaultStartDate    = "2023-01-01" // 分笔成交最早的日期
 )
 
-//var (
-//	kTransactionRawFields = []string{"Time", "Price", "Vol", "Num", "BuyOrSell"}
-//	kTransactionFields    = []string{"time", "price", "vol", "num", "buyorsell"}
-//)
-
 var (
 	// TickDefaultStartDate 最早的时间
 	__tickHistoryStartDate = "20230101"
@@ -117,11 +112,9 @@ func GetTickAll(securityCode string) {
 	if len(dateRange) == 0 {
 		return
 	}
-	//bar := progressbar.NewBar(0, fmt.Sprintf("同步[%s]", securityCode), len(dateRange))
 	today := dateRange[0]
 	ignore := false
 	for _, tradeDate := range dateRange {
-		//bar.Add(1)
 		if ignore {
 			continue
 		}
@@ -173,10 +166,8 @@ func CheckoutTickData(securityCode string, date string, ignorePreviousData bool)
 			return list
 		}
 	}
-	//logger.Warnf("tick: code=%s, trade-date=%s, 检查缓存", securityCode, tradeDate)
 	startTime := TradingFirstTime
 	filename := cache.TickFilename(securityCode, tradeDate)
-	//logger.Warnf("tick: code=%s, trade-date=%s, filename=%s", securityCode, tradeDate, filename)
 	if api.FileExist(filename) {
 		// 如果缓存存在
 		err := api.CsvToSlices(filename, &list)
@@ -187,7 +178,6 @@ func CheckoutTickData(securityCode string, date string, ignorePreviousData bool)
 				//logger.Warnf("tick: code=%s, trade-date=%s, 缓存存在", securityCode, tradeDate)
 				return
 			}
-			//times := stat.Reverse(df.Col("time").Strings())
 			firstTime := ""
 			skipCount := 0
 			for i := 0; i < cacheLength; i++ {
@@ -210,8 +200,6 @@ func CheckoutTickData(securityCode string, date string, ignorePreviousData bool)
 		} else {
 			logger.Errorf("tick: code=%s, trade-date=%s, 没有有效数据, %+v", securityCode, tradeDate, err)
 		}
-	} else {
-		//logger.Warnf("tick: code=%s, trade-date=%s, 文件不存在", securityCode, tradeDate)
 	}
 
 	tdxApi := gotdx.GetTdxApi()
@@ -268,15 +256,6 @@ func CheckoutTickData(securityCode string, date string, ignorePreviousData bool)
 		return
 	}
 	list = append(list, history...)
-
-	//incremental := pandas.LoadStructs(history)
-	//incremental = incremental.Select(kTransactionRawFields)
-	//err := incremental.SetNames(kTransactionFields...)
-	//if err != nil {
-	//	logger.Errorf("tick: code=%s, trade-date=%s, %+v", securityCode, tradeDate, err)
-	//	return pandas.DataFrame{}
-	//}
-	//df = df.Concat(incremental)
 
 	return
 }

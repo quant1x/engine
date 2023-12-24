@@ -11,10 +11,10 @@ type RuleParameter struct {
 	MaximumIncreaseWithin10days float64     `yaml:"maximum_increase_within_10_days" default:"70.00"` // 70.00 10日累计最大涨幅
 	MaxReduceAmount             float64     `yaml:"max_reduce_amount" default:"-1000"`               // -1000 最大流出1000万
 	VolumeRatioMax              float64     `yaml:"volume_ratio_max" default:"3.82"`                 // 1.800 成交量放大不能超过1.8
-	Price                       NumberRange `yaml:"price" default:"2.00~30.00"`                      // 股价
+	Price                       NumberRange `yaml:"price" default:""`                                // 股价: 4.9E-324~1.7976931348623157e+308
 	Capital                     NumberRange `yaml:"capital" default:"2~20"`                          // 流通股本
 	MarketCap                   NumberRange `yaml:"market_cap" default:"4~600"`                      // 流通市值
-	OpenRate                    NumberRange `yaml:"open_rate"  default:"-2.00~2.00"`                 // 开盘涨幅
+	OpenRate                    NumberRange `yaml:"open_rate"  default:""`                           // 开盘涨幅
 	QuantityRatio               NumberRange `yaml:"quantity_ratio" default:"1.00~9.99"`              // 开盘量比
 	TurnZ                       NumberRange `yaml:"turn_z" default:"1.50~200.00"`                    // 开盘换手
 	Vix                         NumberRange `yaml:"vix" default:"0.00~100.00"`                       // 波动率0

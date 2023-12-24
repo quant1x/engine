@@ -23,7 +23,7 @@ type ValueType interface {
 	~int | ~float64 | ~string
 }
 
-func ParseRange[T ValueType](text string) v1ValueRange[T] {
+func ParseRange[T ValueType](text string) ValueRange[T] {
 	text = strings.TrimSpace(text)
 	arr := valueRangeRegexp.Split(text, -1)
 	if len(arr) != 2 {
@@ -35,21 +35,21 @@ func ParseRange[T ValueType](text string) v1ValueRange[T] {
 	if begin > end {
 		begin, end = end, begin
 	}
-	r := v1ValueRange[T]{
+	r := ValueRange[T]{
 		begin: begin,
 		end:   end,
 	}
 	return r
 }
 
-// v1ValueRange 数值范围
-type v1ValueRange[T ValueType] struct {
+// ValueRange 数值范围
+type ValueRange[T ValueType] struct {
 	begin T // 最小值
 	end   T // 最大值
 }
 
 // In 检查是否包含在范围内
-func (r v1ValueRange[T]) In(v T) bool {
+func (r ValueRange[T]) In(v T) bool {
 	if v < r.begin || v > r.end {
 		return false
 	}

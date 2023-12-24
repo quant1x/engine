@@ -14,5 +14,5 @@ var (
 
 // AllStockTopN 最大输出多少只个股
 func AllStockTopN() int {
-	return config.OrderConfig().TopN
+	return config.TraderConfig().TopN
 }

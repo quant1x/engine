@@ -12,15 +12,15 @@ type RuleParameter struct {
 	MaxReduceAmount             float64     `yaml:"max_reduce_amount" default:"-1000"`               // -1000 最大流出1000万
 	VolumeRatioMax              float64     `yaml:"volume_ratio_max" default:"3.82"`                 // 1.800 成交量放大不能超过1.8
 	Price                       NumberRange `yaml:"price" default:""`                                // 股价: 4.9E-324~1.7976931348623157e+308
-	Capital                     NumberRange `yaml:"capital" default:"2~20"`                          // 流通股本
-	MarketCap                   NumberRange `yaml:"market_cap" default:"4~600"`                      // 流通市值
-	OpenRate                    NumberRange `yaml:"open_rate"  default:""`                           // 开盘涨幅
-	QuantityRatio               NumberRange `yaml:"quantity_ratio" default:"1.00~9.99"`              // 开盘量比
-	TurnZ                       NumberRange `yaml:"turn_z" default:"1.50~200.00"`                    // 开盘换手
-	Vix                         NumberRange `yaml:"vix" default:"0.00~100.00"`                       // 波动率0
-	TurnoverRate                NumberRange `yaml:"turnover_rate" default:"1.00~20.00"`              // 换手率范围
-	AmplitudeRatio              NumberRange `yaml:"amplitude_ratio" default:"0.00~15.00"`            // 振幅 最大
-	BiddingVolume               NumberRange `yaml:"bidding_volume" default:"100~5000"`               // 5档行情委托平均最小值
+	Capital                     NumberRange `yaml:"capital" default:"2~20"`                          // 流通股本, 默认2亿~20亿
+	MarketCap                   NumberRange `yaml:"market_cap" default:"4~600"`                      // 流通市值, 默认4亿~600亿
+	OpenRate                    NumberRange `yaml:"open_rate"  default:""`                           // 开盘涨幅, 默认不限制
+	QuantityRatio               NumberRange `yaml:"quantity_ratio" default:""`                       // 开盘量比, 默认不限制
+	TurnZ                       NumberRange `yaml:"turn_z" default:""`                               // 开盘换手, 默认不限制
+	Vix                         NumberRange `yaml:"vix" default:""`                                  // 波动率, 默认不限制
+	TurnoverRate                NumberRange `yaml:"turnover_rate" default:""`                        // 换手率范围, 默认不限制
+	AmplitudeRatio              NumberRange `yaml:"amplitude_ratio" default:""`                      // 振幅范围, 默认不限制
+	BiddingVolume               NumberRange `yaml:"bidding_volume" default:""`                       // 5档行情委托平均值范围, 默认不限制
 	Sentiment                   NumberRange `yaml:"sentiment" default:"38.2~61.80"`                  // 情绪范围
 }
 

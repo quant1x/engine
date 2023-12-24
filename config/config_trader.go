@@ -18,9 +18,17 @@ const (
 	RoleManual                    // 人工干预, 作用同
 )
 
+const (
+	sectorIgnorePrefix = "-"
+	sectorPrefixLength = len(sectorIgnorePrefix)
+)
+
 // TraderParameter 预览交易通道参数
 type TraderParameter struct {
 	AccountId            string         `name:"账号ID" yaml:"account_id" dataframe:"888xxxxxxx"`                                      // 账号ID
+	OrderPath            string         `name:"订单路径" yaml:"order_path"`                                                             // 订单路径
+	TopN                 int            `yaml:"TopN" default:"3"`                                                                   // 最多输出前多少名个股
+	HaveETF              bool           `yaml:"是否包含ETF" default:"false"`                                                            // 是否包含ETF
 	StampDutyRateForBuy  float64        `name:"买入印花税" yaml:"stamp_duty_rate_for_buy" default:"0.0000"`                              // 印花说-买入, 没有
 	StampDutyRateForSell float64        `name:"卖出印花税" yaml:"stamp_duty_rate_for_sell" default:"0.0010"`                             // 印花说-卖出, 默认是千分之1
 	TransferRate         float64        `name:"过户费" yaml:"transfer_rate" default:"0.0006"`                                          // 过户费, 双向, 默认是万分之6
@@ -103,67 +111,67 @@ type TradeRule struct {
 	TakeProfitRatio     float64        `name:"止盈比例" yaml:"take_profit_ratio" default:"15.00"`                  // 止盈比例, 默认15%
 	StopLossRatio       float64        `name:"止损比例" yaml:"stop_loss_ratio" default:"-2.00"`                    // 止损比例, 默认-2%
 	GapDown             bool           `name:"跳空低开" yaml:"gap_down" default:"true"`                            // 买入是否允许跳空低开, 默认是允许
+	excludeCodes        []string       `name:"需要过滤的股票代码列表"`
 }
 
-func (t *TradeRule) QmtStrategyName() string {
-	return QmtStrategyNameFromId(t.Id)
+func (this *TradeRule) QmtStrategyName() string {
+	return QmtStrategyNameFromId(this.Id)
 }
 
 // Enable 策略是否有效
-func (t *TradeRule) Enable() bool {
-	return t.Auto && t.Id >= 0
+func (this *TradeRule) Enable() bool {
+	return this.Auto && this.Id >= 0
 }
 
 // BuyEnable 获取可买入状态
-func (t *TradeRule) BuyEnable() bool {
-	return t.Enable() && t.Total > 0
+func (this *TradeRule) BuyEnable() bool {
+	return this.Enable() && this.Total > 0
 }
 
 // SellEnable 获取可卖出状态
-func (t *TradeRule) SellEnable() bool {
-	return t.Enable()
+func (this *TradeRule) SellEnable() bool {
+	return this.Enable()
 }
 
 // IsCookieCutterForSell 是否一刀切卖出
-func (t *TradeRule) IsCookieCutterForSell() bool {
-	return t.SellEnable() && t.Total == 0
+func (this *TradeRule) IsCookieCutterForSell() bool {
+	return this.SellEnable() && this.Total == 0
 }
 
 // NumberOfTargets 获得可买入标的总数
-func (t *TradeRule) NumberOfTargets() int {
-	if !t.BuyEnable() {
+func (this *TradeRule) NumberOfTargets() int {
+	if !this.BuyEnable() {
 		return 0
 	}
-	return t.Total
+	return this.Total
 }
 
-// StockList 取得可以交易的证券代码列表
-func (t *TradeRule) StockList() []string {
-	var codes []string
+func (this *TradeRule) initExclude() {
+	if len(this.excludeCodes) > 0 {
+		return
+	}
 	var excludeCodes []string
-	for _, v := range t.Sectors {
-		sectorCode := v
-		exclude := strings.HasPrefix(sectorCode, "-")
-		if exclude {
-			sectorCode = sectorCode[1:]
-		}
-		blockInfo := securities.GetBlockInfo(sectorCode)
-		if blockInfo != nil {
-			if exclude {
+	for _, v := range this.Sectors {
+		sectorCode := strings.TrimSpace(v)
+		if strings.HasPrefix(sectorCode, sectorIgnorePrefix) {
+			sectorCode = strings.TrimSpace(sectorCode[sectorPrefixLength:])
+			blockInfo := securities.GetBlockInfo(sectorCode)
+			if blockInfo != nil {
 				excludeCodes = append(excludeCodes, blockInfo.ConstituentStocks...)
-			} else {
-				codes = append(codes, blockInfo.ConstituentStocks...)
 			}
 		}
 	}
-	if len(codes) == 0 {
-		codes = market.GetStockCodeList()
-	}
+	excludeCodes = api.Unique(excludeCodes)
+	this.excludeCodes = excludeCodes
+}
+
+func (this *TradeRule) Filter(codes []string) []string {
+	this.initExclude()
 	// 过滤需要忽略的板块成份股
-	codes = api.Filter(codes, func(s string) bool {
-		return !slices.Contains(excludeCodes, s)
+	newCodeList := api.Filter(codes, func(s string) bool {
+		return !slices.Contains(this.excludeCodes, s)
 	})
-	codes = api.SliceUnique(codes, func(a string, b string) int {
+	newCodeList = api.SliceUnique(newCodeList, func(a string, b string) int {
 		if a < b {
 			return -1
 		} else if a > b {
@@ -173,16 +181,36 @@ func (t *TradeRule) StockList() []string {
 		}
 	})
 
-	if t.IgnoreMarginTrading {
+	if this.IgnoreMarginTrading {
 		// 过滤两融
 		marginTradingList := securities.MarginTradingList()
-		codes = api.Filter(codes, func(s string) bool {
+		newCodeList = api.Filter(newCodeList, func(s string) bool {
 			if slices.Contains(marginTradingList, s) {
 				return false
 			}
 			return true
 		})
 	}
+	return newCodeList
+}
+
+// StockList 取得可以交易的证券代码列表
+func (this *TradeRule) StockList() []string {
+	var codes []string
+	for _, v := range this.Sectors {
+		sectorCode := strings.TrimSpace(v)
+		if !strings.HasPrefix(sectorCode, sectorIgnorePrefix) {
+			blockInfo := securities.GetBlockInfo(sectorCode)
+			if blockInfo != nil {
+				codes = append(codes, blockInfo.ConstituentStocks...)
+
+			}
+		}
+	}
+	if len(codes) == 0 {
+		codes = market.GetStockCodeList()
+	}
+	codes = this.Filter(codes)
 	return codes
 }
 

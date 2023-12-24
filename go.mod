@@ -7,7 +7,7 @@ require (
 	gitee.com/quant1x/gox v1.16.2
 	gitee.com/quant1x/pandas v1.2.6
 	gitee.com/quant1x/pkg v0.1.7
-	gitee.com/quant1x/ta-lib v0.3.0
+	gitee.com/quant1x/ta-lib v0.3.1
 	github.com/bits-and-blooms/bitset v1.12.0
 	github.com/spf13/cobra v1.8.0
 	github.com/syndtr/goleveldb v1.0.0

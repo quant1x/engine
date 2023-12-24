@@ -10,5 +10,6 @@ func TestConfig(t *testing.T) {
 	strategyCode := 82
 	rule := config.GetTradeRule(strategyCode)
 	fmt.Println(rule)
-	fmt.Println(rule.StockList())
+	list := rule.StockList()
+	fmt.Println(list)
 }

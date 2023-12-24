@@ -89,7 +89,8 @@ func BackTesting(countDays, countTopN int) {
 			}
 			feature := features[pos]
 			snapshot := models.FeatureToSnapshot(feature, securityCode)
-			if !strategies.GeneralFilter(snapshot) {
+			err := strategies.GeneralFilter(snapshot)
+			if err != nil {
 				continue
 			}
 

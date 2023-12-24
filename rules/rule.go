@@ -4,9 +4,9 @@ import (
 	"errors"
 	"fmt"
 	"gitee.com/quant1x/engine/factors"
+	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/runtime"
 	bitmap "github.com/bits-and-blooms/bitset"
-	"golang.org/x/exp/maps"
 	"slices"
 	"sync"
 )
@@ -24,10 +24,10 @@ const (
 	KRuleBase           = engineBaseRule + 1 // 基础规则
 )
 
-// 规则错误码, 每一组规则错误拟100个错误码
+// 规则错误码, 每一组规则错误拟1000个错误码
 const (
-	errorRuleF10  = (iota + 1) * 100 // F10错误码
-	errorRuleBase                    // 基础规则错误码
+	errorRuleF10  = (iota + 1) * 1000 // F10错误码
+	errorRuleBase                     // 基础规则错误码
 )
 
 // Rule 规则接口
@@ -77,7 +77,7 @@ func Filter(snapshot factors.QuoteSnapshot) (passed []uint64, failed Kind, err e
 	}
 	var bitset bitmap.BitSet
 	// 规则按照kind排序
-	kinds := maps.Keys(mapRules)
+	kinds := api.Keys(mapRules)
 	slices.Sort(kinds)
 	for _, kind := range kinds {
 		if rule, ok := mapRules[kind]; ok {
@@ -96,7 +96,7 @@ func Filter(snapshot factors.QuoteSnapshot) (passed []uint64, failed Kind, err e
 func PrintRuleList() {
 	fmt.Println("规则总数:", len(mapRules))
 	// 规则按照kind排序
-	kinds := maps.Keys(mapRules)
+	kinds := api.Keys(mapRules)
 	slices.Sort(kinds)
 	for _, kind := range kinds {
 		if rule, ok := mapRules[kind]; ok {

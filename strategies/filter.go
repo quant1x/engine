@@ -6,12 +6,9 @@ import (
 )
 
 // GeneralFilter 过滤条件
-func GeneralFilter(snapshot factors.QuoteSnapshot) bool {
+func GeneralFilter(snapshot factors.QuoteSnapshot) error {
 	passed, failed, err := rules.Filter(snapshot)
-	if failed != rules.Pass {
-		return false
-	}
 	_ = passed
-	_ = err
-	return true
+	_ = failed
+	return err
 }

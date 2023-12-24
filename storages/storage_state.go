@@ -3,7 +3,6 @@ package storages
 import (
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/trader"
 	"gitee.com/quant1x/gotdx/proto"
@@ -18,10 +17,6 @@ import (
 
 const (
 	orderStateFileExtension = ".done"
-)
-
-var (
-	orderConfig = config.OrderConfig()
 )
 
 // Touch 创建一个空文件
@@ -39,7 +34,7 @@ func state_filepath(state_date string) string {
 // 获取状态文件前缀
 func state_prefix(state_date, qmtStrategyName string, direction trader.Direction) string {
 	qmtStrategyName = strings.ToLower(qmtStrategyName)
-	prefix := fmt.Sprintf("%s-%s-%s-%s", state_date, orderConfig.AccountId, qmtStrategyName, direction.Flag())
+	prefix := fmt.Sprintf("%s-%s-%s-%s", state_date, traderConfig.AccountId, qmtStrategyName, direction.Flag())
 	return prefix
 }
 

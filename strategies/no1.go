@@ -41,7 +41,7 @@ func (m ModelNo1) OrderFlag() string {
 	return models.OrderFlagTail
 }
 
-func (m ModelNo1) Filter(snapshot factors.QuoteSnapshot) bool {
+func (m ModelNo1) Filter(snapshot factors.QuoteSnapshot) error {
 	return GeneralFilter(snapshot)
 }
 

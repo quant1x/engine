@@ -12,8 +12,7 @@ const (
 )
 
 var (
-	RuleParameters  config.RuleParameter
-	OrderParameters config.OrderParameter
+	RuleParameters config.RuleParameter
 )
 
 func init() {
@@ -29,7 +28,4 @@ func init() {
 	//RuleParameters.MarketCapMax *= Billion
 	// 最大流出
 	//RuleParameters.MaxReduceAmount *= TenThousand
-
-	// 加载订单参数
-	_ = api.Copy(&OrderParameters, &config.GlobalConfig.Order)
 }

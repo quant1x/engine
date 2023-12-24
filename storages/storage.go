@@ -11,6 +11,10 @@ import (
 	"os"
 )
 
+var (
+	traderConfig = config.TraderConfig()
+)
+
 const (
 	StrategiesPath = "zero-sum" // 策略结果数据文件存储路径
 	OrdersPath     = "qmt"      // QMT订单缓存路径

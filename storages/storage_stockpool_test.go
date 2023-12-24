@@ -23,7 +23,7 @@ func (m TestModel) OrderFlag() string {
 	return models.OrderFlagTick
 }
 
-func (m TestModel) Filter(snapshot factors.QuoteSnapshot) bool {
+func (m TestModel) Filter(snapshot factors.QuoteSnapshot) error {
 	//TODO implement me
 	panic("implement me")
 }

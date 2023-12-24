@@ -6,7 +6,8 @@ import (
 )
 
 const (
-	InvalidPeriod = -1 // 无效的周期
+	InvalidPeriod = -1              // 无效的周期
+	InvalidWeight = float64(-99.99) // 无效的权重值
 )
 
 // Trait 基础的特性

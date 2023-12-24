@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.9.7] - 2023-12-24
+### Changed
+- 拆分个股列表, 增加过滤功能.
+- 配置文件删除order项.
+- 策略接口的filter方法增加参数交易规则.
+- 调整topn的取法.
+- 确定出了流通股本和流通市值以外, 其它默认都是不验证.
+- 调整数值范围的验证逻辑, 如果begin和end都为0, 视为不验证, 默认通过.
+- 更新ta-lib版本.
+
 ## [0.9.6] - 2023-12-24
 ### Changed
 - 调整特征源文件名, 保持前缀feature.
@@ -713,8 +723,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.9.6...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.9.7...HEAD
 
+[0.9.7]: https://gitee.com/quant1x/engine/compare/v0.9.6...v0.9.7
 [0.9.6]: https://gitee.com/quant1x/engine/compare/v0.9.5...v0.9.6
 [0.9.5]: https://gitee.com/quant1x/engine/compare/v0.9.4...v0.9.5
 [0.9.4]: https://gitee.com/quant1x/engine/compare/v0.9.3...v0.9.4

@@ -39,7 +39,6 @@ type Quant1XConfig struct {
 	BaseDir string           `yaml:"basedir"` // 基础路径
 	Runtime RuntimeParameter `yaml:"runtime"` // 运行时参数
 	Rules   RuleParameter    `yaml:"rules"`   // 规则参数
-	Order   OrderParameter   `yaml:"order"`   // 订单参数
 	Trader  TraderParameter  `yaml:"trader"`  // 预览交易参数
 }
 

@@ -17,17 +17,25 @@ var (
 
 // NumberRange 数值范围
 type NumberRange struct {
-	begin float64
-	end   float64
+	min float64
+	max float64
 }
 
 func (this NumberRange) String() string {
-	return fmt.Sprintf("{begin: %f, end: %f}", this.begin, this.end)
+	return fmt.Sprintf("{min: %f, max: %f}", this.min, this.max)
 }
 
 func (this *NumberRange) init() {
-	this.begin = stat.MinFloat64
-	this.end = stat.MaxFloat64
+	this.min = stat.MinFloat64
+	this.max = stat.MaxFloat64
+}
+
+func (this *NumberRange) Max() float64 {
+	return this.max
+}
+
+func (this *NumberRange) Min() float64 {
+	return this.min
 }
 
 func (this *NumberRange) Parse(text string) error {
@@ -39,10 +47,10 @@ func (this *NumberRange) Parse(text string) error {
 	}
 	begin := strings.TrimSpace(arr[0])
 	end := strings.TrimSpace(arr[1])
-	this.begin = stat.AnyToFloat64(begin)
-	this.end = stat.AnyToFloat64(end)
-	if this.begin > this.end {
-		this.begin, this.end = this.end, this.begin
+	this.min = stat.AnyToFloat64(begin)
+	this.max = stat.AnyToFloat64(end)
+	if this.min > this.max {
+		this.min, this.max = this.max, this.min
 	}
 	return nil
 }
@@ -69,9 +77,9 @@ func (this *NumberRange) UnmarshalText(text []byte) error {
 
 // Validate 验证
 func (this *NumberRange) Validate(v float64) bool {
-	if this.begin == 0 && this.end == 0 {
+	if this.min == 0 && this.max == 0 {
 		return true
-	} else if v >= this.begin && v < this.end {
+	} else if v >= this.min && v < this.max {
 		return true
 	}
 	return false

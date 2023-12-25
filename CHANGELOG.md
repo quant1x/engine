@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.9.8] - 2023-12-25
+### Changed
+- 命令字增加检测服务器网速.
+- 更新gotdx库,增加更多的服务器IP地址.
+
 ## [0.9.7] - 2023-12-24
 ### Changed
 - 拆分个股列表, 增加过滤功能.
@@ -723,8 +728,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.9.7...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.9.8...HEAD
 
+[0.9.8]: https://gitee.com/quant1x/engine/compare/v0.9.7...v0.9.8
 [0.9.7]: https://gitee.com/quant1x/engine/compare/v0.9.6...v0.9.7
 [0.9.6]: https://gitee.com/quant1x/engine/compare/v0.9.5...v0.9.6
 [0.9.5]: https://gitee.com/quant1x/engine/compare/v0.9.4...v0.9.5

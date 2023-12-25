@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.9.9] - 2023-12-25
+### Changed
+- 调整可用金额的计算方法, 以当日可用为主, 不为下一交易日做预留处理.
+
 ## [0.9.8] - 2023-12-25
 ### Changed
 - 命令字增加检测服务器网速.
@@ -728,8 +732,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.9.8...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.9.9...HEAD
 
+[0.9.9]: https://gitee.com/quant1x/engine/compare/v0.9.8...v0.9.9
 [0.9.8]: https://gitee.com/quant1x/engine/compare/v0.9.7...v0.9.8
 [0.9.7]: https://gitee.com/quant1x/engine/compare/v0.9.6...v0.9.7
 [0.9.6]: https://gitee.com/quant1x/engine/compare/v0.9.5...v0.9.6

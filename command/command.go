@@ -60,8 +60,10 @@ func GlobalFlags() *cmder.Command {
 	engineCmd.PersistentFlags().BoolVar(&businessDebug, "debug", businessDebug, "打开业务调试开关, 慎重使用!")
 	engineCmd.PersistentFlags().BoolVar(&cpuAvx2, "avx2", false, "Avx2 加速开关")
 	engineCmd.PersistentFlags().IntVar(&cpuNum, "cpu", cpuNum, "设置CPU最大核数")
-	engineCmd.AddCommand(CmdVersion, CmdPrint, CmdBackTesting, CmdRules)
-	engineCmd.AddCommand(CmdUpdate, CmdRepair, CmdService, CmdSafes)
+	engineCmd.AddCommand(CmdVersion, CmdSafes, CmdBestIP)
+	engineCmd.AddCommand(CmdUpdate, CmdRepair, CmdPrint)
+	engineCmd.AddCommand(CmdBackTesting, CmdRules)
+	engineCmd.AddCommand(CmdService)
 	return engineCmd
 }
 

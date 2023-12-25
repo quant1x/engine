@@ -62,6 +62,11 @@ func calculateTheoreticalFund() (theoretical, cash float64) {
 		logger.Warnf("!!! 持仓占比[{}%], 已超过可总仓位的[{}%], 必须在收盘前择机降低仓位, 以免影响下一个交易日的买入操作 !!!", num.Decimal(100*(acc_value/acc.TotalAsset)),
 			num.Decimal(100*(1-traderConfig.PositionRatio)))
 	}
+	// 8. 重新修订可用金额
+	available = (acc.TotalAsset - traderConfig.KeepCash) * traderConfig.PositionRatio
+	if available > acc.Cash {
+		available = acc.Cash
+	}
 	theoretical = available
 	cash = acc.Cash
 	return theoretical, cash

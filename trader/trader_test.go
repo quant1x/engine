@@ -64,7 +64,7 @@ func (TestModel) OrderFlag() string {
 	panic("implement me")
 }
 
-func (TestModel) Filter(snapshot factors.QuoteSnapshot) bool {
+func (TestModel) Filter(snapshot factors.QuoteSnapshot) error {
 	//TODO implement me
 	panic("implement me")
 }

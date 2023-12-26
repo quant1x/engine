@@ -24,38 +24,16 @@ trader: # 交易配置
       ignore_margin_trading: true # 是否剔除两融
       holding_period: 1           # 持股周期, 默认是1天, 即T+1卖出
       sell_strategy: 117          # 关联卖出策略
+      rules:
+        price: 2.00~30.00                      # 股价范围
+        open_turn_z: 1.50~200.00               # 换手z范围
+        open_change_rate: -2.00~2.00           # 开盘涨幅
     - id: 117
       name: 一刀切卖出
       auto: false
       flag: sell
       time: 09:50:00~09:50:99,10:50:00~10:50:99 # 交易时间段
       total: 0 # 卖出策略中股票总是为0, 视为全部卖出
-  sell:
-    auto: false
-  ask_time: 09:50:00~14:59:30 # 卖出时段
-order:
-  account_id: "8881247681" # 账号
-  top_n: 6         # 最多输出前多少名个股
-  have_etf: false  # 是否包含ETF交易
-rules:
-  sectors_filter: false                  # 是否启用板块过滤, false代表全市场扫描
-  sectors_top_n: 10                      # 板块排名前多少名
-  stock_top_n_in_sector: 50              # 板块内选前多少名
-  price_min: 2.00                        # 2.00 股价最低
-  price_max: 30.00                       # 30.00 股价最高
-  maximum_increase_within_5_days: 20.00  # 20.00 5日累计最大涨幅
-  maximum_increase_within_10_days: 70.00 # 70.00 10日累计最大涨幅
-  max_reduce_amount: -1000               # -1000 最大流出1000万
-  turn_z_max: 200.00                     # 200.00 换手最大值
-  turn_z_min: 1.50                       # 1.50 换手最小值
-  open_rate_max: 2.00                    # 2.00 最大涨幅
-  open_rate_min: -2.00                   # -1.00 最低涨幅
-  quantity_ratio_max: 61.80              # 61.80 最大开盘量比
-  quantity_ratio_min: 1.00               # 3.82 最小开盘量比
-  safety_score_min: 80                   # 80 通达信安全分最小值
-  volume_ratio_max: 3.82                 # 1.800 成交量放大不能超过1.8
-  capital_min: 1                         # 2 亿 流通股本最小值
-  capital_max: 200                       # 200 亿 流通股本最大值
 runtime:
   crontab:
     realtime_kline:

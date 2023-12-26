@@ -60,7 +60,7 @@ type Strategy interface {
 	// OrderFlag 订单标志
 	OrderFlag() string
 	// Filter 过滤
-	Filter(snapshot factors.QuoteSnapshot) error
+	Filter(ruleParameter config.RuleParameter, snapshot factors.QuoteSnapshot) error
 	// Sort 排序
 	Sort([]factors.QuoteSnapshot) SortedStatus
 	// Evaluate 评估 日线数据

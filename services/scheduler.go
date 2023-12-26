@@ -7,6 +7,7 @@ import (
 	"gitee.com/quant1x/gox/coroutine"
 	"gitee.com/quant1x/gox/cron"
 	"gitee.com/quant1x/gox/logger"
+	"gitee.com/quant1x/gox/runtime"
 	"strings"
 	"sync"
 )
@@ -90,7 +91,7 @@ func DaemonService() {
 func PrintJobList() {
 	for _, v := range mapJobs {
 		spec := v.spec
-		message := fmt.Sprintf("Service: %s, Interval: %s", v.name, spec)
+		message := fmt.Sprintf("Service: %s, Interval: %s, method: %s", v.name, spec, runtime.FuncName(v.Service))
 		fmt.Println(message)
 	}
 }

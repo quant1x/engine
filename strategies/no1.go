@@ -1,6 +1,7 @@
 package strategies
 
 import (
+	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/utils"
@@ -41,8 +42,8 @@ func (m ModelNo1) OrderFlag() string {
 	return models.OrderFlagTail
 }
 
-func (m ModelNo1) Filter(snapshot factors.QuoteSnapshot) error {
-	return GeneralFilter(snapshot)
+func (m ModelNo1) Filter(ruleParameter config.RuleParameter, snapshot factors.QuoteSnapshot) error {
+	return GeneralFilter(ruleParameter, snapshot)
 }
 
 func (m ModelNo1) Sort(snapshots []factors.QuoteSnapshot) models.SortedStatus {

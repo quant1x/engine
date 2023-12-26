@@ -1,6 +1,7 @@
 package rules
 
 import (
+	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/gox/api"
@@ -9,7 +10,7 @@ import (
 )
 
 func init() {
-	err := Register(RuleF10{})
+	err := RegisterFunc(KRuleF10, "基本面", ruleF10)
 	if err != nil {
 		panic(err)
 	}
@@ -30,17 +31,7 @@ var (
 )
 
 // RuleF10 基本面规则
-type RuleF10 struct{}
-
-func (r RuleF10) Kind() Kind {
-	return KRuleF10
-}
-
-func (r RuleF10) Name() string {
-	return "基本面"
-}
-
-func (r RuleF10) Exec(snapshot factors.QuoteSnapshot) error {
+func ruleF10(ruleParameter config.RuleParameter, snapshot factors.QuoteSnapshot) error {
 	// 基础过滤规则, 检测F10基本面
 	securityCode := snapshot.Code
 	// 1. 去掉需要忽略的个股
@@ -48,7 +39,7 @@ func (r RuleF10) Exec(snapshot factors.QuoteSnapshot) error {
 		return ErrF10IgnoreStock
 	}
 	// 2. 过滤指定的代码前缀
-	if api.StartsWith(securityCode, RuleParameters.IgnoreCodes) {
+	if api.StartsWith(securityCode, ruleParameter.IgnoreCodes) {
 		return ErrF10IgnoreStock
 	}
 	// 3. 去掉次新股
@@ -56,23 +47,24 @@ func (r RuleF10) Exec(snapshot factors.QuoteSnapshot) error {
 		return ErrF10SubNewStock
 	}
 	// 4. 股价控制
-	if num.IsNaN(snapshot.LastClose) || !RuleParameters.Price.Validate(snapshot.LastClose) {
+	if num.IsNaN(snapshot.LastClose) || !ruleParameter.Price.Validate(snapshot.LastClose) {
 		return ErrF10PriceRange
 	}
 	// 5. F10数据
 	f10 := factors.GetL5F10(securityCode)
 	if f10 != nil {
 		// 5.1 流通股本控制
-		if f10.Capital != 0 && !RuleParameters.Capital.Validate(f10.Capital/Billion) {
+		capital := f10.Capital / config.Billion
+		if f10.Capital != 0 && !ruleParameter.Capital.Validate(capital) {
 			return ErrF10RangeOfCapital
 		}
 		// 5.1.1 市值控制
-		marketValue := f10.TotalCapital * snapshot.LastClose / Billion
-		if !RuleParameters.MarketCap.Validate(marketValue) {
+		marketValue := f10.TotalCapital * snapshot.LastClose / config.Billion
+		if !ruleParameter.MarketCap.Validate(marketValue) {
 			return ErrF10RangeOfMarketCap
 		}
 		// 5.2 安全分太低
-		if f10.SafetyScore != 0 && float64(f10.SafetyScore) < RuleParameters.SafetyScoreMin {
+		if f10.SafetyScore != 0 && !ruleParameter.SafetyScore.Validate(float64(f10.SafetyScore)) {
 			return ErrF10RangeOfSafetyCode
 		}
 		// 5.3 季报不理想

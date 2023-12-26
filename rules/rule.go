@@ -3,6 +3,7 @@ package rules
 import (
 	"errors"
 	"fmt"
+	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/runtime"
@@ -30,14 +31,19 @@ const (
 	errorRuleBase                     // 基础规则错误码
 )
 
-// Rule 规则接口
-type Rule interface {
-	// Kind 类型
-	Kind() Kind
-	// Name 名称
-	Name() string
-	// Exec 执行, 返回nil即为成功
-	Exec(snapshot factors.QuoteSnapshot) error
+// Rule 规则接口封装
+type Rule struct {
+	kind Kind
+	name string
+	Exec func(ruleParameter config.RuleParameter, snapshot factors.QuoteSnapshot) error
+}
+
+func (this Rule) Kind() Kind {
+	return this.kind
+}
+
+func (this Rule) Name() string {
+	return this.name
 }
 
 var (
@@ -46,12 +52,12 @@ var (
 )
 
 var (
-	ErrAlreadyExists = errors.New("the rule already exists")   // 规则已经存在
-	ErrExecuteFailed = errors.New("the rule execution failed") // 规则执行失败
+	ErrAlreadyExists = errors.New("the rule already exists") // 规则已经存在
 )
 
-// Register 注册规则
-func Register(rule Rule) error {
+// RegisterFunc 注册规则回调函数
+func RegisterFunc(kind Kind, name string, cb func(ruleParameter config.RuleParameter, snapshot factors.QuoteSnapshot) error) error {
+	rule := Rule{kind: kind, name: name, Exec: cb}
 	mutex.Lock()
 	defer mutex.Unlock()
 	_, ok := mapRules[rule.Kind()]
@@ -62,14 +68,8 @@ func Register(rule Rule) error {
 	return nil
 }
 
-// RegisterFunc 注册规则回调函数
-func RegisterFunc(kind Kind, name string, cb func(snapshot factors.QuoteSnapshot) error) error {
-	rule := RuleImpl{kind: kind, name: name, exec: cb}
-	return Register(rule)
-}
-
 // Filter 遍历所有规则
-func Filter(snapshot factors.QuoteSnapshot) (passed []uint64, failed Kind, err error) {
+func Filter(ruleParameter config.RuleParameter, snapshot factors.QuoteSnapshot) (passed []uint64, failed Kind, err error) {
 	mutex.RLock()
 	defer mutex.RUnlock()
 	if len(mapRules) == 0 {
@@ -81,7 +81,7 @@ func Filter(snapshot factors.QuoteSnapshot) (passed []uint64, failed Kind, err e
 	slices.Sort(kinds)
 	for _, kind := range kinds {
 		if rule, ok := mapRules[kind]; ok {
-			err = rule.Exec(snapshot)
+			err = rule.Exec(ruleParameter, snapshot)
 			if err != nil {
 				failed = rule.Kind()
 				break

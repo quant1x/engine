@@ -3,6 +3,7 @@ package tracker
 import (
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/models"
@@ -57,6 +58,12 @@ func BackTesting(countDays, countTopN int) {
 		fmt.Println(err)
 		return
 	}
+	//TODO: 这里应该要取策略的规则参数
+	tradeRule := config.GetTradeRule(0)
+	if tradeRule == nil {
+		return
+	}
+	ruleParameter := tradeRule.Rules
 	allResult := []models.Statistics{}
 	gcs := []GoodCase{}
 	dates = dates[s : e+1]
@@ -89,7 +96,8 @@ func BackTesting(countDays, countTopN int) {
 			}
 			feature := features[pos]
 			snapshot := models.FeatureToSnapshot(feature, securityCode)
-			err := strategies.GeneralFilter(snapshot)
+
+			err := strategies.GeneralFilter(ruleParameter, snapshot)
 			if err != nil {
 				continue
 			}

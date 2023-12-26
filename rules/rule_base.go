@@ -1,13 +1,14 @@
 package rules
 
 import (
+	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/gox/exception"
 	"gitee.com/quant1x/gox/num"
 )
 
 func init() {
-	err := Register(RuleBase{})
+	err := RegisterFunc(KRuleBase, "基础规则", ruleBase)
 	if err != nil {
 		panic(err)
 	}
@@ -20,30 +21,20 @@ var (
 	ErrRangeOfFundFlow             = exception.New(errorRuleBase+3, "非资金流出")
 )
 
-// RuleBase 基本面规则
-type RuleBase struct{}
-
-func (r RuleBase) Kind() Kind {
-	return KRuleBase
-}
-
-func (r RuleBase) Name() string {
-	return "基础规则"
-}
-
-func (r RuleBase) Exec(snapshot factors.QuoteSnapshot) error {
+// ruleBase 基本面规则
+func ruleBase(ruleParameter config.RuleParameter, snapshot factors.QuoteSnapshot) error {
 	// 基础过滤规则
 	securityCode := snapshot.Code
 	// 1. 开盘换手Z的逻辑
-	if num.IsNaN(snapshot.OpenTurnZ) || !RuleParameters.TurnZ.Validate(snapshot.OpenTurnZ) {
+	if num.IsNaN(snapshot.OpenTurnZ) || !ruleParameter.OpenTurnZ.Validate(snapshot.OpenTurnZ) {
 		return ErrRangeOfOpeningTurnZ
 	}
 	// 2. 当日 - 开盘量比
-	if num.IsNaN(snapshot.OpenQuantityRatio) || !RuleParameters.QuantityRatio.Validate(snapshot.OpenQuantityRatio) {
+	if num.IsNaN(snapshot.OpenQuantityRatio) || !ruleParameter.OpenQuantityRatio.Validate(snapshot.OpenQuantityRatio) {
 		return ErrRangeOfOpeningQuantityRatio
 	}
 	// 3. 当日 - 开盘涨幅
-	if num.IsNaN(snapshot.OpeningChangeRate) || !RuleParameters.OpenRate.Validate(snapshot.OpeningChangeRate) {
+	if num.IsNaN(snapshot.OpeningChangeRate) || !ruleParameter.OpenChangeRate.Validate(snapshot.OpeningChangeRate) {
 		return ErrRangeOfOpeningChangeRate
 	}
 	//// 4. 委托量

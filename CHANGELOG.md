@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.0.0] - 2023-12-26
+### Changed
+- 调整过滤规则, 规则参数从策略中加载.
+- 配置项第一层去掉rules, 该在每一个策略中配置.
+- 优化卖出规则.
+- NumberRange调整最大最小值的字段名, 并新增获取数值的方法.
+
 ## [0.9.9] - 2023-12-25
 ### Changed
 - 调整可用金额的计算方法, 以当日可用为主, 不为下一交易日做预留处理.
@@ -732,8 +739,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v0.9.9...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.0.0...HEAD
 
+[1.0.0]: https://gitee.com/quant1x/engine/compare/v0.9.9...v1.0.0
 [0.9.9]: https://gitee.com/quant1x/engine/compare/v0.9.8...v0.9.9
 [0.9.8]: https://gitee.com/quant1x/engine/compare/v0.9.7...v0.9.8
 [0.9.7]: https://gitee.com/quant1x/engine/compare/v0.9.6...v0.9.7

@@ -2,6 +2,7 @@ package storages
 
 import (
 	"fmt"
+	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/gotdx/trading"
@@ -23,7 +24,7 @@ func (m TestModel) OrderFlag() string {
 	return models.OrderFlagTick
 }
 
-func (m TestModel) Filter(snapshot factors.QuoteSnapshot) error {
+func (m TestModel) Filter(ruleParameter config.RuleParameter, snapshot factors.QuoteSnapshot) error {
 	//TODO implement me
 	panic("implement me")
 }

@@ -2,13 +2,20 @@ package storages
 
 import (
 	"fmt"
+	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/trader"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/concurrent"
+	"path/filepath"
 	"testing"
 )
+
+func TestFilePathClean(t *testing.T) {
+	s := "d:\\quant\\data/qmt/var/20231225/20231225-8881479758-s0-b-*.done"
+	fmt.Println(filepath.Clean(s))
+}
 
 func TestOrderFlag(t *testing.T) {
 	model := TestModel82{}
@@ -55,7 +62,7 @@ func (TestModel82) OrderFlag() string {
 	panic("implement me")
 }
 
-func (TestModel82) Filter(snapshot factors.QuoteSnapshot) error {
+func (TestModel82) Filter(ruleParameter config.RuleParameter, snapshot factors.QuoteSnapshot) error {
 	//TODO implement me
 	panic("implement me")
 }

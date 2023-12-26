@@ -16,6 +16,7 @@ import (
 	"gitee.com/quant1x/gox/num"
 	"gitee.com/quant1x/gox/runtime"
 	"slices"
+	"strings"
 )
 
 // 任务 - 卖出117
@@ -93,11 +94,12 @@ func cookieCutterSell() {
 		avgPrice := position.OpenPrice
 		// 6.8 盈亏比
 		floatProfitLossRatio := num.NetChangeRate(avgPrice, lastPrice)
-		logger.Infof("%s[%d]: %s profit-loss-ratio: %.02f", sellRule.Name, sellRule.Id, securityCode, floatProfitLossRatio)
 		// 6.9 确定是否规则内最后一天持股
 		isFinal := slices.Contains(finalCodeList, securityCode)
+		todayLastSession := sellRule.Session.IsTodayLastSession()
+		logger.Infof("%s[%d]: %s, profit-loss-ratio=%.02f, last-day=%t, last-session=%t", sellRule.Name, sellRule.Id, securityCode, floatProfitLossRatio, isFinal, todayLastSession)
 		// 117. 最后一天持股, 且是最后一个交易时段, 则卖出
-		if isFinal && sellRule.Session.IsTodayLastSession() {
+		if isFinal && todayLastSession {
 			// 卖出
 			isNeedToSell = true
 			orderRemark = "LASTDAY:P"
@@ -186,6 +188,7 @@ func checkoutCanSellStockList(sellStrategyId int) []string {
 		date := getEarlierDate(v.HoldingPeriod)
 		qmtStrategyName := v.QmtStrategyName()
 		codes := storages.FetchListForFirstPurchase(date, qmtStrategyName, trader.BUY)
+		logger.Infof("sell strategy[%d]: from %d, last-day codes=%s", sellStrategyId, v.Id, strings.Join(codes, ","))
 		if len(codes) == 0 {
 			continue
 		}

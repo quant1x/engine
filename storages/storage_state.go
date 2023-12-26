@@ -27,7 +27,7 @@ func Touch(filename string) error {
 
 // 获取状态机路径
 func state_filepath(state_date string) string {
-	flagPath := fmt.Sprintf("%s/var/%s", getQmtCachePath(), state_date)
+	flagPath := filepath.Join(getQmtCachePath(), "var", state_date)
 	return flagPath
 }
 
@@ -73,7 +73,8 @@ func CountStrategyOrders(date string, model models.Strategy, direction trader.Di
 	stateDate := trading.FixTradeDate(date, cache.CACHE_DATE)
 	orderFlagPath := state_filepath(stateDate)
 	filenamePrefix := order_state_prefix(stateDate, model, direction)
-	files, err := filepath.Glob(orderFlagPath + "/" + filenamePrefix + "-*.done")
+	pattern := filepath.Join(orderFlagPath, filenamePrefix+"-*"+orderStateFileExtension)
+	files, err := filepath.Glob(pattern)
 	if err != nil {
 		logger.Error(err)
 		return 0
@@ -87,10 +88,10 @@ func FetchListForFirstPurchase(date, qmtStrategyName string, direction trader.Di
 	orderFlagPath := state_filepath(stateDate)
 	filenamePrefix := state_prefix(stateDate, qmtStrategyName, direction)
 	var list []string
-	prefix := orderFlagPath + "/" + filenamePrefix + "-"
+	prefix := filepath.Join(orderFlagPath, filenamePrefix+"-")
 	pattern := prefix + "*" + orderStateFileExtension
 	files, err := filepath.Glob(pattern)
-	if err != nil {
+	if err != nil || len(files) == 0 {
 		logger.Error(err)
 		return list
 	}

@@ -56,6 +56,11 @@ func (this *TradingSession) Parse(text string) error {
 	return nil
 }
 
+func (this TradingSession) MarshalText() (text []byte, err error) {
+	str := this.String()
+	return api.String2Bytes(str), nil
+}
+
 // UnmarshalYAML YAML自定义解析
 func (this *TradingSession) UnmarshalYAML(node *yaml.Node) error {
 	var value string

@@ -28,7 +28,7 @@ type TraderParameter struct {
 	AccountId            string         `name:"账号ID" yaml:"account_id" dataframe:"888xxxxxxx"`                                      // 账号ID
 	OrderPath            string         `name:"订单路径" yaml:"order_path"`                                                             // 订单路径
 	TopN                 int            `yaml:"TopN" default:"3"`                                                                   // 最多输出前多少名个股
-	HaveETF              bool           `yaml:"是否包含ETF" default:"false"`                                                            // 是否包含ETF
+	HaveETF              bool           `name:"是否包含ETF" yaml:"have_etf" default:"false"`                                            // 是否包含ETF
 	StampDutyRateForBuy  float64        `name:"买入印花税" yaml:"stamp_duty_rate_for_buy" default:"0.0000"`                              // 印花说-买入, 没有
 	StampDutyRateForSell float64        `name:"卖出印花税" yaml:"stamp_duty_rate_for_sell" default:"0.0010"`                             // 印花说-卖出, 默认是千分之1
 	TransferRate         float64        `name:"过户费" yaml:"transfer_rate" default:"0.0006"`                                          // 过户费, 双向, 默认是万分之6
@@ -111,7 +111,8 @@ type TradeRule struct {
 	TakeProfitRatio     float64        `name:"止盈比例" yaml:"take_profit_ratio" default:"15.00"`                  // 止盈比例, 默认15%
 	StopLossRatio       float64        `name:"止损比例" yaml:"stop_loss_ratio" default:"-2.00"`                    // 止损比例, 默认-2%
 	GapDown             bool           `name:"跳空低开" yaml:"gap_down" default:"true"`                            // 买入是否允许跳空低开, 默认是允许
-	excludeCodes        []string       `name:"需要过滤的股票代码列表"`
+	Rules               RuleParameter  `name:"规则参数" yaml:"rules"`                                              // 过滤规则
+	excludeCodes        []string       `name:"过滤列表"`                                                           //  需要排除的个股
 }
 
 func (this *TradeRule) QmtStrategyName() string {
@@ -231,9 +232,3 @@ func GetTradeRule(code int) *TradeRule {
 	}
 	return nil
 }
-
-//// GetSellRule 获取卖出规则
-//func GetSellRule() TradeRule {
-//	params := TraderConfig()
-//	return params.Sell
-//}

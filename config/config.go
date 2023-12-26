@@ -38,8 +38,8 @@ var (
 type Quant1XConfig struct {
 	BaseDir string           `yaml:"basedir"` // 基础路径
 	Runtime RuntimeParameter `yaml:"runtime"` // 运行时参数
-	Rules   RuleParameter    `yaml:"rules"`   // 规则参数
-	Trader  TraderParameter  `yaml:"trader"`  // 预览交易参数
+	//Rules   RuleParameter    `yaml:"rules"`   // 规则参数
+	Trader TraderParameter `yaml:"trader"` // 预览交易参数
 }
 
 // GetConfigFilename 获取配置文件路径

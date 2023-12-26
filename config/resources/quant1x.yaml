@@ -1,33 +1,33 @@
 basedir: ~/.quant1x # 数据路径
 trader: # 交易配置
-  account_id: "888xxxxxxx" # 账号
+  account_id: "888xxxxxxx"              # qmt账号
   proxy_url: http://127.0.0.1:18168/qmt # miniQMT Proxy地址
-  stamp_duty_rate_for_buy: 0.0000 # 买入印花税率
-  stamp_duty_rate_for_sell: 0.0010 # 卖出印花税率
-  transfer_rate: 0.0006 # 过户费
-  commission_rate: 0.00025 # 佣金率
-  commission_min: 5.0000 # 佣金最低
-  position_ratio: 0.5000 # 买入总占比
-  keep_cash: 10000.00 # 预留备用金
-  buy_amount_max: 250000.00 # 最大可买金额
-  buy_amount_min: 1000.00 # 最小可买金额
+  stamp_duty_rate_for_buy: 0.0000       # 买入印花税率
+  stamp_duty_rate_for_sell: 0.0010      # 卖出印花税率
+  transfer_rate: 0.0006                 # 过户费
+  commission_rate: 0.00025              # 佣金率
+  commission_min: 5.0000                # 佣金最低
+  position_ratio: 0.5000                # 买入总占比
+  keep_cash: 10000.00                   # 预留备用金
+  buy_amount_max: 250000.00             # 最大可买金额
+  buy_amount_min: 1000.00               # 最小可买金额
   strategies:
-    - id: 1
-      name: 1号策略
-      auto: false
-      flag: tick
+    - id: 1                    # 策略ID
+      name: 1号策略             # 策略名称
+      auto: false              # 是否自动交易
+      flag: tick               # 订单类型
       time: 09:39:00~14:56:30  # 交易时间段
-      total: 6
-      fee_max: 20000.00
-      fee_min: 1000.00
+      total: 6                 # 可买多少个标的
+      fee_max: 20000.00        # 可买最大金额
+      fee_min: 1000.00         # 可买最小金额
       sectors: [ "880847","880785","880884","880887","880880" ] # 行业龙头880847, 近期多板880785, 最近异动880884, 户数减少880887, 近期强势 880880
       ignore_margin_trading: true # 是否剔除两融
       holding_period: 1           # 持股周期, 默认是1天, 即T+1卖出
       sell_strategy: 117          # 关联卖出策略
       rules:
-        price: 2.00~30.00                      # 股价范围
-        open_turn_z: 1.50~200.00               # 换手z范围
-        open_change_rate: -2.00~2.00           # 开盘涨幅
+        price: 2.00~30.00            # 股价范围
+        open_turn_z: 1.50~200.00     # 换手z范围
+        open_change_rate: -2.00~2.00 # 开盘涨幅
     - id: 117
       name: 一刀切卖出
       auto: false

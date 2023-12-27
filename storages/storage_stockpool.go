@@ -136,7 +136,7 @@ func stockPoolMerge(model models.Strategy, date string, orders []models.Statisti
 func strategyOrderIsFinished(model models.Strategy) bool {
 	strategyId := model.Code()
 	strategyName := models.QmtStrategyName(model)
-	tradeRule := config.GetTradeRule(strategyId)
+	tradeRule := config.GetStrategyParameterByCode(strategyId)
 	if tradeRule == nil || !tradeRule.BuyEnable() {
 		return true
 	}
@@ -156,7 +156,7 @@ func strategyOrderIsFinished(model models.Strategy) bool {
 // 检查买入订单
 func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool {
 	tradeDate := trading.FixTradeDate(date)
-	tradeRule := config.GetTradeRule(model.Code())
+	tradeRule := config.GetStrategyParameterByCode(model.Code())
 	if tradeRule != nil && tradeRule.BuyEnable() {
 		direction := trader.BUY
 		numberOfStrategy := CountStrategyOrders(tradeDate, model, direction)

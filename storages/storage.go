@@ -38,7 +38,7 @@ func OutputStatistics(model models.Strategy, date string, v []models.Statistics)
 	if df.Nrow() == 0 {
 		return
 	}
-	tradeRule := config.GetTradeRule(model.Code())
+	tradeRule := config.GetStrategyParameterByCode(model.Code())
 	if tradeRule == nil || !tradeRule.Enable() {
 		// 配置不存在, 或者规则无效
 		return

@@ -34,7 +34,7 @@ type Position struct {
 	YesterdayVolume int     `name:"昨夜拥股" dataframe:"yesterday_volume"` // 昨夜拥股
 	AvgPrice        float64 `name:"成本价" dataframe:"avg_price"`         // 成本价
 	CreateTime      string  `name:"创建时间" dataframe:"create_time"`      // 创建时间
-	LastOrderId     string  `name:"前订单ID" dataframe:"last_order_id"`   //  前订单ID
+	LastOrderId     string  `name:"前订单ID" dataframe:"last_order_id"`   // 前订单ID
 	BuyTime         string  `name:"买入时间" dataframe:"buy_time"`         // 买入时间
 	BuyPrice        float64 `name:"买入价格" dataframe:"buy_price"`        // 买入价格
 	BuyVolume       int     `name:"买入数量" dataframe:"buy_volume"`       // 买入数量

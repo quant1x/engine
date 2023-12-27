@@ -33,7 +33,7 @@ func jobOneSizeFitsAllSales() {
 func cookieCutterSell() {
 	sellStrategyCode := models.ModelOneSizeFitsAllSells
 	// 1. 获取117号策略(卖出)
-	sellRule := config.GetTradeRule(sellStrategyCode)
+	sellRule := config.GetStrategyParameterByCode(sellStrategyCode)
 	if sellRule == nil {
 		return
 	}
@@ -165,9 +165,9 @@ func getEarlierDate(period int) string {
 }
 
 // 获取所有挂接了指定的卖出策略ID的交易规则
-func getTradeRuleList(sellStrategyId int) []config.TradeRule {
+func getStrategyParameterList(sellStrategyId int) []config.StrategyParameter {
 	traderConfig := config.TraderConfig()
-	var list []config.TradeRule
+	var list []config.StrategyParameter
 	for _, v := range traderConfig.Strategies {
 		if v.Flag == models.OrderFlagSell || v.SellStrategy != sellStrategyId {
 			continue
@@ -180,7 +180,7 @@ func getTradeRuleList(sellStrategyId int) []config.TradeRule {
 // 捡出T+HoldingPeriod日的股票列表
 func checkoutCanSellStockList(sellStrategyId int) []string {
 	var list []string
-	tradeRules := getTradeRuleList(sellStrategyId)
+	tradeRules := getStrategyParameterList(sellStrategyId)
 	if len(tradeRules) == 0 {
 		return list
 	}

@@ -219,7 +219,7 @@ func DirectOrder(direction Direction, strategyName, orderRemark, securityCode st
 // 计算策略标的的可用资金
 func CalculateFundForStrategy(model models.Strategy) float64 {
 	strategyCode := model.Code()
-	rule := config.GetTradeRule(strategyCode)
+	rule := config.GetStrategyParameterByCode(strategyCode)
 	if rule == nil {
 		return InvalidFee
 	}

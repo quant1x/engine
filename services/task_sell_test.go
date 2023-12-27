@@ -16,7 +16,7 @@ func TestTaskSell_getEarlierDate(t *testing.T) {
 func TestTaskSell_LastSession(t *testing.T) {
 	sellStrategyCode := models.ModelOneSizeFitsAllSells
 	// 1. 获取117号策略(卖出)
-	sellRule := config.GetTradeRule(sellStrategyCode)
+	sellRule := config.GetStrategyParameterByCode(sellStrategyCode)
 	if sellRule == nil {
 		return
 	}

@@ -84,9 +84,9 @@ func calculateTheoreticalFund() (theoretical, cash float64) {
 // 返回值:
 //
 //	availableFund: 可动用资金量
-func CalculateAvailableFund(tradeRule *config.TradeRule) float64 {
+func CalculateAvailableFund(strategyParameter *config.StrategyParameter) float64 {
 	onceAccount.Do(lazyInitFundPool)
-	if tradeRule.Total < 1 {
+	if strategyParameter.Total < 1 {
 		return InvalidFee
 	}
 	// 1. 检查可用资金
@@ -94,12 +94,12 @@ func CalculateAvailableFund(tradeRule *config.TradeRule) float64 {
 		return InvalidFee
 	}
 	// 2. 计算策略的可用资金, 总可用资金*策略权重
-	strategy_fund := accountTheoreticalFund * tradeRule.Weight
-	single_funds_available := num.Decimal(strategy_fund / float64(tradeRule.Total))
+	strategy_fund := accountTheoreticalFund * strategyParameter.Weight
+	single_funds_available := num.Decimal(strategy_fund / float64(strategyParameter.Total))
 	// 3. 检查策略的可用资金范围
-	if single_funds_available > tradeRule.FeeMax {
-		single_funds_available = tradeRule.FeeMax
-	} else if single_funds_available < tradeRule.FeeMin {
+	if single_funds_available > strategyParameter.FeeMax {
+		single_funds_available = strategyParameter.FeeMax
+	} else if single_funds_available < strategyParameter.FeeMin {
 		return InvalidFee
 	}
 	// 4. 检查可用资金的最大值和最小值

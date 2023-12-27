@@ -8,7 +8,7 @@ import (
 
 func TestConfig(t *testing.T) {
 	strategyCode := 82
-	rule := config.GetTradeRule(strategyCode)
+	rule := config.GetStrategyParameterByCode(strategyCode)
 	fmt.Println(rule)
 	list := rule.StockList()
 	fmt.Println(list)

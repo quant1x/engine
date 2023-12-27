@@ -2,10 +2,8 @@ package trader
 
 import (
 	"fmt"
-	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/strategies"
-	"gitee.com/quant1x/gox/concurrent"
 	"testing"
 )
 
@@ -46,35 +44,4 @@ func TestCalculateFundForStrategy(t *testing.T) {
 	model = new(TestModel)
 	fund := CalculateFundForStrategy(model)
 	fmt.Println(fund)
-}
-
-type TestModel struct{}
-
-func (TestModel) Code() models.ModelKind {
-	return 82
-}
-
-func (TestModel) Name() string {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (TestModel) OrderFlag() string {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (TestModel) Filter(snapshot factors.QuoteSnapshot) error {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (TestModel) Sort(snapshots []factors.QuoteSnapshot) models.SortedStatus {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (TestModel) Evaluate(securityCode string, result *concurrent.TreeMap[string, models.ResultInfo]) {
-	//TODO implement me
-	panic("implement me")
 }

@@ -59,7 +59,7 @@ func BackTesting(countDays, countTopN int) {
 		return
 	}
 	//TODO: 这里应该要取策略的规则参数
-	tradeRule := config.GetTradeRule(0)
+	tradeRule := config.GetStrategyParameterByCode(0)
 	if tradeRule == nil {
 		return
 	}

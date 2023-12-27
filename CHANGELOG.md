@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.0.1] - 2023-12-27
+### Changed
+- 调整策略参数.
+- 修订默认配置.
+- 修订默认配置.
+
 ## [1.0.0] - 2023-12-26
 ### Changed
 - 调整过滤规则, 规则参数从策略中加载.
@@ -739,8 +745,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.0.0...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.0.1...HEAD
 
+[1.0.1]: https://gitee.com/quant1x/engine/compare/v1.0.0...v1.0.1
 [1.0.0]: https://gitee.com/quant1x/engine/compare/v0.9.9...v1.0.0
 [0.9.9]: https://gitee.com/quant1x/engine/compare/v0.9.8...v0.9.9
 [0.9.8]: https://gitee.com/quant1x/engine/compare/v0.9.7...v0.9.8

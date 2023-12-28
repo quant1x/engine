@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.0.3] - 2023-12-28
+### Changed
+- 跳空低开统一加在基础规则中.
+- 调整跳空低开的开关到规则参数结构中.
+
 ## [1.0.2] - 2023-12-28
 ### Changed
 - 回测增加check个股在策略中的过滤情况, 输出失败的详细信息.
@@ -752,8 +757,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.0.2...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.0.3...HEAD
 
+[1.0.3]: https://gitee.com/quant1x/engine/compare/v1.0.2...v1.0.3
 [1.0.2]: https://gitee.com/quant1x/engine/compare/v1.0.1...v1.0.2
 [1.0.1]: https://gitee.com/quant1x/engine/compare/v1.0.0...v1.0.1
 [1.0.0]: https://gitee.com/quant1x/engine/compare/v0.9.9...v1.0.0

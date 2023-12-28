@@ -19,9 +19,12 @@ var (
 	ErrRangeOfOpeningQuantityRatio = exception.New(errorRuleBase+1, "非开盘量比范围")
 	ErrRangeOfOpeningChangeRate    = exception.New(errorRuleBase+2, "非开盘涨跌幅范围")
 	ErrRangeOfFundFlow             = exception.New(errorRuleBase+3, "非资金流出")
+	ErrHistoryNotExist             = exception.New(errorRuleBase+4, "没有找到history数据")
+	ErrRiskOfGapDown               = exception.New(errorRuleBase+5, "开盘存在向下跳空缺口")
+	ErrExchangeNotExist            = exception.New(errorRuleBase+4, "没有找到history数据")
 )
 
-// ruleBase 基本面规则
+// ruleBase 基础规则
 func ruleBase(ruleParameter config.RuleParameter, snapshot factors.QuoteSnapshot) error {
 	// 基础过滤规则
 	securityCode := snapshot.Code
@@ -47,14 +50,24 @@ func ruleBase(ruleParameter config.RuleParameter, snapshot factors.QuoteSnapshot
 	//}
 	// 6. exchange 过滤
 	exchange := factors.GetL5Exchange(securityCode)
-	if exchange != nil {
+	if exchange == nil {
+		//return ErrExchangeNotExist
+	} else {
 		//// 6.1 资金流向
 		//if exchange.FundFlow != 0 && (exchange.FundFlow/TenThousand) < RuleParameters.MaxReduceAmount {
 		//	return ErrRangeOfFundFlow
 		//}
 	}
-
-	_ = securityCode
+	// 7. 历史数据
+	history := factors.GetL5History(securityCode)
+	if history == nil {
+		return ErrHistoryNotExist
+	} else {
+		// 7.1 开盘存在跳空缺口
+		if !ruleParameter.GapDown && history.LOW >= snapshot.Open {
+			return ErrRiskOfGapDown
+		}
+	}
 	// 规则通过
 	return nil
 }

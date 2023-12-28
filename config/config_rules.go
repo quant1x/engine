@@ -23,4 +23,5 @@ type RuleParameter struct {
 	AmplitudeRatio              NumberRange `yaml:"amplitude_ratio" default:""`                  // 振幅范围, 默认不限制
 	BiddingVolume               NumberRange `yaml:"bidding_volume" default:""`                   // 5档行情委托平均值范围, 默认不限制
 	Sentiment                   NumberRange `yaml:"sentiment" default:"38.2~61.80"`              // 情绪范围
+	GapDown                     bool        `yaml:"gap_down" default:"true"`                     // 买入是否允许跳空低开, 默认是允许
 }

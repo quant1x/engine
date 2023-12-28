@@ -21,7 +21,7 @@ var CmdBackTesting = &cmder.Command{
 	Short: "回测",
 	Run: func(cmd *cmder.Command, args []string) {
 		securityCode = strings.TrimSpace(securityCode)
-		securityCode = proto.CorrectSecurityCode(safesSecurityCode)
+		securityCode = proto.CorrectSecurityCode(securityCode)
 		if len(securityCode) > 0 {
 			tracker.CheckStrategy(strategyCode, securityCode)
 		} else {

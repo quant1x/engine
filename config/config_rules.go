@@ -5,6 +5,7 @@ type RuleParameter struct {
 	SectorsFilter               bool        `yaml:"sectors_filter" default:"false"`              // 是否启用板块过滤, false代表全市场扫描
 	SectorsTopN                 int         `yaml:"sectors_top_n" default:"3"`                   // 最多关联多少个板块, 默认3个
 	StockTopNInSector           int         `yaml:"stock_top_n_in_sector" default:"5"`           // 板块内个股排名前N
+	IgnoreRuleGroup             []int       `yaml:"ignore_rule_group"`                           // 忽略规则组合
 	IgnoreCodes                 []string    `yaml:"ignore_codes" default:"[\"sh68\",\"bj\"]"`    // 忽略的证券代码段, 默认忽略科创板和北交所全部
 	MaximumIncreaseWithin5days  float64     `yaml:"maximum_increase_within_5d" default:"20.00"`  // 20.00 5日累计最大涨幅
 	MaximumIncreaseWithin10days float64     `yaml:"maximum_increase_within_10d" default:"70.00"` // 70.00 10日累计最大涨幅

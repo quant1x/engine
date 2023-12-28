@@ -51,6 +51,11 @@ func initSubCommands() {
 	initBackTesting()
 }
 
+// InitCommands 公开初始化函数
+func InitCommands() {
+	initSubCommands()
+}
+
 // GlobalFlags engine支持的全部命令
 func GlobalFlags() *cmder.Command {
 	initSubCommands()

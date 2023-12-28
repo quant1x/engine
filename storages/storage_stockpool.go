@@ -123,6 +123,7 @@ func stockPoolMerge(model models.Strategy, date string, orders []models.Statisti
 			continue
 		}
 		v.UpdateTime = updateTime
+		logger.Infof("%s[%d]: buy queue append %s", model.Name(), model.Code(), v.Code)
 		newList = append(newList, *v)
 	}
 	if len(newList) > 0 {
@@ -183,31 +184,37 @@ func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool
 				// 2. 检查买入已完成状态
 				ok := CheckOrderState(date, model, securityCode, direction)
 				if ok {
+					logger.Errorf("%s[%d]: %s 已买入, 放弃", model.Name(), model.Code(), securityCode)
 					continue
 				}
 				// 3. 首先推送订单已完成状态
 				_ = PushOrderState(date, model, securityCode, direction)
 				if !trading.DateIsTradingDay() {
 					// 非交易日
+					logger.Errorf("%s[%d]: %s 非交易日, 放弃", model.Name(), model.Code(), securityCode)
 					continue
 				}
 				if !tradeRule.Session.IsTrading() {
 					// 非交易时段
+					logger.Errorf("%s[%d]: %s 非交易时段, 放弃", model.Name(), model.Code(), securityCode)
 					continue
 				}
 				// 4. 执行买入
 				fund := trader.CalculateAvailableFund(tradeRule)
 				if fund <= trader.InvalidFee {
+					logger.Errorf("%s[%d]: %s 可用资金为0, 放弃", model.Name(), model.Code(), securityCode)
 					continue
 				}
 				// 5. 计算买入费用
 				tradeFee := trader.EvaluateFeeForBuy(securityCode, fund, price)
 				if tradeFee.Volume <= trader.InvalidVolume {
+					logger.Errorf("%s[%d]: %s 可买数量为0, 放弃", model.Name(), model.Code(), securityCode)
 					continue
 				}
 				// 6. 执行买入
 				orderId, err := trader.PlaceOrder(direction, model, securityCode, tradeFee.Price, tradeFee.Volume)
 				if err != nil {
+					logger.Errorf("%s[%d]: %s 下单失败, error=%+v", model.Name(), model.Code(), securityCode, err)
 					continue
 				}
 				// 7. 保存订单ID

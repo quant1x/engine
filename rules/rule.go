@@ -81,6 +81,9 @@ func Filter(ruleParameter config.RuleParameter, snapshot factors.QuoteSnapshot) 
 	slices.Sort(kinds)
 	for _, kind := range kinds {
 		if rule, ok := mapRules[kind]; ok {
+			if slices.Contains(ruleParameter.IgnoreRuleGroup, int(rule.Kind())) {
+				continue
+			}
 			err = rule.Exec(ruleParameter, snapshot)
 			if err != nil {
 				failed = rule.Kind()

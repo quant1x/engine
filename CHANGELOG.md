@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.0.2] - 2023-12-28
+### Changed
+- 回测增加check个股在策略中的过滤情况, 输出失败的详细信息.
+- 增加检查指定个股在策略中的执行情况.
+- 调整测试代码.
+- 修订测试代码.
+
 ## [1.0.1] - 2023-12-27
 ### Changed
 - 调整策略参数.
@@ -745,8 +752,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.0.1...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.0.2...HEAD
 
+[1.0.2]: https://gitee.com/quant1x/engine/compare/v1.0.1...v1.0.2
 [1.0.1]: https://gitee.com/quant1x/engine/compare/v1.0.0...v1.0.1
 [1.0.0]: https://gitee.com/quant1x/engine/compare/v0.9.9...v1.0.0
 [0.9.9]: https://gitee.com/quant1x/engine/compare/v0.9.8...v0.9.9

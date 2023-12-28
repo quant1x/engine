@@ -13,8 +13,7 @@ func Test_baseFilter(t *testing.T) {
 	code = "sh601188"
 	code = "sz002682"
 	snapshot := models.GetTick(code)
-	strategyParametet := config.GetStrategyParameterByCode(0)
-	passed, failKind, err := Filter(strategyParametet.Rules, *snapshot)
+	strategyParameter := config.GetStrategyParameterByCode(0)
+	passed, failKind, err := Filter(strategyParameter.Rules, *snapshot)
 	fmt.Println(passed, failKind, err)
-
 }

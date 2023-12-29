@@ -12,19 +12,26 @@ import (
 	"sync"
 )
 
-// ModelKind 做多64个策略
+// ModelKind 模型类型编码, 整型
 type ModelKind = int
 
 const (
-	ModelZero ModelKind = 0 // 0号策略
+	ModelZero                ModelKind = 0   // 0号策略, 是一个特殊策略, 不允许覆盖
+	ModelHousNo1             ModelKind = 1   // 1号策略, 经典的默认策略, 不允许覆盖
+	Model89K                 ModelKind = 89  // 89号策略, 89K策略, 不允许覆盖
+	ModelOneSizeFitsAllSells ModelKind = 117 // 卖出策略: 一刀切(Panic sell, cookie-cutter, One size fits all sales)
+	ModelNoShareHolding      ModelKind = 861 // 卖出策略: 不留了
 )
 
-const (
-	ModelHousNo1             ModelKind = 1 << iota // 1号策略
-	ModelTail                                      // 尾盘策略
-	ModelTick                                      // 盘中实时策略
-	ModelOneSizeFitsAllSells ModelKind = 117       // 卖出策略: 一刀切(Panic sell, cookie-cutter, One size fits all sales)
-	ModelNoShareHolding      ModelKind = 861       // 卖出策略: 不留了
+var (
+	// ReserveStrategyNumberRanges Quant1X保留的策略编码范围
+	ReserveStrategyNumberRanges = []ModelKind{
+		ModelZero,
+		ModelHousNo1,
+		Model89K,
+		ModelOneSizeFitsAllSells,
+		ModelNoShareHolding,
+	}
 )
 
 const (
@@ -123,15 +130,14 @@ func UsageStrategyList() string {
 	return usage
 }
 
-type StrategyWrap struct {
+type StrategySummary struct {
 	Type ModelKind
 	Name string
 }
 
 var (
-	MapStrategies = map[ModelKind]StrategyWrap{
+	MapStrategies = map[ModelKind]StrategySummary{
 		ModelZero:    {Type: ModelZero, Name: "0号策略"},
 		ModelHousNo1: {Type: ModelHousNo1, Name: "1号策略"},
-		ModelTail:    {Type: ModelTail, Name: "尾盘策略"},
 	}
 )

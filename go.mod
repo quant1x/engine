@@ -6,7 +6,7 @@ require (
 	gitee.com/quant1x/gotdx v1.18.2
 	gitee.com/quant1x/gox v1.16.2
 	gitee.com/quant1x/pandas v1.2.6
-	gitee.com/quant1x/pkg v0.1.7
+	gitee.com/quant1x/pkg v0.1.8
 	gitee.com/quant1x/ta-lib v0.3.1
 	github.com/bits-and-blooms/bitset v1.12.0
 	github.com/spf13/cobra v1.8.0
@@ -21,6 +21,7 @@ require (
 	github.com/campoy/embedmd v1.0.0 // indirect
 	github.com/dlclark/regexp2 v1.10.0 // indirect
 	github.com/frankban/quicktest v1.14.6 // indirect
+	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/go-fonts/liberation v0.3.2 // indirect
 	github.com/go-latex/latex v0.0.0-20231108140139-5c1ce85aa4ea // indirect
 	github.com/go-pdf/fpdf v0.9.0 // indirect
@@ -37,7 +38,7 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/rogpeppe/fastuuid v1.2.0 // indirect
-	github.com/rogpeppe/go-internal v1.11.0 // indirect
+	github.com/rogpeppe/go-internal v1.12.0 // indirect
 	github.com/shabbyrobe/xmlwriter v0.0.0-20230525083848-85336ec334fa // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/tealeg/xlsx/v3 v3.3.4 // indirect
@@ -46,5 +47,6 @@ require (
 	golang.org/x/text v0.14.0 // indirect
 	gonum.org/v1/gonum v0.14.0 // indirect
 	gonum.org/v1/plot v0.14.0 // indirect
+	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )

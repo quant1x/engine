@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.0.4] - 2023-12-29
+### Changed
+- 新增工具集子命令, 实现了tail功能.
+
 ## [1.0.3] - 2023-12-28
 ### Changed
 - 跳空低开统一加在基础规则中.
@@ -757,8 +761,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.0.3...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.0.4...HEAD
 
+[1.0.4]: https://gitee.com/quant1x/engine/compare/v1.0.3...v1.0.4
 [1.0.3]: https://gitee.com/quant1x/engine/compare/v1.0.2...v1.0.3
 [1.0.2]: https://gitee.com/quant1x/engine/compare/v1.0.1...v1.0.2
 [1.0.1]: https://gitee.com/quant1x/engine/compare/v1.0.0...v1.0.1

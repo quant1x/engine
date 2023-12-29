@@ -16,7 +16,7 @@ import (
 const (
 	kErrorCapitalBase = 90000 // 股本异常错误码基础值
 
-	kUrlEastmoneyGdfxHoldingAnalyse     = "https://datacenter-web.eastmoney.com/api/data/v1/get"
+	urlEastmoneyGdfxHoldingAnalyse      = "https://datacenter-web.eastmoney.com/api/data/v1/get"
 	EastmoneyGdfxHoldingAnalysePageSize = 500
 )
 
@@ -113,7 +113,7 @@ func getFreeHoldingAnalyse(pageNumber ...int) ([]HoldingAnalyse, int, error) {
 		"client":      {"WEB"},
 		"filter":      {fmt.Sprintf("(END_DATE>='%s')", endDate)},
 	}
-	url := kUrlEastmoneyGdfxHoldingAnalyse + "?" + params.Encode()
+	url := urlEastmoneyGdfxHoldingAnalyse + "?" + params.Encode()
 	data, err := http.Get(url)
 	//fmt.Println(api.Bytes2String(data))
 	var holds = []HoldingAnalyse{}
@@ -161,7 +161,7 @@ func FreeHoldingAnalyse(pageNumber ...int) ([]CirculatingShareholder, int, error
 		"client":      {"WEB"},
 		"filter":      {fmt.Sprintf("(END_DATE>='%s')", endDate)},
 	}
-	url := kUrlEastmoneyGdfxHoldingAnalyse + "?" + params.Encode()
+	url := urlEastmoneyGdfxHoldingAnalyse + "?" + params.Encode()
 	data, err := http.Get(url)
 	var holds = []HoldingAnalyse{}
 	obj, err := fastjson.ParseBytes(data)

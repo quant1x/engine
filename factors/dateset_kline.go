@@ -57,26 +57,6 @@ func (k *DataKLine) Check(cacheDate, featureDate string) error {
 	panic("implement me")
 }
 
-//func (k *DataKLine) Kind() cache.Kind {
-//	return BaseKLine
-//}
-//
-//func (k *DataKLine) Key() string {
-//	return mapDataSets[k.Kind()].Key()
-//}
-//
-//func (k *DataKLine) Name() string {
-//	return mapDataSets[k.Kind()].Name()
-//}
-//
-//func (k *DataKLine) Owner() string {
-//	return mapDataSets[k.Kind()].Owner()
-//}
-//
-//func (k *DataKLine) Usage() string {
-//	return mapDataSets[k.Kind()].Name()
-//}
-
 func (k *DataKLine) Filename(date, code string) string {
 	//TODO implement me
 	_ = code

@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.0.5] - 2023-12-30
+### Changed
+- 增加东方财富两融数据接口的实现.
+- 更新gotdx版本.
+- 预留增加两融详细数据.
+- 测试通达信问小达的接口, 失败.
+- 删除废弃的代码.
+- 调整url常量前缀, 去掉k.
+- 优化模型部分配置性代码.
+- 修复策略接口源文件拼写的错误.
+- 更新依赖库版本.
+
 ## [1.0.4] - 2023-12-29
 ### Changed
 - 新增工具集子命令, 实现了tail功能.
@@ -761,8 +773,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.0.4...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.0.5...HEAD
 
+[1.0.5]: https://gitee.com/quant1x/engine/compare/v1.0.4...v1.0.5
 [1.0.4]: https://gitee.com/quant1x/engine/compare/v1.0.3...v1.0.4
 [1.0.3]: https://gitee.com/quant1x/engine/compare/v1.0.2...v1.0.3
 [1.0.2]: https://gitee.com/quant1x/engine/compare/v1.0.1...v1.0.2

@@ -34,11 +34,11 @@ func TailFileWithNumber(filename string, config tail.Config, n int) {
 		return
 	}
 
-	sb := strings.Builder{}
+	builder := strings.Builder{}
 	for line := range t.Lines {
-		sb.WriteString(line.Text + "\n")
+		builder.WriteString(line.Text + "\n")
 	}
-	arr := strings.Split(sb.String(), "\n")
+	arr := strings.Split(builder.String(), "\n")
 	total := len(arr)
 	pos := n + 1
 	if n >= total {

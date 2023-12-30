@@ -24,6 +24,18 @@ func (this TradingSession) String() string {
 	return builder.String()
 }
 
+func (this TradingSession) v2String() string {
+	builder := strings.Builder{}
+	//builder.WriteByte('[')
+	var arr []string
+	for _, timeRange := range this.sessions {
+		arr = append(arr, timeRange.String())
+	}
+	builder.WriteString(strings.Join(arr, ","))
+	//builder.WriteByte(']')
+	return builder.String()
+}
+
 func (this *TradingSession) Parse(text string) error {
 	var sessions []TimeRange
 	text = strings.TrimSpace(text)

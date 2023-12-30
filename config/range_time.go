@@ -37,6 +37,10 @@ func (this TimeRange) String() string {
 	return fmt.Sprintf("{begin: %s, end: %s}", this.begin, this.end)
 }
 
+func (this TimeRange) v2String() string {
+	return fmt.Sprintf("%s~%s", this.begin, this.end)
+}
+
 func (this *TimeRange) Parse(text string) error {
 	text = strings.TrimSpace(text)
 	arr := stringRangeRegexp.Split(text, -1)

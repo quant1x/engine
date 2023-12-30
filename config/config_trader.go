@@ -79,8 +79,12 @@ func (t TraderParameter) ResetPositionRatio() {
 	remainingCount := len(unassignedStrategies)
 	if remainingRatio > 0 && remainingCount > 0 {
 		averageFundPercentage := remainingRatio / float64(remainingCount)
-		for _, v := range unassignedStrategies {
+		for i, v := range unassignedStrategies {
 			v.Weight = averageFundPercentage
+			if i+1 == remainingCount {
+				v.Weight = remainingRatio
+			}
+			remainingRatio -= v.Weight
 		}
 	}
 }

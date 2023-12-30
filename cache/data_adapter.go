@@ -1,7 +1,7 @@
 package cache
 
 import (
-	"gitee.com/quant1x/gox/errors"
+	"errors"
 	"slices"
 	"sync"
 )

@@ -1,7 +1,7 @@
 package command
 
 import (
-	"gitee.com/quant1x/gox/errors"
+	"errors"
 	"testing"
 )
 

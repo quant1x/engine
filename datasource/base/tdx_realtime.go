@@ -2,6 +2,7 @@ package base
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/gotdx"
@@ -9,24 +10,26 @@ import (
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/errors"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/runtime"
 	"os"
 	"time"
 )
 
+var (
+	ErrTdxApiQuotesTickMaxBatchSizeExceeded = errors.New(fmt.Sprintf("[tdx-api-quotes-tick]batch size exceeded maximum(%d) limit", quotes.TDX_SECURITY_QUOTES_MAX))
+)
+
 // BatchRealtimeBasicKLine 批量获取实时行情数据
 func BatchRealtimeBasicKLine(codes []string) error {
 	if len(codes) > quotes.TDX_SECURITY_QUOTES_MAX {
-		message := fmt.Sprintf("BatchKLineWideRealtime: codes count > %d", quotes.TDX_SECURITY_QUOTES_MAX)
-		return errors.New(message)
+		return ErrTdxApiQuotesTickMaxBatchSizeExceeded
 	}
 	now := time.Now()
 	nowServerTime := now.Format(trading.CN_SERVERTIME_FORMAT)
-	lastTradeday := trading.LastTradeDate()
+	lastTradingDay := trading.LastTradeDate()
 	today := trading.Today()
-	if lastTradeday != today {
+	if lastTradingDay != today {
 		// 当天非交易日, 不更新, 直接返回
 		return nil
 	}
@@ -58,7 +61,7 @@ func BatchRealtimeBasicKLine(codes []string) error {
 		}
 		securityCode := proto.GetMarketFlag(v.Market) + v.Code
 		kl := KLine{
-			Date:   lastTradeday,
+			Date: lastTradingDay,
 			Open:   v.Open,
 			Close:  v.Price,
 			High:   v.High,
@@ -86,7 +89,7 @@ func BatchRealtimeBasicKLine(codes []string) error {
 			UpdateAllBasicKLine(securityCode)
 			continue
 		}
-		ts := trading.TradeRange(cacheLastDate, lastTradeday)
+		ts := trading.TradeRange(cacheLastDate, lastTradingDay)
 		if len(ts) > 2 {
 			// 超过2天的差距, 不能用realtime更新K线数据
 			// 只能是当天更新 或者是新增, 跨越2个以上的交易日不更新
@@ -97,7 +100,7 @@ func BatchRealtimeBasicKLine(codes []string) error {
 		// 数据差异数
 		diffDays := 0
 		// 当日的K线数据已经存在
-		if cacheLastDate == lastTradeday {
+		if cacheLastDate == lastTradingDay {
 			// 如果最后一条数据和最后一个交易日相同, 那么去掉缓存中的最后一条, 用实时数据填补
 			// 这种情况的出现是K线被更新过了, 现在做的是用快照更新K线
 			diffDays = 1

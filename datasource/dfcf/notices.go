@@ -16,15 +16,14 @@ import (
 
 const (
 	CacheL5KeyNotices        = "cache/notices"
-	kUrlEastmoneyNotices     = "https://np-anotice-stock.eastmoney.com/api/security/ann"
+	urlEastmoneyNotices      = "https://np-anotice-stock.eastmoney.com/api/security/ann"
 	EastmoneyNoticesPageSize = 100
-
-	kErrorBaseNotice = 91000
+	errorBaseNotice          = 91000
 )
 
 var (
-	ErrNoticeBadApi   = exception.New(kErrorBaseNotice, "接口异常")
-	ErrNoticeNotFound = exception.New(kErrorBaseNotice+1, "没有数据")
+	ErrNoticeBadApi   = exception.New(errorBaseNotice, "接口异常")
+	ErrNoticeNotFound = exception.New(errorBaseNotice+1, "没有数据")
 )
 
 var (
@@ -153,7 +152,7 @@ func AllNotices(noticeType EMNoticeType, date string, pageNumber ...int) (notice
 		//"User-Agent": config.HTTP_REQUEST_HEADER_USER_AGENT,
 		//"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
 	}
-	url := kUrlEastmoneyNotices + "?" + params.Encode()
+	url := urlEastmoneyNotices + "?" + params.Encode()
 	//url = "https://np-anotice-stock.eastmoney.com/api/security/ann?cb=jQuery112305241416374967685_1683838825141&sr=-1&page_size=50&page_index=1&ann_type=SHA%2CCYB%2CSZA%2CBJA&client_source=web&f_node=0&s_node=0"
 	data, _, err := http.Request(url, http.MethodGet, "", header)
 	if err != nil {
@@ -278,7 +277,7 @@ func StockNotices(securityCode, beginDate, endDate string, pageNumber ...int) (n
 		//"User-Agent": config.HTTP_REQUEST_HEADER_USER_AGENT,
 		//"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
 	}
-	url := kUrlEastmoneyNotices + "?" + params.Encode()
+	url := urlEastmoneyNotices + "?" + params.Encode()
 	//url = "https://np-anotice-stock.eastmoney.com/api/security/ann?cb=jQuery112305241416374967685_1683838825141&sr=-1&page_size=50&page_index=1&ann_type=SHA%2CCYB%2CSZA%2CBJA&client_source=web&f_node=0&s_node=0"
 	data, err := http.Get(url, header)
 	if err != nil {

@@ -5,13 +5,13 @@ import (
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gox/concurrent"
-	"gitee.com/quant1x/gox/fastjson"
 	"gitee.com/quant1x/gox/http"
 	"gitee.com/quant1x/gox/logger"
+	"gitee.com/quant1x/pkg/fastjson"
 )
 
 const (
-	kUrlRiskAssessment           = "http://page3.tdx.com.cn:7615/site/pcwebcall_static/bxb/json/"
+	urlRiskAssessment            = "http://page3.tdx.com.cn:7615/site/pcwebcall_static/bxb/json/"
 	defaultSafetyScore           = 100
 	defaultSafetyScoreOfNotFound = 100
 	defaultSafetyScoreOfIgnore   = 0
@@ -31,7 +31,7 @@ func GetSafetyScore(securityCode string) (score int) {
 	score = defaultSafetyScore
 	_, _, code := proto.DetectMarket(securityCode)
 	if len(code) == 6 {
-		url := fmt.Sprintf("%s%s.json", kUrlRiskAssessment, code)
+		url := fmt.Sprintf("%s%s.json", urlRiskAssessment, code)
 		data, err := http.Get(url)
 		if err != nil || err == http.NotFound {
 			score = defaultSafetyScoreOfNotFound

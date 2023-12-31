@@ -6,9 +6,9 @@ import (
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/fastjson"
 	"gitee.com/quant1x/gox/http"
 	"gitee.com/quant1x/gox/logger"
+	"gitee.com/quant1x/pkg/fastjson"
 	urlpkg "net/url"
 	"sync"
 )

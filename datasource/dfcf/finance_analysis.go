@@ -5,9 +5,9 @@ import (
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/fastjson"
 	"gitee.com/quant1x/gox/http"
 	"gitee.com/quant1x/gox/logger"
+	"gitee.com/quant1x/pkg/fastjson"
 	urlpkg "net/url"
 )
 
@@ -93,6 +93,7 @@ func GetQuarterlyReports(pageNumber ...int) (reports []QuarterlyReport, pages in
 	pages = result.GetInt("pages")
 	if len(list) > 0 {
 		for _, v := range list {
+			v.GetStringBytes()
 			report := QuarterlyReport{
 				SecuCode:           v.GetString("SECUCODE"),
 				UpdateDate:         v.GetString("UPDATE_DATE"),

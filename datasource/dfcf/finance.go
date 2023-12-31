@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	kUrlFinanceReports              = "https://datacenter-web.eastmoney.com/api/data/v1/get"
+	urlFinanceReports               = "https://datacenter-web.eastmoney.com/api/data/v1/get"
 	EastmoneyFinanceReportsPageSize = 100
 )
 
@@ -73,7 +73,7 @@ func FinanceReports(date string, pageNumber ...int) (reports []PreviewQuarterlyR
 		"filter":      {fmt.Sprintf("(REPORT_DATE>='%s')", beginDate)},
 		//"callback": {"jQuery1123017378221241641723_1683879528446"},
 	}
-	url := kUrlFinanceReports + "?" + params.Encode()
+	url := urlFinanceReports + "?" + params.Encode()
 	data, err := http.Get(url)
 	if err != nil {
 		return

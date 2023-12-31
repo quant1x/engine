@@ -7,11 +7,6 @@ import (
 	cmder "github.com/spf13/cobra"
 )
 
-var (
-	updateBases    []cmdFlag[bool]
-	updateFeatures []cmdFlag[bool]
-)
-
 // CmdUpdate 更新数据
 var CmdUpdate = &cmder.Command{
 	Use:     "update",
@@ -20,8 +15,8 @@ var CmdUpdate = &cmder.Command{
 	Args: func(cmd *cmder.Command, args []string) error {
 		return nil
 	},
-	Short: "更新股市数据",
-	Long:  `更新股市数据`,
+	Short: "更新数据",
+	Long:  `更新数据`,
 	Run: func(cmd *cmder.Command, args []string) {
 		fmt.Println()
 		currentDate := cache.DefaultCanUpdateDate()
@@ -29,23 +24,16 @@ var CmdUpdate = &cmder.Command{
 		if flagAll.Value {
 			// 全部更新
 			handleUpdateAll(cacheDate, featureDate)
-		} else if flagBaseData.Value {
-			//handleUpdateBaseData(featureDate)
-			keywords := []string{}
-			for _, m := range updateBases {
-				if m.Value {
-					keywords = append(keywords, m.Name)
-					break
-				}
+		} else if len(flagBaseData.Value) > 0 {
+			all, keywords := parseFields(flagBaseData.Value)
+			if all || len(keywords) == 0 {
+				clear(keywords)
 			}
 			handleUpdateBaseDataWithKeywords(cacheDate, featureDate, keywords...)
-		} else if flagFeatures.Value {
-			keywords := []string{}
-			for _, m := range updateFeatures {
-				if m.Value {
-					keywords = append(keywords, m.Name)
-					break
-				}
+		} else if len(flagFeatures.Value) > 0 {
+			all, keywords := parseFields(flagFeatures.Value)
+			if all || len(keywords) == 0 {
+				clear(keywords)
 			}
 			handleUpdateFeaturesWithKeywords(cacheDate, featureDate, keywords...)
 		} else {
@@ -57,30 +45,19 @@ var CmdUpdate = &cmder.Command{
 
 func initUpdate() {
 	commandInit(CmdUpdate, &flagAll)
+
+	// 1. 基础数据
+	plugins := cache.Plugins(cache.PluginMaskBaseData)
+	flagBaseData.Usage = getPluginsUsage(plugins)
 	commandInit(CmdUpdate, &flagBaseData)
+
+	// 2. 特征数据
+	plugins = cache.Plugins(cache.PluginMaskFeature)
+	flagFeatures.Usage = getPluginsUsage(plugins)
 	commandInit(CmdUpdate, &flagFeatures)
 
-	plugins := cache.Plugins(cache.PluginMaskBaseData)
-	updateBases = make([]cmdFlag[bool], len(plugins))
-	for i, plugin := range plugins {
-		key := plugin.Key()
-		usage := plugin.Usage()
-		updateBases[i] = cmdFlag[bool]{Name: key, Usage: plugin.Owner() + ": " + usage, Value: false}
-		//CmdUpdate.Flags().BoolVar(&(updateFeatures[i].Value), updateFeatures[i].Name, updateFeatures[i].Value, updateFeatures[i].Usage)
-		commandInit(CmdUpdate, &updateBases[i])
-	}
-
-	plugins = cache.Plugins(cache.PluginMaskFeature)
-	updateFeatures = make([]cmdFlag[bool], len(plugins))
-	for i, plugin := range plugins {
-		key := plugin.Key()
-		usage := plugin.Usage()
-		updateFeatures[i] = cmdFlag[bool]{Name: key, Usage: plugin.Owner() + ": " + usage, Value: false}
-		//CmdUpdate.Flags().BoolVar(&(updateFeatures[i].Value), updateFeatures[i].Name, updateFeatures[i].Value, updateFeatures[i].Usage)
-		commandInit(CmdUpdate, &updateFeatures[i])
-	}
+	// 3. 处理异常
 	CmdUpdate.SetFlagErrorFunc(func(cmd *cmder.Command, err error) error {
-		//flag, value := parseFlagError(err)
 		return nil
 	})
 }
@@ -106,10 +83,10 @@ func handleUpdateBaseDataWithKeywords(cacheDate, featureDate string, keywords ..
 	if len(plugins) == 0 {
 		// 1. 获取全部注册的数据集插件
 		mask := cache.PluginMaskBaseData
-		//dataSetList := flash.DataSetList()
 		plugins = cache.Plugins(mask)
 	}
 	storages.BaseDataUpdate(barIndex, featureDate, plugins, cache.OpUpdate)
+	_ = cacheDate
 }
 
 // 更新特征组合
@@ -118,7 +95,6 @@ func handleUpdateFeaturesWithKeywords(cacheDate, featureDate string, keywords ..
 	if len(plugins) == 0 {
 		// 1. 获取全部注册的数据集插件
 		mask := cache.PluginMaskFeature
-		//dataSetList := flash.DataSetList()
 		plugins = cache.Plugins(mask)
 	}
 	storages.FeaturesUpdate(&barIndex, cacheDate, featureDate, plugins, cache.OpUpdate)

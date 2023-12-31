@@ -13,11 +13,6 @@ import (
 	"time"
 )
 
-var (
-	repairBases    = []cmdFlag[bool]{}
-	repairFeatures = []cmdFlag[bool]{}
-)
-
 // CmdRepair 补登历史数据
 var CmdRepair = &cmder.Command{
 	Use:     "repair",
@@ -26,8 +21,8 @@ var CmdRepair = &cmder.Command{
 	Args: func(cmd *cmder.Command, args []string) error {
 		return nil
 	},
-	Short: "修复股市数据",
-	Long:  `修复股市数据`,
+	Short: "修复数据",
+	Long:  `修复数据`,
 	Run: func(cmd *cmder.Command, args []string) {
 		beginDate := trading.FixTradeDate(flagStartDate.Value)
 		endDate := cache.DefaultCanReadDate()
@@ -40,15 +35,9 @@ var CmdRepair = &cmder.Command{
 		base.UpdateTickStartDate(dates[0])
 		if flagAll.Value {
 			handleRepairAll(dates)
-		} else if flagBaseData.Value {
-			keywords := []string{}
-			for _, m := range repairBases {
-				if m.Value {
-					keywords = append(keywords, m.Name)
-					break
-				}
-			}
-			if len(keywords) == 0 {
+		} else if len(flagBaseData.Value) > 0 {
+			all, keywords := parseFields(flagBaseData.Value)
+			if all || len(keywords) == 0 {
 				handleRepairAllDataSets(dates)
 			} else {
 				plugins := cache.PluginsWithName(cache.PluginMaskBaseData, keywords...)
@@ -58,15 +47,9 @@ var CmdRepair = &cmder.Command{
 					handleRepairDataSetsWithPlugins(dates, plugins)
 				}
 			}
-		} else if flagFeatures.Value {
-			keywords := []string{}
-			for _, m := range repairFeatures {
-				if m.Value {
-					keywords = append(keywords, m.Name)
-					break
-				}
-			}
-			if len(keywords) == 0 {
+		} else if len(flagFeatures.Value) > 0 {
+			all, keywords := parseFields(flagFeatures.Value)
+			if all || len(keywords) == 0 {
 				handleRepairAllFeatures(dates)
 			} else {
 				plugins := cache.PluginsWithName(cache.PluginMaskFeature, keywords...)
@@ -86,28 +69,18 @@ var CmdRepair = &cmder.Command{
 
 func initRepair() {
 	commandInit(CmdRepair, &flagAll)
-	commandInit(CmdRepair, &flagBaseData)
-	commandInit(CmdRepair, &flagFeatures)
 	commandInit(CmdRepair, &flagStartDate)
 	commandInit(CmdRepair, &flagEndDate)
 
+	// 1. 基础数据
 	plugins := cache.Plugins(cache.PluginMaskBaseData)
-	repairBases = make([]cmdFlag[bool], len(plugins))
-	for i, plugin := range plugins {
-		key := plugin.Key()
-		usage := plugin.Usage()
-		repairBases[i] = cmdFlag[bool]{Name: key, Usage: plugin.Owner() + ": " + usage, Value: false}
-		CmdRepair.Flags().BoolVar(&(repairBases[i].Value), repairBases[i].Name, repairBases[i].Value, repairBases[i].Usage)
-	}
+	flagBaseData.Usage = getPluginsUsage(plugins)
+	commandInit(CmdRepair, &flagBaseData)
 
+	// 2. 特征数据
 	plugins = cache.Plugins(cache.PluginMaskFeature)
-	repairFeatures = make([]cmdFlag[bool], len(plugins))
-	for i, plugin := range plugins {
-		key := plugin.Key()
-		usage := plugin.Usage()
-		repairFeatures[i] = cmdFlag[bool]{Name: key, Usage: plugin.Owner() + ": " + usage, Value: false}
-		CmdRepair.Flags().BoolVar(&(repairFeatures[i].Value), repairFeatures[i].Name, repairFeatures[i].Value, repairFeatures[i].Usage)
-	}
+	flagFeatures.Usage = getPluginsUsage(plugins)
+	commandInit(CmdRepair, &flagFeatures)
 }
 
 func handleRepairAll(dates []string) {

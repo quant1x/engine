@@ -44,11 +44,15 @@ func (this *DataMinutes) Repair(date string) {
 }
 
 func (this *DataMinutes) Increase(snapshot quotes.Snapshot) {
+	_ = snapshot
 	//TODO implement me
 	panic("implement me")
+
 }
 
 func (this *DataMinutes) Print(code string, date ...string) {
+	_ = code
+	_ = date
 	//TODO implement me
 	panic("implement me")
 }

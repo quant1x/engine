@@ -154,19 +154,19 @@ func strategyOrderIsFinished(model models.Strategy) bool {
 	return total >= tradeRule.Total
 }
 
-// 检查买入订单
+// 检查买入订单, 条件满足则买入
 func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool {
 	tradeDate := trading.FixTradeDate(date)
-	tradeRule := config.GetStrategyParameterByCode(model.Code())
-	if tradeRule != nil && tradeRule.BuyEnable() {
+	strategyParameter := config.GetStrategyParameterByCode(model.Code())
+	if strategyParameter != nil && strategyParameter.BuyEnable() {
 		direction := trader.BUY
 		numberOfStrategy := CountStrategyOrders(tradeDate, model, direction)
-		if numberOfStrategy >= tradeRule.Total {
-			logger.Warnf("%s %s: 计划买入=%d, 已完成=%d. ", tradeDate, model.Name(), tradeRule.Total, numberOfStrategy)
+		if numberOfStrategy >= strategyParameter.Total {
+			logger.Warnf("%s %s: 计划买入=%d, 已完成=%d. ", tradeDate, model.Name(), strategyParameter.Total, numberOfStrategy)
 			return true
 		}
 		length := len(list)
-		for i := 0; i < length && numberOfStrategy < tradeRule.Total; i++ {
+		for i := 0; i < length && numberOfStrategy < strategyParameter.Total; i++ {
 			v := &(list[i])
 			if v.Date != tradeDate {
 				continue
@@ -180,7 +180,8 @@ func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool
 					logger.Infof("%s[%d]: %s ProhibitForSelling", model.Name(), model.Code(), securityCode)
 					continue
 				}
-				price := v.Buy
+				// 暂时不用价格笼子, 只向上浮动0.05
+				price := v.Buy + 0.05
 				// 2. 检查买入已完成状态
 				ok := CheckOrderState(date, model, securityCode, direction)
 				if ok {
@@ -194,13 +195,13 @@ func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool
 					logger.Errorf("%s[%d]: %s 非交易日, 放弃", model.Name(), model.Code(), securityCode)
 					continue
 				}
-				if !tradeRule.Session.IsTrading() {
+				if !strategyParameter.Session.IsTrading() {
 					// 非交易时段
 					logger.Errorf("%s[%d]: %s 非交易时段, 放弃", model.Name(), model.Code(), securityCode)
 					continue
 				}
 				// 4. 执行买入
-				fund := trader.CalculateAvailableFund(tradeRule)
+				fund := trader.CalculateAvailableFund(strategyParameter)
 				if fund <= trader.InvalidFee {
 					logger.Errorf("%s[%d]: %s 可用资金为0, 放弃", model.Name(), model.Code(), securityCode)
 					continue
@@ -221,7 +222,7 @@ func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool
 				v.OrderId = orderId
 			}
 		}
-		return numberOfStrategy >= tradeRule.Total
+		return numberOfStrategy >= strategyParameter.Total
 	}
 	return false
 }

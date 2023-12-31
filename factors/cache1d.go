@@ -22,14 +22,12 @@ import (
 //
 //	每天1个证券代码1条数据
 type Cache1D[T Feature] struct {
-	once     coroutine.PeriodicOnce
-	m        sync.RWMutex
-	factory  func(date, securityCode string) T
-	cacheKey string // 缓存关键字
-	Date     string // 日期
-	filename string // 缓存文件名
-	//mapCache    map[string]T
-	//mapCache    concurrent.ConcurrentHashMap[string, T]
+	once        coroutine.PeriodicOnce
+	m           sync.RWMutex
+	factory     func(date, securityCode string) T
+	cacheKey    string // 缓存关键字
+	Date        string // 日期
+	filename    string // 缓存文件名
 	mapCache    *concurrent.TreeMap[string, T]
 	replaceDate string // 替换缓存的日期
 	allCodes    []string
@@ -41,11 +39,9 @@ type Cache1D[T Feature] struct {
 //	key支持多级相对路径, 比如a/b, 创建的路径是~/.quant1x/a/b.yyyy-mm-dd
 func NewCache1D[T Feature](key string, factory func(date, securityCode string) T) *Cache1D[T] {
 	d1 := &Cache1D[T]{
-		cacheKey: key,
-		Date:     "",
-		factory:  factory,
-		//mapCache:    map[string]T{},
-		//mapCache:    concurrent.NewHashMap[string, T](),
+		cacheKey:    key,
+		Date:        "",
+		factory:     factory,
 		mapCache:    concurrent.NewTreeMap[string, T](),
 		replaceDate: "",
 		allCodes:    []string{},
@@ -96,6 +92,7 @@ func (this *Cache1D[T]) Length() int {
 
 // loadCache 加载指定日期的数据
 func (this *Cache1D[T]) loadCache(date string) {
+	// 重置个股列表
 	this.allCodes = market.GetCodeList()
 	this.Date = trading.FixTradeDate(date)
 	this.filename = getCache1DFilepath(this.cacheKey, this.Date)
@@ -177,6 +174,8 @@ func (this *Cache1D[T]) Print(code string, date ...string) {
 }
 
 func (this *Cache1D[T]) Check(cacheDate, featureDate string) {
+	_ = cacheDate
+	_ = featureDate
 	//TODO implement me
 	panic("implement me")
 }
@@ -203,7 +202,7 @@ func (this *Cache1D[T]) Set(securityCode string, newValue T, date ...string) {
 //
 //	泛型T需要保持一个string类型的Date字段
 func (this *Cache1D[T]) Apply(merge func(code string, local *T) (updated bool)) {
-	list := []T{}
+	list := make([]T, 0, len(this.allCodes))
 	for _, securityCode := range this.allCodes {
 		v, found := this.mapCache.Get(securityCode)
 		if !found && this.factory != nil {
@@ -226,7 +225,7 @@ func (this *Cache1D[T]) Apply(merge func(code string, local *T) (updated bool)) 
 }
 
 func (this *Cache1D[T]) Merge(p *treemap.Map) {
-	list := []T{}
+	list := make([]T, 0, len(this.allCodes))
 	for _, securityCode := range this.allCodes {
 		v, found := this.mapCache.Get(securityCode)
 		if !found && this.factory != nil {

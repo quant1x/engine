@@ -27,9 +27,9 @@ func BatchRealtimeBasicKLine(codes []string) error {
 	}
 	now := time.Now()
 	nowServerTime := now.Format(trading.CN_SERVERTIME_FORMAT)
-	lastTradingDay := trading.LastTradeDate()
+	lastTradingDay1 := trading.LastTradeDate()
 	today := trading.Today()
-	if lastTradingDay != today {
+	if lastTradingDay1 != today {
 		// 当天非交易日, 不更新, 直接返回
 		return nil
 	}
@@ -61,7 +61,7 @@ func BatchRealtimeBasicKLine(codes []string) error {
 		}
 		securityCode := proto.GetMarketFlag(v.Market) + v.Code
 		kl := KLine{
-			Date: lastTradingDay,
+			Date:   lastTradingDay1, // 默认
 			Open:   v.Open,
 			Close:  v.Price,
 			High:   v.High,
@@ -89,7 +89,7 @@ func BatchRealtimeBasicKLine(codes []string) error {
 			UpdateAllBasicKLine(securityCode)
 			continue
 		}
-		ts := trading.TradeRange(cacheLastDate, lastTradingDay)
+		ts := trading.TradeRange(cacheLastDate, lastTradingDay1)
 		if len(ts) > 2 {
 			// 超过2天的差距, 不能用realtime更新K线数据
 			// 只能是当天更新 或者是新增, 跨越2个以上的交易日不更新
@@ -100,7 +100,7 @@ func BatchRealtimeBasicKLine(codes []string) error {
 		// 数据差异数
 		diffDays := 0
 		// 当日的K线数据已经存在
-		if cacheLastDate == lastTradingDay {
+		if cacheLastDate == lastTradingDay1 {
 			// 如果最后一条数据和最后一个交易日相同, 那么去掉缓存中的最后一条, 用实时数据填补
 			// 这种情况的出现是K线被更新过了, 现在做的是用快照更新K线
 			diffDays = 1

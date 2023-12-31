@@ -53,7 +53,7 @@ const (
 var (
 	__mapFeatures = map[cache.Kind]cache.DataSummary{
 		FeatureF10:              cache.Summary(FeatureF10, cacheL5KeyF10, "基本面", cache.DefaultDataProvider),
-		FeatureHistory:          cache.Summary(FeatureHistory, cacheL5KeyHistory, "基本面", cache.DefaultDataProvider),
+		FeatureHistory:          cache.Summary(FeatureHistory, cacheL5KeyHistory, "历史数据", cache.DefaultDataProvider),
 		FeatureExchange:         cache.Summary(FeatureExchange, cacheL5KeyExchange, "交易数据集合", cache.DefaultDataProvider),
 		FeatureBreaksThroughBox: cache.Summary(FeatureBreaksThroughBox, cacheL5KeyBox, "有效突破平台", cache.DefaultDataProvider),
 	}

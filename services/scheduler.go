@@ -18,7 +18,7 @@ import (
 //	排名不分先后
 type Task struct {
 	name    string // 任务名称
-	spec    string // 出发条件
+	spec    string // 触发条件
 	Service func() // 任务函数
 }
 

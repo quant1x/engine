@@ -26,7 +26,7 @@ const (
 // 定时任务关键字
 const (
 	keyCronReset            = "clean"           // 定时清理重置数据状态
-	keyCronRealTimeKLine    = "realtime_kline"  //  实时更新K线
+	keyCronRealTimeKLine    = "realtime_kline"  // 实时更新K线
 	keyCronUpdateSnapshot   = "update_snapshot" // 更新快照
 	cronUpdateExchange      = "update_exchange" // 更新exchange
 	keyCronUpdateAll        = "update_all"      // 更新全部数据, 包括基础数据和特征数据

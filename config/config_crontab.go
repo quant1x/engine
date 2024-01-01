@@ -2,7 +2,7 @@ package config
 
 // JobParameter 定时任务配置
 type JobParameter struct {
-	Name    string `yaml:"name" default:""`       // 任务名称
+	//Name    string `yaml:"name" default:""`       // 任务名称
 	Trigger string `yaml:"trigger"  default:""`   // 触发条件
 	Enable  bool   `yaml:"enable" default:"true"` // 任务是否有效
 }

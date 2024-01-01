@@ -15,6 +15,8 @@ const (
 	CronDefaultInterval = "@every 10s"
 	// CronTickInterval tick级别数据的更新频次
 	CronTickInterval = "@every 1s"
+	// 同步订单触发时间, 每交易日15点02分
+	cronSyncOrdersInterval = "2 15 * * *"
 )
 
 const (
@@ -28,9 +30,10 @@ const (
 	keyCronReset            = "clean"           // 定时清理重置数据状态
 	keyCronRealTimeKLine    = "realtime_kline"  // 实时更新K线
 	keyCronUpdateSnapshot   = "update_snapshot" // 更新快照
-	cronUpdateExchange      = "update_exchange" // 更新exchange
+	keyCronUpdateExchange   = "update_exchange" // 更新exchange
 	keyCronUpdateAll        = "update_all"      // 更新全部数据, 包括基础数据和特征数据
 	keyCronCookieCutterSell = "sell_117"        // 一刀切卖出, one-size-fits-all
+	keyCronSyncQmtOrder     = "sync_orders"     // 同步订单
 )
 
 func init() {
@@ -45,7 +48,7 @@ func init() {
 		logger.Fatal(err)
 	}
 	// 更新快照
-	err = Register(cronUpdateExchange, CronTickInterval, jobUpdateExchangeAndSnapshot)
+	err = Register(keyCronUpdateExchange, CronTickInterval, jobUpdateExchangeAndSnapshot)
 	if err != nil {
 		logger.Fatal(err)
 	}
@@ -64,6 +67,11 @@ func init() {
 
 	// 一刀切卖出
 	err = Register(keyCronCookieCutterSell, CronDefaultInterval, jobOneSizeFitsAllSales)
+	if err != nil {
+		logger.Fatal(err)
+	}
+	// 同步QMT订单
+	err = Register(keyCronSyncQmtOrder, cronSyncOrdersInterval, jobSyncTraderOrders)
 	if err != nil {
 		logger.Fatal(err)
 	}

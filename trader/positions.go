@@ -136,7 +136,7 @@ func getPositionsPath() string {
 
 // 持仓缓存文件名
 func positionsFilename() string {
-	filename := fmt.Sprintf("%s/%s-%s", getPositionsPath(), traderConfig.AccountId, qmtPositionsFilename)
+	filename := fmt.Sprintf("%s/%s-%s", getPositionsPath(), traderParameter.AccountId, qmtPositionsFilename)
 	return filename
 }
 
@@ -205,7 +205,7 @@ func UpdatePositions() {
 
 // CacheSync 缓存同步
 func CacheSync() {
-	methedName := "CacheSync"
+	methodName := "CacheSync"
 	periodicOnce.Do(lazyLoadLocalPositions)
 	length := mapPositions.Size()
 	list := make([]Position, 0, length)
@@ -215,6 +215,6 @@ func CacheSync() {
 	cacheFilename := positionsFilename()
 	err := api.SlicesToCsv(cacheFilename, list)
 	if err != nil {
-		logger.Errorf("services.trader:%s, error:%+v", methedName, err)
+		logger.Errorf("services.trader:%s, error:%+v", methodName, err)
 	}
 }

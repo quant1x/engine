@@ -4,6 +4,30 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.0.7] - 2024-01-01
+### Changed
+- 新增定时任务, 每个交易日15点02分同步全天的委托订单.
+- 调整qmt订单路径, 修复不能从配置文件读取的bug.
+- 委托买入启用价格笼子算法, 价格笼子相关的参数从配置文件加载.
+- 优化持仓信息.
+- 为每一组qmt常量设定类型.
+- 优化账户数据.
+- 优化调度任务, 修订同种类型定时任务的源文件名前缀.
+- 策略新增关于价格笼子的两个参数.
+- Crontab配置去掉name字段.
+- 优化cache1d的内存申请方式.
+- 消除部分未使用变量的告警信息.
+- 测试代码: 新增,批量转换证券代码为qmt支持的格式.
+- 调整买入价格逻辑, 从当前价格默认增加0.05.
+- 更新gotdx依赖库版本.
+- 恢复测试前的代码.
+- 测试goland在git提交时格式化的问题.
+- 优化update和repair子命令.
+- 修复特征history名字错误的bug.
+- 迁移fastjson到pkg.
+- 更新依赖库gotdx版本.
+- 调整errors的用法.
+
 ## [1.0.6] - 2023-12-30
 ### Changed
 - 更新gotdx版本,修复交易日历用到最后1天时无法引用下一个交易日的bug.
@@ -779,8 +803,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.0.6...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.0.7...HEAD
 
+[1.0.7]: https://gitee.com/quant1x/engine/compare/v1.0.6...v1.0.7
 [1.0.6]: https://gitee.com/quant1x/engine/compare/v1.0.5...v1.0.6
 [1.0.5]: https://gitee.com/quant1x/engine/compare/v1.0.4...v1.0.5
 [1.0.4]: https://gitee.com/quant1x/engine/compare/v1.0.3...v1.0.4

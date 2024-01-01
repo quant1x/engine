@@ -22,14 +22,14 @@ var (
 )
 
 func GetStockPool() (list []StockPool) {
-	filename := fmt.Sprintf("%s/%s", getQmtCachePath(), filenameStockPool)
+	filename := fmt.Sprintf("%s/%s", cache.GetQmtCachePath(), filenameStockPool)
 	err := api.CsvToSlices(filename, &list)
 	_ = err
 	return
 }
 
 func SaveStockPool(list []StockPool) {
-	filename := fmt.Sprintf("%s/%s", getQmtCachePath(), filenameStockPool)
+	filename := fmt.Sprintf("%s/%s", cache.GetQmtCachePath(), filenameStockPool)
 	err := api.SlicesToCsv(filename, list)
 	_ = err
 	return

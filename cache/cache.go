@@ -86,6 +86,7 @@ func initCache() {
 
 	// 启动性能分析
 	config.StartPprof()
+	initMiniQmt()
 }
 
 // Reset 重置日志记录器

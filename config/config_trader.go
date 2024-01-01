@@ -19,7 +19,7 @@ const (
 type TraderParameter struct {
 	AccountId                   string              `name:"账号ID" yaml:"account_id" dataframe:"888xxxxxxx"`                                      // 账号ID
 	OrderPath                   string              `name:"订单路径" yaml:"order_path"`                                                             // 订单路径
-	TopN                        int                 `yaml:"TopN" default:"3"`                                                                   // 最多输出前多少名个股
+	TopN                        int                 `name:"TopN" yaml:"top_n" default:"3"`                                                      // 最多输出前多少名个股
 	HaveETF                     bool                `name:"是否包含ETF" yaml:"have_etf" default:"false"`                                            // 是否包含ETF
 	PriceCageRatio              float64             `name:"价格笼子比例" yaml:"price_cage_ratio" default:"0.02"`                                      // 价格笼子比例, 默认2%, 小于0就是无限制
 	MinimumPriceFluctuationUnit float64             `name:"价格变动最小单位" yaml:"minimum_price_fluctuation_unit" default:"0.10"`                      // 价格最小变动单位, 默认0.10

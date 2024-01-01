@@ -16,6 +16,7 @@ import (
 )
 
 const (
+	// 状态文件扩展名
 	orderStateFileExtension = ".done"
 )
 
@@ -27,7 +28,7 @@ func Touch(filename string) error {
 
 // 获取状态机路径
 func state_filepath(state_date string) string {
-	flagPath := filepath.Join(getQmtCachePath(), "var", state_date)
+	flagPath := filepath.Join(cache.GetQmtCachePath(), "var", state_date)
 	return flagPath
 }
 

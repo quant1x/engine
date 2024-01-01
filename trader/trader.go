@@ -3,12 +3,15 @@ package trader
 import (
 	"encoding/json"
 	"fmt"
+	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/gotdx/proto"
+	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/http"
 	"gitee.com/quant1x/gox/logger"
 	urlpkg "net/url"
+	"path/filepath"
 	"strings"
 )
 
@@ -31,7 +34,23 @@ var (
 	urlPlaceOrder = urlPrefixForTrade + "/order"
 	// 撤单
 	urlCancelOrder = urlPrefixForTrade + "/cancel"
+	// qmt账户数据路径: qmt/账户id
+	traderQmtOrderPath = filepath.Join(cache.GetQmtCachePath(), traderParameter.AccountId)
 )
+
+// 获得订单文件名
+//
+//	qmt/账户id/orders.yyyy-mm-dd
+func GetOrderFilename(date ...string) string {
+	var tradeDate string
+	if len(date) > 0 {
+		tradeDate = trading.FixTradeDate(date[0])
+	} else {
+		tradeDate = trading.LastTradeDate()
+	}
+	filename := filepath.Join(traderQmtOrderPath, "orders."+tradeDate)
+	return filename
+}
 
 // Direction 交易方向
 type Direction string

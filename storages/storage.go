@@ -17,18 +17,12 @@ var (
 
 const (
 	StrategiesPath = "zero-sum" // 策略结果数据文件存储路径
-	OrdersPath     = "qmt"      // QMT订单缓存路径
+
 )
 
 // GetResultCachePath 获取结果缓存路径
 func GetResultCachePath() string {
 	path := fmt.Sprintf("%s/%s", cache.GetRootPath(), StrategiesPath)
-	return path
-}
-
-// QMT订单文件路径
-func getQmtCachePath() string {
-	path := fmt.Sprintf("%s/%s", cache.GetRootPath(), OrdersPath)
 	return path
 }
 
@@ -50,14 +44,14 @@ func OutputStatistics(model models.Strategy, date string, v []models.Statistics)
 	_ = df.WriteCSV(filename)
 	updateTime, _ := api.ParseTime(v[0].UpdateTime)
 	if trading.CanUpdate(updateTime) {
-		fnOrder := fmt.Sprintf("%s/%s-%s.csv", getQmtCachePath(), date, orderFlag)
+		fnOrder := fmt.Sprintf("%s/%s-%s.csv", cache.GetQmtCachePath(), date, orderFlag)
 		if !api.FileExist(fnOrder) {
 			err := df.WriteCSV(fnOrder)
 			if err != nil {
 				fmt.Println(err)
 				return
 			}
-			fnReady := fmt.Sprintf("%s/%s-%s.ready", getQmtCachePath(), date, orderFlag)
+			fnReady := fmt.Sprintf("%s/%s-%s.ready", cache.GetQmtCachePath(), date, orderFlag)
 			file, err := os.Create(fnReady)
 			if err != nil {
 				fmt.Println(err)

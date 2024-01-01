@@ -10,23 +10,25 @@ import (
 
 // StrategyParameter 策略参数
 type StrategyParameter struct {
-	Id                  int            `name:"策略编码" yaml:"id" default:"-1"`                                    // 策略ID, -1无效
-	Auto                bool           `name:"是否自动执行" yaml:"auto" default:"false"`                             // 是否自动执行
-	Name                string         `name:"策略名称" yaml:"name"`                                               // 策略名称
-	Flag                string         `name:"订单标识" yaml:"flag"`                                               // 订单标识,分早盘,尾盘和盘中
-	Session             TradingSession `name:"时间范围" yaml:"time" default:"09:30:00~11:30:00,13:00:00~14:56:30"` // 可操作的交易时段
-	Weight              float64        `name:"持仓占比" yaml:"weight" default:"0"`                                 // 策略权重, 默认0, 由系统自动分配
-	Total               int            `name:"订单数上限" yaml:"total" default:"3"`                                 // 订单总数, 默认是3
-	FeeMax              float64        `name:"最大费用" yaml:"fee_max" default:"20000.00"`                         // 可投入资金-最大
-	FeeMin              float64        `name:"最小费用" yaml:"fee_min" default:"10000.00"`                         // 可投入资金-最小
-	Sectors             []string       `name:"板块" yaml:"sectors" default:""`                                   // 板块, 策略适用的板块列表, 默认板块为空, 即全部个股
-	IgnoreMarginTrading bool           `name:"剔除两融" yaml:"ignore_margin_trading" default:"true"`               // 剔除两融标的, 默认是剔除
-	HoldingPeriod       int            `name:"持仓周期" yaml:"holding_period" default:"1"`                         // 持仓周期, 默认为1天, 即T+1日触发117号策略
-	SellStrategy        int            `name:"卖出策略" yaml:"sell_strategy" default:"117"`                        // 卖出策略, 默认117
-	TakeProfitRatio     float64        `name:"止盈比例" yaml:"take_profit_ratio" default:"15.00"`                  // 止盈比例, 默认15%
-	StopLossRatio       float64        `name:"止损比例" yaml:"stop_loss_ratio" default:"-2.00"`                    // 止损比例, 默认-2%
-	Rules               RuleParameter  `name:"规则参数" yaml:"rules"`                                              // 过滤规则
-	excludeCodes        []string       `name:"过滤列表"`                                                           //  需要排除的个股
+	Id                          int            `name:"策略编码" yaml:"id" default:"-1"`                                    // 策略ID, -1无效
+	Auto                        bool           `name:"是否自动执行" yaml:"auto" default:"false"`                             // 是否自动执行
+	Name                        string         `name:"策略名称" yaml:"name"`                                               // 策略名称
+	Flag                        string         `name:"订单标识" yaml:"flag"`                                               // 订单标识,分早盘,尾盘和盘中
+	Session                     TradingSession `name:"时间范围" yaml:"time" default:"09:30:00~11:30:00,13:00:00~14:56:30"` // 可操作的交易时段
+	Weight                      float64        `name:"持仓占比" yaml:"weight" default:"0"`                                 // 策略权重, 默认0, 由系统自动分配
+	Total                       int            `name:"订单数上限" yaml:"total" default:"3"`                                 // 订单总数, 默认是3
+	PriceCageRatio              float64        `name:"价格笼子比例" yaml:"price_cage_ratio" default:"0.00"`                  // 价格笼子比例, 默认0%
+	MinimumPriceFluctuationUnit float64        `name:"价格变动最小单位" yaml:"minimum_price_fluctuation_unit" default:"0.05"`  // 价格最小变动单位, 默认0.05
+	FeeMax                      float64        `name:"最大费用" yaml:"fee_max" default:"20000.00"`                         // 可投入资金-最大
+	FeeMin                      float64        `name:"最小费用" yaml:"fee_min" default:"10000.00"`                         // 可投入资金-最小
+	Sectors                     []string       `name:"板块" yaml:"sectors" default:""`                                   // 板块, 策略适用的板块列表, 默认板块为空, 即全部个股
+	IgnoreMarginTrading         bool           `name:"剔除两融" yaml:"ignore_margin_trading" default:"true"`               // 剔除两融标的, 默认是剔除
+	HoldingPeriod               int            `name:"持仓周期" yaml:"holding_period" default:"1"`                         // 持仓周期, 默认为1天, 即T+1日触发117号策略
+	SellStrategy                int            `name:"卖出策略" yaml:"sell_strategy" default:"117"`                        // 卖出策略, 默认117
+	TakeProfitRatio             float64        `name:"止盈比例" yaml:"take_profit_ratio" default:"15.00"`                  // 止盈比例, 默认15%
+	StopLossRatio               float64        `name:"止损比例" yaml:"stop_loss_ratio" default:"-2.00"`                    // 止损比例, 默认-2%
+	Rules                       RuleParameter  `name:"规则参数" yaml:"rules"`                                              // 过滤规则
+	excludeCodes                []string       `name:"过滤列表"`                                                           //  需要排除的个股
 }
 
 func (this *StrategyParameter) QmtStrategyName() string {

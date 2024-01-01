@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.0.8] - 2024-01-01
+### Changed
+- 更新gotdx, 修复扩展行情和标准行情相同的bug.
+
 ## [1.0.7] - 2024-01-01
 ### Changed
 - 新增定时任务, 每个交易日15点02分同步全天的委托订单.
@@ -803,8 +807,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.0.7...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.0.8...HEAD
 
+[1.0.8]: https://gitee.com/quant1x/engine/compare/v1.0.7...v1.0.8
 [1.0.7]: https://gitee.com/quant1x/engine/compare/v1.0.6...v1.0.7
 [1.0.6]: https://gitee.com/quant1x/engine/compare/v1.0.5...v1.0.6
 [1.0.5]: https://gitee.com/quant1x/engine/compare/v1.0.4...v1.0.5

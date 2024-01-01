@@ -149,7 +149,7 @@ func cookieCutterSell() {
 		orderPrice := lastPrice
 		orderVolume := position.CanUseVolume
 		// 卖出
-		order_id, err := trader.DirectOrder(direction, strategyName, orderRemark, securityCode, orderPrice, orderVolume)
+		order_id, err := trader.DirectOrder(direction, strategyName, orderRemark, securityCode, trader.LATEST_PRICE, orderPrice, orderVolume)
 		if err != nil {
 			continue
 		}

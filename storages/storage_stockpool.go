@@ -181,7 +181,8 @@ func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool
 					continue
 				}
 				// 暂时不用价格笼子, 只向上浮动0.05
-				price := v.Buy + 0.05
+				price := trader.CalculatePriceCage(*strategyParameter, direction, v.Buy)
+				//price = v.Buy + 0.05
 				// 2. 检查买入已完成状态
 				ok := CheckOrderState(date, model, securityCode, direction)
 				if ok {
@@ -213,7 +214,7 @@ func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool
 					continue
 				}
 				// 6. 执行买入
-				orderId, err := trader.PlaceOrder(direction, model, securityCode, tradeFee.Price, tradeFee.Volume)
+				orderId, err := trader.PlaceOrder(direction, model, securityCode, trader.FIX_PRICE, tradeFee.Price, tradeFee.Volume)
 				if err != nil {
 					logger.Errorf("%s[%d]: %s 下单失败, error=%+v", model.Name(), model.Code(), securityCode, err)
 					continue

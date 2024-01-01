@@ -6,15 +6,15 @@ import (
 )
 
 func TestFundAllocate(t *testing.T) {
-	traderConfig.ResetPositionRatio()
-	fmt.Println(traderConfig)
+	traderParameter.ResetPositionRatio()
+	fmt.Println(traderParameter)
 }
 
 func TestEvaluateFeeForBuy(t *testing.T) {
 	code := "sh600178"
 	price := 8.17
 
-	v := EvaluateFeeForBuy(code, traderConfig.BuyAmountMax, price)
+	v := EvaluateFeeForBuy(code, traderParameter.BuyAmountMax, price)
 	fmt.Println(v)
 	v.log()
 }

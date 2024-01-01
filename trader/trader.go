@@ -13,10 +13,10 @@ import (
 )
 
 var (
-	traderConfig = config.TraderConfig()
+	traderParameter = config.TraderConfig()
 	// miniQMT代理服务器地址
 	//urlPrefixMiniQmtProxy = "http://10.211.55.3:18168/qmt"
-	urlPrefixMiniQmtProxy = traderConfig.ProxyUrl
+	urlPrefixMiniQmtProxy = traderParameter.ProxyUrl
 	// 查询前缀
 	urlPrefixForQuery = urlPrefixMiniQmtProxy + "/query"
 	// 交易前缀
@@ -182,22 +182,23 @@ func CancelOrder(orderId int) error {
 }
 
 // PlaceOrder 下委托订单
-func PlaceOrder(direction Direction, model models.Strategy, securityCode string, price float64, volume int) (int, error) {
+func PlaceOrder(direction Direction, model models.Strategy, securityCode string, priceType PriceType, price float64, volume int) (int, error) {
 	strategyName := models.QmtStrategyName(model)
 	orderRemark := models.QmtOrderRemark(model)
-	return DirectOrder(direction, strategyName, orderRemark, securityCode, price, volume)
+	return DirectOrder(direction, strategyName, orderRemark, securityCode, priceType, price, volume)
 }
 
 // 直接下单(透传)
-func DirectOrder(direction Direction, strategyName, orderRemark, securityCode string, price float64, volume int) (int, error) {
+func DirectOrder(direction Direction, strategyName, orderRemark, securityCode string, priceType PriceType, price float64, volume int) (int, error) {
 	_, mflag, symbol := proto.DetectMarket(securityCode)
 	params := urlpkg.Values{
-		"direction": {direction.String()},
-		"code":      {fmt.Sprintf("%s.%s", symbol, strings.ToUpper(mflag))},
-		"price":     {fmt.Sprintf("%f", price)},
-		"volume":    {fmt.Sprintf("%d", volume)},
-		"strategy":  {strategyName},
-		"remark":    {orderRemark},
+		"direction":  {direction.String()},
+		"code":       {fmt.Sprintf("%s.%s", symbol, strings.ToUpper(mflag))},
+		"price_type": {fmt.Sprintf("%d", priceType)},
+		"price":      {fmt.Sprintf("%f", price)},
+		"volume":     {fmt.Sprintf("%d", volume)},
+		"strategy":   {strategyName},
+		"remark":     {orderRemark},
 	}
 	body := params.Encode()
 	logger.Infof("trader-order: %s", body)

@@ -2,6 +2,7 @@ package trader
 
 import (
 	"fmt"
+	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/gox/num"
 	"math"
 )
@@ -23,29 +24,63 @@ const (
 	minimumPriceFluctuationUnit = float64(0.10) // 价格浮动最大值
 )
 
+// CalculatePriceCage 计算价格笼子
+func CalculatePriceCage(strategyParameter config.StrategyParameter, direction Direction, price float64) float64 {
+	priceLimit := 0.000
+	var priceCage, minimumPriceFluctuation float64
+	if direction == BUY {
+		priceCage = price * (1 + strategyParameter.PriceCageRatio)
+		minimumPriceFluctuation = price + strategyParameter.MinimumPriceFluctuationUnit
+		priceLimit = max(priceCage, minimumPriceFluctuation)
+	} else {
+		priceCage = price * (1 - strategyParameter.PriceCageRatio)
+		minimumPriceFluctuation = price - strategyParameter.MinimumPriceFluctuationUnit
+		priceLimit = min(priceCage, minimumPriceFluctuation)
+	}
+	return priceLimit
+}
+
+// calculate_price_limit_for_buy 计算合适的买入价格
+//
+//	价格笼子, +2%和+0.10哪个大
+//	目前使用, 当前价格+0.05
+func calculate_price_limit_for_buy(last_price, price_cage_ratio, minimum_price_fluctuation_unit float64) float64 {
+	// 价格笼子, +2%和+0.10哪个大
+	priceLimit := max(last_price*(1+price_cage_ratio), last_price+minimum_price_fluctuation_unit)
+	// 当前价格+0.05
+	priceLimit = last_price + 0.05
+	// 最后修订价格
+	priceLimit = num.Decimal(priceLimit)
+	return priceLimit
+}
+
 // CalculateBuyPriceLimit 计算合适的买入价格
 //
 //	价格笼子, +2%和+0.10哪个大
 //	目前使用, 当前价格+0.05
 func CalculateBuyPriceLimit(price float64) float64 {
-	// 价格笼子, +2%和+0.10哪个大
-	buyLimit := max(price*(1+validDeclarationPriceRange), price+minimumPriceFluctuationUnit)
-	// 当前价格+0.05
-	buyLimit = price + 0.05
+	priceLimit := calculate_price_limit_for_buy(price, validDeclarationPriceRange, minimumPriceFluctuationUnit)
+	return priceLimit
+}
+
+// calculate_price_limit_for_sell 计算合适的买入价格
+//
+//	价格笼子, -2%和-0.10哪个大
+//	目前使用, 当前价格-0.01
+func calculate_price_limit_for_sell(last_price, price_cage_ratio, minimum_price_fluctuation_unit float64) float64 {
+	// 价格笼子, -2%和-0.10哪个小
+	priceLimit := min(last_price*(1-price_cage_ratio), last_price-minimum_price_fluctuation_unit)
+	// 当前价格-0.01
+	priceLimit = last_price - 0.01
 	// 最后修订价格
-	buyLimit = num.Decimal(buyLimit)
-	return buyLimit
+	priceLimit = num.Decimal(priceLimit)
+	return priceLimit
 }
 
 // CalculateSellPriceLimit 计算卖出价格笼子
 func CalculateSellPriceLimit(price float64) float64 {
-	// 价格笼子, -2%和-0.10哪个小
-	buyLimit := min(price*(1-validDeclarationPriceRange), price-minimumPriceFluctuationUnit)
-	// 当前价格-0.01
-	buyLimit = price - 0.01
-	// 最后修订价格
-	buyLimit = num.Decimal(buyLimit)
-	return buyLimit
+	priceLimit := calculate_price_limit_for_sell(price, validDeclarationPriceRange, minimumPriceFluctuationUnit)
+	return priceLimit
 }
 
 // 计算买入总费用
@@ -63,9 +98,9 @@ func calculate_transaction_fee(direction Direction, price float64, volume int, a
 	// 1. 印花税, 按照成交金额计算, 买入没有, 卖出, 0.1%
 	_stamp_duty_fee := amount
 	if direction == BUY {
-		_stamp_duty_fee *= traderConfig.StampDutyRateForBuy
+		_stamp_duty_fee *= traderParameter.StampDutyRateForBuy
 	} else if direction == SELL {
-		_stamp_duty_fee *= traderConfig.StampDutyRateForSell
+		_stamp_duty_fee *= traderParameter.StampDutyRateForSell
 	} else {
 		return InvalidFee, 0, 0, 0, 0
 	}
@@ -73,17 +108,17 @@ func calculate_transaction_fee(direction Direction, price float64, volume int, a
 		_stamp_duty_fee = num.Decimal(_stamp_duty_fee)
 	}
 	// 2. 过户费, 按照股票数量, 双向, 0.06%
-	_transfer_fee := vol * traderConfig.TransferRate
+	_transfer_fee := vol * traderParameter.TransferRate
 	if align {
 		_transfer_fee = num.Decimal(_transfer_fee)
 	}
 	// 3. 券商佣金, 按照成交金额计算, 双向, 0.025%
-	_commission_fee := amount * traderConfig.CommissionRate
+	_commission_fee := amount * traderParameter.CommissionRate
 	if align {
 		_commission_fee = num.Decimal(_commission_fee)
 	}
-	if align && _commission_fee < traderConfig.CommissionMin {
-		_commission_fee = traderConfig.CommissionMin
+	if align && _commission_fee < traderParameter.CommissionMin {
+		_commission_fee = traderParameter.CommissionMin
 	}
 	// 4. 股票市值
 	_marketValue := amount

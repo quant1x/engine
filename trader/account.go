@@ -9,8 +9,8 @@ import (
 
 var (
 	onceAccount            coroutine.PeriodicOnce
-	accountTheoreticalFund = float64(0.00)
-	accountRemainingCash   = float64(0.00)
+	accountTheoreticalFund = 0.00
+	accountRemainingCash   = 0.00
 )
 
 func lazyInitFundPool() {
@@ -51,19 +51,19 @@ func calculateTheoreticalFund() (theoretical, cash float64) {
 	acc_value = num.Decimal(acc_value)
 	can_use_amount = num.Decimal(can_use_amount)
 	// 4. 确定可用资金总量: 账户可以资金 + 当日可卖出的总市值 - 预留现金
-	can_use_cash := acc.Cash + can_use_amount - traderConfig.KeepCash
+	can_use_cash := acc.Cash + can_use_amount - traderParameter.KeepCash
 	// 5. 计算预留仓位, 给下一个交易日留position_ratio仓位
-	reserve_cash := num.Decimal(acc.TotalAsset * traderConfig.PositionRatio)
+	reserve_cash := num.Decimal(acc.TotalAsset * traderParameter.PositionRatio)
 	// 6. 计算当日可用仓位: 可用资金总量 - 预留资金总量
 	available := can_use_cash - reserve_cash
 	logger.Warnf("账户资金: 可用=%.02f, 市值=%.02f, 预留=%.02f, 可买=%.02f, 可卖=%.02f", acc.Cash, acc_value, reserve_cash, available, can_use_amount)
 	// 7. 如果当日可用金额大于资金账户的可用金额, 输出风险提示
 	if available > acc.Cash {
 		logger.Warnf("!!! 持仓占比[{}%], 已超过可总仓位的[{}%], 必须在收盘前择机降低仓位, 以免影响下一个交易日的买入操作 !!!", num.Decimal(100*(acc_value/acc.TotalAsset)),
-			num.Decimal(100*(1-traderConfig.PositionRatio)))
+			num.Decimal(100*(1-traderParameter.PositionRatio)))
 	}
 	// 8. 重新修订可用金额
-	available = (acc.TotalAsset - traderConfig.KeepCash) * traderConfig.PositionRatio
+	available = (acc.TotalAsset - traderParameter.KeepCash) * traderParameter.PositionRatio
 	if available > acc.Cash {
 		available = acc.Cash
 	}
@@ -103,9 +103,9 @@ func CalculateAvailableFund(strategyParameter *config.StrategyParameter) float64
 		return InvalidFee
 	}
 	// 4. 检查可用资金的最大值和最小值
-	if single_funds_available > traderConfig.BuyAmountMax {
-		single_funds_available = traderConfig.BuyAmountMax
-	} else if single_funds_available < traderConfig.BuyAmountMin {
+	if single_funds_available > traderParameter.BuyAmountMax {
+		single_funds_available = traderParameter.BuyAmountMax
+	} else if single_funds_available < traderParameter.BuyAmountMin {
 		return InvalidFee
 	}
 	return single_funds_available

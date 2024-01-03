@@ -1,22 +1,28 @@
 package config
 
 import (
+	"gitee.com/quant1x/gox/exception"
 	"gitee.com/quant1x/pandas/stat"
 	"regexp"
 	"strings"
 	_ "unsafe"
 )
 
-// 值范围正则表达式
+// 正则表达式
 var (
+	// 值范围正则表达式
 	valueRangePattern = "[~]\\s*"
 	valueRangeRegexp  = regexp.MustCompile(valueRangePattern)
-)
 
-// 数组正则表达式
-var (
+	// 数组正则表达式
 	arrayPattern = "[,]\\s*"
 	arrayRegexp  = regexp.MustCompile(arrayPattern)
+)
+
+// 错误信息
+var (
+	errnoConfig    = 0
+	ErrRangeFormat = exception.New(errnoConfig+0, "数值范围格式错误")
 )
 
 type ValueType interface {

@@ -3,10 +3,10 @@ module gitee.com/quant1x/engine
 go 1.21.5
 
 require (
-	gitee.com/quant1x/gotdx v1.18.8
-	gitee.com/quant1x/gox v1.16.6
+	gitee.com/quant1x/gotdx v1.18.9
+	gitee.com/quant1x/gox v1.16.7
 	gitee.com/quant1x/pandas v1.2.7
-	gitee.com/quant1x/pkg v0.2.2
+	gitee.com/quant1x/pkg v0.2.3
 	gitee.com/quant1x/ta-lib v0.3.1
 	github.com/bits-and-blooms/bitset v1.13.0
 	github.com/spf13/cobra v1.8.0
@@ -14,6 +14,8 @@ require (
 	golang.org/x/exp v0.0.0-20231226003508-02704c960a9b
 	golang.org/x/sys v0.15.0
 )
+
+//replace gitee.com/quant1x/gotdx v1.18.8 => ../gotdx
 
 require (
 	git.sr.ht/~sbinet/gg v0.5.0 // indirect

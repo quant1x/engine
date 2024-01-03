@@ -24,6 +24,7 @@ func GetStockCodeList() []string {
 			allCodes = append(allCodes, fc)
 		}
 	}
+	// 科创板
 	// sh688000-sh688999
 	{
 		var (

@@ -192,6 +192,7 @@ func cacheQuarterlyReportsBySecurityCode(securityCode, date string, diffQuarters
 	var allReports []QuarterlyReport
 
 	mutexReports.Lock()
+	defer mutexReports.Unlock()
 	allReports, ok := mapReports[filename]
 	if !ok && api.FileExist(filename) {
 		_ = api.CsvToSlices(filename, &allReports)
@@ -233,7 +234,6 @@ func cacheQuarterlyReportsBySecurityCode(securityCode, date string, diffQuarters
 			}
 		}
 	}
-	mutexReports.Unlock()
 
 	for _, v := range allReports {
 		if v.SecurityCode == securityCode {

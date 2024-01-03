@@ -10,7 +10,7 @@ import (
 )
 
 func TestF10(t *testing.T) {
-	date := "2023-12-05"
+	date := "2024-01-03"
 	q := getQuarterlyYearQuarter(date)
 	fmt.Println(q)
 	cacheDate, featureDate := cache.CorrectDate(date)

@@ -16,9 +16,7 @@ var (
 )
 
 var (
-	errnoConfig       = 0
 	ErrTimeFormat     = exception.New(errnoConfig+1, "时间格式错误")
-	ErrRangeFormat    = exception.New(errnoConfig+2, "数值范围格式错误")
 	formatOfTimestamp = time.TimeOnly
 )
 
@@ -55,12 +53,13 @@ func (this *TimeRange) Parse(text string) error {
 	return nil
 }
 
-// UnmarshalText 设置默认值调用
-func (this *TimeRange) UnmarshalText(text []byte) error {
-	//TODO implement me
-	panic("implement me")
-}
+//// UnmarshalText 设置默认值调用
+//func (this *TimeRange) UnmarshalText(text []byte) error {
+//	//TODO implement me
+//	panic("implement me")
+//}
 
+// UnmarshalYAML YAML自定义解析
 func (this *TimeRange) UnmarshalYAML(node *yaml.Node) error {
 	var key, value string
 	if len(node.Content) == 0 {

@@ -24,7 +24,7 @@ const (
 
 // 定时任务关键字
 const (
-	keyCronReset            = "clean"           // 定时清理重置数据状态
+	keyCronReset            = "global_reset"    // 全局重置
 	keyCronRealTimeKLine    = "realtime_kline"  // 实时更新K线
 	keyCronUpdateSnapshot   = "update_snapshot" // 更新快照
 	keyCronUpdateExchange   = "update_exchange" // 更新exchange

@@ -1,9 +1,6 @@
 package services
 
 import (
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/gotdx"
 	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/logger"
 )
@@ -75,15 +72,6 @@ func init() {
 	if err != nil {
 		logger.Fatal(err)
 	}
-}
-
-// 任务 - 交易日数据缓存重置
-func jobGlobalReset() {
-	logger.Info("清理过期的更新状态文件...")
-	_ = cleanExpiredStateFiles()
-	gotdx.ReOpen()
-	factors.SwitchDate(cache.DefaultCanReadDate())
-	logger.Info("清理过期的更新状态文件...OK")
 }
 
 // IsTrading 状态是否交易中

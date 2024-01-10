@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.1.0] - 2024-01-09
+### Changed
+- 更新依赖库版本.
+- 调整流通股本默认最小值0.5亿股.
+- 调整9点整重置定时任务的key为global_reset, clean的字面意义已过时.
+- 拆分每日系统初始化功能函数.
+
 ## [1.0.9] - 2024-01-03
 ### Changed
 - 修复f10季报死锁的bug.
@@ -811,8 +818,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.0.9...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.1.0...HEAD
 
+[1.1.0]: https://gitee.com/quant1x/engine/compare/v1.0.9...v1.1.0
 [1.0.9]: https://gitee.com/quant1x/engine/compare/v1.0.8...v1.0.9
 [1.0.8]: https://gitee.com/quant1x/engine/compare/v1.0.7...v1.0.8
 [1.0.7]: https://gitee.com/quant1x/engine/compare/v1.0.6...v1.0.7

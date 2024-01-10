@@ -63,6 +63,7 @@ func CountInflow(list []quotes.TickTransaction, securityCode string, date string
 		if tm > base.TradingFinalBiddingTime && tm <= base.TradingLastTime {
 			summary.CloseVolume += vol
 		}
+		lastPrice = price
 	}
 	f10 := GetL5F10(securityCode, date)
 	if f10 != nil {

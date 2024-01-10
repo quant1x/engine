@@ -130,6 +130,9 @@ func (this *F10) Repair(code, cacheDate, featureDate string, complete bool) {
 	// 2. 前十大流通股股东
 	shareHolder := checkoutShareHolder(securityCode, featureDate)
 	_ = api.Copy(this, shareHolder)
+	if this.FreeCapital == 0 {
+		this.FreeCapital = this.Capital
+	}
 	// 3. 上市公司公告
 	notice := getOneNotice(securityCode, featureDate)
 	_ = api.Copy(this, &notice)
@@ -160,11 +163,15 @@ func (this *F10) ValidateSample() error {
 }
 
 func (this *F10) TurnZ(v any) float64 {
-	if this.FreeCapital == 0 {
+	freeCapital := this.FreeCapital
+	if freeCapital == 0 {
+		freeCapital = this.Capital
+	}
+	if freeCapital == 0 {
 		return 0.00
 	}
 	n := stat.AnyToFloat64(v)
-	turnoverRateZ := num.ChangeRate(this.FreeCapital, n)
+	turnoverRateZ := num.ChangeRate(freeCapital, n)
 	turnoverRateZ *= 10000
 	turnoverRateZ = num.Decimal(turnoverRateZ)
 	return turnoverRateZ

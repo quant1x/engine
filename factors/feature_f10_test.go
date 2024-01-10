@@ -22,6 +22,7 @@ func TestF10(t *testing.T) {
 	code = "sz002685"
 	code = "sh603158"
 	code = "sh600178"
+	code = "sh880941"
 	f10 := NewF10(cacheDate, code)
 	//barIndex := 1
 	ctx := context.Background()

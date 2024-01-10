@@ -55,7 +55,3 @@ type QuoteSnapshot struct {
 	AverageBiddingVolume  int                  `name:"委托均量"` // 委托均量
 	UpdateTime            string               // 本地时间戳
 }
-
-//func (q QuoteSnapshot) QuantityRelativeRatio() {
-//	return q.OpenQuantityRatio = float64(q.OpenVolume) / history.GetMV5()
-//}

@@ -18,52 +18,54 @@ const (
 // Exchange 上一个交易日的数据快照
 type Exchange struct {
 	cache.DataSummary     `dataframe:"-"`
-	Date                  string  `name:"日期" dataframe:"日期"`           // 数据日期
-	Code                  string  `name:"证券代码" dataframe:"证券代码"`       // 证券代码
-	Shape                 uint64  `name:"K线形态" dataframe:"K线形态"`       // K线形态
-	MV3                   float64 `name:"前3日分钟均量" dataframe:"前3日分钟均量"` // 前3日分钟均量
-	MA3                   float64 `name:"3日均线" dataframe:"3日均线"`       // 3日均价
-	MV5                   float64 `name:"前5日分钟均量" dataframe:"前5日分钟均量"` // 前5日每分钟均量, 量比(QuantityRelativeRatio)需要
-	MA5                   float64 `name:"5日均线" dataframe:"5日均线"`       // 5日均价
-	MA10                  float64 `name:"10日均线" dataframe:"10日均线"`     // 10日均价
-	MA20                  float64 `name:"20日均线" dataframe:"20日均线"`     // 生命线(MA20)/20日线
-	FundFlow              float64 `name:"资金流向" dataframe:"资金流向"`       // 资金流向, 暂时无用
-	VolumeRatio           float64 `name:"成交量比" dataframe:"成交量比"`       // 成交量放大比例, 相邻的两个交易日进行比对
-	TurnoverRate          float64 `name:"换手率" dataframe:"换手率"`         // 换手率
-	AmplitudeRatio        float64 `name:"振幅" dataframe:"振幅"`           // 振幅
-	BidOpen               float64 `name:"竞价开盘" dataframe:"竞价开盘"`       // 竞价开盘价
-	BidClose              float64 `name:"竞价结束" dataframe:"竞价结束"`       // 竞价结束
-	BidHigh               float64 `name:"竞价最高" dataframe:"竞价最高"`       // 竞价最高
-	BidLow                float64 `name:"竞价最低" dataframe:"竞价最低"`       // 竞价最低
-	BidMatched            float64 `name:"竞价匹配量" dataframe:"竞价匹配量"`     // 竞价匹配量
-	BidUnmatched          float64 `name:"竞价未匹配" dataframe:"竞价未匹配"`     // 竞价未匹配量
-	BidDirection          int     `name:"竞价方向" dataframe:"竞价方向"`       // 竞价方向
-	OpenBiddingDirection  int     `name:"开盘竞价" dataframe:"开盘竞价"`       // 竞价方向, 交易当日集合竞价开盘时更新
-	OpenVolumeDirection   int     `name:"开盘竞量" dataframe:"开盘竞量"`       // 委托量差, 交易当日集合竞价开盘时更新
-	CloseBiddingDirection int     `name:"收盘竞价" dataframe:"收盘竞价"`       // 竞价方向, 交易当日集合竞价收盘时更新
-	CloseVolumeDirection  int     `name:"收盘竞量" dataframe:"收盘竞量"`       // 委托量差, 交易当日集合竞价收盘时更新
-	OpenVolume            int64   `name:"开盘量" dataframe:"开盘量"`         // 开盘量
-	OpenTurnZ             float64 `name:"开盘换手z" dataframe:"开盘换手z"`     // 开盘换手z
-	CloseVolume           int64   `name:"收盘量" dataframe:"收盘量"`         // TODO:快照数据实际上有好几条, 应该用当日成交记录修订
-	CloseTurnZ            float64 `name:"收盘换手z" dataframe:"收盘换手z"`     // 收盘换手z
-	LastSentiment         float64 `name:"昨日情绪" dataframe:"昨日情绪"`       // 昨日情绪
-	LastConsistent        int     `name:"昨日情绪一致" dataframe:"昨日情绪一致"`   // 昨日情绪一致
-	OpenSentiment         float64 `name:"开盘情绪值" dataframe:"开盘情绪值"`     // 开盘情绪值, 个股没有
-	OpenConsistent        int     `name:"开盘情绪一致" dataframe:"开盘情绪一致"`   // 开盘情绪一致, 个股没有
-	CloseSentiment        float64 `name:"收盘情绪值" dataframe:"收盘情绪值"`     // 收盘情绪值
-	CloseConsistent       int     `name:"收盘情绪一致" dataframe:"收盘情绪一致"`   // 收盘情绪一致
-	AveragePrice          float64 `name:"均价线" dataframe:"均价线"`         // 均价线
-	Volume                int64   `name:"成交量" dataframe:"成交量"`         // 成交量
-	InnerVolume           int64   `name:"内盘" dataframe:"内盘"`           // 内盘
-	OuterVolume           int64   `name:"外盘" dataframe:"外盘"`           // 外盘
-	Change5               float64 `name:"5日涨幅" dataframe:"5日涨幅"`       // 5日涨幅
-	Change10              float64 `name:"10日涨幅" dataframe:"10日涨幅"`     // 10日涨幅
-	InitialPrice          float64 `name:"启动价格" dataframe:"启动价格"`       // 短线底部(Short-Term Bottom),股价最近一次上穿5日均线
-	ShortIntensity        float64 `name:"短线强度" dataframe:"短线强度"`       // 短线强度,Strength
-	ShortIntensityDiff    float64 `name:"短线强度增幅" dataframe:"短线强度增幅"`   // 短线强度
-	MediumIntensity       float64 `name:"中线强度" dataframe:"中线强度"`       // 中线强度
-	MediumIntensityDiff   float64 `name:"中线强度增幅" dataframe:"中线强度增幅"`   // 中线强度
-	Vix                   float64 `name:"波动率" dataframe:"波动率"`         // 波动率
+	Date                  string  `name:"日期" dataframe:"日期"`             // 数据日期
+	Code                  string  `name:"证券代码" dataframe:"证券代码"`         // 证券代码
+	Shape                 uint64  `name:"K线形态" dataframe:"K线形态"`         // K线形态
+	MV3                   float64 `name:"前3日分钟均量" dataframe:"前3日分钟均量"`   // 前3日分钟均量
+	MA3                   float64 `name:"3日均线" dataframe:"3日均线"`         // 3日均价
+	MV5                   float64 `name:"前5日分钟均量" dataframe:"前5日分钟均量"`   // 前5日每分钟均量, 量比(QuantityRelativeRatio)需要
+	MA5                   float64 `name:"5日均线" dataframe:"5日均线"`         // 5日均价
+	MA10                  float64 `name:"10日均线" dataframe:"10日均线"`       // 10日均价
+	MA20                  float64 `name:"20日均线" dataframe:"20日均线"`       // 生命线(MA20)/20日线
+	FundFlow              float64 `name:"资金流向" dataframe:"资金流向"`         // 资金流向, 暂时无用
+	VolumeRatio           float64 `name:"成交量比" dataframe:"成交量比"`         // 成交量放大比例, 相邻的两个交易日进行比对
+	TurnoverRate          float64 `name:"换手率" dataframe:"换手率"`           // 换手率
+	AmplitudeRatio        float64 `name:"振幅" dataframe:"振幅"`             // 振幅
+	BidOpen               float64 `name:"竞价开盘" dataframe:"竞价开盘"`         // 竞价开盘价
+	BidClose              float64 `name:"竞价结束" dataframe:"竞价结束"`         // 竞价结束
+	BidHigh               float64 `name:"竞价最高" dataframe:"竞价最高"`         // 竞价最高
+	BidLow                float64 `name:"竞价最低" dataframe:"竞价最低"`         // 竞价最低
+	BidMatched            float64 `name:"竞价匹配量" dataframe:"竞价匹配量"`       // 竞价匹配量
+	BidUnmatched          float64 `name:"竞价未匹配" dataframe:"竞价未匹配"`       // 竞价未匹配量
+	BidDirection          int     `name:"竞价方向" dataframe:"竞价方向"`         // 竞价方向
+	OpenBiddingDirection  int     `name:"开盘竞价" dataframe:"开盘竞价"`         // 竞价方向, 交易当日集合竞价开盘时更新
+	OpenVolumeDirection   int     `name:"开盘竞量" dataframe:"开盘竞量"`         // 委托量差, 交易当日集合竞价开盘时更新
+	CloseBiddingDirection int     `name:"收盘竞价" dataframe:"收盘竞价"`         // 竞价方向, 交易当日集合竞价收盘时更新
+	CloseVolumeDirection  int     `name:"收盘竞量" dataframe:"收盘竞量"`         // 委托量差, 交易当日集合竞价收盘时更新
+	OpenVolume            int64   `name:"开盘量" dataframe:"开盘量"`           // 开盘量
+	OpenTurnZ             float64 `name:"开盘换手z" dataframe:"开盘换手z"`       // 开盘换手z
+	CloseVolume           int64   `name:"收盘量" dataframe:"收盘量"`           // TODO:快照数据实际上有好几条, 应该用当日成交记录修订
+	CloseTurnZ            float64 `name:"收盘换手z" dataframe:"收盘换手z"`       // 收盘换手z
+	LastSentiment         float64 `name:"昨日情绪" dataframe:"昨日情绪"`         // 昨日情绪
+	LastConsistent        int     `name:"昨日情绪一致" dataframe:"昨日情绪一致"`     // 昨日情绪一致
+	OpenSentiment         float64 `name:"开盘情绪值" dataframe:"开盘情绪值"`       // 开盘情绪值, 个股没有
+	OpenConsistent        int     `name:"开盘情绪一致" dataframe:"开盘情绪一致"`     // 开盘情绪一致, 个股没有
+	CloseSentiment        float64 `name:"收盘情绪值" dataframe:"收盘情绪值"`       // 收盘情绪值
+	CloseConsistent       int     `name:"收盘情绪一致" dataframe:"收盘情绪一致"`     // 收盘情绪一致
+	AveragePrice          float64 `name:"均价线" dataframe:"均价线"`           // 均价线
+	Volume                int64   `name:"成交量" dataframe:"成交量"`           // 成交量
+	InnerVolume           int64   `name:"内盘" dataframe:"内盘"`             // 内盘
+	OuterVolume           int64   `name:"外盘" dataframe:"外盘"`             // 外盘
+	InnerAmount           float64 `name:"卖出金额" dataframe:"inner_amount"` // 卖出金额合计
+	OuterAmount           float64 `name:"买入金额" dataframe:"outer_amount"` // 买入金额合计
+	Change5               float64 `name:"5日涨幅" dataframe:"5日涨幅"`         // 5日涨幅
+	Change10              float64 `name:"10日涨幅" dataframe:"10日涨幅"`       // 10日涨幅
+	InitialPrice          float64 `name:"启动价格" dataframe:"启动价格"`         // 短线底部(Short-Term Bottom),股价最近一次上穿5日均线
+	ShortIntensity        float64 `name:"短线强度" dataframe:"短线强度"`         // 短线强度,Strength
+	ShortIntensityDiff    float64 `name:"短线强度增幅" dataframe:"短线强度增幅"`     // 短线强度
+	MediumIntensity       float64 `name:"中线强度" dataframe:"中线强度"`         // 中线强度
+	MediumIntensityDiff   float64 `name:"中线强度增幅" dataframe:"中线强度增幅"`     // 中线强度
+	Vix                   float64 `name:"波动率" dataframe:"波动率"`           // 波动率
 	State                 uint64  `name:"样本状态" dataframe:"样本状态"`
 }
 
@@ -195,6 +197,8 @@ func exchangeTurnZ(info *Exchange, securityCode string, cacheDate, featureDate s
 		info.Volume = cover.InnerVolume + cover.OuterVolume
 		info.InnerVolume = cover.InnerVolume
 		info.OuterVolume = cover.OuterVolume
+		info.InnerAmount = cover.InnerAmount
+		info.OuterAmount = cover.OuterAmount
 	}
 }
 

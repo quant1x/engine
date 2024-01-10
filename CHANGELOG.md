@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.1.1] - 2024-01-11
+### Changed
+- 修复买入方向的算法.
+- 修订换手z的算法, 板块指数类的自由流通股本用流通股本来计算.
+- 修订换手z的算法, 板块指数类的自由流通股本用流通股本来计算.
+
 ## [1.1.0] - 2024-01-09
 ### Changed
 - 更新依赖库版本.
@@ -818,8 +824,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.1.0...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.1.1...HEAD
 
+[1.1.1]: https://gitee.com/quant1x/engine/compare/v1.1.0...v1.1.1
 [1.1.0]: https://gitee.com/quant1x/engine/compare/v1.0.9...v1.1.0
 [1.0.9]: https://gitee.com/quant1x/engine/compare/v1.0.8...v1.0.9
 [1.0.8]: https://gitee.com/quant1x/engine/compare/v1.0.7...v1.0.8

@@ -46,7 +46,7 @@ func GetStrategySnapshot(securityCode string) *factors.QuoteSnapshot {
 	if f10 != nil {
 		snapshot.Capital = f10.Capital
 		snapshot.FreeCapital = f10.FreeCapital
-		snapshot.OpenTurnZ = 10000 * float64(snapshot.OpenVolume) / float64(snapshot.FreeCapital)
+		snapshot.OpenTurnZ = f10.TurnZ(snapshot.OpenVolume)
 	}
 	history := factors.GetL5History(securityCode)
 	if history != nil {

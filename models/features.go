@@ -90,7 +90,7 @@ func FeatureToSnapshot(feature cache.SecurityFeature, securityCode string) facto
 	if f10 != nil {
 		qs.Capital = f10.Capital
 		qs.FreeCapital = f10.FreeCapital
-		qs.OpenTurnZ = 10000 * num.ChangeRate(qs.FreeCapital, qs.OpenVolume)
+		qs.OpenTurnZ = f10.TurnZ(qs.OpenVolume)
 	}
 	extend := factors.GetL5History(securityCode)
 	if extend != nil && extend.MV5 > 0 {

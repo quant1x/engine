@@ -17,11 +17,23 @@ func CountInflow(list []quotes.TickTransaction, securityCode string, date string
 		return
 	}
 	securityCode = proto.CorrectSecurityCode(securityCode)
+	lastPrice := float64(0)
 	for _, v := range list {
 		tm := v.Time
 		direction := int32(v.BuyOrSell)
 		price := v.Price
+		if lastPrice == 0 {
+			lastPrice = price
+		}
 		vol := int64(v.Vol)
+		if direction != quotes.TDX_TICK_BUY && direction != quotes.TDX_TICK_SELL {
+			switch {
+			case price > lastPrice:
+				direction = quotes.TDX_TICK_BUY
+			case price < lastPrice:
+				direction = quotes.TDX_TICK_SELL
+			}
+		}
 		// 统计内外盘数据
 		if direction == quotes.TDX_TICK_BUY {
 			// 买入

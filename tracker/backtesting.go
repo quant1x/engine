@@ -67,7 +67,7 @@ func BackTesting(countDays, countTopN int) {
 	gcs := []GoodCase{}
 	dates = dates[s : e+1]
 	codes := market.GetCodeList()
-	mapStock := map[string][]cache.SecurityFeature{}
+	mapStock := map[string][]factors.SecurityFeature{}
 	for i, date := range dates {
 		// 切换策略数据的缓存日期
 		factors.SwitchDate(date)

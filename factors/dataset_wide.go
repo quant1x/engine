@@ -3,7 +3,7 @@ package factors
 import (
 	"context"
 	"gitee.com/quant1x/engine/cache"
-	base2 "gitee.com/quant1x/engine/datasource/base"
+	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx"
 	"gitee.com/quant1x/gotdx/proto"
@@ -54,6 +54,7 @@ func (this *DataWide) Repair(date string) {
 }
 
 func (this *DataWide) Increase(snapshot quotes.Snapshot) {
+	_ = snapshot
 	//TODO implement me
 	panic("implement me")
 }
@@ -67,21 +68,15 @@ var (
 	FBarsProtocolFields = []string{"Open", "Close", "High", "Low", "Vol", "Amount", "DateTime", "UpCount", "DownCount"}
 	FBarsRawFields      = []string{"open", "close", "high", "low", "volume", "amount", "date", "up", "down"}
 	FBarsHalfFields     = []string{"date", "open", "close", "high", "low", "volume", "amount", "up", "down", "open_volume", "open_turnz", "open_unmatched", "close_volume", "close_turnz", "close_unmatched", "inner_volume", "outer_volume", "inner_amount", "outer_amount"}
-	//FBarsOldWideFields  = []string{"date", "open", "close", "high", "low", "volume", "amount", "up", "down", "last_close", "turnover_rate", "open_volume", "open_turnz", "open_unmatched", "close_volume", "close_turnz", "close_unmatched", "inner_volume", "outer_volume", "inner_amount", "outer_amount"}
-	FBarsWideFields = []string{"date", "open", "close", "high", "low", "volume", "amount", "up", "down", "last_close", "change_rate", "open_volume", "open_turnz", "open_unmatched", "close_volume", "close_turnz", "close_unmatched", "inner_volume", "outer_volume", "inner_amount", "outer_amount"}
+	FBarsWideFields     = []string{"date", "open", "close", "high", "low", "volume", "amount", "up", "down", "last_close", "change_rate", "open_volume", "open_turnz", "open_unmatched", "close_volume", "close_turnz", "close_unmatched", "inner_volume", "outer_volume", "inner_amount", "outer_amount"}
 )
-
-//var (
-//	// DataDaysDiff 日期差异偏移量
-//	DataDaysDiff = 1
-//)
 
 // SetKLineOffset 设置K线数据调整回补天数
 func SetKLineOffset(days int) {
 	if days <= 1 {
 		return
 	}
-	base2.DataDaysDiff = days
+	base.DataDaysDiff = days
 }
 
 // loadCacheKLine 加载K线
@@ -112,7 +107,7 @@ func loadCacheKLine(code string, adjust ...bool) pandas.DataFrame {
 		return df
 	}
 	if qfq {
-		xdxrs := base2.GetCacheXdxrList(code)
+		xdxrs := base.GetCacheXdxrList(code)
 		for i := 0; i < len(xdxrs); i++ {
 			xdxr := xdxrs[i]
 			if xdxr.Category != 1 {
@@ -219,7 +214,7 @@ func GetKLineAll(securityCode string, argv ...int) pandas.DataFrame {
 	}
 	var info *quotes.FinanceInfo
 	var err error
-	var klineDaysOffset = base2.DataDaysDiff
+	var klineDaysOffset = base.DataDaysDiff
 	if dfCache.Nrow() > 0 {
 		ds := dfCache.Col("date").Strings()
 		if klineDaysOffset > len(ds) {
@@ -311,7 +306,7 @@ func GetKLineAll(securityCode string, argv ...int) pandas.DataFrame {
 	dfNew = dfNew.Select(FBarsHalfFields)
 	if dfNew.Nrow() > 0 {
 		// 除权除息
-		xdxrs := base2.GetCacheXdxrList(securityCode)
+		xdxrs := base.GetCacheXdxrList(securityCode)
 		cacheLastDay := dfNew.Col("date").IndexOf(-1).(string)
 		for i := 0; i < len(xdxrs); i++ {
 			xdxr := xdxrs[i]
@@ -383,7 +378,7 @@ func attachVolume(df pandas.DataFrame, securityCode string) pandas.DataFrame {
 	closeTurnZ := []stat.DType{}
 	closeUnmatched := []int64{}
 	for _, tradeDate := range dates {
-		tmp := base2.CheckoutTickData(securityCode, tradeDate, true)
+		tmp := base.CheckoutTickData(securityCode, tradeDate, true)
 		logger.Warnf("tick: code=%s, date=%s, rows=%d", securityCode, tradeDate, len(tmp))
 		//summary := InflowCount(tmp, securityCode)
 		summary := CountInflow(tmp, securityCode, tradeDate)

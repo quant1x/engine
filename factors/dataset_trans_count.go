@@ -1,18 +1,13 @@
 package factors
 
 import (
-	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/quotes"
 )
 
-//var (
-//	mapFreeCapital = concurrent.NewTreeMap[string, float64]
-//)
-
 // CountInflow 统计指定日期的内外盘
-func CountInflow(list []quotes.TickTransaction, securityCode string, date string) (summary cache.TurnoverDataSummary) {
+func CountInflow(list []quotes.TickTransaction, securityCode string, date string) (summary TurnoverDataSummary) {
 	if len(list) == 0 {
 		return
 	}

@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.1.4] - 2024-01-11
+### Changed
+- 调整宽表的结构.
+- 更新pkg版本, 修复csv加载不能解析从科学计数法的浮点转换成int64的bug.
+- 调整misc缓存文件名.
+
 ## [1.1.3] - 2024-01-11
 ### Changed
 - 适配exchange工具包.
@@ -832,8 +838,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.1.3...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.1.4...HEAD
 
+[1.1.4]: https://gitee.com/quant1x/engine/compare/v1.1.3...v1.1.4
 [1.1.3]: https://gitee.com/quant1x/engine/compare/v1.1.2...v1.1.3
 [1.1.2]: https://gitee.com/quant1x/engine/compare/v1.1.1...v1.1.2
 [1.1.1]: https://gitee.com/quant1x/engine/compare/v1.1.0...v1.1.1

@@ -35,7 +35,7 @@ func lazyInitFeatures() {
 		panic(err)
 	}
 	// 扩展信息
-	__l5Misc = NewCache1D[*Misc](cacheL5KeyExchange, NewExchange)
+	__l5Misc = NewCache1D[*Misc](cacheL5KeyMisc, NewExchange)
 	err = cache.Register(__l5Misc)
 	if err != nil {
 		panic(err)

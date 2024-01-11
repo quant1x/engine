@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	cacheL5KeyExchange = "exchange"
+	cacheL5KeyMisc = "misc"
 )
 
 // Misc 上一个交易日的数据快照

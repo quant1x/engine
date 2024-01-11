@@ -4,8 +4,8 @@ import (
 	"context"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasource/dfcf"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/quotes"
-	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
@@ -46,7 +46,7 @@ func (this *DataPreviewReport) Init(ctx context.Context, date string) error {
 	var allReports []dfcf.PreviewQuarterlyReport
 	// 确定更新日期
 	qBegin, _ := api.GetQuarterDayByDate(date, 0)
-	quarterBeginDate := trading.FixTradeDate(qBegin)
+	quarterBeginDate := exchange.FixTradeDate(qBegin)
 	list, pages, _, _ := dfcf.FinanceReports(quarterBeginDate, 1)
 	if pages < 1 || len(list) == 0 {
 		return nil

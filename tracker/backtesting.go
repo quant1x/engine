@@ -9,8 +9,7 @@ import (
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/storages"
 	"gitee.com/quant1x/engine/strategies"
-	"gitee.com/quant1x/gotdx/proto"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/num"
 	"gitee.com/quant1x/gox/progressbar"
@@ -50,8 +49,8 @@ type SampleFeature struct {
 
 // BackTesting 回测
 func BackTesting(countDays, countTopN int) {
-	currentlyDay := trading.GetCurrentlyDay()
-	dates := trading.TradeRange(proto.MARKET_CH_FIRST_LISTTIME, currentlyDay)
+	currentlyDay := exchange.GetCurrentlyDay()
+	dates := exchange.TradeRange(exchange.MARKET_CH_FIRST_LISTTIME, currentlyDay)
 	scope := api.RangeFinite(-countDays)
 	s, e, err := scope.Limits(len(dates))
 	if err != nil {
@@ -77,7 +76,7 @@ func BackTesting(countDays, countTopN int) {
 		bar := progressbar.NewBar(1, "执行["+date+"涨幅扫描]", total)
 		for _, securityCode := range codes {
 			bar.Add(1)
-			if !proto.AssertStockBySecurityCode(securityCode) {
+			if !exchange.AssertStockBySecurityCode(securityCode) {
 				continue
 			}
 			features, ok := mapStock[securityCode]

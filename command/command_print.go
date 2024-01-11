@@ -4,9 +4,8 @@ import (
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/gotdx/proto"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/securities"
-	"gitee.com/quant1x/gotdx/trading"
 	cmder "github.com/spf13/cobra"
 )
 
@@ -23,7 +22,7 @@ var CmdPrint = &cmder.Command{
 	Run: func(cmd *cmder.Command, args []string) {
 		tradeDate := cache.DefaultCanReadDate()
 		if len(flagDate.Value) > 0 {
-			tradeDate = trading.FixTradeDate(flagDate.Value)
+			tradeDate = exchange.FixTradeDate(flagDate.Value)
 		}
 		keywords := ""
 		code := ""
@@ -67,9 +66,9 @@ func initPrint() {
 
 // 输出结构化信息
 func handlePrintData(code, date string, plugin cache.DataAdapter) {
-	securityCode := proto.CorrectSecurityCode(code)
+	securityCode := exchange.CorrectSecurityCode(code)
 	name := securities.GetStockName(securityCode)
-	tradeDate := trading.FixTradeDate(date)
+	tradeDate := exchange.FixTradeDate(date)
 	cacheDate, featureDate := cache.CorrectDate(tradeDate)
 	fmt.Printf("%s: %s, cache: %s, feature: %s\n", securityCode, name, cacheDate, featureDate)
 	plugin.Print(securityCode, tradeDate)
@@ -86,75 +85,9 @@ func handlePrintData(code, date string, plugin cache.DataAdapter) {
 
 // 输出K线概要数据列表
 func printKline(securityCode string, tradeDate string) {
-	securityCode = proto.CorrectSecurityCode(securityCode)
+	securityCode = exchange.CorrectSecurityCode(securityCode)
 	name := securities.GetStockName(securityCode)
 	fmt.Printf("%s: %s, %s\n", securityCode, name, tradeDate)
 	df := factors.BasicKLine(securityCode)
 	fmt.Println(df)
 }
-
-//func checkoutTable(v any) (headers []string, records [][]string) {
-//	headers = []string{"字段", "数值"}
-//	fields := tags.GetHeadersByTags(v)
-//	values := tags.GetValuesByTags(v)
-//	num := len(fields)
-//	if num > len(values) {
-//		num = len(values)
-//	}
-//	for i := 0; i < num; i++ {
-//		records = append(records, []string{fields[i], strings.TrimSpace(values[i])})
-//	}
-//	return
-//}
-
-//func printF10(securityCode string, tradeDate string) {
-//	securityCode = proto.CorrectSecurityCode(securityCode)
-//	name := securities.GetStockName(securityCode)
-//	fmt.Printf("%s: %s, %s\n", securityCode, name, tradeDate)
-//	value := smart.GetL5F10(securityCode, tradeDate)
-//	headers, records := checkoutTable(value)
-//	table := tablewriter.NewWriter(os.Stdout)
-//	table.SetHeader(headers)
-//	table.SetColumnAlignment([]int{tablewriter.ALIGN_RIGHT, tablewriter.ALIGN_LEFT})
-//	table.AppendBulk(records)
-//	table.Render()
-//}
-
-//func printExchange(securityCode string) {
-//	securityCode = proto.CorrectSecurityCode(securityCode)
-//	name := securities.GetStockName(securityCode)
-//	fmt.Printf("%s: %s, %s\n", securityCode, name, tradeDate)
-//	value := flash.GetL5Exchange(securityCode, tradeDate)
-//	headers, records := checkoutTable(value)
-//	table := tablewriter.NewWriter(os.Stdout)
-//	table.SetHeader(headers)
-//	table.SetColumnAlignment([]int{tablewriter.ALIGN_RIGHT, tablewriter.ALIGN_LEFT})
-//	table.AppendBulk(records)
-//	table.Render()
-//}
-//
-//func printMA(securityCode string) {
-//	securityCode = proto.CorrectSecurityCode(securityCode)
-//	name := securities.GetStockName(securityCode)
-//	fmt.Printf("%s: %s, %s\n", securityCode, name, tradeDate)
-//	value := flash.GetL5MovingAverage(securityCode, tradeDate)
-//	headers, records := checkoutTable(value)
-//	table := tablewriter.NewWriter(os.Stdout)
-//	table.SetHeader(headers)
-//	table.SetColumnAlignment([]int{tablewriter.ALIGN_RIGHT, tablewriter.ALIGN_LEFT})
-//	table.AppendBulk(records)
-//	table.Render()
-//}
-//
-//func printBox(securityCode string) {
-//	securityCode = proto.CorrectSecurityCode(securityCode)
-//	name := securities.GetStockName(securityCode)
-//	fmt.Printf("%s: %s, %s\n", securityCode, name, tradeDate)
-//	value := flash.GetL5Box(securityCode, tradeDate)
-//	headers, records := checkoutTable(value)
-//	table := tablewriter.NewWriter(os.Stdout)
-//	table.SetHeader(headers)
-//	table.SetColumnAlignment([]int{tablewriter.ALIGN_RIGHT, tablewriter.ALIGN_LEFT})
-//	table.AppendBulk(records)
-//	table.Render()
-//}

@@ -2,7 +2,7 @@ package cache
 
 import (
 	"fmt"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 )
 
@@ -35,7 +35,7 @@ func FeatureFilename(code string) string {
 }
 
 func MinuteFilename(code, date string) string {
-	date = trading.FixTradeDate(date, FilenameDate)
+	date = exchange.FixTradeDate(date, FilenameDate)
 	cacheId := CacheId(code)
 	filename := fmt.Sprintf("%s/%s/%s/%s.csv", GetMinutePath(), date[0:4], date, cacheId)
 	return filename
@@ -89,7 +89,7 @@ func PreviewReportFilename(date string) string {
 
 // TickFilename tick文件比较多, 目录结构${tick}/${YYYY}/${YYYYMMDD}/${CacheIdPath}
 func TickFilename(code, date string) string {
-	date = trading.FixTradeDate(date, FilenameDate)
+	date = exchange.FixTradeDate(date, FilenameDate)
 	cacheId := CacheId(code)
 	tickPath := fmt.Sprintf("%s/%s/%s/%s.csv", GetTickPath(), date[0:4], date, cacheId)
 	return tickPath

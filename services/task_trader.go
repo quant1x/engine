@@ -2,7 +2,7 @@ package services
 
 import (
 	"gitee.com/quant1x/engine/trader"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 )
@@ -10,7 +10,7 @@ import (
 // 同步委托订单
 func jobSyncTraderOrders() {
 	// 非交易日直接退出
-	if !trading.DateIsTradingDay() {
+	if !exchange.DateIsTradingDay() {
 		return
 	}
 	logger.Info("同步交易订单...")

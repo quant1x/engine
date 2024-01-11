@@ -2,10 +2,9 @@ package factors
 
 import (
 	"gitee.com/quant1x/engine/datasource/base"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx"
-	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/quotes"
-	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/pandas/stat"
 	"strconv"
@@ -14,9 +13,9 @@ import (
 
 // 获取财务数据
 func getFinanceInfo(securityCode, featureDate string) (capital, totalCapital float64, ipoDate, updateDate string) {
-	basicDate := uint32(stat.AnyToInt64(proto.MARKET_CN_FIRST_DATE))
+	basicDate := uint32(stat.AnyToInt64(exchange.MARKET_CN_FIRST_DATE))
 	for i := 0; i < quotes.DefaultRetryTimes; i++ {
-		securityCode := proto.CorrectSecurityCode(securityCode)
+		securityCode := exchange.CorrectSecurityCode(securityCode)
 		tdxApi := gotdx.GetTdxApi()
 		info, err := tdxApi.GetFinanceInfo(securityCode)
 		if err != nil {
@@ -30,13 +29,13 @@ func getFinanceInfo(securityCode, featureDate string) (capital, totalCapital flo
 			}
 			if info.IPODate >= basicDate {
 				ipoDate = strconv.FormatInt(int64(info.IPODate), 10)
-				ipoDate = trading.FixTradeDate(ipoDate)
+				ipoDate = exchange.FixTradeDate(ipoDate)
 			} else {
 				ipoDate = getIpoDate(securityCode, featureDate)
 			}
 			if info.UpdatedDate >= basicDate {
 				updateDate = strconv.FormatInt(int64(info.UpdatedDate), 10)
-				updateDate = trading.FixTradeDate(updateDate)
+				updateDate = exchange.FixTradeDate(updateDate)
 			}
 			break
 		} else if i+1 < quotes.DefaultRetryTimes {

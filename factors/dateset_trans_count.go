@@ -3,7 +3,7 @@ package factors
 import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasource/base"
-	"gitee.com/quant1x/gotdx/proto"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/quotes"
 )
 
@@ -16,7 +16,7 @@ func CountInflow(list []quotes.TickTransaction, securityCode string, date string
 	if len(list) == 0 {
 		return
 	}
-	securityCode = proto.CorrectSecurityCode(securityCode)
+	securityCode = exchange.CorrectSecurityCode(securityCode)
 	lastPrice := float64(0)
 	for _, v := range list {
 		tm := v.Time

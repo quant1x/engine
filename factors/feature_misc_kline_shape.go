@@ -3,7 +3,7 @@ package factors
 import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/utils"
-	"gitee.com/quant1x/gotdx/proto"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/num"
 	"gitee.com/quant1x/pandas"
 	. "gitee.com/quant1x/pandas/formula"
@@ -97,7 +97,7 @@ func KLineShape(df pandas.DataFrame, securityCode string) (shape ShapeType) {
 		shape |= KLineShapeYiZi
 	}
 	// 4 判断是否涨跌停板
-	limitRate := proto.MarketLimit(securityCode)
+	limitRate := exchange.MarketLimit(securityCode)
 	lastClose := num.Decimal(LAST_CLOSE)
 	lastHigh := num.Decimal(HIGH)
 	lastLow := num.Decimal(LOW)

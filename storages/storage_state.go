@@ -5,8 +5,7 @@ import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/trader"
-	"gitee.com/quant1x/gotdx/proto"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"os"
@@ -48,10 +47,10 @@ func order_state_prefix(state_date string, model models.Strategy, direction trad
 
 // 获得订单标识文件名
 func order_state_filename(date string, model models.Strategy, code string, direction trader.Direction) string {
-	state_date := trading.FixTradeDate(date, cache.CACHE_DATE)
+	state_date := exchange.FixTradeDate(date, cache.CACHE_DATE)
 	orderFlagPath := state_filepath(state_date)
 	prefix := order_state_prefix(date, model, direction)
-	securityCode := proto.CorrectSecurityCode(code)
+	securityCode := exchange.CorrectSecurityCode(code)
 	filename := fmt.Sprintf("%s-%s.done", prefix, securityCode)
 	state_filename := path.Join(orderFlagPath, filename)
 	return state_filename
@@ -71,7 +70,7 @@ func PushOrderState(date string, model models.Strategy, code string, direction t
 
 // CountStrategyOrders 统计策略订单数
 func CountStrategyOrders(date string, model models.Strategy, direction trader.Direction) int {
-	stateDate := trading.FixTradeDate(date, cache.CACHE_DATE)
+	stateDate := exchange.FixTradeDate(date, cache.CACHE_DATE)
 	orderFlagPath := state_filepath(stateDate)
 	filenamePrefix := order_state_prefix(stateDate, model, direction)
 	pattern := filepath.Join(orderFlagPath, filenamePrefix+"-*"+orderStateFileExtension)
@@ -85,7 +84,7 @@ func CountStrategyOrders(date string, model models.Strategy, direction trader.Di
 
 // FetchListForFirstPurchase 获取指定日期交易的个股列表
 func FetchListForFirstPurchase(date, qmtStrategyName string, direction trader.Direction) []string {
-	stateDate := trading.FixTradeDate(date, cache.CACHE_DATE)
+	stateDate := exchange.FixTradeDate(date, cache.CACHE_DATE)
 	orderFlagPath := state_filepath(stateDate)
 	filenamePrefix := state_prefix(stateDate, qmtStrategyName, direction)
 	var list []string
@@ -93,7 +92,7 @@ func FetchListForFirstPurchase(date, qmtStrategyName string, direction trader.Di
 	pattern := prefix + "*" + orderStateFileExtension
 	files, err := filepath.Glob(pattern)
 	if err != nil || len(files) == 0 {
-		logger.Error(err)
+		logger.Errorf("没有指定日期的个股买入列表, error=%+v", err)
 		return list
 	}
 	for _, filename := range files {

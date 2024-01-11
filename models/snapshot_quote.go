@@ -2,10 +2,9 @@ package models
 
 import (
 	"gitee.com/quant1x/engine/factors"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx"
-	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/quotes"
-	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/num"
@@ -14,7 +13,7 @@ import (
 func QuoteSnapshotFromProtocol(v quotes.Snapshot) factors.QuoteSnapshot {
 	snapshot := factors.QuoteSnapshot{}
 	_ = api.Copy(&snapshot, &v)
-	securityCode := proto.GetSecurityCode(v.Market, v.Code)
+	securityCode := exchange.GetSecurityCode(v.Market, v.Code)
 	snapshot.Code = securityCode
 	snapshot.OpeningChangeRate = num.NetChangeRate(snapshot.LastClose, snapshot.Open)
 	snapshot.ChangeRate = num.NetChangeRate(snapshot.LastClose, snapshot.Price)
@@ -37,7 +36,7 @@ func QuoteSnapshotFromProtocol(v quotes.Snapshot) factors.QuoteSnapshot {
 	if history != nil && history.MV5 > 0 {
 		lastMinuteVolume := history.GetMV5()
 		snapshot.OpenQuantityRatio = float64(snapshot.OpenVolume) / lastMinuteVolume
-		minuteVolume := float64(snapshot.Vol) / float64(trading.Minutes(snapshot.Date))
+		minuteVolume := float64(snapshot.Vol) / float64(exchange.Minutes(snapshot.Date))
 		snapshot.QuantityRatio = minuteVolume / lastMinuteVolume
 	}
 	return snapshot

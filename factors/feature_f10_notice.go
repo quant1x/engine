@@ -2,7 +2,7 @@ package factors
 
 import (
 	"gitee.com/quant1x/engine/datasource/dfcf"
-	"gitee.com/quant1x/gotdx/proto"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"strings"
@@ -18,7 +18,7 @@ type companyNotice struct {
 
 // 上市公司公告
 func getOneNotice(securityCode, currentDate string) (notice companyNotice) {
-	if !proto.AssertStockBySecurityCode(securityCode) {
+	if !exchange.AssertStockBySecurityCode(securityCode) {
 		return
 	}
 	now, _ := api.ParseTime(currentDate)

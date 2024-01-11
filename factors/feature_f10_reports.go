@@ -3,7 +3,7 @@ package factors
 import (
 	"gitee.com/quant1x/engine/cache"
 	dfcf2 "gitee.com/quant1x/engine/datasource/dfcf"
-	"gitee.com/quant1x/gotdx/proto"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 )
@@ -51,7 +51,7 @@ func (q *quarterlyReportSummary) Assign(v dfcf2.QuarterlyReport) {
 
 func getQuarterlyReportSummary(securityCode, date string) quarterlyReportSummary {
 	var summary quarterlyReportSummary
-	if proto.AssertIndexBySecurityCode(securityCode) {
+	if exchange.AssertIndexBySecurityCode(securityCode) {
 		return summary
 	}
 	v, ok := __mapQuarterlyReports[securityCode]

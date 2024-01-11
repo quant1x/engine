@@ -4,8 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/gotdx/proto"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/http"
 	"gitee.com/quant1x/gox/logger"
@@ -94,10 +93,10 @@ const (
 )
 
 func ShareHolder(securityCode, date string, diffQuarters ...int) (list []CirculatingShareholder) {
-	_, _, code := proto.DetectMarket(securityCode)
-	quarterEndDate := trading.FixTradeDate(date)
+	_, _, code := exchange.DetectMarket(securityCode)
+	quarterEndDate := exchange.FixTradeDate(date)
 	_, _, qEnd := api.GetQuarterByDate(date, diffQuarters...)
-	quarterEndDate = trading.FixTradeDate(qEnd)
+	quarterEndDate = exchange.FixTradeDate(qEnd)
 	params := urlpkg.Values{
 		"sortColumns": {"HOLDER_RANK"},
 		"sortTypes":   {"1"},
@@ -125,8 +124,8 @@ func ShareHolder(securityCode, date string, diffQuarters ...int) (list []Circula
 		shareholder := CirculatingShareholder{
 			SecurityCode:     v.SECUCODE,
 			SecurityName:     v.SECURITY_NAME_ABBR,
-			EndDate:          trading.FixTradeDate(v.END_DATE),
-			UpdateDate:       trading.FixTradeDate(v.UPDATE_DATE),
+			EndDate:          exchange.FixTradeDate(v.END_DATE),
+			UpdateDate:       exchange.FixTradeDate(v.UPDATE_DATE),
 			HolderType:       v.HOLDER_NEWTYPE,
 			HolderName:       v.HOLDER_NAME,
 			IsHoldOrg:        v.IS_HOLDORG,
@@ -140,7 +139,7 @@ func ShareHolder(securityCode, date string, diffQuarters ...int) (list []Circula
 			HoldRatioChange:  v.HOLD_RATIO_CHANGE,
 		}
 		// 修订证券代码
-		_, mfalg, mcode := proto.DetectMarket(shareholder.SecurityCode)
+		_, mfalg, mcode := exchange.DetectMarket(shareholder.SecurityCode)
 		shareholder.SecurityCode = mfalg + mcode
 		//HoldChangeState  int     `dataframe:"change_state"`        // 期末持股-变化状态
 		switch v.HOLDNUM_CHANGE_NAME {

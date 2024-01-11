@@ -6,7 +6,7 @@ import (
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/trader"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/concurrent"
 	"path/filepath"
 	"testing"
@@ -19,7 +19,7 @@ func TestFilePathClean(t *testing.T) {
 
 func TestOrderFlag(t *testing.T) {
 	model := TestModel82{}
-	date := trading.LastTradeDate()
+	date := exchange.LastTradeDate()
 	code := "sh600178"
 	direction := trader.BUY
 	filename := order_state_filename(date, model, code, direction)
@@ -32,7 +32,7 @@ func TestOrderFlag(t *testing.T) {
 
 func TestCountOrderFlag(t *testing.T) {
 	model := TestModel82{}
-	date := trading.LastTradeDate()
+	date := exchange.LastTradeDate()
 	direction := trader.BUY
 	v := CountStrategyOrders(date, model, direction)
 	fmt.Println(v)

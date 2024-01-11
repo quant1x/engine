@@ -3,7 +3,7 @@ package dfcf
 import (
 	"encoding/json"
 	"fmt"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/http"
 	"gitee.com/quant1x/pandas/stat"
 	urlpkg "net/url"
@@ -78,7 +78,7 @@ type rawMarginTrading struct {
 }
 
 func rawMarginTradingList(date string, pageNumber int) ([]SecurityMarginTrading, int, error) {
-	tradeDate := trading.FixTradeDate(date)
+	tradeDate := exchange.FixTradeDate(date)
 	params := urlpkg.Values{
 		"reportName":  {"RPTA_WEB_RZRQ_GGMX"},
 		"columns":     {"ALL"},

@@ -2,8 +2,7 @@ package dfcf
 
 import (
 	"encoding/json"
-	"gitee.com/quant1x/gotdx/proto"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/http"
 	urlpkg "net/url"
@@ -104,7 +103,7 @@ type StockCapital struct {
 //
 //	deprecated: 不推荐, 太慢
 func CapitalChange(securityCode string) (list []StockCapital) {
-	code := proto.CorrectSecurityCode(securityCode)
+	code := exchange.CorrectSecurityCode(securityCode)
 	params := urlpkg.Values{
 		"code": {strings.ToUpper(code)},
 	}
@@ -127,7 +126,7 @@ func CapitalChange(securityCode string) (list []StockCapital) {
 	for _, v := range css.Lngbbd {
 		sc := StockCapital{
 			Code:            securityCode,
-			Date:            trading.FixTradeDate(v.ENDDATE),
+			Date:            exchange.FixTradeDate(v.ENDDATE),
 			TotalShares:     v.TOTALSHARES,
 			UnlimitedShares: v.UNLIMITEDSHARES,
 			ListedAShares:   v.LISTEDASHARES,

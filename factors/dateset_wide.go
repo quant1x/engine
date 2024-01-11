@@ -4,10 +4,10 @@ import (
 	"context"
 	"gitee.com/quant1x/engine/cache"
 	base2 "gitee.com/quant1x/engine/datasource/base"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx"
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/quotes"
-	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/pandas"
@@ -169,7 +169,7 @@ func GetCacheKLine(code string, adjust ...bool) pandas.DataFrame {
 			return v
 		} else {
 			tmp := stat.Any2DType(v)
-			ms := stat.DType(trading.Minutes(lastDay)) / float64(trading.CN_TOTALFZNUM)
+			ms := stat.DType(exchange.Minutes(lastDay)) / float64(exchange.CN_TOTALFZNUM)
 			tmp /= ms
 			return tmp
 		}
@@ -177,7 +177,7 @@ func GetCacheKLine(code string, adjust ...bool) pandas.DataFrame {
 
 	// 链接量比序列
 	oLB := pandas.NewSeries(stat.SERIES_TYPE_DTYPE, "lb", lb.DTypes())
-	oMV5 := pandas.NewSeries(stat.SERIES_TYPE_DTYPE, "mv5", mv5.Div(trading.CN_DEFAULT_TOTALFZNUM).DTypes())
+	oMV5 := pandas.NewSeries(stat.SERIES_TYPE_DTYPE, "mv5", mv5.Div(exchange.CN_DEFAULT_TOTALFZNUM).DTypes())
 	vr := VOL.Div(REF(VOL, 1))
 	oVR := pandas.NewSeries(stat.SERIES_TYPE_DTYPE, "vr", vr.DTypes())
 	CLOSE := df.Col("close")
@@ -204,12 +204,12 @@ func GetKLineAll(securityCode string, argv ...int) pandas.DataFrame {
 	if len(argv) == 1 {
 		kType = uint16(argv[0])
 	}
-	securityCode = proto.CorrectSecurityCode(securityCode)
+	securityCode = exchange.CorrectSecurityCode(securityCode)
 	tdxApi := gotdx.GetTdxApi()
-	startDate := proto.MARKET_CH_FIRST_LISTTIME
+	startDate := exchange.MARKET_CH_FIRST_LISTTIME
 	// 默认是缓存中是已经复权的数据
 	dfCache := loadCacheKLine(securityCode)
-	isIndex := proto.AssertIndexBySecurityCode(securityCode)
+	isIndex := exchange.AssertIndexBySecurityCode(securityCode)
 	rawFields := FBarsProtocolFields
 	newFields := FBarsRawFields
 	// 尝试选择一次字段, 如果出现异常, 则清空dataframe, 重新下载
@@ -233,11 +233,11 @@ func GetKLineAll(securityCode string, argv ...int) pandas.DataFrame {
 		}
 		if info.IPODate > 0 {
 			startDate = strconv.FormatInt(int64(info.IPODate), 10)
-			startDate = trading.FixTradeDate(startDate)
+			startDate = exchange.FixTradeDate(startDate)
 		}
 	}
-	endDate := trading.Today()
-	ts := trading.TradeRange(startDate, endDate)
+	endDate := exchange.Today()
+	ts := exchange.TradeRange(startDate, endDate)
 	history := []quotes.SecurityBar{}
 	step := uint16(quotes.TDX_SECURITY_BARS_MAX)
 	total := uint16(len(ts))
@@ -280,10 +280,10 @@ func GetKLineAll(securityCode string, argv ...int) pandas.DataFrame {
 		}
 	}
 	hs = stat.Reverse(hs)
-	startDate = trading.FixTradeDate(startDate)
+	startDate = exchange.FixTradeDate(startDate)
 	for _, v := range hs {
 		for _, row := range v.List {
-			dateTime := trading.FixTradeDate(row.DateTime)
+			dateTime := exchange.FixTradeDate(row.DateTime)
 			if dateTime < startDate {
 				continue
 			}
@@ -304,7 +304,7 @@ func GetKLineAll(securityCode string, argv ...int) pandas.DataFrame {
 		if err != nil {
 			return date1
 		}
-		return dt.Format(trading.TradingDayDateFormat)
+		return dt.Format(exchange.TradingDayDateFormat)
 	}, true)
 	// 补充昨日收盘和涨跌幅
 	dfNew = attachVolume(dfNew, securityCode)
@@ -366,7 +366,7 @@ func GetKLineAll(securityCode string, argv ...int) pandas.DataFrame {
 
 // 附加成交量
 func attachVolume(df pandas.DataFrame, securityCode string) pandas.DataFrame {
-	securityCode = proto.CorrectSecurityCode(securityCode)
+	securityCode = exchange.CorrectSecurityCode(securityCode)
 	dates := df.Col("date").Strings()
 	if len(dates) == 0 {
 		return df

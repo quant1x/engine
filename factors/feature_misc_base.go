@@ -5,9 +5,8 @@ import (
 	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/utils"
-	"gitee.com/quant1x/gotdx/proto"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/securities"
-	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/num"
 	"gitee.com/quant1x/pandas"
 	. "gitee.com/quant1x/pandas/formula"
@@ -43,7 +42,7 @@ type ExchangeKLine struct {
 
 // NewExchangeKLine 构建制定日期的K线数据
 func NewExchangeKLine(code, date string) *ExchangeKLine {
-	securityCode := proto.CorrectSecurityCode(code)
+	securityCode := exchange.CorrectSecurityCode(code)
 	klines := base.CheckoutKLines(securityCode, date)
 	if len(klines) < cache.KLineMin {
 		return nil
@@ -75,7 +74,7 @@ func NewExchangeKLine(code, date string) *ExchangeKLine {
 	ek.MA3 = utils.SeriesIndexOf(ma3, -1)
 	// 2. 计算5日分钟均量
 	mv5 := MA(VOL, 5) // 5日均量
-	mv5m := mv5.Div(trading.CN_DEFAULT_TOTALFZNUM)
+	mv5m := mv5.Div(exchange.CN_DEFAULT_TOTALFZNUM)
 	ma5Volume := utils.SeriesIndexOf(mv5m, -1)
 	ek.MV5 = num.Decimal(ma5Volume, digits)
 	ma5 := MA(CLOSE, 5)

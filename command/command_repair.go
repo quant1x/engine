@@ -5,7 +5,7 @@ import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/storages"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
 	cmder "github.com/spf13/cobra"
@@ -24,12 +24,12 @@ var CmdRepair = &cmder.Command{
 	Short: "修复数据",
 	Long:  `修复数据`,
 	Run: func(cmd *cmder.Command, args []string) {
-		beginDate := trading.FixTradeDate(flagStartDate.Value)
+		beginDate := exchange.FixTradeDate(flagStartDate.Value)
 		endDate := cache.DefaultCanReadDate()
 		if len(flagEndDate.Value) > 0 {
-			endDate = trading.FixTradeDate(flagEndDate.Value)
+			endDate = exchange.FixTradeDate(flagEndDate.Value)
 		}
-		dates := trading.TradeRange(beginDate, endDate)
+		dates := exchange.TradeRange(beginDate, endDate)
 		count := len(dates)
 		fmt.Printf("修复数据: %s => %s"+strings.Repeat("\r\n", 2), dates[0], dates[count-1])
 		base.UpdateTickStartDate(dates[0])

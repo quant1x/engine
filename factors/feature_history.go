@@ -5,8 +5,7 @@ import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/utils"
-	"gitee.com/quant1x/gotdx/proto"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/pandas"
 	. "gitee.com/quant1x/pandas/formula"
@@ -98,8 +97,8 @@ func (this *History) Update(code, cacheDate, featureDate string, complete bool) 
 }
 
 func (this *History) Repair(code, cacheDate, featureDate string, complete bool) {
-	securityCode := proto.CorrectSecurityCode(this.Code)
-	tradeDate := trading.FixTradeDate(featureDate)
+	securityCode := exchange.CorrectSecurityCode(this.Code)
+	tradeDate := exchange.FixTradeDate(featureDate)
 	klines := base.CheckoutKLines(securityCode, tradeDate)
 	if len(klines) < cache.KLineMin {
 		return
@@ -194,6 +193,6 @@ func (this *History) GetMV5() float64 {
 	//if minutes < 1 {
 	//	minutes = 1
 	//}
-	minutes := trading.CN_DEFAULT_TOTALFZNUM
+	minutes := exchange.CN_DEFAULT_TOTALFZNUM
 	return this.MV5 / float64(minutes)
 }

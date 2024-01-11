@@ -4,8 +4,7 @@ import (
 	"context"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/market"
-	"gitee.com/quant1x/gotdx/proto"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/concurrent"
 	"gitee.com/quant1x/gox/coroutine"
@@ -94,7 +93,7 @@ func (this *Cache1D[T]) Length() int {
 func (this *Cache1D[T]) loadCache(date string) {
 	// 重置个股列表
 	this.allCodes = market.GetCodeList()
-	this.Date = trading.FixTradeDate(date)
+	this.Date = exchange.FixTradeDate(date)
 	this.filename = getCache1DFilepath(this.cacheKey, this.Date)
 	var list []T
 	err := api.CsvToSlices(this.filename, &list)
@@ -124,7 +123,7 @@ func (this *Cache1D[T]) ReplaceCache() {
 func (this *Cache1D[T]) Checkout(date ...string) {
 	if len(date) > 0 {
 		this.m.Lock()
-		destDate := trading.FixTradeDate(date[0])
+		destDate := exchange.FixTradeDate(date[0])
 		if this.Date != destDate {
 			this.replaceDate = destDate
 		}
@@ -154,12 +153,10 @@ func checkoutTable(v any) (headers []string, records [][]string) {
 }
 
 func (this *Cache1D[T]) Print(code string, date ...string) {
-	securityCode := proto.CorrectSecurityCode(code)
-	//name := securities.GetStockName(securityCode)
-	//tradeDate = trading.FixTradeDate(tradeDate)
+	securityCode := exchange.CorrectSecurityCode(code)
 	tradeDate := cache.DefaultCanReadDate()
 	if len(date) > 0 {
-		tradeDate = trading.FixTradeDate(date[0])
+		tradeDate = exchange.FixTradeDate(date[0])
 	}
 	//fmt.Printf("%s: %s, %s\n", securityCode, name, tradeDate)
 	value := this.Get(securityCode, tradeDate)

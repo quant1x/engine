@@ -4,8 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"gitee.com/quant1x/engine/utils"
-	"gitee.com/quant1x/gotdx/proto"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/http"
 	urlpkg "net/url"
@@ -172,10 +171,10 @@ type FundFlow struct {
 func IndividualStocksFundFlow(securityCode, date string) (list []FundFlow) {
 	beginDate := ""
 	if len(date) > 0 {
-		beginDate = trading.FixTradeDate(date)
+		beginDate = exchange.FixTradeDate(date)
 	}
 
-	mId, _, code := proto.DetectMarket(securityCode)
+	mId, _, code := exchange.DetectMarket(securityCode)
 	params := urlpkg.Values{
 		"lmt":     {"0"},
 		"klt":     {"101"},

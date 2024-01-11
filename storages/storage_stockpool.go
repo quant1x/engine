@@ -6,7 +6,7 @@ import (
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/trader"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"sync"
@@ -41,7 +41,7 @@ func stockPoolMerge(model models.Strategy, date string, orders []models.Statisti
 	localStockPool := GetStockPool()
 	//targets := []StockPool{}
 	cacheStatistics := map[string]*StockPool{}
-	tradeDate := trading.FixTradeDate(date)
+	tradeDate := exchange.FixTradeDate(date)
 	for i, v := range orders {
 		sp := StockPool{
 			//Status         StrategyStatus `name:"策略状态" dataframe:"status"`
@@ -156,7 +156,7 @@ func strategyOrderIsFinished(model models.Strategy) bool {
 
 // 检查买入订单, 条件满足则买入
 func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool {
-	tradeDate := trading.FixTradeDate(date)
+	tradeDate := exchange.FixTradeDate(date)
 	strategyParameter := config.GetStrategyParameterByCode(model.Code())
 	if strategyParameter != nil && strategyParameter.BuyEnable() {
 		direction := trader.BUY
@@ -191,7 +191,7 @@ func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool
 				}
 				// 3. 首先推送订单已完成状态
 				_ = PushOrderState(date, model, securityCode, direction)
-				if !trading.DateIsTradingDay() {
+				if !exchange.DateIsTradingDay() {
 					// 非交易日
 					logger.Errorf("%s[%d]: %s 非交易日, 放弃", model.Name(), model.Code(), securityCode)
 					continue

@@ -1,8 +1,8 @@
 package market
 
 import (
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx"
-	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/pandas/stat"
@@ -25,10 +25,10 @@ func IndexSentiment(codes ...string) (sentiment float64, consistent int) {
 	// 默认上证指数
 	securityCode := "sh000001"
 	if len(codes) > 0 {
-		securityCode = proto.CorrectSecurityCode(codes[0])
+		securityCode = exchange.CorrectSecurityCode(codes[0])
 	}
 	// 非指数不判断情绪
-	if !proto.AssertIndexBySecurityCode(securityCode) {
+	if !exchange.AssertIndexBySecurityCode(securityCode) {
 		return
 	}
 	if len(securityCode) != 8 {
@@ -62,7 +62,7 @@ func SecuritySentiment[E ~int | ~int64 | ~float32 | ~float64](up, down E) (senti
 
 // SnapshotSentiment 情绪指数, 50%为平稳, 低于50%为情绪差, 高于50%为情绪好
 func SnapshotSentiment(snapshot quotes.Snapshot) (sentiment float64, consistent int) {
-	if proto.AssertIndexByMarketAndCode(snapshot.Market, snapshot.Code) {
+	if exchange.AssertIndexByMarketAndCode(snapshot.Market, snapshot.Code) {
 		// 指数和板块按照上涨和下跌家数计算
 		return SecuritySentiment(snapshot.IndexUp, snapshot.IndexDown)
 	}

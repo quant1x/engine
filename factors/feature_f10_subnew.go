@@ -1,8 +1,8 @@
 package factors
 
 import (
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/quotes"
-	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
 )
 
@@ -33,14 +33,14 @@ func checkXdxr(list []quotes.XdxrInfo, date string) *quotes.XdxrInfo {
 
 // IsSubNewStockByIpoDate 检查是否次新股
 func IsSubNewStockByIpoDate(securityCode, ipoDate, date string) bool {
-	ipoDate = trading.FixTradeDate(ipoDate)
-	date = trading.FixTradeDate(date)
+	ipoDate = exchange.FixTradeDate(ipoDate)
+	date = exchange.FixTradeDate(date)
 	listingDate, err := api.ParseTime(ipoDate)
 	if err != nil {
 		return false
 	}
 	tm := listingDate.AddDate(SubNewStockYears, 0, 0)
-	after := tm.Format(trading.TradingDayDateFormat)
+	after := tm.Format(exchange.TradingDayDateFormat)
 	if date >= after {
 		return false
 	}

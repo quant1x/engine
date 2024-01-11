@@ -1,8 +1,7 @@
 package base
 
 import (
-	"gitee.com/quant1x/gotdx/proto"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/pandas"
 	"gitee.com/quant1x/pandas/stat"
@@ -45,8 +44,8 @@ func UpdateCacheKLines(securityCode string, klines []KLine) {
 }
 
 func CheckoutKLines(code, date string) []KLine {
-	securityCode := proto.CorrectSecurityCode(code)
-	date = trading.FixTradeDate(date)
+	securityCode := exchange.CorrectSecurityCode(code)
+	date = exchange.FixTradeDate(date)
 	// 1. 取缓存的K线
 	klineMutex.RLock()
 	cacheKLines, ok := routineLocalKLines[securityCode]
@@ -101,7 +100,7 @@ func periodKLine(checkPeriod func(date ...string) (s, e string), securityCode st
 			//days := len(dates)
 			//days = 7
 			//if days > 0 {
-			periodLastDate := trading.FixTradeDate(we)
+			periodLastDate := exchange.FixTradeDate(we)
 			//if periodLastDate == "2023-07-30" {
 			//	fmt.Println(1)
 			//}

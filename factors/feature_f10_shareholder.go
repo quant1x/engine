@@ -3,7 +3,7 @@ package factors
 import (
 	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/datasource/dfcf"
-	"gitee.com/quant1x/gotdx/proto"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/api"
 )
@@ -24,7 +24,7 @@ func checkoutShareHolder(securityCode, featureDate string) *top10ShareHolder {
 		return a.Date > b.Date
 	})
 	xdxrInfo := checkoutCapital(xdxrs, featureDate)
-	if xdxrInfo != nil && proto.AssertStockBySecurityCode(securityCode) {
+	if xdxrInfo != nil && exchange.AssertStockBySecurityCode(securityCode) {
 		list := dfcf.GetCacheShareHolder(securityCode, featureDate)
 		capital := xdxrInfo.HouLiuTong * 10000
 		totalCapital := xdxrInfo.HouZongGuBen * 10000

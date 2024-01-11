@@ -3,8 +3,7 @@ package factors
 import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasource/base"
-	"gitee.com/quant1x/gotdx/proto"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/pandas"
 	"gitee.com/quant1x/pandas/stat"
@@ -12,7 +11,7 @@ import (
 
 // BasicKLine 基础日K线
 func BasicKLine(securityCode string) pandas.DataFrame {
-	securityCode = proto.CorrectSecurityCode(securityCode)
+	securityCode = exchange.CorrectSecurityCode(securityCode)
 	filename := cache.KLineFilename(securityCode)
 	df := pandas.ReadCSV(filename)
 	return df
@@ -20,7 +19,7 @@ func BasicKLine(securityCode string) pandas.DataFrame {
 
 // KLine 加载日K线宽表
 func KLine(securityCode string) pandas.DataFrame {
-	securityCode = proto.CorrectSecurityCode(securityCode)
+	securityCode = exchange.CorrectSecurityCode(securityCode)
 	df := GetCacheKLine(securityCode, false)
 	return df
 }
@@ -97,7 +96,7 @@ func KLineToWeekly(kline pandas.DataFrame) pandas.DataFrame {
 		dt, _ := api.ParseTime(wdate)
 		w := int(dt.Weekday())
 		last := false
-		today := trading.IndexToday()
+		today := exchange.IndexToday()
 		if wdate == today {
 			last = true
 		}
@@ -106,7 +105,7 @@ func KLineToWeekly(kline pandas.DataFrame) pandas.DataFrame {
 			last = true
 		}
 		if !last {
-			nextDate := trading.NextTradeDate(wdate)
+			nextDate := exchange.NextTradeDate(wdate)
 			ndt, _ := api.ParseTime(nextDate)
 			nw := int(ndt.Weekday())
 			if nw < w || api.DifferDays(ndt, dt) >= 7 {
@@ -174,7 +173,7 @@ func periodKLine(checkPeriod func(date ...string) (s, e string), securityCode st
 			//days := len(dates)
 			//days = 7
 			//if days > 0 {
-			periodLastDate := trading.FixTradeDate(we)
+			periodLastDate := exchange.FixTradeDate(we)
 			//if periodLastDate == "2023-07-30" {
 			//	fmt.Println(1)
 			//}

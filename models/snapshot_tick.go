@@ -2,10 +2,10 @@ package models
 
 import (
 	"gitee.com/quant1x/engine/factors"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx"
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gotdx/securities"
-	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/num"
@@ -52,7 +52,7 @@ func GetStrategySnapshot(securityCode string) *factors.QuoteSnapshot {
 	if history != nil {
 		lastMinuteVolume := history.GetMV5()
 		snapshot.OpenQuantityRatio = float64(snapshot.OpenVolume) / lastMinuteVolume
-		minuteVolume := float64(snapshot.Vol) / float64(trading.Minutes(snapshot.Date))
+		minuteVolume := float64(snapshot.Vol) / float64(exchange.Minutes(snapshot.Date))
 		snapshot.QuantityRatio = minuteVolume / lastMinuteVolume
 	}
 	snapshot.OpenBiddingDirection, snapshot.OpenVolumeDirection = v.CheckDirection()
@@ -68,7 +68,7 @@ func SyncAllSnapshots(barIndex *int) {
 	if barIndex != nil {
 		bar = progressbar.NewBar(*barIndex, "执行["+modName+"]", count)
 	}
-	currentDate := trading.GetCurrentlyDay()
+	currentDate := exchange.GetCurrentlyDay()
 	tdxApi := gotdx.GetTdxApi()
 	var snapshots []quotes.Snapshot
 	for start := 0; start < count; start += quotes.TDX_SECURITY_QUOTES_MAX {

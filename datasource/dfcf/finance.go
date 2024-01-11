@@ -3,8 +3,7 @@ package dfcf
 import (
 	"encoding/json"
 	"fmt"
-	"gitee.com/quant1x/gotdx/proto"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/http"
 	urlpkg "net/url"
 	"strings"
@@ -62,7 +61,7 @@ func FinanceReports(date string, pageNumber ...int) (reports []PreviewQuarterlyR
 	if len(pageNumber) > 0 {
 		pageNo = pageNumber[0]
 	}
-	beginDate := trading.FixTradeDate(date)
+	beginDate := exchange.FixTradeDate(date)
 	params := urlpkg.Values{
 		"page_size":   {fmt.Sprintf("%d", pageSize)},
 		"page_index":  {fmt.Sprintf("%d", pageNo)},
@@ -97,7 +96,7 @@ func FinanceReports(date string, pageNumber ...int) (reports []PreviewQuarterlyR
 			continue
 		}
 		code := strings.TrimSpace(v.SECUCODE)
-		_, mflag, msymbol := proto.DetectMarket(code)
+		_, mflag, msymbol := exchange.DetectMarket(code)
 		securityCode := mflag + msymbol
 
 		report := PreviewQuarterlyReport{

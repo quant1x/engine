@@ -3,7 +3,7 @@ package trader
 import (
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/gotdx/proto"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/concurrent"
 	"gitee.com/quant1x/gox/coroutine"
@@ -129,7 +129,7 @@ func lazyLoadListOfBlackAndWhite() {
 	}
 	mapSafes.Clear()
 	for _, v := range list {
-		securityCode := proto.CorrectSecurityCode(v.Code)
+		securityCode := exchange.CorrectSecurityCode(v.Code)
 		mapSafes.Put(securityCode, v.Type)
 	}
 }
@@ -154,7 +154,7 @@ func SyncLoadListOfBlackAndWhite() {
 // 校验和修正证券代码
 func verify_and_correct_for_security_code(code string) (securityCode string) {
 	onceSafes.Do(lazyLoadListOfBlackAndWhite)
-	return proto.CorrectSecurityCode(code)
+	return exchange.CorrectSecurityCode(code)
 }
 
 // 检查是否禁止的类型

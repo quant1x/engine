@@ -55,3 +55,7 @@ func Test_checkoutCanSellStockList(t *testing.T) {
 	v := checkoutCanSellStockList(117)
 	fmt.Println(v)
 }
+
+func Test_cookieCutterSell(t *testing.T) {
+	cookieCutterSell()
+}

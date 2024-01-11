@@ -1,7 +1,7 @@
 package market
 
 import (
-	"gitee.com/quant1x/gotdx/proto"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/securities"
 	"sync"
 )
@@ -22,7 +22,7 @@ func loadSubNewStock() {
 		return
 	}
 	for _, v := range blockInfo.ConstituentStocks {
-		securityCode := proto.CorrectSecurityCode(v)
+		securityCode := exchange.CorrectSecurityCode(v)
 		mapSubnewStock[securityCode] = true
 	}
 }
@@ -30,7 +30,7 @@ func loadSubNewStock() {
 // IsSubNewStock 是否次新股
 func IsSubNewStock(code string) bool {
 	onceSubNew.Do(loadSubNewStock)
-	securityCode := proto.CorrectSecurityCode(code)
+	securityCode := exchange.CorrectSecurityCode(code)
 	if v, ok := mapSubnewStock[securityCode]; ok {
 		return v
 	}

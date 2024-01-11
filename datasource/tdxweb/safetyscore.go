@@ -3,7 +3,7 @@ package tdxweb
 import (
 	"fmt"
 	"gitee.com/quant1x/engine/market"
-	"gitee.com/quant1x/gotdx/proto"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/concurrent"
 	"gitee.com/quant1x/gox/http"
 	"gitee.com/quant1x/gox/logger"
@@ -22,14 +22,14 @@ var (
 )
 
 func GetSafetyScore(securityCode string) (score int) {
-	if !proto.AssertStockBySecurityCode(securityCode) {
+	if !exchange.AssertStockBySecurityCode(securityCode) {
 		return defaultSafetyScore
 	}
 	if market.IsNeedIgnore(securityCode) {
 		return defaultSafetyScoreOfIgnore
 	}
 	score = defaultSafetyScore
-	_, _, code := proto.DetectMarket(securityCode)
+	_, _, code := exchange.DetectMarket(securityCode)
 	if len(code) == 6 {
 		url := fmt.Sprintf("%s%s.json", urlRiskAssessment, code)
 		data, err := http.Get(url)

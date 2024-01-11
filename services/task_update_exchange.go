@@ -5,8 +5,8 @@ import (
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/models"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/quotes"
-	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
@@ -19,9 +19,9 @@ import (
 func jobUpdateExchangeAndSnapshot() {
 	//funcName, _, _ := runtime.Caller()
 	now := time.Now()
-	updateInRealTime, _ := trading.CanUpdateInRealtime()
+	updateInRealTime, _ := exchange.CanUpdateInRealtime()
 	// 09:15:00~09:27:00, 14:57:00~15:01:00之间更新数据
-	if updateInRealTime && trading.CheckCallAuctionTime(now) {
+	if updateInRealTime && exchange.CheckCallAuctionTime(now) {
 		realtimeUpdateExchangeAndSnapshot()
 	} else {
 		if runtime.Debug() {
@@ -71,71 +71,71 @@ func realtimeUpdateExchangeAndSnapshot() {
 		v.Date = currentDate
 		//cacheSnapshots := []flash.Exchange{}
 		securityCode := v.SecurityCode
-		exchange := factors.GetL5Exchange(securityCode)
-		if exchange == nil {
-			exchange = &factors.Exchange{
+		misc := factors.GetL5Misc(securityCode)
+		if misc == nil {
+			misc = &factors.Misc{
 				Date: currentDate,
 				Code: securityCode,
 			}
 		} else {
-			exchange.Date = currentDate
+			misc.Date = currentDate
 		}
 		// 2. 计算开盘和收盘的成交量
-		exchange.OpenVolume = int64(v.OpenVolume)
-		exchange.CloseVolume = int64(v.CloseVolume)
+		misc.OpenVolume = int64(v.OpenVolume)
+		misc.CloseVolume = int64(v.CloseVolume)
 		// 计算开盘换手z和收盘换手z
 		f10 := factors.GetL5F10(securityCode)
 		if f10 != nil {
-			exchange.OpenTurnZ = f10.TurnZ(exchange.OpenVolume)
-			exchange.CloseTurnZ = f10.TurnZ(exchange.CloseVolume)
+			misc.OpenTurnZ = f10.TurnZ(misc.OpenVolume)
+			misc.CloseTurnZ = f10.TurnZ(misc.CloseVolume)
 		}
 		// 3. 计算快照扩展数据
-		if trading.CheckCallAuctionOpen(timestamp) {
+		if exchange.CheckCallAuctionOpen(timestamp) {
 			// 3.1 早盘情绪有时效性
 			// 计算早盘竞价方向
-			exchange.OpenBiddingDirection, exchange.OpenVolumeDirection = v.CheckDirection()
+			misc.OpenBiddingDirection, misc.OpenVolumeDirection = v.CheckDirection()
 			// 3.2 计算早盘情绪
-			exchange.OpenSentiment, exchange.OpenConsistent = market.SnapshotSentiment(*v)
+			misc.OpenSentiment, misc.OpenConsistent = market.SnapshotSentiment(*v)
 		} else {
 			// 3.3盘 中及盘后的数据的计算都没有问题
 			// 计算收盘竞价方向
-			exchange.CloseBiddingDirection, exchange.CloseVolumeDirection = v.CheckDirection()
+			misc.CloseBiddingDirection, misc.CloseVolumeDirection = v.CheckDirection()
 			// 3.4 计算收盘情绪
-			exchange.CloseSentiment, exchange.CloseConsistent = market.SnapshotSentiment(*v)
+			misc.CloseSentiment, misc.CloseConsistent = market.SnapshotSentiment(*v)
 		}
 		// 4. 竞价上午竞价观察
-		if trading.CheckCallAuctionOpen(timestamp) {
+		if exchange.CheckCallAuctionOpen(timestamp) {
 			// 4.1 竞价开盘
-			if exchange.BidOpen == 0 {
-				exchange.BidOpen = v.Ask1
+			if misc.BidOpen == 0 {
+				misc.BidOpen = v.Ask1
 			}
 			// 4.2 竞价结束
-			exchange.BidClose = v.Price
+			misc.BidClose = v.Price
 			// 4.3 竞价最高
-			if exchange.BidHigh == 0 || exchange.BidHigh < v.Ask1 {
-				exchange.BidHigh = v.Ask1
+			if misc.BidHigh == 0 || misc.BidHigh < v.Ask1 {
+				misc.BidHigh = v.Ask1
 			}
 			// 4.4 竞价最低
-			if exchange.BidLow == 0 || exchange.BidLow > v.Ask1 {
-				exchange.BidLow = v.Ask1
+			if misc.BidLow == 0 || misc.BidLow > v.Ask1 {
+				misc.BidLow = v.Ask1
 			}
 			// 4.4 竞价匹配量
-			exchange.BidMatched = float64(v.BidVol1)
+			misc.BidMatched = float64(v.BidVol1)
 			// 4.5 竞价未匹配量
 			if v.BidVol2 == 0 {
-				exchange.BidUnmatched = float64(v.AskVol2)
-				exchange.BidDirection = -1
+				misc.BidUnmatched = float64(v.AskVol2)
+				misc.BidDirection = -1
 			}
 			if v.AskVol2 == 0 {
-				exchange.BidUnmatched = float64(v.BidVol2)
-				exchange.BidDirection = 1
+				misc.BidUnmatched = float64(v.BidVol2)
+				misc.BidDirection = 1
 			}
 		}
 		// 5. 缓存数据
 		//cacheSnapshots = append(cacheSnapshots, *exchange)
 
 		// 6. 更新内存中的数据
-		factors.UpdateL5Exchange(exchange)
+		factors.UpdateL5Misc(misc)
 		// 7. 刷新缓存
 		cacheList, ok := mapSnapshot[securityCode]
 		if !ok {
@@ -156,11 +156,11 @@ func realtimeUpdateExchangeAndSnapshot() {
 		//logger.Infof("%s: begin-1-3", moduleName)
 	}
 	logger.Infof("%s: begin-2", moduleName)
-	// 刷新exchange快照本地cache
-	factors.RefreshL5Exchange()
+	// 刷新Misc快照本地cache
+	factors.RefreshL5Misc()
 	logger.Infof("%s: begin-3", moduleName)
 	timestamp := time.Now()
-	if trading.CheckCallAuctionOpenFinished(timestamp) || trading.CheckCallAuctionCloseFinished(timestamp) {
+	if exchange.CheckCallAuctionOpenFinished(timestamp) || exchange.CheckCallAuctionCloseFinished(timestamp) {
 		// 早盘和尾盘集合竞价结束后刷新缓存文件
 		for _, listSnapshot := range mapSnapshot {
 			if len(listSnapshot) == 0 {

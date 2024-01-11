@@ -2,7 +2,7 @@ package command
 
 import (
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/tags"
 	"gitee.com/quant1x/pkg/tablewriter"
 	cmder "github.com/spf13/cobra"
@@ -18,7 +18,7 @@ var (
 	flagAll       = cmdFlag[bool]{Name: "all", Value: false, Usage: "全部"}
 	flagBaseData  = cmdFlag[string]{Name: "base", Value: "", Usage: "基础数据"}
 	flagFeatures  = cmdFlag[string]{Name: "features", Value: "", Usage: "特征数据"}
-	flagStartDate = cmdFlag[string]{Name: "start", Value: trading.LastTradeDate(), Usage: "开始日期"}
+	flagStartDate = cmdFlag[string]{Name: "start", Value: exchange.LastTradeDate(), Usage: "开始日期"}
 	flagEndDate   = cmdFlag[string]{Name: "end", Value: "", Usage: "结束日期"}
 	flagDate      = cmdFlag[string]{Name: "date", Value: "", Usage: "日期"}
 )

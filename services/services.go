@@ -1,7 +1,7 @@
 package services
 
 import (
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/logger"
 )
 
@@ -76,7 +76,7 @@ func init() {
 
 // IsTrading 状态是否交易中
 func IsTrading(status int) bool {
-	if status == trading.ExchangeTrading || status == trading.ExchangeCallAuction {
+	if status == exchange.ExchangeTrading || status == exchange.ExchangeCallAuction {
 		return true
 	}
 	return false

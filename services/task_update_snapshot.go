@@ -2,7 +2,7 @@ package services
 
 import (
 	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/runtime"
 	"runtime/debug"
@@ -11,7 +11,7 @@ import (
 // 任务 - 更新快照
 func jobUpdateSnapshot() {
 	//funcName, _, _ := runtime.Caller()
-	updateInRealTime, status := trading.CanUpdateInRealtime()
+	updateInRealTime, status := exchange.CanUpdateInRealtime()
 	// 14:30:00~15:01:00之间更新数据
 	if updateInRealTime && IsTrading(status) {
 		realtimeUpdateSnapshot()

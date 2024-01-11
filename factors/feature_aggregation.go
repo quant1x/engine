@@ -12,7 +12,7 @@ var (
 	// 基本面F10
 	__l5F10 *Cache1D[*F10] = nil
 	// 扩展交易特征
-	__l5Exchange *Cache1D[*Exchange] = nil
+	__l5Misc *Cache1D[*Misc] = nil
 	// 平台
 	__l5Box *Cache1D[*Box] = nil
 )
@@ -35,8 +35,8 @@ func lazyInitFeatures() {
 		panic(err)
 	}
 	// 扩展信息
-	__l5Exchange = NewCache1D[*Exchange](cacheL5KeyExchange, NewExchange)
-	err = cache.Register(__l5Exchange)
+	__l5Misc = NewCache1D[*Misc](cacheL5KeyExchange, NewExchange)
+	err = cache.Register(__l5Misc)
 	if err != nil {
 		panic(err)
 	}
@@ -77,31 +77,31 @@ func GetL5F10(securityCode string, date ...string) *F10 {
 	return *data
 }
 
-func CacheExchange() *Cache1D[*Exchange] {
+func CacheExchange() *Cache1D[*Misc] {
 	__l5Once.Do(lazyInitFeatures)
-	return __l5Exchange
+	return __l5Misc
 }
 
-// GetL5Exchange 获取扩展信息
-func GetL5Exchange(securityCode string, date ...string) (exchange *Exchange) {
+// GetL5Misc 获取扩展信息
+func GetL5Misc(securityCode string, date ...string) (exchange *Misc) {
 	__l5Once.Do(lazyInitFeatures)
-	v := __l5Exchange.Get(securityCode, date...)
+	v := __l5Misc.Get(securityCode, date...)
 	if v == nil {
 		return nil
 	}
 	return *v
 }
 
-// UpdateL5Exchange 更新当日exchange
-func UpdateL5Exchange(extension *Exchange) {
+// UpdateL5Misc 更新当日exchange
+func UpdateL5Misc(extension *Misc) {
 	__l5Once.Do(lazyInitFeatures)
-	__l5Exchange.Set(extension.Code, extension, cache.DefaultCanReadDate())
+	__l5Misc.Set(extension.Code, extension, cache.DefaultCanReadDate())
 }
 
 // RefreshL5Exchange 刷新缓存
-func RefreshL5Exchange() {
+func RefreshL5Misc() {
 	__l5Once.Do(lazyInitFeatures)
-	__l5Exchange.Apply(nil)
+	__l5Misc.Apply(nil)
 }
 
 func CacheBox() *Cache1D[*Box] {

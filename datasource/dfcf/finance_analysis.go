@@ -2,8 +2,7 @@ package dfcf
 
 import (
 	"fmt"
-	"gitee.com/quant1x/gotdx/proto"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/http"
 	"gitee.com/quant1x/gox/logger"
@@ -63,7 +62,7 @@ func GetQuarterlyReports(pageNumber ...int) (reports []QuarterlyReport, pages in
 		pageNo = pageNumber[0]
 	}
 	_, qEnd := api.GetQuarterDay(4)
-	beginDate := trading.FixTradeDate(qEnd)
+	beginDate := exchange.FixTradeDate(qEnd)
 	params := urlpkg.Values{
 		//"callback":    {"jQuery1123043614175387302234_1685785566671"},
 		//"sortColumns": {"UPDATE_DATE,SECURITY_CODE"},
@@ -131,7 +130,7 @@ func GetQuarterlyReports(pageNumber ...int) (reports []QuarterlyReport, pages in
 				ZXGXL:              v.GetFloat64("ZXGXL"),
 			}
 			// 截取市场编码，截取股票编码，市场编码+股票编码拼接作为主键
-			securityCode := proto.CorrectSecurityCode(report.SecuCode)
+			securityCode := exchange.CorrectSecurityCode(report.SecuCode)
 			report.SecurityCode = securityCode
 			reports = append(reports, report)
 		}

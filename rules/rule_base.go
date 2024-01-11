@@ -49,8 +49,8 @@ func ruleBase(ruleParameter config.RuleParameter, snapshot factors.QuoteSnapshot
 	//	return false
 	//}
 	// 6. exchange 过滤
-	exchange := factors.GetL5Exchange(securityCode)
-	if exchange == nil {
+	misc := factors.GetL5Misc(securityCode)
+	if misc == nil {
 		//return ErrExchangeNotExist
 	} else {
 		//// 6.1 资金流向

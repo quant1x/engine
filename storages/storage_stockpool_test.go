@@ -5,7 +5,7 @@ import (
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/concurrent"
 	"testing"
 )
@@ -47,7 +47,7 @@ func Test_strategyOrderIsFinished(t *testing.T) {
 func Test_checkOrderForBuy(t *testing.T) {
 	list := GetStockPool()
 	model := TestModel{}
-	date := trading.LastTradeDate()
+	date := exchange.LastTradeDate()
 	v := checkOrderForBuy(list, model, date)
 	fmt.Println(v)
 }

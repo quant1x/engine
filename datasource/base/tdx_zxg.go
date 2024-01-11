@@ -2,7 +2,7 @@ package base
 
 import (
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/gotdx/proto"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/pandas"
 )
 
@@ -26,7 +26,7 @@ func GetZxgList() []string {
 	// 校验证券代码, 统一格式前缀加代码
 	cs := rows.Strings()
 	for i, v := range cs {
-		cs[i] = proto.CorrectSecurityCode(v)
+		cs[i] = exchange.CorrectSecurityCode(v)
 	}
 	return cs
 }

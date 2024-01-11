@@ -4,8 +4,7 @@ import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/utils"
-	"gitee.com/quant1x/gotdx/proto"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/pandas"
 	. "gitee.com/quant1x/pandas/formula"
 	"gitee.com/quant1x/pandas/stat"
@@ -44,8 +43,8 @@ type KLineBox struct {
 
 // NewKLineBox 构建有效突破数据
 func NewKLineBox(code, date string) *KLineBox {
-	securityCode := proto.CorrectSecurityCode(code)
-	tradeDate := trading.FixTradeDate(date)
+	securityCode := exchange.CorrectSecurityCode(code)
+	tradeDate := exchange.FixTradeDate(date)
 	klines := base.CheckoutKLines(securityCode, tradeDate)
 	if len(klines) < cache.KLineMin {
 		return nil

@@ -5,10 +5,9 @@ import (
 	"errors"
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx"
-	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/quotes"
-	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/runtime"
@@ -26,14 +25,14 @@ func BatchRealtimeBasicKLine(codes []string) error {
 		return ErrTdxApiQuotesTickMaxBatchSizeExceeded
 	}
 	now := time.Now()
-	nowServerTime := now.Format(trading.CN_SERVERTIME_FORMAT)
-	lastTradingDay := trading.LastTradeDate()
-	today := trading.Today()
+	nowServerTime := now.Format(exchange.CN_SERVERTIME_FORMAT)
+	lastTradingDay := exchange.LastTradeDate()
+	today := exchange.Today()
 	if lastTradingDay != today {
 		// 当天非交易日, 不更新, 直接返回
 		return nil
 	}
-	if nowServerTime < trading.CN_TradingStartTime || nowServerTime > trading.CN_TradingStopTime {
+	if nowServerTime < exchange.CN_TradingStartTime || nowServerTime > exchange.CN_TradingStopTime {
 		// 非交易时间, 不更新, 直接返回
 		return nil
 	}
@@ -55,11 +54,11 @@ func BatchRealtimeBasicKLine(codes []string) error {
 		return err
 	}
 	for _, v := range hq {
-		if v.State == quotes.TDX_SECURITY_TRADE_STATE_DELISTING || v.Code == proto.StockDelisting || v.LastClose == float64(0) {
+		if v.State == quotes.TDX_SECURITY_TRADE_STATE_DELISTING || v.Code == exchange.StockDelisting || v.LastClose == float64(0) {
 			// 终止上市的数据略过
 			continue
 		}
-		securityCode := proto.GetMarketFlag(v.Market) + v.Code
+		securityCode := exchange.GetMarketFlag(v.Market) + v.Code
 		kl := KLine{
 			Date:   lastTradingDay, // 默认
 			Open:   v.Open,
@@ -89,7 +88,7 @@ func BatchRealtimeBasicKLine(codes []string) error {
 			UpdateAllBasicKLine(securityCode)
 			continue
 		}
-		ts := trading.TradeRange(cacheLastDate, lastTradingDay)
+		ts := exchange.TradeRange(cacheLastDate, lastTradingDay)
 		if len(ts) > 2 {
 			// 超过2天的差距, 不能用realtime更新K线数据
 			// 只能是当天更新 或者是新增, 跨越2个以上的交易日不更新
@@ -126,22 +125,22 @@ func BatchRealtimeBasicKLine(codes []string) error {
 // BasicKLineForSnapshot 通过snapshot更新基础K线
 func BasicKLineForSnapshot(v quotes.Snapshot) {
 	now := time.Now()
-	nowServerTime := now.Format(trading.CN_SERVERTIME_FORMAT)
-	lastTradeday := trading.LastTradeDate()
-	today := trading.Today()
+	nowServerTime := now.Format(exchange.CN_SERVERTIME_FORMAT)
+	lastTradeday := exchange.LastTradeDate()
+	today := exchange.Today()
 	if lastTradeday != today {
 		// 当天非交易日, 不更新, 直接返回
 		if !runtime.Debug() {
 			return
 		}
 	}
-	if nowServerTime < trading.CN_TradingStartTime || nowServerTime > trading.CN_TradingStopTime {
+	if nowServerTime < exchange.CN_TradingStartTime || nowServerTime > exchange.CN_TradingStopTime {
 		// 非交易时间, 不更新, 直接返回
 		if !runtime.Debug() {
 			return
 		}
 	}
-	if v.State == quotes.TDX_SECURITY_TRADE_STATE_DELISTING || v.Code == proto.StockDelisting || v.LastClose == float64(0) {
+	if v.State == quotes.TDX_SECURITY_TRADE_STATE_DELISTING || v.Code == exchange.StockDelisting || v.LastClose == float64(0) {
 		// 终止上市的数据略过
 		return
 	}
@@ -176,7 +175,7 @@ func BasicKLineForSnapshot(v quotes.Snapshot) {
 		UpdateAllBasicKLine(securityCode)
 		return
 	}
-	ts := trading.TradeRange(cacheLastDate, lastTradeday)
+	ts := exchange.TradeRange(cacheLastDate, lastTradeday)
 	if len(ts) > 2 {
 		// 超过2天的差距, 不能用realtime更新K线数据
 		// 只能是当天更新 或者是新增, 跨越2个以上的交易日不更新

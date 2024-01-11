@@ -3,7 +3,7 @@ package command
 import (
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/tracker"
-	"gitee.com/quant1x/gotdx/proto"
+	"gitee.com/quant1x/exchange"
 	cmder "github.com/spf13/cobra"
 	"strings"
 )
@@ -21,7 +21,7 @@ var CmdBackTesting = &cmder.Command{
 	Short: "回测",
 	Run: func(cmd *cmder.Command, args []string) {
 		securityCode = strings.TrimSpace(securityCode)
-		securityCode = proto.CorrectSecurityCode(securityCode)
+		securityCode = exchange.CorrectSecurityCode(securityCode)
 		if len(securityCode) > 0 {
 			tracker.CheckStrategy(strategyCode, securityCode)
 		} else {

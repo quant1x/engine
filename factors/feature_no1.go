@@ -5,8 +5,7 @@ import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/utils"
-	"gitee.com/quant1x/gotdx/proto"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/pandas"
 	. "gitee.com/quant1x/pandas/formula"
@@ -51,8 +50,8 @@ func (this *HousNo1) Update(code, cacheDate, featureDate string, complete bool) 
 }
 
 func (this *HousNo1) Repair(code, cacheDate, featureDate string, complete bool) {
-	securityCode := proto.CorrectSecurityCode(code)
-	tradeDate := trading.FixTradeDate(featureDate)
+	securityCode := exchange.CorrectSecurityCode(code)
+	tradeDate := exchange.FixTradeDate(featureDate)
 	klines := base.CheckoutKLines(securityCode, tradeDate)
 	if len(klines) < cache.KLineMin {
 		return

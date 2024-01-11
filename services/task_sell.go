@@ -9,8 +9,7 @@ import (
 	"gitee.com/quant1x/engine/realtime"
 	"gitee.com/quant1x/engine/storages"
 	"gitee.com/quant1x/engine/trader"
-	"gitee.com/quant1x/gotdx/proto"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/num"
@@ -21,7 +20,7 @@ import (
 
 // 任务 - 卖出117
 func jobOneSizeFitsAllSales() {
-	updateInRealTime, status := trading.CanUpdateInRealtime()
+	updateInRealTime, status := exchange.CanUpdateInRealtime()
 	if updateInRealTime && IsTrading(status) {
 		cookieCutterSell()
 	} else if runtime.Debug() {
@@ -42,7 +41,7 @@ func cookieCutterSell() {
 		return
 	}
 	// 3. 判断是否交易日
-	if !trading.DateIsTradingDay() {
+	if !exchange.DateIsTradingDay() {
 		return
 	}
 	// 3.1 判断是否交易时段
@@ -68,7 +67,7 @@ func cookieCutterSell() {
 		}
 		// 6.2 对齐证券代码, 检查黑白名单
 		stockCode := position.StockCode
-		securityCode := proto.CorrectSecurityCode(stockCode)
+		securityCode := exchange.CorrectSecurityCode(stockCode)
 		if !trader.CheckForSell(securityCode) {
 			// 禁止卖出, 则返回
 			logger.Infof("%s[%d]: %s ProhibitForBuying", sellRule.Name, sellRule.Id, securityCode)
@@ -159,8 +158,8 @@ func cookieCutterSell() {
 
 // 获得T+HoldingPeriod的具体日期
 func getEarlierDate(period int) string {
-	dates := trading.LastNDate(trading.LastTradeDate(), period)
-	earlier_date := trading.FixTradeDate(dates[0], cache.CACHE_DATE)
+	dates := exchange.LastNDate(exchange.LastTradeDate(), period)
+	earlier_date := exchange.FixTradeDate(dates[0], cache.CACHE_DATE)
 	return earlier_date
 }
 

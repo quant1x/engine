@@ -3,8 +3,7 @@ package dfcf
 import (
 	"encoding/json"
 	"fmt"
-	"gitee.com/quant1x/gotdx/proto"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/http"
 	"gitee.com/quant1x/gox/logger"
@@ -100,7 +99,7 @@ func getFreeHoldingAnalyse(pageNumber ...int) ([]HoldingAnalyse, int, error) {
 	}
 	pageSize := EastmoneyGdfxHoldingAnalysePageSize
 	_, qEnd := api.GetQuarterDay(9)
-	endDate := trading.FixTradeDate(qEnd)
+	endDate := exchange.FixTradeDate(qEnd)
 	params := urlpkg.Values{
 		"sortColumns": {"UPDATE_DATE,SECURITY_CODE,HOLDER_RANK"},
 		"sortTypes":   {"-1,1,1"},
@@ -133,8 +132,8 @@ func getFreeHoldingAnalyse(pageNumber ...int) ([]HoldingAnalyse, int, error) {
 	text := tData.String()
 	err = json.Unmarshal(api.String2Bytes(text), &holds)
 	for i := 0; i < len(holds); i++ {
-		holds[i].END_DATE = trading.FixTradeDate(holds[i].END_DATE)
-		holds[i].UPDATE_DATE = trading.FixTradeDate(holds[i].UPDATE_DATE)
+		holds[i].END_DATE = exchange.FixTradeDate(holds[i].END_DATE)
+		holds[i].UPDATE_DATE = exchange.FixTradeDate(holds[i].UPDATE_DATE)
 	}
 	return holds, pages, err
 }
@@ -148,7 +147,7 @@ func FreeHoldingAnalyse(pageNumber ...int) ([]CirculatingShareholder, int, error
 	shareholders := []CirculatingShareholder{}
 	pageSize := EastmoneyGdfxHoldingAnalysePageSize
 	_, qEnd := api.GetQuarterDay(9)
-	endDate := trading.FixTradeDate(qEnd)
+	endDate := exchange.FixTradeDate(qEnd)
 	params := urlpkg.Values{
 		"sortColumns": {"UPDATE_DATE,SECURITY_CODE,HOLDER_RANK"},
 		"sortTypes":   {"-1,1,1"},
@@ -180,8 +179,8 @@ func FreeHoldingAnalyse(pageNumber ...int) ([]CirculatingShareholder, int, error
 	text := tData.String()
 	err = json.Unmarshal(api.String2Bytes(text), &holds)
 	for i := 0; i < len(holds); i++ {
-		holds[i].END_DATE = trading.FixTradeDate(holds[i].END_DATE)
-		holds[i].UPDATE_DATE = trading.FixTradeDate(holds[i].UPDATE_DATE)
+		holds[i].END_DATE = exchange.FixTradeDate(holds[i].END_DATE)
+		holds[i].UPDATE_DATE = exchange.FixTradeDate(holds[i].UPDATE_DATE)
 	}
 	for _, v := range holds {
 		shareholder := CirculatingShareholder{
@@ -217,7 +216,7 @@ func FreeHoldingAnalyse(pageNumber ...int) ([]CirculatingShareholder, int, error
 			HoldRatioChange: v.HOLD_RATIO_CHANGE,
 		}
 		// 修订证券代码
-		_, mfalg, mcode := proto.DetectMarket(shareholder.SecurityCode)
+		_, mfalg, mcode := exchange.DetectMarket(shareholder.SecurityCode)
 		shareholder.SecurityCode = mfalg + mcode
 		//HoldChangeState  int     `dataframe:"change_state"`        // 期末持股-变化状态
 		switch v.HOLD_NUM_CHANGE_NAME {
@@ -287,7 +286,7 @@ func freeHoldingDetail() []CirculatingShareholder {
 				HoldRatioChange: v.HOLD_RATIO_CHANGE,
 			}
 			// 修订证券代码
-			_, mfalg, mcode := proto.DetectMarket(shareholder.SecurityCode)
+			_, mfalg, mcode := exchange.DetectMarket(shareholder.SecurityCode)
 			shareholder.SecurityCode = mfalg + mcode
 			//HoldChangeState  int     `dataframe:"change_state"`        // 期末持股-变化状态
 			switch v.HOLD_NUM_CHANGE_NAME {

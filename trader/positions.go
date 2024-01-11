@@ -4,8 +4,7 @@ import (
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/gotdx/proto"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/concurrent"
 	"gitee.com/quant1x/gox/coroutine"
@@ -57,8 +56,8 @@ func (p *Position) Sync(other PositionDetail) bool {
 	}
 	if len(p.CreateTime) == 0 && p.YesterdayVolume > 0 {
 		// 如果创建时间等于空且昨夜拥股大于0, 则持股日期往前推一天
-		today := trading.Today()
-		dates := trading.LastNDate(today, 1)
+		today := exchange.Today()
+		dates := exchange.LastNDate(today, 1)
 		frontDate := dates[0] + " 00:00:00"
 		p.CreateTime = frontDate
 	}
@@ -163,7 +162,7 @@ func SyncPositions() {
 		return
 	}
 	for _, v := range list {
-		securityCode := proto.CorrectSecurityCode(v.StockCode)
+		securityCode := exchange.CorrectSecurityCode(v.StockCode)
 		position, found := mapPositions.Get(securityCode)
 		if !found {
 			position = &Position{
@@ -187,7 +186,7 @@ func UpdatePositions() {
 		return
 	}
 	for _, v := range list {
-		securityCode := proto.CorrectSecurityCode(v.StockCode)
+		securityCode := exchange.CorrectSecurityCode(v.StockCode)
 		position, found := mapPositions.Get(securityCode)
 		if !found {
 			position = &Position{

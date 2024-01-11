@@ -6,7 +6,7 @@ import (
 	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/datasource/dfcf"
 	"gitee.com/quant1x/engine/market"
-	"gitee.com/quant1x/gotdx/proto"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 )
@@ -15,8 +15,8 @@ const (
 	cacheL5KeyExchange = "exchange"
 )
 
-// Exchange 上一个交易日的数据快照
-type Exchange struct {
+// Misc 上一个交易日的数据快照
+type Misc struct {
 	cache.DataSummary     `dataframe:"-"`
 	Date                  string  `name:"日期" dataframe:"日期"`             // 数据日期
 	Code                  string  `name:"证券代码" dataframe:"证券代码"`         // 证券代码
@@ -69,9 +69,9 @@ type Exchange struct {
 	State                 uint64  `name:"样本状态" dataframe:"样本状态"`
 }
 
-func NewExchange(date, code string) *Exchange {
-	summary := __mapFeatures[FeatureExchange]
-	v := Exchange{
+func NewExchange(date, code string) *Misc {
+	summary := __mapFeatures[FeatureMisc]
+	v := Misc{
 		DataSummary: summary,
 		Date:        date,
 		Code:        code,
@@ -79,31 +79,31 @@ func NewExchange(date, code string) *Exchange {
 	return &v
 }
 
-func (this *Exchange) GetDate() string {
+func (this *Misc) GetDate() string {
 	return this.Date
 }
 
-func (this *Exchange) GetSecurityCode() string {
+func (this *Misc) GetSecurityCode() string {
 	return this.Code
 }
 
-func (this *Exchange) Factory(date string, code string) Feature {
+func (this *Misc) Factory(date string, code string) Feature {
 	v := NewExchange(date, code)
 	return v
 }
 
-func (this *Exchange) Init(ctx context.Context, date string) error {
+func (this *Misc) Init(ctx context.Context, date string) error {
 	_ = ctx
 	_ = date
 	return nil
 }
 
-func (this *Exchange) FromHistory(history History) Feature {
+func (this *Misc) FromHistory(history History) Feature {
 	_ = history
 	return this
 }
 
-func (this *Exchange) Update(code, cacheDate, featureDate string, complete bool) {
+func (this *Misc) Update(code, cacheDate, featureDate string, complete bool) {
 	// 1. K线相关
 	exchangeKLineExtend(this, code, featureDate)
 	// 2. 成交量
@@ -114,7 +114,7 @@ func (this *Exchange) Update(code, cacheDate, featureDate string, complete bool)
 	exchangeFundFlow(this, code, cacheDate, featureDate)
 }
 
-func (this *Exchange) Repair(code, cacheDate, featureDate string, complete bool) {
+func (this *Misc) Repair(code, cacheDate, featureDate string, complete bool) {
 	// 1. K线相关
 	exchangeKLineExtend(this, code, featureDate)
 	// 2. 成交量, 使用cacheDate作为特征的缓存日期
@@ -125,13 +125,13 @@ func (this *Exchange) Repair(code, cacheDate, featureDate string, complete bool)
 	exchangeFundFlow(this, code, cacheDate, featureDate)
 }
 
-func (this *Exchange) Increase(snapshot QuoteSnapshot) Feature {
+func (this *Misc) Increase(snapshot QuoteSnapshot) Feature {
 	_ = snapshot
 	return this
 }
 
 // ValidateSample 验证样本数据
-func (this *Exchange) ValidateSample() error {
+func (this *Misc) ValidateSample() error {
 	if this.State > 0 {
 		return nil
 	}
@@ -139,7 +139,7 @@ func (this *Exchange) ValidateSample() error {
 }
 
 // ExchangeKLineExtend 更新Exchange K线相关数据
-func exchangeKLineExtend(info *Exchange, securityCode string, featureDate string) {
+func exchangeKLineExtend(info *Misc, securityCode string, featureDate string) {
 	cover := NewExchangeKLine(securityCode, featureDate)
 	if cover == nil {
 		logger.Errorf("code[%s, %s] kline not found", securityCode, featureDate)
@@ -171,7 +171,7 @@ func exchangeKLineExtend(info *Exchange, securityCode string, featureDate string
 	info.Vix = cover.Vix
 
 	// 情绪, 指数和板块的情绪从K线上的up和down获取, 这里不处理个股的情绪
-	if proto.AssertIndexBySecurityCode(info.Code) {
+	if exchange.AssertIndexBySecurityCode(info.Code) {
 		info.LastSentiment = cover.Sentiment
 		info.LastConsistent = cover.Consistent
 	}
@@ -179,7 +179,7 @@ func exchangeKLineExtend(info *Exchange, securityCode string, featureDate string
 }
 
 // 更新 - exchange - 历史成交数据相关, capture,collect
-func exchangeTurnZ(info *Exchange, securityCode string, cacheDate, featureDate string) {
+func exchangeTurnZ(info *Misc, securityCode string, cacheDate, featureDate string) {
 	list := base.Transaction(securityCode, featureDate)
 	if len(list) > 0 {
 		summary := CountInflow(list, securityCode, featureDate)
@@ -203,8 +203,8 @@ func exchangeTurnZ(info *Exchange, securityCode string, cacheDate, featureDate s
 }
 
 // 更新 - exchange - 情绪
-func exchangeSentiment(info *Exchange, securityCode string, cacheDate, featureDate string) {
-	if proto.AssertIndexBySecurityCode(securityCode) {
+func exchangeSentiment(info *Misc, securityCode string, cacheDate, featureDate string) {
+	if exchange.AssertIndexBySecurityCode(securityCode) {
 		// 跳过指数和板块, 只处理个股的情绪值
 		return
 	}
@@ -216,11 +216,11 @@ func exchangeSentiment(info *Exchange, securityCode string, cacheDate, featureDa
 }
 
 // 更新 - exchange - 资金流向
-func exchangeFundFlow(info *Exchange, securityCode string, cacheDate, featureDate string) {
-	if !proto.AssertStockBySecurityCode(securityCode) {
+func exchangeFundFlow(info *Misc, securityCode string, cacheDate, featureDate string) {
+	if !exchange.AssertStockBySecurityCode(securityCode) {
 		return
 	}
-	beginDate := proto.MARKET_CH_FIRST_LISTTIME
+	beginDate := exchange.MARKET_CH_FIRST_LISTTIME
 	filename := cache.FundFlowFilename(securityCode)
 	cacheList := []dfcf.FundFlow{}
 	err := api.CsvToSlices(filename, &cacheList)

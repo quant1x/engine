@@ -3,7 +3,7 @@ package services
 import (
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"os"
 	"path/filepath"
@@ -11,8 +11,8 @@ import (
 )
 
 func stateFilename(date, timestamp string) string {
-	date = trading.FixTradeDate(date)
-	t, _ := time.ParseInLocation(trading.CN_SERVERTIME_FORMAT, timestamp, time.Local)
+	date = exchange.FixTradeDate(date)
+	t, _ := time.ParseInLocation(exchange.CN_SERVERTIME_FORMAT, timestamp, time.Local)
 	//timestamp = t.Format(trading.CN_SERVERTIME_SHORT_FORMAT)
 	timestamp = t.Format("150405")
 	tm := date + "T" + timestamp

@@ -2,12 +2,12 @@ package cache
 
 import (
 	"fmt"
-	"gitee.com/quant1x/gotdx/proto"
+	"gitee.com/quant1x/exchange"
 )
 
 // CacheId 通过代码构建目录结构
 func CacheId(code string) string {
-	_, marketName, code := proto.DetectMarket(code)
+	_, marketName, code := exchange.DetectMarket(code)
 	cacheId := fmt.Sprintf("%s%s", marketName, code)
 	return cacheId
 }

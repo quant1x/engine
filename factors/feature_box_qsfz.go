@@ -2,7 +2,7 @@ package factors
 
 import (
 	"gitee.com/quant1x/engine/utils"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	. "gitee.com/quant1x/pandas/formula"
 	"gitee.com/quant1x/pandas/stat"
 )
@@ -27,7 +27,7 @@ func computeQuShiFanZhuan(date string, OPEN, CLOSE, HIGH, LOW, VOL stat.Series) 
 	R1MV5 := REF(MV5, 1)
 	LB0 := VOL.Div(R1MV5)
 	// FIX:=IFF(CURRBARSCOUNT=1,FROMOPEN/TOTALFZNUM,1);
-	FIX := IFF(CURRBARSCOUNT.Eq(1), float64(trading.Minutes(date))/float64(trading.CN_DEFAULT_TOTALFZNUM), 1.00)
+	FIX := IFF(CURRBARSCOUNT.Eq(1), float64(exchange.Minutes(date))/float64(exchange.CN_DEFAULT_TOTALFZNUM), 1.00)
 	// LB:LB0/FIX,NODRAW;
 	LB := LB0.Div(FIX)
 	// NVOL:LB*REF(MV5,1),NODRAW;

@@ -5,7 +5,7 @@ import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/pandas"
 	"os"
@@ -39,11 +39,11 @@ func OutputStatistics(model models.Strategy, date string, v []models.Statistics)
 	}
 	topN := tradeRule.Total
 	orderFlag := model.OrderFlag()
-	date = trading.FixTradeDate(date, cache.FilenameDate)
+	date = exchange.FixTradeDate(date, cache.FilenameDate)
 	filename := fmt.Sprintf("%s/%s-%d.csv", GetResultCachePath(), date, topN)
 	_ = df.WriteCSV(filename)
 	updateTime, _ := api.ParseTime(v[0].UpdateTime)
-	if trading.CanUpdate(updateTime) {
+	if exchange.CanUpdate(updateTime) {
 		fnOrder := fmt.Sprintf("%s/%s-%s.csv", cache.GetQmtCachePath(), date, orderFlag)
 		if !api.FileExist(fnOrder) {
 			err := df.WriteCSV(fnOrder)

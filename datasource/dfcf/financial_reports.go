@@ -3,8 +3,7 @@ package dfcf
 import (
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/gotdx/proto"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/http"
 	"gitee.com/quant1x/gox/logger"
@@ -20,8 +19,8 @@ func QuarterlyReports(featureDate string, pageNumber ...int) (reports []Quarterl
 		pageNo = pageNumber[0]
 	}
 	qBegin, qEnd := api.GetQuarterDayByDate(featureDate)
-	quarterBeginDate := trading.FixTradeDate(qBegin)
-	quarterEndDate := trading.FixTradeDate(qEnd)
+	quarterBeginDate := exchange.FixTradeDate(qBegin)
+	quarterEndDate := exchange.FixTradeDate(qEnd)
 	params := urlpkg.Values{
 		//"callback":    {"jQuery1123043614175387302234_1685785566671"},
 		//"sortColumns": {"UPDATE_DATE,SECURITY_CODE"},
@@ -87,7 +86,7 @@ func QuarterlyReports(featureDate string, pageNumber ...int) (reports []Quarterl
 				ZXGXL:              v.GetFloat64("ZXGXL"),
 			}
 			// 截取市场编码，截取股票编码，市场编码+股票编码拼接作为主键
-			securityCode := proto.CorrectSecurityCode(report.SecuCode)
+			securityCode := exchange.CorrectSecurityCode(report.SecuCode)
 			report.SecurityCode = securityCode
 			reports = append(reports, report)
 		}
@@ -101,8 +100,8 @@ func QuarterlyReportsBySecurityCode(securityCode, date string, diffQuarters int,
 	if len(pageNumber) > 0 {
 		pageNo = pageNumber[0]
 	}
-	_, _, code := proto.DetectMarket(securityCode)
-	quarterEndDate := trading.FixTradeDate(date)
+	_, _, code := exchange.DetectMarket(securityCode)
+	quarterEndDate := exchange.FixTradeDate(date)
 	//_, _, qEnd := api.GetQuarterByDate(date, diffQuarters)
 	//quarterEndDate = trading.FixTradeDate(qEnd)
 	params := urlpkg.Values{
@@ -167,7 +166,7 @@ func QuarterlyReportsBySecurityCode(securityCode, date string, diffQuarters int,
 				ZXGXL:              v.GetFloat64("ZXGXL"),
 			}
 			// 截取市场编码，截取股票编码，市场编码+股票编码拼接作为主键
-			securityCode := proto.CorrectSecurityCode(report.SecuCode)
+			securityCode := exchange.CorrectSecurityCode(report.SecuCode)
 			report.SecurityCode = securityCode
 			reports = append(reports, report)
 		}

@@ -2,10 +2,10 @@ package base
 
 import (
 	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx"
 	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/quotes"
-	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/pandas/stat"
@@ -44,9 +44,9 @@ func LoadBasicKline(securityCode string) []KLine {
 
 // UpdateAllBasicKLine 更新全部日K线基础数据并保存文件
 func UpdateAllBasicKLine(securityCode string) []KLine {
-	startDate := proto.MARKET_CN_FIRST_DATE
-	securityCode = proto.CorrectSecurityCode(securityCode)
-	isIndex := proto.AssertIndexBySecurityCode(securityCode)
+	startDate := exchange.MARKET_CN_FIRST_DATE
+	securityCode = exchange.CorrectSecurityCode(securityCode)
+	isIndex := exchange.AssertIndexBySecurityCode(securityCode)
 	cacheKLines := LoadBasicKline(securityCode)
 	kLength := len(cacheKLines)
 	var klineDaysOffset = DataDaysDiff
@@ -62,8 +62,8 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 		//	startDate = trading.FixTradeDate(startDate)
 		//}
 	}
-	endDate := trading.Today()
-	ts := trading.TradeRange(startDate, endDate)
+	endDate := exchange.Today()
+	ts := exchange.TradeRange(startDate, endDate)
 	history := make([]quotes.SecurityBar, 0)
 	step := uint16(quotes.TDX_SECURITY_BARS_MAX)
 	total := uint16(len(ts))
@@ -108,10 +108,10 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 		}
 	}
 	hs = stat.Reverse(hs)
-	startDate = trading.FixTradeDate(startDate)
+	startDate = exchange.FixTradeDate(startDate)
 	for _, v := range hs {
 		for _, row := range v.List {
-			dateTime := trading.FixTradeDate(row.DateTime)
+			dateTime := exchange.FixTradeDate(row.DateTime)
 			if dateTime < startDate {
 				continue
 			}
@@ -121,7 +121,7 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 	}
 	var newKLines []KLine
 	for _, v := range history {
-		date := trading.FixTradeDate(v.DateTime)
+		date := exchange.FixTradeDate(v.DateTime)
 		kline := KLine{
 			Date:   date,
 			Open:   v.Open,

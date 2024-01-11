@@ -2,10 +2,9 @@ package base
 
 import (
 	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx"
-	"gitee.com/quant1x/gotdx/proto"
 	"gitee.com/quant1x/gotdx/quotes"
-	"gitee.com/quant1x/gotdx/trading"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/pandas/stat"
@@ -41,13 +40,13 @@ func GetTickStartDate() string {
 
 // Transaction 获取指定日期的历史成交数据
 func Transaction(securityCode, tradeDate string) []quotes.TickTransaction {
-	securityCode = proto.CorrectSecurityCode(securityCode)
+	securityCode = exchange.CorrectSecurityCode(securityCode)
 	tdxApi := gotdx.GetTdxApi()
 	offset := uint16(quotes.TDX_TRANSACTION_MAX)
 	start := uint16(0)
 	history := make([]quotes.TickTransaction, 0)
 	hs := make([]quotes.TransactionReply, 0)
-	date := trading.FixTradeDate(tradeDate, cache.TDX_FORMAT_PROTOCOL_DATE)
+	date := exchange.FixTradeDate(tradeDate, cache.TDX_FORMAT_PROTOCOL_DATE)
 	iDate := stat.AnyToInt64(date)
 	for {
 		var data *quotes.TransactionReply
@@ -93,7 +92,7 @@ func GetTickAll(securityCode string) {
 			return
 		}
 	}()
-	securityCode = proto.CorrectSecurityCode(securityCode)
+	securityCode = exchange.CorrectSecurityCode(securityCode)
 	tdxApi := gotdx.GetTdxApi()
 	info, err := tdxApi.GetFinanceInfo(securityCode)
 	if err != nil {
@@ -105,8 +104,8 @@ func GetTickAll(securityCode string) {
 	if tStart < fixStart {
 		tStart = fixStart
 	}
-	tEnd := trading.Today()
-	dateRange := trading.TradeRange(tStart, tEnd)
+	tEnd := exchange.Today()
+	dateRange := exchange.TradeRange(tStart, tEnd)
 	// 反转切片
 	dateRange = stat.Reverse(dateRange)
 	if len(dateRange) == 0 {
@@ -136,7 +135,7 @@ func GetTickAll(securityCode string) {
 
 // GetTickData 获取指定日期的分笔成交记录
 func GetTickData(securityCode string, date string) (list []quotes.TickTransaction) {
-	securityCode = proto.CorrectSecurityCode(securityCode)
+	securityCode = exchange.CorrectSecurityCode(securityCode)
 	list = CheckoutTickData(securityCode, date, false)
 	if len(list) == 0 {
 		return list
@@ -155,12 +154,12 @@ func GetTickData(securityCode string, date string) (list []quotes.TickTransactio
 //	先从缓存获取, 如果缓存不存在, 则从服务器下载
 //	K线附加成交数据
 func CheckoutTickData(securityCode string, date string, ignorePreviousData bool) (list []quotes.TickTransaction) {
-	securityCode = proto.CorrectSecurityCode(securityCode)
+	securityCode = exchange.CorrectSecurityCode(securityCode)
 	// 对齐日期格式: YYYYMMDD
-	tradeDate := trading.FixTradeDate(date, cache.TDX_FORMAT_PROTOCOL_DATE)
+	tradeDate := exchange.FixTradeDate(date, cache.TDX_FORMAT_PROTOCOL_DATE)
 	if ignorePreviousData {
 		// 在默认日期之前的数据直接返回空
-		startDate := trading.FixTradeDate(__tickHistoryStartDate, cache.TDX_FORMAT_PROTOCOL_DATE)
+		startDate := exchange.FixTradeDate(__tickHistoryStartDate, cache.TDX_FORMAT_PROTOCOL_DATE)
 		if tradeDate < startDate {
 			logger.Errorf("tick: code=%s, trade-date=%s, start-date=%s, 没有数据", securityCode, tradeDate, startDate)
 			return list
@@ -213,7 +212,7 @@ func CheckoutTickData(securityCode string, date string, ignorePreviousData bool)
 		var err error
 		retryTimes := 0
 		for retryTimes < quotes.DefaultRetryTimes {
-			if trading.CurrentlyTrading(tradeDate) {
+			if exchange.CurrentlyTrading(tradeDate) {
 				data, err = tdxApi.GetTransactionData(securityCode, start, offset)
 			} else {
 				data, err = tdxApi.GetHistoryTransactionData(securityCode, toTdxProtocolDate(tradeDate), start, offset)

@@ -4,8 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"gitee.com/quant1x/engine/utils"
-	"gitee.com/quant1x/gotdx/proto"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/exception"
 	"gitee.com/quant1x/gox/http"
 	"gitee.com/quant1x/pandas/stat"
@@ -130,8 +129,8 @@ func AllNotices(noticeType EMNoticeType, date string, pageNumber ...int) (notice
 	if len(pageNumber) > 0 {
 		pageNo = pageNumber[0]
 	}
-	beginDate := trading.FixTradeDate(date)
-	endDate := trading.Today()
+	beginDate := exchange.FixTradeDate(date)
+	endDate := exchange.Today()
 	pageSize := EastmoneyNoticesPageSize
 	params := urlpkg.Values{
 		"sr":         {"-1"},
@@ -171,14 +170,14 @@ func AllNotices(noticeType EMNoticeType, date string, pageNumber ...int) (notice
 	pages = int(math.Ceil(float64(raw.Data.TotalHits) / float64(EastmoneyNoticesPageSize)))
 
 	for _, v := range raw.Data.List {
-		marketCode := proto.MarketIdShenZhen
+		marketCode := exchange.MarketIdShenZhen
 		if len(v.Codes) == 0 || len(v.Columns) == 0 {
 			continue
 		}
 		code := v.Codes[0]
 		mc := strings.TrimSpace(code.MarketCode)
-		marketCode = proto.MarketType(stat.AnyToInt64(mc))
-		securityCode := proto.GetSecurityCode(marketCode, strings.TrimSpace(code.StockCode))
+		marketCode = exchange.MarketType(stat.AnyToInt64(mc))
+		securityCode := exchange.GetSecurityCode(marketCode, strings.TrimSpace(code.StockCode))
 		securityName := strings.TrimSpace(code.ShortName)
 		//if securityCode == "sz300027" {
 		//	fmt.Printf("\n%+v\n", v)
@@ -248,11 +247,11 @@ func StockNotices(securityCode, beginDate, endDate string, pageNumber ...int) (n
 	if len(pageNumber) > 0 {
 		pageNo = pageNumber[0]
 	}
-	beginDate = trading.FixTradeDate(beginDate)
+	beginDate = exchange.FixTradeDate(beginDate)
 	if len(endDate) > 0 {
-		endDate = trading.FixTradeDate(endDate)
+		endDate = exchange.FixTradeDate(endDate)
 	} else {
-		endDate = trading.Today()
+		endDate = exchange.Today()
 	}
 	pageSize := EastmoneyNoticesPageSize
 	params := urlpkg.Values{
@@ -270,7 +269,7 @@ func StockNotices(securityCode, beginDate, endDate string, pageNumber ...int) (n
 		"end_time":   {endDate},
 		//"cb": {"jQuery112305241416374967685_1683838825141"},
 	}
-	_, _, symbol := proto.DetectMarket(securityCode)
+	_, _, symbol := exchange.DetectMarket(securityCode)
 	params.Add("stock_list", symbol)
 	// Host: np-anotice-stock.eastmoney.com
 	header := map[string]any{
@@ -297,14 +296,14 @@ func StockNotices(securityCode, beginDate, endDate string, pageNumber ...int) (n
 	pages = utils.GetPages(pageSize, raw.Data.TotalHits)
 
 	for _, v := range raw.Data.List {
-		marketCode := proto.MarketIdShenZhen
+		marketCode := exchange.MarketIdShenZhen
 		if len(v.Codes) == 0 || len(v.Columns) == 0 {
 			continue
 		}
 		code := v.Codes[0]
 		mc := strings.TrimSpace(code.MarketCode)
-		marketCode = proto.MarketType(stat.AnyToInt64(mc))
-		securityCode := proto.GetSecurityCode(marketCode, strings.TrimSpace(code.StockCode))
+		marketCode = exchange.MarketType(stat.AnyToInt64(mc))
+		securityCode := exchange.GetSecurityCode(marketCode, strings.TrimSpace(code.StockCode))
 		securityName := strings.TrimSpace(code.ShortName)
 		//if securityCode == "sz300027" {
 		//	fmt.Printf("\n%+v\n", v)

@@ -6,8 +6,7 @@ import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/gotdx/proto"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/http"
 	"gitee.com/quant1x/gox/logger"
 	urlpkg "net/url"
@@ -44,9 +43,9 @@ var (
 func GetOrderFilename(date ...string) string {
 	var tradeDate string
 	if len(date) > 0 {
-		tradeDate = trading.FixTradeDate(date[0])
+		tradeDate = exchange.FixTradeDate(date[0])
 	} else {
-		tradeDate = trading.LastTradeDate()
+		tradeDate = exchange.LastTradeDate()
 	}
 	filename := filepath.Join(traderQmtOrderPath, "orders."+tradeDate)
 	return filename
@@ -127,7 +126,7 @@ type OrderDetail struct {
 
 // SecurityCode 获取证券代码
 func (d OrderDetail) SecurityCode() string {
-	return proto.CorrectSecurityCode(d.StockCode)
+	return exchange.CorrectSecurityCode(d.StockCode)
 }
 
 // QueryAccount 查询账户信息
@@ -209,7 +208,7 @@ func PlaceOrder(direction Direction, model models.Strategy, securityCode string,
 
 // 直接下单(透传)
 func DirectOrder(direction Direction, strategyName, orderRemark, securityCode string, priceType PriceType, price float64, volume int) (int, error) {
-	_, mflag, symbol := proto.DetectMarket(securityCode)
+	_, mflag, symbol := exchange.DetectMarket(securityCode)
 	params := urlpkg.Values{
 		"direction":  {direction.String()},
 		"code":       {fmt.Sprintf("%s.%s", symbol, strings.ToUpper(mflag))},

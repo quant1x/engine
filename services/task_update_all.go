@@ -4,7 +4,7 @@ import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/storages"
-	"gitee.com/quant1x/gotdx/trading"
+	"gitee.com/quant1x/exchange"
 	"time"
 )
 
@@ -19,9 +19,9 @@ var (
 func jobUpdateAll() {
 	//funcName := "jobUpdateAll"
 	now := time.Now()
-	tm := now.Format(trading.CN_SERVERTIME_FORMAT)
-	today := trading.Today()
-	lastDate := trading.LastTradeDate()
+	tm := now.Format(exchange.CN_SERVERTIME_FORMAT)
+	today := exchange.Today()
+	lastDate := exchange.LastTradeDate()
 	bUpdated := false
 	phase := ""
 	if today == lastDate {

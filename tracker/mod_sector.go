@@ -251,3 +251,9 @@ func output(strategyNo int, v []models.ResultInfo) {
 	filename := fmt.Sprintf("%s/%s/%s-%d.csv", cache.GetRootPath(), models.CACHE_STRATEGY_PATH, cache.Today(), strategyNo)
 	_ = df.WriteCSV(filename)
 }
+
+// 个股评估
+func evaluate(api models.Strategy, wg *sync.WaitGroup, code string, result *concurrent.TreeMap[string, models.ResultInfo]) {
+	defer wg.Done()
+	api.Evaluate(code, result)
+}

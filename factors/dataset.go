@@ -5,8 +5,6 @@ import (
 	"gitee.com/quant1x/gotdx/quotes"
 )
 
-//type DataKind = uint64
-
 const (
 	baseKind cache.Kind = 0
 )
@@ -20,8 +18,6 @@ const (
 	BaseSafetyScore         = cache.PluginMaskBaseData | (baseKind + 6) // 基础数据-安全分
 	BaseKLineWide           = cache.PluginMaskBaseData | (baseKind + 7) // 基础数据-宽表
 	BasePerformanceForecast = cache.PluginMaskBaseData | (baseKind + 8) // 基础数据-业绩预告
-	//BaseAggregationData  cache.Kind = 1 << 63
-	//BaseTest             DataKind   = 0x8000000000000000
 )
 
 // DataSet 数据层, 数据集接口 smart

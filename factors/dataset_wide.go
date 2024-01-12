@@ -10,18 +10,19 @@ import (
 	"slices"
 )
 
-type DataWide struct {
+// DataWideKLine 宽表
+type DataWideKLine struct {
 	Manifest
 }
 
 func init() {
-	summary := mapDataSets[BaseKLineWide]
-	_ = cache.Register(&DataWide{Manifest: Manifest{DataSummary: summary}})
+	summary := mapDataSets[BaseWideKLine]
+	_ = cache.Register(&DataWideKLine{Manifest: Manifest{DataSummary: summary}})
 }
 
-func (this *DataWide) Clone(date string, code string) DataSet {
-	summary := mapDataSets[BaseKLineWide]
-	var dest = DataWide{
+func (this *DataWideKLine) Clone(date string, code string) DataSet {
+	summary := mapDataSets[BaseWideKLine]
+	var dest = DataWideKLine{
 		Manifest: Manifest{
 			DataSummary: summary,
 			Date:        date,
@@ -31,26 +32,25 @@ func (this *DataWide) Clone(date string, code string) DataSet {
 	return &dest
 }
 
-func (this *DataWide) Init(ctx context.Context, date string) error {
+func (this *DataWideKLine) Init(ctx context.Context, date string) error {
 	_ = ctx
 	_ = date
 	return nil
 }
 
-func (this *DataWide) Update(date string) {
-	GetKLineAll(this.GetSecurityCode())
-	_ = date
+func (this *DataWideKLine) Update(date string) {
+	pullWideByDate(this.GetSecurityCode(), date)
 }
 
-func (this *DataWide) Repair(date string) {
+func (this *DataWideKLine) Repair(date string) {
 	this.Update(date)
 }
 
-func (this *DataWide) Increase(snapshot quotes.Snapshot) {
+func (this *DataWideKLine) Increase(snapshot quotes.Snapshot) {
 	_ = snapshot
 }
 
-func (this *DataWide) Print(code string, date ...string) {
+func (this *DataWideKLine) Print(code string, date ...string) {
 	_ = code
 	_ = date
 }

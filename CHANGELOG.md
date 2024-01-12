@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.1.7] - 2024-01-12
+### Changed
+- 整理部分代码, 合并小功能.
+
 ## [1.1.6] - 2024-01-12
 ### Changed
 - 从stock迁移扫描功能.
@@ -850,8 +854,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.1.6...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.1.7...HEAD
 
+[1.1.7]: https://gitee.com/quant1x/engine/compare/v1.1.6...v1.1.7
 [1.1.6]: https://gitee.com/quant1x/engine/compare/v1.1.5...v1.1.6
 [1.1.5]: https://gitee.com/quant1x/engine/compare/v1.1.4...v1.1.5
 [1.1.4]: https://gitee.com/quant1x/engine/compare/v1.1.3...v1.1.4

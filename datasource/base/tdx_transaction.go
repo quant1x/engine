@@ -12,16 +12,16 @@ import (
 )
 
 const (
-	TradingFirstTime        = "09:25"      // 第一个时间
-	TradingStartTime        = "09:30"      // 开盘时间
-	TradingFinalBiddingTime = "14:57"      // 尾盘集合竞价时间
-	TradingLastTime         = "15:00"      // 最后一个时间
-	TickDefaultStartDate    = "2023-01-01" // 分笔成交最早的日期
+	TradingFirstTime        = "09:25" // 第一个时间
+	TradingStartTime        = "09:30" // 开盘时间
+	TradingFinalBiddingTime = "14:57" // 尾盘集合竞价时间
+	TradingLastTime         = "15:00" // 最后一个时间
+	//TickDefaultStartDate    = "2023-10-01" // 分笔成交最早的日期
 )
 
 var (
 	// TickDefaultStartDate 最早的时间
-	__tickHistoryStartDate = "20230101"
+	__transactionHistoryStartDate = "20231001"
 )
 
 // UpdateTickStartDate 修改tick数据开始下载的日期
@@ -31,29 +31,31 @@ func UpdateTickStartDate(date string) {
 		return
 	}
 	date = dt.Format(cache.TDX_FORMAT_PROTOCOL_DATE)
-	__tickHistoryStartDate = date
+	__transactionHistoryStartDate = date
 }
 
 func GetTickStartDate() string {
-	return __tickHistoryStartDate
+	return __transactionHistoryStartDate
 }
 
-// Transaction 获取指定日期的历史成交数据
-func Transaction(securityCode, tradeDate string) []quotes.TickTransaction {
+// GetTransaction 获取指定日期的历史成交数据
+func GetTransaction(securityCode, tradeDate string) []quotes.TickTransaction {
 	securityCode = exchange.CorrectSecurityCode(securityCode)
 	tdxApi := gotdx.GetTdxApi()
 	offset := uint16(quotes.TDX_TRANSACTION_MAX)
 	start := uint16(0)
 	history := make([]quotes.TickTransaction, 0)
 	hs := make([]quotes.TransactionReply, 0)
-	date := exchange.FixTradeDate(tradeDate, cache.TDX_FORMAT_PROTOCOL_DATE)
-	iDate := stat.AnyToInt64(date)
+	u32Date, err := toTdxProtocolDate(tradeDate)
+	if err != nil {
+		return history
+	}
 	for {
 		var data *quotes.TransactionReply
 		var err error
 		retryTimes := 0
 		for retryTimes < quotes.DefaultRetryTimes {
-			data, err = tdxApi.GetHistoryTransactionData(securityCode, uint32(iDate), start, offset)
+			data, err = tdxApi.GetHistoryTransactionData(securityCode, u32Date, start, offset)
 			if err == nil && data != nil {
 				break
 			}
@@ -66,8 +68,6 @@ func Transaction(securityCode, tradeDate string) []quotes.TickTransaction {
 		if data == nil || data.Count == 0 {
 			break
 		}
-		// 历史成交记录是按照时间排序
-		//data.List = stat.Reverse(data.List)
 		hs = append(hs, *data)
 		if data.Count < offset {
 			break
@@ -99,13 +99,12 @@ func GetTickAll(securityCode string) {
 		return
 	}
 	tStart := strconv.FormatInt(int64(info.IPODate), 10)
-	fixStart := __tickHistoryStartDate
-	//fmt.Println("start date:", fixStart)
+	fixStart := __transactionHistoryStartDate
 	if tStart < fixStart {
 		tStart = fixStart
 	}
 	tEnd := exchange.Today()
-	dateRange := exchange.TradeRange(tStart, tEnd)
+	dateRange := exchange.TradingDateRange(tStart, tEnd)
 	// 反转切片
 	dateRange = stat.Reverse(dateRange)
 	if len(dateRange) == 0 {
@@ -117,13 +116,13 @@ func GetTickAll(securityCode string) {
 		if ignore {
 			continue
 		}
-		fname := cache.TickFilename(securityCode, tradeDate)
+		fname := cache.TransFilename(securityCode, tradeDate)
 		if tradeDate != today && api.FileIsValid(fname) {
 			// 如果已经存在, 假定之前的数据已经下载过了, 不需要继续
 			ignore = true
 			continue
 		}
-		list := GetTickData(securityCode, tradeDate)
+		list := GetTransationData(securityCode, tradeDate)
 		if len(list) == 0 && tradeDate != today {
 			// 如果数据为空, 且不是当前日期, 认定为从这天起往前是没有分笔成交数据的
 			ignore = true
@@ -133,14 +132,14 @@ func GetTickAll(securityCode string) {
 	return
 }
 
-// GetTickData 获取指定日期的分笔成交记录
-func GetTickData(securityCode string, date string) (list []quotes.TickTransaction) {
+// GetTransationData 获取指定日期的分笔成交记录
+func GetTransationData(securityCode string, date string) (list []quotes.TickTransaction) {
 	securityCode = exchange.CorrectSecurityCode(securityCode)
-	list = CheckoutTickData(securityCode, date, false)
+	list = CheckoutTransactionData(securityCode, date, false)
 	if len(list) == 0 {
 		return list
 	}
-	tickFile := cache.TickFilename(securityCode, date)
+	tickFile := cache.TransFilename(securityCode, date)
 	err := api.SlicesToCsv(tickFile, list)
 	if err != nil {
 		return []quotes.TickTransaction{}
@@ -149,24 +148,28 @@ func GetTickData(securityCode string, date string) (list []quotes.TickTransactio
 	return list
 }
 
-// CheckoutTickData 获取指定日期的分笔成交记录
+// CheckoutTransactionData 获取指定日期的分笔成交记录
 //
 //	先从缓存获取, 如果缓存不存在, 则从服务器下载
 //	K线附加成交数据
-func CheckoutTickData(securityCode string, date string, ignorePreviousData bool) (list []quotes.TickTransaction) {
+func CheckoutTransactionData(securityCode string, date string, ignorePreviousData bool) (list []quotes.TickTransaction) {
 	securityCode = exchange.CorrectSecurityCode(securityCode)
 	// 对齐日期格式: YYYYMMDD
 	tradeDate := exchange.FixTradeDate(date, cache.TDX_FORMAT_PROTOCOL_DATE)
+	u32Date, err := toTdxProtocolDate(tradeDate)
+	if err != nil {
+		return
+	}
 	if ignorePreviousData {
 		// 在默认日期之前的数据直接返回空
-		startDate := exchange.FixTradeDate(__tickHistoryStartDate, cache.TDX_FORMAT_PROTOCOL_DATE)
+		startDate := exchange.FixTradeDate(__transactionHistoryStartDate, cache.TDX_FORMAT_PROTOCOL_DATE)
 		if tradeDate < startDate {
 			logger.Errorf("tick: code=%s, trade-date=%s, start-date=%s, 没有数据", securityCode, tradeDate, startDate)
 			return list
 		}
 	}
 	startTime := TradingFirstTime
-	filename := cache.TickFilename(securityCode, tradeDate)
+	filename := cache.TransFilename(securityCode, tradeDate)
 	if api.FileExist(filename) {
 		// 如果缓存存在
 		err := api.CsvToSlices(filename, &list)
@@ -215,7 +218,7 @@ func CheckoutTickData(securityCode string, date string, ignorePreviousData bool)
 			if exchange.CurrentlyTrading(tradeDate) {
 				data, err = tdxApi.GetTransactionData(securityCode, start, offset)
 			} else {
-				data, err = tdxApi.GetHistoryTransactionData(securityCode, toTdxProtocolDate(tradeDate), start, offset)
+				data, err = tdxApi.GetHistoryTransactionData(securityCode, u32Date, start, offset)
 			}
 			if err == nil && data != nil {
 				break

@@ -12,6 +12,8 @@ import (
 func CheckStrategy(strategyCode int, securityCode string) {
 	fmt.Printf("\n策略检测中...\n")
 	// 1. 获取快照
+	name := securities.GetStockName(securityCode)
+	fmt.Printf("\t=> 证券代码: %s, 证券名称: %s...\n", securityCode, name)
 	fmt.Printf("\t=> 1. 获取tick[%s]...\n", securityCode)
 	snapshot := models.GetTick(securityCode)
 	if snapshot == nil {

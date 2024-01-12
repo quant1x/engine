@@ -28,7 +28,7 @@ func TestKLineWide(t *testing.T) {
 	code = "600178"
 	securityCode := exchange.CorrectSecurityCode(code)
 	var wides []SecurityFeature
-	filename := cache.FeatureFilename(securityCode)
+	filename := cache.WideFilename(securityCode)
 	err := api.CsvToSlices(filename, &wides)
 	if err != nil || len(wides) == 0 {
 		return
@@ -36,4 +36,19 @@ func TestKLineWide(t *testing.T) {
 	//wides = wides[len(wides)-1:]
 	df := pandas.LoadStructs(wides)
 	fmt.Println(df)
+}
+
+func TestGetKLineAll(t *testing.T) {
+	code := "600178"
+	securityCode := exchange.CorrectSecurityCode(code)
+	df := GetKLineAll(securityCode)
+	fmt.Println(df)
+}
+
+func Test_pullWideByDate(t *testing.T) {
+	code := "600178"
+	date := "20240110"
+	securityCode := exchange.CorrectSecurityCode(code)
+	data := pullWideByDate(securityCode, date)
+	fmt.Println(data)
 }

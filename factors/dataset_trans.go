@@ -69,10 +69,9 @@ func (r *TransactionRecord) Update(date string) {
 
 func (r *TransactionRecord) Repair(date string) {
 	//base.GetTickAll(r.code)
-	base.GetTickData(r.GetSecurityCode(), date)
+	base.GetTransationData(r.GetSecurityCode(), date)
 }
 
 func (r *TransactionRecord) Increase(snapshot quotes.Snapshot) {
-	//TODO implement me
-	panic("implement me")
+	_ = snapshot
 }

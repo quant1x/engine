@@ -26,11 +26,11 @@ func KLineFilename(code string) string {
 	return filepath
 }
 
-// FeatureFilename 特征数据缓存路径
-func FeatureFilename(code string) string {
+// WideFilename 宽表据缓存路径
+func WideFilename(code string) string {
 	cacheId := CacheId(code)
 	length := len(cacheId)
-	filepath := fmt.Sprintf("%s/%s/%s.csv", GetFeaturesPath(), cacheId[:length-3], cacheId)
+	filepath := fmt.Sprintf("%s/%s/%s.csv", GetWidePath(), cacheId[:length-3], cacheId)
 	return filepath
 }
 
@@ -87,11 +87,11 @@ func PreviewReportFilename(date string) string {
 	return quarterlyFilename(date, "preview")
 }
 
-// TickFilename tick文件比较多, 目录结构${tick}/${YYYY}/${YYYYMMDD}/${CacheIdPath}
-func TickFilename(code, date string) string {
+// TransFilename 历史成交数据文件比较多, 目录结构${tick}/${YYYY}/${YYYYMMDD}/${CacheIdPath}
+func TransFilename(code, date string) string {
 	date = exchange.FixTradeDate(date, FilenameDate)
 	cacheId := CacheId(code)
-	tickPath := fmt.Sprintf("%s/%s/%s/%s.csv", GetTickPath(), date[0:4], date, cacheId)
+	tickPath := fmt.Sprintf("%s/%s/%s/%s.csv", GetTransPath(), date[0:4], date, cacheId)
 	return tickPath
 }
 

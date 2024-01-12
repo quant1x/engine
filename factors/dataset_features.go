@@ -23,6 +23,7 @@ type SecurityFeature struct {
 	OuterVolume    int64   `name:"外盘" dataframe:"outer_volume,int64"`
 	InnerAmount    float64 `name:"流出金额" dataframe:"inner_amount,float64"`
 	OuterAmount    float64 `name:"流入金额" dataframe:"outer_amount,float64"`
+	//State          int     `name:"数据状态" dataframe:"state"`
 }
 
 // TurnoverDataSummary 换手数据概要

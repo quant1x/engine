@@ -12,7 +12,11 @@ import (
 // GetMinutes 获取分时数据
 func GetMinutes(securityCode, date string) (list []quotes.HistoryMinuteTime) {
 	tdxApi := gotdx.GetTdxApi()
-	hs, err := tdxApi.GetHistoryMinuteTimeData(securityCode, toTdxProtocolDate(date))
+	u32Date, err := toTdxProtocolDate(date)
+	if err != nil {
+		return
+	}
+	hs, err := tdxApi.GetHistoryMinuteTimeData(securityCode, u32Date)
 	if err != nil || hs.Count == 0 {
 		return
 	}

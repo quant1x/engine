@@ -9,7 +9,7 @@ import (
 func TestTransaction(t *testing.T) {
 	code := "sh881200"
 	date := "2024-01-09"
-	list := base.Transaction(code, date)
+	list := base.GetTransaction(code, date)
 	v := CountInflow(list, code, date)
 	fmt.Printf("%+v\n", v)
 }

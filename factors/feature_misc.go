@@ -69,7 +69,7 @@ type Misc struct {
 	State                 uint64  `name:"样本状态" dataframe:"样本状态"`
 }
 
-func NewExchange(date, code string) *Misc {
+func NewMisc(date, code string) *Misc {
 	summary := __mapFeatures[FeatureMisc]
 	v := Misc{
 		DataSummary: summary,
@@ -88,7 +88,7 @@ func (this *Misc) GetSecurityCode() string {
 }
 
 func (this *Misc) Factory(date string, code string) Feature {
-	v := NewExchange(date, code)
+	v := NewMisc(date, code)
 	return v
 }
 
@@ -105,24 +105,24 @@ func (this *Misc) FromHistory(history History) Feature {
 
 func (this *Misc) Update(code, cacheDate, featureDate string, complete bool) {
 	// 1. K线相关
-	exchangeKLineExtend(this, code, featureDate)
+	miscKLineExtend(this, code, featureDate)
 	// 2. 成交量
-	exchangeTurnZ(this, code, cacheDate, featureDate)
+	miscTurnZ(this, code, cacheDate, featureDate)
 	// 3. 情绪
-	exchangeSentiment(this, code, cacheDate, featureDate)
+	miscSentiment(this, code, cacheDate, featureDate)
 	// 4. 资金流向
-	exchangeFundFlow(this, code, cacheDate, featureDate)
+	miscFundFlow(this, code, cacheDate, featureDate)
 }
 
 func (this *Misc) Repair(code, cacheDate, featureDate string, complete bool) {
 	// 1. K线相关
-	exchangeKLineExtend(this, code, featureDate)
+	miscKLineExtend(this, code, featureDate)
 	// 2. 成交量, 使用cacheDate作为特征的缓存日期
-	exchangeTurnZ(this, code, cacheDate, cacheDate)
+	miscTurnZ(this, code, cacheDate, cacheDate)
 	// 3. 情绪
-	exchangeSentiment(this, code, cacheDate, featureDate)
+	miscSentiment(this, code, cacheDate, featureDate)
 	// 4. 资金流向
-	exchangeFundFlow(this, code, cacheDate, featureDate)
+	miscFundFlow(this, code, cacheDate, featureDate)
 }
 
 func (this *Misc) Increase(snapshot QuoteSnapshot) Feature {
@@ -139,7 +139,7 @@ func (this *Misc) ValidateSample() error {
 }
 
 // ExchangeKLineExtend 更新Exchange K线相关数据
-func exchangeKLineExtend(info *Misc, securityCode string, featureDate string) {
+func miscKLineExtend(info *Misc, securityCode string, featureDate string) {
 	cover := NewExchangeKLine(securityCode, featureDate)
 	if cover == nil {
 		logger.Errorf("code[%s, %s] kline not found", securityCode, featureDate)
@@ -178,9 +178,9 @@ func exchangeKLineExtend(info *Misc, securityCode string, featureDate string) {
 	info.State |= cover.Kind()
 }
 
-// 更新 - exchange - 历史成交数据相关, capture,collect
-func exchangeTurnZ(info *Misc, securityCode string, cacheDate, featureDate string) {
-	list := base.Transaction(securityCode, featureDate)
+// 更新 - misc - 历史成交数据相关, capture,collect
+func miscTurnZ(info *Misc, securityCode string, cacheDate, featureDate string) {
+	list := base.GetTransaction(securityCode, featureDate)
 	if len(list) > 0 {
 		summary := CountInflow(list, securityCode, featureDate)
 		// 修正f10的缓存, 应该是缓存日期为准
@@ -202,21 +202,21 @@ func exchangeTurnZ(info *Misc, securityCode string, cacheDate, featureDate strin
 	}
 }
 
-// 更新 - exchange - 情绪
-func exchangeSentiment(info *Misc, securityCode string, cacheDate, featureDate string) {
+// 更新 - misc - 情绪
+func miscSentiment(info *Misc, securityCode string, cacheDate, featureDate string) {
 	if exchange.AssertIndexBySecurityCode(securityCode) {
 		// 跳过指数和板块, 只处理个股的情绪值
 		return
 	}
-	list := base.Transaction(securityCode, featureDate)
+	list := base.GetTransaction(securityCode, featureDate)
 	if len(list) > 0 {
 		cover := CountInflow(list, securityCode, featureDate)
 		info.LastSentiment, info.LastConsistent = market.SecuritySentiment(cover.OuterVolume, cover.InnerVolume)
 	}
 }
 
-// 更新 - exchange - 资金流向
-func exchangeFundFlow(info *Misc, securityCode string, cacheDate, featureDate string) {
+// 更新 - misc - 资金流向
+func miscFundFlow(info *Misc, securityCode string, cacheDate, featureDate string) {
 	if !exchange.AssertStockBySecurityCode(securityCode) {
 		return
 	}

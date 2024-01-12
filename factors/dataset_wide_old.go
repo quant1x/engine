@@ -330,7 +330,7 @@ func attachVolume(df pandas.DataFrame, securityCode string) pandas.DataFrame {
 	closeTurnZ := []stat.DType{}
 	closeUnmatched := []int64{}
 	for _, tradeDate := range dates {
-		tmp := base.CheckoutTickData(securityCode, tradeDate, true)
+		tmp := base.CheckoutTransactionData(securityCode, tradeDate, true)
 		logger.Warnf("tick: code=%s, date=%s, rows=%d", securityCode, tradeDate, len(tmp))
 		//summary := InflowCount(tmp, securityCode)
 		summary := CountInflow(tmp, securityCode, tradeDate)

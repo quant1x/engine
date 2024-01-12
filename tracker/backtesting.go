@@ -81,7 +81,7 @@ func BackTesting(countDays, countTopN int) {
 			}
 			features, ok := mapStock[securityCode]
 			if !ok {
-				filename := cache.FeatureFilename(securityCode)
+				filename := cache.WideFilename(securityCode)
 				err := api.CsvToSlices(filename, &features)
 				if err != nil {
 					continue

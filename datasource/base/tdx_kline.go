@@ -43,6 +43,7 @@ func UpdateCacheKLines(securityCode string, klines []KLine) {
 	klineMutex.Unlock()
 }
 
+// CheckoutKLines 捡出指定日期的K线数据
 func CheckoutKLines(code, date string) []KLine {
 	securityCode := exchange.CorrectSecurityCode(code)
 	date = exchange.FixTradeDate(date)

@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"gitee.com/quant1x/gotdx/securities"
 	"testing"
 )
 
@@ -12,4 +13,10 @@ func TestConfig(t *testing.T) {
 	strategyCode := 82
 	v := GetStrategyParameterByCode(strategyCode)
 	fmt.Println(v)
+}
+
+func TestBlocks(t *testing.T) {
+	sectorCode := "sh880884"
+	blk := securities.GetBlockInfo(sectorCode)
+	fmt.Println(len(blk.ConstituentStocks))
 }

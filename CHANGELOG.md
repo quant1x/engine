@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.1.5] - 2024-01-12
+### Changed
+- 调整宽表、历史成交数据的更新方案.
+- 保存旧版本wide的更新操作方法.
+- 梳理数据集代码.
+- 更新exchange版本号.
+
 ## [1.1.4] - 2024-01-11
 ### Changed
 - 调整宽表的结构.
@@ -838,8 +845,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.1.4...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.1.5...HEAD
 
+[1.1.5]: https://gitee.com/quant1x/engine/compare/v1.1.4...v1.1.5
 [1.1.4]: https://gitee.com/quant1x/engine/compare/v1.1.3...v1.1.4
 [1.1.3]: https://gitee.com/quant1x/engine/compare/v1.1.2...v1.1.3
 [1.1.2]: https://gitee.com/quant1x/engine/compare/v1.1.1...v1.1.2

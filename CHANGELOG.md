@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.1.6] - 2024-01-12
+### Changed
+- 从stock迁移扫描功能.
+- 新增板块测试代码.
+
 ## [1.1.5] - 2024-01-12
 ### Changed
 - 调整宽表、历史成交数据的更新方案.
@@ -845,8 +850,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.1.5...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.1.6...HEAD
 
+[1.1.6]: https://gitee.com/quant1x/engine/compare/v1.1.5...v1.1.6
 [1.1.5]: https://gitee.com/quant1x/engine/compare/v1.1.4...v1.1.5
 [1.1.4]: https://gitee.com/quant1x/engine/compare/v1.1.3...v1.1.4
 [1.1.3]: https://gitee.com/quant1x/engine/compare/v1.1.2...v1.1.3

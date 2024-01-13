@@ -63,13 +63,19 @@ func pullWideByDate(securityCode, date string) []SecurityFeature {
 	var list []SecurityFeature
 	var beginDate string // 补数据的开始日期
 	var endDate string   // 补数据的结束日期
+	var cacheBeginDate, cacheEndDate string
 	err := api.CsvToSlices(filename, &list)
 	if err != nil || len(list) == 0 {
 		// 如果文件为空, 暂定从1990-12-19
-		beginDate = exchange.MARKET_CH_FIRST_LISTTIME
+		cacheBeginDate = exchange.MARKET_CH_FIRST_LISTTIME
+		cacheEndDate = cacheBeginDate
+		beginDate = cacheBeginDate
 	} else {
+		cacheBeginDate = list[0].Date
+		cacheEndDate = list[len(list)-1].Date
 		// 以缓存文件最后一条记录的日期
-		beginDate = list[len(list)-1].Date
+		beginDate = cacheEndDate
+
 	}
 	// 2. 确定补齐数据的日期
 	endDate = exchange.FixTradeDate(date)
@@ -95,14 +101,21 @@ func pullWideByDate(securityCode, date string) []SecurityFeature {
 		// K线为空, 返回空
 		return nil
 	} else {
-		//TODO: 这里没有处理的一个前提是wide数据的开始日期和K线的开始日期保持一致
-		////beginDate = klines[0].Date
-		//// 再次调整日期
-		//if beginDate != klines[0].Date {
-		//	// 如果缓存第一条记录的日期小于K线第一条记录的日期, 则数据异常, 清空
-		//	clear(list)
-		//	beginDate = klines[0].Date
-		//}
+		// 校验wide缓存和k线缓存的开始日期是否对齐
+		klsBeginDate := klines[0].Date
+		klsEndDate := klines[kline_length-1].Date
+		if cacheBeginDate == klsBeginDate {
+			// 如果缓存的开始日期和k线的开始日期相同, 没有问题
+		} else {
+			// 如果缓存的开始日期和k线的开始日期不同, 则认为数据错乱, 清空
+			clear(list)
+			// 设置缓存开始日期为k线的开始日期
+			cacheBeginDate = klsBeginDate
+			// 设置缓存结束日期为k线的开始日期
+			cacheEndDate = klsBeginDate
+			beginDate = cacheBeginDate
+		}
+		_ = klsEndDate
 	}
 	// 4. 确定缓存记录数
 	list_length := len(list)

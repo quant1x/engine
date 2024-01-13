@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.1.8] - 2024-01-13
+### Changed
+- 调整历史成交数据的部分函数名, 收敛关于历史成交记录的默认日期.
+- 修复命令参数错误时控制台输出两次错误信息的bug.
+- 修订部分代码的变量名, 结构体名.
+
 ## [1.1.7] - 2024-01-12
 ### Changed
 - 整理部分代码, 合并小功能.
@@ -854,8 +860,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.1.7...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.1.8...HEAD
 
+[1.1.8]: https://gitee.com/quant1x/engine/compare/v1.1.7...v1.1.8
 [1.1.7]: https://gitee.com/quant1x/engine/compare/v1.1.6...v1.1.7
 [1.1.6]: https://gitee.com/quant1x/engine/compare/v1.1.5...v1.1.6
 [1.1.5]: https://gitee.com/quant1x/engine/compare/v1.1.4...v1.1.5

@@ -7,6 +7,7 @@ import (
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/gox/logger"
 	"slices"
 )
 
@@ -57,6 +58,12 @@ func (this *DataWideKLine) Print(code string, date ...string) {
 
 // 通过日期拉取宽表数据
 func pullWideByDate(securityCode, date string) []SecurityFeature {
+	//defer func() {
+	//	if err := recover(); err != nil {
+	//		s := string(debug.Stack())
+	//		logger.Fatalf("code=%s, err=%v, stack=%s", securityCode, err, s)
+	//	}
+	//}()
 	securityCode = exchange.CorrectSecurityCode(securityCode)
 	// 1. 加载缓存
 	filename := cache.WideFilename(securityCode)
@@ -72,7 +79,8 @@ func pullWideByDate(securityCode, date string) []SecurityFeature {
 		beginDate = cacheBeginDate
 	} else {
 		cacheBeginDate = list[0].Date
-		cacheEndDate = list[len(list)-1].Date
+		last := list[len(list)-1]
+		cacheEndDate = last.Date
 		// 以缓存文件最后一条记录的日期
 		beginDate = cacheEndDate
 
@@ -80,6 +88,10 @@ func pullWideByDate(securityCode, date string) []SecurityFeature {
 	// 2. 确定补齐数据的日期
 	endDate = exchange.FixTradeDate(date)
 	// 2.1 结束日期经过交易日历的校对处理一次
+	logger.Warnf("[%s]: begin=%s, end= %s", securityCode, beginDate, endDate)
+	if len(beginDate) == 0 {
+		beginDate = exchange.MARKET_CH_FIRST_LISTTIME
+	}
 	dates := exchange.TradingDateRange(beginDate, endDate)
 	n := len(dates)
 	if n == 0 {
@@ -128,6 +140,9 @@ func pullWideByDate(securityCode, date string) []SecurityFeature {
 	for i, v := range klines {
 		if v.Date < beginDate {
 			continue
+		}
+		if v.Date > endDate {
+			break
 		}
 		featureDate := v.Date
 		cacheDate := v.Date

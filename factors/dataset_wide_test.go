@@ -46,8 +46,9 @@ func TestGetKLineAll(t *testing.T) {
 }
 
 func Test_pullWideByDate(t *testing.T) {
-	code := "600178"
-	date := "20240110"
+	code := "880424"
+	code = "sh000001"
+	date := "20231009"
 	securityCode := exchange.CorrectSecurityCode(code)
 	data := pullWideByDate(securityCode, date)
 	fmt.Println(data)

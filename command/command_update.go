@@ -7,16 +7,21 @@ import (
 	cmder "github.com/spf13/cobra"
 )
 
+const (
+	updateCommand     = "update"
+	updateDescription = "更新数据"
+)
+
 // CmdUpdate 更新数据
 var CmdUpdate = &cmder.Command{
-	Use:     "update",
-	Example: Application + " update --all",
+	Use:     updateCommand,
+	Example: Application + " " + updateCommand + " --all",
 	//Args:    args.MinimumNArgs(0),
 	Args: func(cmd *cmder.Command, args []string) error {
 		return nil
 	},
-	Short: "更新数据",
-	Long:  `更新数据`,
+	Short: updateDescription,
+	Long:  updateDescription,
 	Run: func(cmd *cmder.Command, args []string) {
 		fmt.Println()
 		currentDate := cache.DefaultCanUpdateDate()
@@ -56,10 +61,10 @@ func initUpdate() {
 	flagFeatures.Usage = getPluginsUsage(plugins)
 	commandInit(CmdUpdate, &flagFeatures)
 
-	// 3. 处理异常
-	CmdUpdate.SetFlagErrorFunc(func(cmd *cmder.Command, err error) error {
-		return nil
-	})
+	//// 3. 处理异常
+	//CmdUpdate.SetFlagErrorFunc(func(cmd *cmder.Command, err error) error {
+	//	return nil
+	//})
 }
 
 // 全部更新

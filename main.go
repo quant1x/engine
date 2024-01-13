@@ -46,10 +46,7 @@ func main() {
 
 	// 命令字
 	rootCommand := command.GlobalFlags()
-	err := rootCommand.Execute()
-	if err != nil {
-		fmt.Println(err)
-	}
+	_ = rootCommand.Execute()
 	if config.PprofEnable() {
 		fMem, err := os.Create(memProfile)
 		if err != nil {

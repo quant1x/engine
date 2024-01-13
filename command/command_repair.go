@@ -13,16 +13,21 @@ import (
 	"time"
 )
 
+const (
+	repairCommand     = "repair"
+	repairDescription = "修复数据"
+)
+
 // CmdRepair 补登历史数据
 var CmdRepair = &cmder.Command{
-	Use:     "repair",
-	Example: Application + " repair --all",
+	Use:     repairCommand,
+	Example: Application + " " + repairCommand + " --all",
 	//Args:    args.MinimumNArgs(0),
 	Args: func(cmd *cmder.Command, args []string) error {
 		return nil
 	},
-	Short: "修复数据",
-	Long:  `修复数据`,
+	Short: repairDescription,
+	Long:  repairDescription,
 	Run: func(cmd *cmder.Command, args []string) {
 		beginDate := exchange.FixTradeDate(flagStartDate.Value)
 		endDate := cache.DefaultCanReadDate()

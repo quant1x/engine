@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.2.0] - 2024-01-13
+### Changed
+- 修复wide可能存在的数据日期错乱的情况.
+- Engine增加tracker模块及策略权限验证.
+- Tracker增加校验策略权限.
+- 更新依赖库版本.
+
 ## [1.1.9] - 2024-01-13
 ### Changed
 - 更新依赖库版本.
@@ -866,8 +873,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.1.9...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.2.0...HEAD
 
+[1.2.0]: https://gitee.com/quant1x/engine/compare/v1.1.9...v1.2.0
 [1.1.9]: https://gitee.com/quant1x/engine/compare/v1.1.8...v1.1.9
 [1.1.8]: https://gitee.com/quant1x/engine/compare/v1.1.7...v1.1.8
 [1.1.7]: https://gitee.com/quant1x/engine/compare/v1.1.6...v1.1.7

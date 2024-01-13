@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.1.9] - 2024-01-13
+### Changed
+- 更新依赖库版本.
+- 更新依赖库版本.
+- 修复了日期范围函数因为前后日期颠倒引发的异常, 新增校验wide和k线开始日期是否对齐.
+
 ## [1.1.8] - 2024-01-13
 ### Changed
 - 调整历史成交数据的部分函数名, 收敛关于历史成交记录的默认日期.
@@ -860,8 +866,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.1.8...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.1.9...HEAD
 
+[1.1.9]: https://gitee.com/quant1x/engine/compare/v1.1.8...v1.1.9
 [1.1.8]: https://gitee.com/quant1x/engine/compare/v1.1.7...v1.1.8
 [1.1.7]: https://gitee.com/quant1x/engine/compare/v1.1.6...v1.1.7
 [1.1.6]: https://gitee.com/quant1x/engine/compare/v1.1.5...v1.1.6

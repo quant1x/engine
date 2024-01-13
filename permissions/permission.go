@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	ErrAlreadyExists = errors.New("the validator already exists") // 规则已经存在
+	ErrAlreadyExists = errors.New("the validator already exists") // 权限验证已经存在
 )
 
 type Validator func(model models.Strategy) error

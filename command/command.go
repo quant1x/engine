@@ -53,6 +53,7 @@ func initSubCommands() {
 	initRules()
 	initSafes()
 	initBackTesting()
+	initTracker()
 	initTools()
 }
 
@@ -72,7 +73,8 @@ func GlobalFlags() *cmder.Command {
 	engineCmd.PersistentFlags().IntVar(&cpuNum, "cpu", cpuNum, "设置CPU最大核数")
 	engineCmd.AddCommand(CmdVersion, CmdSafes, CmdBestIP, CmdConfig, CmdTools)
 	engineCmd.AddCommand(CmdUpdate, CmdRepair, CmdPrint)
-	engineCmd.AddCommand(CmdBackTesting, CmdRules, CmdService)
+	engineCmd.AddCommand(CmdBackTesting, CmdRules, CmdTracker)
+	engineCmd.AddCommand(CmdService)
 	return engineCmd
 }
 

@@ -26,8 +26,8 @@ const (
 )
 
 var (
-	quant1XConfigFilename string = "" // 配置文件完整路径
-	listConfigFile               = []string{
+	quant1XConfigFilename = "" // 配置文件完整路径
+	listConfigFile        = []string{
 		"~/." + configFilename,
 		"~/.quant1x/" + configFilename,
 		"~/runtime/etc/" + configFilename,
@@ -36,10 +36,10 @@ var (
 
 // Quant1XConfig Quant1X基础配置
 type Quant1XConfig struct {
-	BaseDir string           `yaml:"basedir"` // 基础路径
-	Runtime RuntimeParameter `yaml:"runtime"` // 运行时参数
-	//Rules   RuleParameter    `yaml:"rules"`   // 规则参数
-	Trader TraderParameter `yaml:"trader"` // 预览交易参数
+	BaseDir    string           `yaml:"basedir"` // 基础路径
+	DataSource DataParameter    `yaml:"data"`    // 数据源
+	Runtime    RuntimeParameter `yaml:"runtime"` // 运行时参数
+	Trader     TraderParameter  `yaml:"trader"`  // 预览交易参数
 }
 
 // GetConfigFilename 获取配置文件路径

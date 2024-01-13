@@ -61,29 +61,33 @@ func pullWideByDate(securityCode, date string) []SecurityFeature {
 	// 1. 加载缓存
 	filename := cache.WideFilename(securityCode)
 	var list []SecurityFeature
-	var beginDate string
+	var beginDate string // 补数据的开始日期
+	var endDate string   // 补数据的结束日期
 	err := api.CsvToSlices(filename, &list)
 	if err != nil || len(list) == 0 {
+		// 如果文件为空, 暂定从1990-12-19
 		beginDate = exchange.MARKET_CH_FIRST_LISTTIME
 	} else {
+		// 以缓存文件最后一条记录的日期
 		beginDate = list[len(list)-1].Date
 	}
 	// 2. 确定补齐数据的日期
-	endDate := exchange.FixTradeDate(date)
-	ts := exchange.TradingDateRange(beginDate, endDate)
-	tslen := len(ts)
-	if tslen == 0 {
+	endDate = exchange.FixTradeDate(date)
+	// 2.1 结束日期经过交易日历的校对处理一次
+	dates := exchange.TradingDateRange(beginDate, endDate)
+	n := len(dates)
+	if n == 0 {
+		// 这种情况的原因是传入的date小于缓存的最后一条记录的日期
 		beginDate = endDate
-	} else if tslen == 1 {
-		beginDate = ts[0]
-		endDate = ts[0]
+	} else if n == 1 {
+		// 传入日期和缓存最后一条记录的日期相同
+		beginDate = dates[0]
+		endDate = dates[0]
 	} else {
-		beginDate = ts[0]
-		endDate = ts[tslen-1]
+		beginDate = dates[0]
+		endDate = dates[n-1]
 	}
-	// 3. 补齐数据
-	list_length := len(list)
-	// 3.1 补齐日线, 日线是必须要有的, 也肯定会有
+	// 3. 补齐日线, 日线是必须要有的, 也肯定会有
 	// 数据为空, 从基础K线获取K线部分
 	klines := base.CheckoutKLines(securityCode, endDate)
 	kline_length := len(klines)
@@ -91,13 +95,22 @@ func pullWideByDate(securityCode, date string) []SecurityFeature {
 		// K线为空, 返回空
 		return nil
 	} else {
-		//beginDate = klines[0].Date
+		//TODO: 这里没有处理的一个前提是wide数据的开始日期和K线的开始日期保持一致
+		////beginDate = klines[0].Date
+		//// 再次调整日期
+		//if beginDate != klines[0].Date {
+		//	// 如果缓存第一条记录的日期小于K线第一条记录的日期, 则数据异常, 清空
+		//	clear(list)
+		//	beginDate = klines[0].Date
+		//}
 	}
-	// 如果kline比wide数据多
+	// 4. 确定缓存记录数
+	list_length := len(list)
+	// 5. 如果kline比wide数据多
 	if kline_length > list_length {
 		list = slices.Grow(list, kline_length)
 	}
-	transBeginDate := base.GetTickStartDate()
+	transBeginDate := base.GetBeginDateOfHistoricalTradingData()
 	transBeginDate = exchange.FixTradeDate(transBeginDate)
 	for i, v := range klines {
 		if v.Date < beginDate {
@@ -145,7 +158,7 @@ func pullWideByDate(securityCode, date string) []SecurityFeature {
 			list = append(list, info)
 		}
 	}
-	// 4 保存文件
+	// 6. 保存文件
 	_ = api.SlicesToCsv(filename, list)
 	return list
 }

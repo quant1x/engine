@@ -9,13 +9,17 @@ type DataSummary struct {
 	usage string // 用法
 }
 
-func Summary(kind Kind, key, name, owner string) DataSummary {
+func Summary(kind Kind, key, name, owner string, usage ...string) DataSummary {
+	var description string
+	if len(usage) > 0 {
+		description = usage[0]
+	}
 	return DataSummary{
 		kind:  kind,
 		key:   key,
 		name:  name,
 		owner: owner,
-		usage: name,
+		usage: description,
 	}
 }
 

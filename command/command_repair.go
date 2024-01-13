@@ -37,7 +37,7 @@ var CmdRepair = &cmder.Command{
 		dates := exchange.TradingDateRange(beginDate, endDate)
 		count := len(dates)
 		fmt.Printf("修复数据: %s => %s"+strings.Repeat("\r\n", 2), dates[0], dates[count-1])
-		base.UpdateTickStartDate(dates[0])
+		base.UpdateBeginDateOfHistoricalTradingData(dates[0])
 		if flagAll.Value {
 			handleRepairAll(dates)
 		} else if len(flagBaseData.Value) > 0 {

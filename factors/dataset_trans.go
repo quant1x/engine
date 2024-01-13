@@ -63,13 +63,13 @@ func (r *TransactionRecord) Filename(date, code string) string {
 }
 
 func (r *TransactionRecord) Update(date string) {
-	base.UpdateTickStartDate(date)
-	base.GetTickAll(r.GetSecurityCode())
+	base.UpdateBeginDateOfHistoricalTradingData(date)
+	base.GetAllHistoricalTradingData(r.GetSecurityCode())
 }
 
 func (r *TransactionRecord) Repair(date string) {
-	//base.GetTickAll(r.code)
-	base.GetTransationData(r.GetSecurityCode(), date)
+	//base.GetAllHistoricalTradingData(r.code)
+	base.GetHistoricalTradingDataByDate(r.GetSecurityCode(), date)
 }
 
 func (r *TransactionRecord) Increase(snapshot quotes.Snapshot) {

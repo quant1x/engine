@@ -2,6 +2,7 @@ package base
 
 import (
 	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx"
 	"gitee.com/quant1x/gotdx/quotes"
@@ -9,6 +10,7 @@ import (
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/pandas/stat"
 	"strconv"
+	"sync"
 )
 
 const (
@@ -16,30 +18,37 @@ const (
 	TradingStartTime        = "09:30" // 开盘时间
 	TradingFinalBiddingTime = "14:57" // 尾盘集合竞价时间
 	TradingLastTime         = "15:00" // 最后一个时间
-	//TickDefaultStartDate    = "2023-10-01" // 分笔成交最早的日期
 )
 
 var (
-	// TickDefaultStartDate 最早的时间
-	__transactionHistoryStartDate = "20231001"
+	__historicalTradingDataOnce      sync.Once
+	__historicalTradingDataBeginDate = "20231001" // 最早的时间
 )
 
-// UpdateTickStartDate 修改tick数据开始下载的日期
-func UpdateTickStartDate(date string) {
+func lazyInitHistoricalTradingData() {
+	date := config.GetDataConfig().Trans.BeginDate
+	__historicalTradingDataBeginDate = exchange.FixTradeDate(date, cache.TDX_FORMAT_PROTOCOL_DATE)
+}
+
+// UpdateBeginDateOfHistoricalTradingData 修改tick数据开始下载的日期
+func UpdateBeginDateOfHistoricalTradingData(date string) {
+	__historicalTradingDataOnce.Do(lazyInitHistoricalTradingData)
 	dt, err := api.ParseTime(date)
 	if err != nil {
 		return
 	}
 	date = dt.Format(cache.TDX_FORMAT_PROTOCOL_DATE)
-	__transactionHistoryStartDate = date
+	__historicalTradingDataBeginDate = date
 }
 
-func GetTickStartDate() string {
-	return __transactionHistoryStartDate
+// GetBeginDateOfHistoricalTradingData 获取系统默认的历史成交数据的最早日期
+func GetBeginDateOfHistoricalTradingData() string {
+	__historicalTradingDataOnce.Do(lazyInitHistoricalTradingData)
+	return __historicalTradingDataBeginDate
 }
 
-// GetTransaction 获取指定日期的历史成交数据
-func GetTransaction(securityCode, tradeDate string) []quotes.TickTransaction {
+// GetHistoricalTradingData 获取指定日期的历史成交数据
+func GetHistoricalTradingData(securityCode, tradeDate string) []quotes.TickTransaction {
 	securityCode = exchange.CorrectSecurityCode(securityCode)
 	tdxApi := gotdx.GetTdxApi()
 	offset := uint16(quotes.TDX_TRANSACTION_MAX)
@@ -83,8 +92,8 @@ func GetTransaction(securityCode, tradeDate string) []quotes.TickTransaction {
 	return history
 }
 
-// GetTickAll 下载全部tick数据
-func GetTickAll(securityCode string) {
+// GetAllHistoricalTradingData 下载全部历史成交数据
+func GetAllHistoricalTradingData(securityCode string) {
 	defer func() {
 		// 解析失败以后输出日志, 以备检查
 		if err := recover(); err != nil {
@@ -99,7 +108,7 @@ func GetTickAll(securityCode string) {
 		return
 	}
 	tStart := strconv.FormatInt(int64(info.IPODate), 10)
-	fixStart := __transactionHistoryStartDate
+	fixStart := __historicalTradingDataBeginDate
 	if tStart < fixStart {
 		tStart = fixStart
 	}
@@ -122,7 +131,7 @@ func GetTickAll(securityCode string) {
 			ignore = true
 			continue
 		}
-		list := GetTransationData(securityCode, tradeDate)
+		list := GetHistoricalTradingDataByDate(securityCode, tradeDate)
 		if len(list) == 0 && tradeDate != today {
 			// 如果数据为空, 且不是当前日期, 认定为从这天起往前是没有分笔成交数据的
 			ignore = true
@@ -132,8 +141,8 @@ func GetTickAll(securityCode string) {
 	return
 }
 
-// GetTransationData 获取指定日期的分笔成交记录
-func GetTransationData(securityCode string, date string) (list []quotes.TickTransaction) {
+// GetHistoricalTradingDataByDate 获取指定日期的历史成交记录
+func GetHistoricalTradingDataByDate(securityCode string, date string) (list []quotes.TickTransaction) {
 	securityCode = exchange.CorrectSecurityCode(securityCode)
 	list = CheckoutTransactionData(securityCode, date, false)
 	if len(list) == 0 {
@@ -162,7 +171,7 @@ func CheckoutTransactionData(securityCode string, date string, ignorePreviousDat
 	}
 	if ignorePreviousData {
 		// 在默认日期之前的数据直接返回空
-		startDate := exchange.FixTradeDate(__transactionHistoryStartDate, cache.TDX_FORMAT_PROTOCOL_DATE)
+		startDate := exchange.FixTradeDate(__historicalTradingDataBeginDate, cache.TDX_FORMAT_PROTOCOL_DATE)
 		if tradeDate < startDate {
 			logger.Errorf("tick: code=%s, trade-date=%s, start-date=%s, 没有数据", securityCode, tradeDate, startDate)
 			return list

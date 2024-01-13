@@ -2,6 +2,7 @@ package factors
 
 import (
 	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/gotdx/quotes"
 )
 
@@ -41,7 +42,7 @@ var (
 	mapDataSets = map[cache.Kind]cache.DataSummary{
 		BaseXdxr:                cache.Summary(BaseXdxr, "xdxr", "除权除息", cache.DefaultDataProvider),
 		BaseKLine:               cache.Summary(BaseKLine, "day", "日K线", cache.DefaultDataProvider),
-		BaseTransaction:         cache.Summary(BaseTransaction, "trans", "成交数据", cache.DefaultDataProvider),
+		BaseTransaction:         cache.Summary(BaseTransaction, "trans", "成交数据", cache.DefaultDataProvider, "默认最早日期"+config.GetDataConfig().Trans.BeginDate),
 		BaseMinutes:             cache.Summary(BaseMinutes, "minutes", "分时数据", cache.DefaultDataProvider),
 		BaseQuarterlyReports:    cache.Summary(BaseQuarterlyReports, "reports", "季报", cache.DefaultDataProvider),
 		BaseSafetyScore:         cache.Summary(BaseSafetyScore, "safetyscore", "安全分", cache.DefaultDataProvider),

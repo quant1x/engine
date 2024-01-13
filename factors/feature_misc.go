@@ -180,7 +180,7 @@ func miscKLineExtend(info *Misc, securityCode string, featureDate string) {
 
 // 更新 - misc - 历史成交数据相关, capture,collect
 func miscTurnZ(info *Misc, securityCode string, cacheDate, featureDate string) {
-	list := base.GetTransaction(securityCode, featureDate)
+	list := base.GetHistoricalTradingData(securityCode, featureDate)
 	if len(list) > 0 {
 		summary := CountInflow(list, securityCode, featureDate)
 		// 修正f10的缓存, 应该是缓存日期为准
@@ -208,7 +208,7 @@ func miscSentiment(info *Misc, securityCode string, cacheDate, featureDate strin
 		// 跳过指数和板块, 只处理个股的情绪值
 		return
 	}
-	list := base.GetTransaction(securityCode, featureDate)
+	list := base.GetHistoricalTradingData(securityCode, featureDate)
 	if len(list) > 0 {
 		cover := CountInflow(list, securityCode, featureDate)
 		info.LastSentiment, info.LastConsistent = market.SecuritySentiment(cover.OuterVolume, cover.InnerVolume)

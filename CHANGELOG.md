@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.2.1] - 2024-01-14
+### Changed
+- 收敛panic的处理方式, 统一归于gox的runtime.
+- 更新exchange版本, 强化交易日期范围的检查.
+- 更新gox版本, 优化可以忽略panic的用法.
+- 更新gox版本, 去掉无异常时的无意义解析入参.
+- 更新gox版本, 以支持recover时, 允许传入可变参数, 提供更多的造成异常的证据.
+- 修订注释描述错误的问题.
+
 ## [1.2.0] - 2024-01-13
 ### Changed
 - 修复wide可能存在的数据日期错乱的情况.
@@ -873,8 +882,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.2.0...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.2.1...HEAD
 
+[1.2.1]: https://gitee.com/quant1x/engine/compare/v1.2.0...v1.2.1
 [1.2.0]: https://gitee.com/quant1x/engine/compare/v1.1.9...v1.2.0
 [1.1.9]: https://gitee.com/quant1x/engine/compare/v1.1.8...v1.1.9
 [1.1.8]: https://gitee.com/quant1x/engine/compare/v1.1.7...v1.1.8

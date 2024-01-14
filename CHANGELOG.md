@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.2.3] - 2024-01-15
+### Changed
+- 调整策略编号的数据类型为uint64, 修改权限注册接口入参为uint64, 和权限模块保持一致.
+
 ## [1.2.2] - 2024-01-15
 ### Changed
 - 增加盘中扫描前策略有效性确认.
@@ -892,8 +896,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.2.2...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.2.3...HEAD
 
+[1.2.3]: https://gitee.com/quant1x/engine/compare/v1.2.2...v1.2.3
 [1.2.2]: https://gitee.com/quant1x/engine/compare/v1.2.1...v1.2.2
 [1.2.1]: https://gitee.com/quant1x/engine/compare/v1.2.0...v1.2.1
 [1.2.0]: https://gitee.com/quant1x/engine/compare/v1.1.9...v1.2.0

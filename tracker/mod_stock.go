@@ -36,7 +36,7 @@ var (
 // AllScan 全市场扫描
 func AllScan(barIndex *int, model models.Strategy) {
 	today := exchange.IndexToday()
-	dates := exchange.TradeRange(exchange.MARKET_CN_FIRST_DATE, today)
+	dates := exchange.TradingDateRange(exchange.MARKET_CN_FIRST_DATE, today)
 	days := len(dates)
 	currentlyDay := dates[days-1]
 	updateTime := "15:00:59"

@@ -1,6 +1,9 @@
 package command
 
 import (
+	"fmt"
+	"gitee.com/quant1x/engine/models"
+	"gitee.com/quant1x/engine/permissions"
 	"gitee.com/quant1x/engine/tracker"
 	"gitee.com/quant1x/gox/api"
 	cmder "github.com/spf13/cobra"
@@ -8,7 +11,8 @@ import (
 )
 
 const (
-	commandTracker = "tracker"
+	trackerCommand     = "tracker"
+	trackerDescription = "实时跟踪"
 )
 
 var (
@@ -17,25 +21,35 @@ var (
 
 // CmdTracker 实时跟踪
 var CmdTracker = &cmder.Command{
-	Use:     commandTracker,
-	Example: Application + " " + commandTracker + " --no=1",
+	Use:     trackerCommand,
+	Example: Application + " " + trackerCommand + " --no=1",
 	//Args:    cobra.MinimumNArgs(0),
 	Args: func(cmd *cmder.Command, args []string) error {
 		return nil
 	},
-	Short: "实时跟踪",
-	Long:  `实时跟踪`,
+	Short: trackerDescription,
+	Long:  trackerDescription,
 	Run: func(cmd *cmder.Command, args []string) {
-		//if !CheckPermission(licenses.QuantStrategyNo81 | licenses.QuantStrategyNo82) {
-		//	fmt.Println("没有策略权限")
-		//	return
-		//}
 		var strategyCodes []int
 		array := strings.Split(trackerStrategyCodes, ",")
 		for _, strategyNumber := range array {
 			strategyNumber := strings.TrimSpace(strategyNumber)
 			code := api.ParseInt(strategyNumber)
+			medel, err := models.CheckoutStrategy(int(code))
+			if err != nil {
+				fmt.Printf("策略编号%d, 不存在\n", code)
+				continue
+			}
+			err = permissions.CheckPermission(medel)
+			if err != nil {
+				fmt.Printf("策略编号%d, 权限验证失败: %+v\n", code, err)
+				continue
+			}
 			strategyCodes = append(strategyCodes, int(code))
+		}
+		if len(strategyCodes) == 0 {
+			fmt.Println("没有有效的策略编号")
+			return
 		}
 		tracker.Tracker(strategyCodes...)
 	},

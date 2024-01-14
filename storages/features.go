@@ -20,7 +20,7 @@ import (
 )
 
 func updateStockFeature(wg *coroutine.RollingWaitGroup, bar *progressbar.Bar, feature factors.Feature, code string, cacheDate, featureDate string, op cache.OpKind, p *treemap.Map, sb *cache.ScoreBoard) {
-	defer runtime.CatchPanic()
+	defer runtime.CatchPanic("code[%s]: cacheDate=%s,featureDate=%s", code, cacheDate, featureDate)
 	now := time.Now()
 	defer sb.Add(1, time.Since(now))
 	if op == cache.OpRepair {

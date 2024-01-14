@@ -14,9 +14,17 @@ import (
 	"sync"
 )
 
+func syncDataSetByDate(data factors.DataSet, date string, op cache.OpKind) {
+	defer runtime.CatchPanic("%s[%s]: date=%s", data.Name(), data.GetSecurityCode(), date)
+	if op == cache.OpUpdate {
+		data.Update(date)
+	} else if op == cache.OpRepair {
+		data.Repair(date)
+	}
+}
+
 // 更新单个数据集
 func updateOneDataSet(wg *sync.WaitGroup, parent, bar *progressbar.Bar, dataSet factors.DataSet, date string, op cache.OpKind, allCodes []string) {
-	defer runtime.CatchPanic()
 	moduleName := "基础数据"
 	if op == cache.OpRepair {
 		moduleName = "修复" + moduleName
@@ -26,11 +34,7 @@ func updateOneDataSet(wg *sync.WaitGroup, parent, bar *progressbar.Bar, dataSet 
 	logger.Infof("%s: %s, begin", moduleName, dataSet.Name())
 	for _, code := range allCodes {
 		data := dataSet.Clone(date, code).(factors.DataSet)
-		if op == cache.OpUpdate {
-			data.Update(date)
-		} else if op == cache.OpRepair {
-			data.Repair(date)
-		}
+		syncDataSetByDate(data, date, op)
 		bar.Add(1)
 	}
 	parent.Add(1)

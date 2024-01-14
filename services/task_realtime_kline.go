@@ -9,7 +9,6 @@ import (
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/runtime"
-	"runtime/debug"
 )
 
 // 任务 - 实时更新K线
@@ -30,12 +29,7 @@ func jobRealtimeKLine() {
 
 // 更新K线
 func realtimeUpdateOfKLine() {
-	defer func() {
-		if err := recover(); err != nil {
-			s := string(debug.Stack())
-			logger.Errorf("err=%v, stack=%s", err, s)
-		}
-	}()
+	defer runtime.IgnorePanic()
 	barIndex := barIndexRealtimeKLine
 	allCodes := market.GetCodeList()
 	wg := coroutine.NewRollingWaitGroup(5)

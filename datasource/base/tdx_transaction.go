@@ -8,6 +8,7 @@ import (
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
+	"gitee.com/quant1x/gox/runtime"
 	"gitee.com/quant1x/pandas/stat"
 	"strconv"
 	"sync"
@@ -94,13 +95,7 @@ func GetHistoricalTradingData(securityCode, tradeDate string) []quotes.TickTrans
 
 // GetAllHistoricalTradingData 下载全部历史成交数据
 func GetAllHistoricalTradingData(securityCode string) {
-	defer func() {
-		// 解析失败以后输出日志, 以备检查
-		if err := recover(); err != nil {
-			logger.Errorf("下载tick数据异常: code=%s", securityCode)
-			return
-		}
-	}()
+	defer runtime.CatchPanic("trans: code=%s", securityCode)
 	securityCode = exchange.CorrectSecurityCode(securityCode)
 	tdxApi := gotdx.GetTdxApi()
 	info, err := tdxApi.GetFinanceInfo(securityCode)

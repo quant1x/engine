@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.2.2] - 2024-01-15
+### Changed
+- 增加盘中扫描前策略有效性确认.
+- 优化策略执行方式.
+- 移除废弃的代码.
+- 命令行统一增加欢迎语.
+- 从zero-sum迁移策略执行函数.
+- 调整日期范围函数.
+- 更新依赖库版本.
+
 ## [1.2.1] - 2024-01-14
 ### Changed
 - 收敛panic的处理方式, 统一归于gox的runtime.
@@ -882,8 +892,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.2.1...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.2.2...HEAD
 
+[1.2.2]: https://gitee.com/quant1x/engine/compare/v1.2.1...v1.2.2
 [1.2.1]: https://gitee.com/quant1x/engine/compare/v1.2.0...v1.2.1
 [1.2.0]: https://gitee.com/quant1x/engine/compare/v1.1.9...v1.2.0
 [1.1.9]: https://gitee.com/quant1x/engine/compare/v1.1.8...v1.1.9

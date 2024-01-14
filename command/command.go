@@ -3,8 +3,11 @@ package command
 import (
 	"fmt"
 	"gitee.com/quant1x/engine/models"
+	"gitee.com/quant1x/engine/tracker"
 	"gitee.com/quant1x/gox/runtime"
 	"gitee.com/quant1x/pandas/stat"
+	"github.com/shirou/gopsutil/v3/cpu"
+	"github.com/shirou/gopsutil/v3/mem"
 	cmder "github.com/spf13/cobra"
 	goruntime "runtime"
 	"strings"
@@ -21,6 +24,15 @@ var (
 	commandDefaultLongFlag = "" // 默认的长标志为空, 主要用在tools
 )
 
+// 输出欢迎语
+func printMotd() {
+	infos, _ := cpu.Info()
+	cpuInfo := infos[0]
+	memory, _ := mem.VirtualMemory()
+	fmt.Printf("CPU: %s %dCores, AVX2: %t, Mem: total %dGB, free %dGB\n", cpuInfo.ModelName, cpuInfo.Cores, stat.GetAvx2Enabled(), memory.Total/(1024*1024*1024), memory.Free/(1024*1024*1024))
+	fmt.Println()
+}
+
 var engineCmd = &cmder.Command{
 	Use: Application,
 	Run: func(cmd *cmder.Command, args []string) {
@@ -29,8 +41,10 @@ var engineCmd = &cmder.Command{
 			fmt.Println(err)
 			return
 		}
+		// 输出欢迎语
+		printMotd()
 		barIndex := 1
-		models.ExecuteStrategy(model, &barIndex)
+		tracker.ExecuteStrategy(model, &barIndex)
 	},
 	PersistentPreRun: func(cmd *cmder.Command, args []string) {
 		// 重置全局调试状态

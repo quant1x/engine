@@ -75,17 +75,5 @@ func toolsInitTail() {
 		fmt.Println("Usage:\n" + Application + " tool tail [-f] [-n #] [file ...]")
 		return nil
 	})
-	//cmdToolTail.SetFlagErrorFunc(func(command *cmder.Command, err error) error {
-	//	errText := err.Error()
-	//	if !strings.HasPrefix(errText, "unknown shorthand flag:") {
-	//		return err
-	//	}
-	//	arr := strings.Fields(errText)
-	//	param := arr[len(arr)-1]
-	//	fmt.Println("hh", param)
-	//	command.Run(command, []string{param})
-	//	return nil
-	//})
-	//cmdToolTail.Flags().IntVarP(&n, commandDefaultLongFlag, "n", 0, "最后的n行")
 	cmdToolTail.Flags().BoolVarP(&taiConfig.Follow, commandDefaultLongFlag, "f", false, "一直等待新数据添加到文件")
 }

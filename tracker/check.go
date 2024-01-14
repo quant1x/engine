@@ -9,7 +9,7 @@ import (
 )
 
 // CheckStrategy 检查当前交易日中个股在策略中的执行情况
-func CheckStrategy(strategyCode int, securityCode string) {
+func CheckStrategy(strategyCode uint64, securityCode string) {
 	fmt.Printf("\n策略检测中...\n")
 	// 1. 获取快照
 	name := securities.GetStockName(securityCode)

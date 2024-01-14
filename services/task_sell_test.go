@@ -8,11 +8,6 @@ import (
 	"testing"
 )
 
-func TestTaskSell_getEarlierDate(t *testing.T) {
-	v := getEarlierDate(1)
-	fmt.Println(v)
-}
-
 func TestTaskSell_LastSession(t *testing.T) {
 	sellStrategyCode := models.ModelOneSizeFitsAllSells
 	// 1. 获取117号策略(卖出)
@@ -49,11 +44,6 @@ func TestStructPtr(t *testing.T) {
 		// 打印元素的地址
 		fmt.Printf("Element %d address: %v\n", i, elemAddr)
 	}
-}
-
-func Test_checkoutCanSellStockList(t *testing.T) {
-	v := checkoutCanSellStockList(117)
-	fmt.Println(v)
 }
 
 func Test_cookieCutterSell(t *testing.T) {

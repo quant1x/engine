@@ -246,7 +246,7 @@ func ScanSectors(barIndex *int, model models.Strategy) {
 	table.Render()
 }
 
-func output(strategyNo int, v []models.ResultInfo) {
+func output(strategyNo uint64, v []models.ResultInfo) {
 	df := pandas.LoadStructs(v)
 	filename := fmt.Sprintf("%s/%s/%s-%d.csv", cache.GetRootPath(), models.CACHE_STRATEGY_PATH, cache.Today(), strategyNo)
 	_ = df.WriteCSV(filename)

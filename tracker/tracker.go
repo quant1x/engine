@@ -15,7 +15,7 @@ import (
 )
 
 // Tracker 盘中跟踪
-func Tracker(strategyNumbers ...int) {
+func Tracker(strategyNumbers ...uint64) {
 	for {
 		updateInRealTime, status := exchange.CanUpdateInRealtime()
 		isTrading := updateInRealTime && status == exchange.ExchangeTrading

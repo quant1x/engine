@@ -11,7 +11,7 @@ import (
 var (
 	days         int    // 统计多少天
 	topN         int    // 统计前N
-	strategyCode int    // 策略ID
+	strategyCode uint64 // 策略ID
 	securityCode string // 证券代码
 )
 
@@ -33,6 +33,6 @@ var CmdBackTesting = &cmder.Command{
 func initBackTesting() {
 	CmdBackTesting.Flags().IntVar(&days, "count", 0, "统计多少天")
 	CmdBackTesting.Flags().IntVar(&topN, "top", models.AllStockTopN(), "输出前排几名")
-	CmdBackTesting.Flags().IntVar(&strategyCode, "strategy", 0, "策略ID")
+	CmdBackTesting.Flags().Uint64Var(&strategyCode, "strategy", 0, "策略ID")
 	CmdBackTesting.Flags().StringVar(&securityCode, "code", "", "证券代码")
 }

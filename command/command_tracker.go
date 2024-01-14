@@ -31,13 +31,13 @@ var CmdTracker = &cmder.Command{
 	Short: trackerDescription,
 	Long:  trackerDescription,
 	Run: func(cmd *cmder.Command, args []string) {
-		var strategyCodes []int
+		var strategyCodes []uint64
 		array := strings.Split(trackerStrategyCodes, ",")
 		for _, strategyNumber := range array {
 			strategyNumber := strings.TrimSpace(strategyNumber)
-			code := api.ParseInt(strategyNumber)
+			code := api.ParseUint(strategyNumber)
 			// 1. 确定策略是否存在
-			medel, err := models.CheckoutStrategy(int(code))
+			medel, err := models.CheckoutStrategy(code)
 			if err != nil {
 				fmt.Printf("策略编号%d, 不存在\n", code)
 				logger.Errorf("策略编号%d, 不存在\n", code)
@@ -50,7 +50,7 @@ var CmdTracker = &cmder.Command{
 				logger.Errorf("策略编号%d, 权限验证失败: %+v\n", code, err)
 				continue
 			}
-			strategyCodes = append(strategyCodes, int(code))
+			strategyCodes = append(strategyCodes, code)
 		}
 		if len(strategyCodes) == 0 {
 			fmt.Println("没有有效的策略编号, 实时扫描结束")

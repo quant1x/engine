@@ -13,11 +13,19 @@ import (
 )
 
 // ModelKind 模型类型编码, 整型
-type ModelKind = int
+type ModelKind = uint64
 
 const (
 	ModelZero                ModelKind = 0   // 0号策略, 是一个特殊策略, 不允许覆盖
 	ModelHousNo1             ModelKind = 1   // 1号策略, 经典的默认策略, 不允许覆盖
+	ModelNo2                 ModelKind = 2   // 2号策略, 不允许覆盖
+	ModelNo3                 ModelKind = 3   // 3号策略, 不允许覆盖
+	ModelNo4                 ModelKind = 4   // 4号策略, 不允许覆盖
+	ModelNo5                 ModelKind = 5   // 5号策略, 不允许覆盖
+	ModelNo6                 ModelKind = 6   // 6号策略, 不允许覆盖
+	ModelNo7                 ModelKind = 7   // 7号策略, 不允许覆盖
+	ModelNo8                 ModelKind = 8   // 8号策略, 不允许覆盖
+	ModelNo9                 ModelKind = 9   // 9号策略, 不允许覆盖
 	Model89K                 ModelKind = 89  // 89号策略, 89K策略, 不允许覆盖
 	ModelOneSizeFitsAllSells ModelKind = 117 // 卖出策略: 一刀切(Panic sell, cookie-cutter, One size fits all sales)
 	ModelNoShareHolding      ModelKind = 861 // 卖出策略: 不留了
@@ -28,6 +36,14 @@ var (
 	ReserveStrategyNumberRanges = []ModelKind{
 		ModelZero,
 		ModelHousNo1,
+		ModelNo2,
+		ModelNo3,
+		ModelNo4,
+		ModelNo5,
+		ModelNo6,
+		ModelNo7,
+		ModelNo8,
+		ModelNo9,
 		Model89K,
 		ModelOneSizeFitsAllSells,
 		ModelNoShareHolding,
@@ -105,7 +121,7 @@ func Register(strategy Strategy) error {
 }
 
 // CheckoutStrategy 捡出策略对象
-func CheckoutStrategy(strategyNumber int) (Strategy, error) {
+func CheckoutStrategy(strategyNumber uint64) (Strategy, error) {
 	_mutexStrategies.Lock()
 	defer _mutexStrategies.Unlock()
 	strategy, ok := _mapStrategies[strategyNumber]

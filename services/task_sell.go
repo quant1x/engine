@@ -1,21 +1,17 @@
 package services
 
 import (
-	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/realtime"
-	"gitee.com/quant1x/engine/storages"
 	"gitee.com/quant1x/engine/trader"
 	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/num"
 	"gitee.com/quant1x/gox/runtime"
 	"slices"
-	"strings"
 )
 
 // 任务 - 卖出117
@@ -54,7 +50,7 @@ func cookieCutterSell() {
 		return
 	}
 	// 5. 确定持股到期的个股列表
-	finalCodeList := checkoutCanSellStockList(sellStrategyCode)
+	finalCodeList := CheckoutCanSellStockList(sellStrategyCode)
 	// 6. 遍历持仓
 	direction := trader.SELL
 	strategyName := sellRule.QmtStrategyName()
@@ -154,45 +150,4 @@ func cookieCutterSell() {
 		}
 		_ = order_id
 	}
-}
-
-// 获得T+HoldingPeriod的具体日期
-func getEarlierDate(period int) string {
-	dates := exchange.LastNDate(exchange.LastTradeDate(), period)
-	earlier_date := exchange.FixTradeDate(dates[0], cache.CACHE_DATE)
-	return earlier_date
-}
-
-// 获取所有挂接了指定的卖出策略ID的交易规则
-func getStrategyParameterList(sellStrategyId int) []config.StrategyParameter {
-	traderConfig := config.TraderConfig()
-	var list []config.StrategyParameter
-	for _, v := range traderConfig.Strategies {
-		if v.Flag == models.OrderFlagSell || v.SellStrategy != sellStrategyId {
-			continue
-		}
-		list = append(list, v)
-	}
-	return list
-}
-
-// 捡出T+HoldingPeriod日的股票列表
-func checkoutCanSellStockList(sellStrategyId int) []string {
-	var list []string
-	tradeRules := getStrategyParameterList(sellStrategyId)
-	if len(tradeRules) == 0 {
-		return list
-	}
-	for _, v := range tradeRules {
-		date := getEarlierDate(v.HoldingPeriod)
-		qmtStrategyName := v.QmtStrategyName()
-		codes := storages.FetchListForFirstPurchase(date, qmtStrategyName, trader.BUY)
-		logger.Infof("sell strategy[%d]: from %d, last-day codes=%s", sellStrategyId, v.Id, strings.Join(codes, ","))
-		if len(codes) == 0 {
-			continue
-		}
-		list = append(list, codes...)
-	}
-	list = api.Unique(list)
-	return list
 }

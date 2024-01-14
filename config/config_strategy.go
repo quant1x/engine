@@ -10,7 +10,7 @@ import (
 
 // StrategyParameter 策略参数
 type StrategyParameter struct {
-	Id                          int            `name:"策略编码" yaml:"id" default:"-1"`                                    // 策略ID, -1无效
+	Id                          uint64         `name:"策略编码" yaml:"id" default:"1"`                                     // 策略ID, 默认是1
 	Auto                        bool           `name:"是否自动执行" yaml:"auto" default:"false"`                             // 是否自动执行
 	Name                        string         `name:"策略名称" yaml:"name"`                                               // 策略名称
 	Flag                        string         `name:"订单标识" yaml:"flag"`                                               // 订单标识,分早盘,尾盘和盘中
@@ -24,7 +24,7 @@ type StrategyParameter struct {
 	Sectors                     []string       `name:"板块" yaml:"sectors" default:""`                                   // 板块, 策略适用的板块列表, 默认板块为空, 即全部个股
 	IgnoreMarginTrading         bool           `name:"剔除两融" yaml:"ignore_margin_trading" default:"true"`               // 剔除两融标的, 默认是剔除
 	HoldingPeriod               int            `name:"持仓周期" yaml:"holding_period" default:"1"`                         // 持仓周期, 默认为1天, 即T+1日触发117号策略
-	SellStrategy                int            `name:"卖出策略" yaml:"sell_strategy" default:"117"`                        // 卖出策略, 默认117
+	SellStrategy                uint64         `name:"卖出策略" yaml:"sell_strategy" default:"117"`                        // 卖出策略, 默认117
 	TakeProfitRatio             float64        `name:"止盈比例" yaml:"take_profit_ratio" default:"15.00"`                  // 止盈比例, 默认15%
 	StopLossRatio               float64        `name:"止损比例" yaml:"stop_loss_ratio" default:"-2.00"`                    // 止损比例, 默认-2%
 	Rules                       RuleParameter  `name:"规则参数" yaml:"rules"`                                              // 过滤规则

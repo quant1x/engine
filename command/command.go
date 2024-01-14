@@ -14,7 +14,7 @@ import (
 )
 
 var (
-	strategyNumber = 0                      // 策略编号
+	strategyNumber = uint64(1)              // 策略编号
 	businessDebug  = runtime.Debug()        // 业务调试开关
 	cpuAvx2        = false                  // AVX2加速状态
 	cpuNum         = goruntime.NumCPU() / 2 // cpu数量
@@ -79,7 +79,7 @@ func InitCommands() {
 // GlobalFlags engine支持的全部命令
 func GlobalFlags() *cmder.Command {
 	initSubCommands()
-	engineCmd.Flags().IntVar(&strategyNumber, "strategy", models.DefaultStrategy, models.UsageStrategyList())
+	engineCmd.Flags().Uint64Var(&strategyNumber, "strategy", models.DefaultStrategy, models.UsageStrategyList())
 	engineCmd.Flags().IntVar(&models.CountDays, "count", 0, "统计多少天")
 	engineCmd.Flags().IntVar(&models.CountTopN, "top", models.AllStockTopN(), "输出前排几名")
 	engineCmd.PersistentFlags().BoolVar(&businessDebug, "debug", businessDebug, "打开业务调试开关, 慎重使用!")

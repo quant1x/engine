@@ -9,8 +9,9 @@ import (
 type Kind = uint64
 
 const (
-	PluginMaskBaseData Kind = 0x1000000000000000
-	PluginMaskFeature  Kind = 0x2000000000000000
+	PluginMaskBaseData Kind = 0x1000000000000000 // 基础数据
+	PluginMaskFeature  Kind = 0x2000000000000000 // 特征数据
+	PluginMaskStrategy Kind = 0x3000000000000000 // 策略
 )
 
 const (

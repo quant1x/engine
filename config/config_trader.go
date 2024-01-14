@@ -95,7 +95,7 @@ func TraderConfig() TraderParameter {
 }
 
 // GetStrategyParameterByCode 通过策略编码查找规则
-func GetStrategyParameterByCode(strategyCode int) *StrategyParameter {
+func GetStrategyParameterByCode(strategyCode uint64) *StrategyParameter {
 	strategies := TraderConfig().Strategies
 	for _, v := range strategies {
 		if v.Auto && v.Id == strategyCode {

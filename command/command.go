@@ -33,32 +33,6 @@ func printMotd() {
 	fmt.Println()
 }
 
-var engineCmd = &cmder.Command{
-	Use: Application,
-	Run: func(cmd *cmder.Command, args []string) {
-		model, err := models.CheckoutStrategy(strategyNumber)
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		// 输出欢迎语
-		printMotd()
-		barIndex := 1
-		tracker.ExecuteStrategy(model, &barIndex)
-	},
-	PersistentPreRun: func(cmd *cmder.Command, args []string) {
-		// 重置全局调试状态
-		runtime.SetDebug(businessDebug)
-		// AVX2 加速
-		stat.SetAvx2Enabled(cpuAvx2)
-		// 设置CPU最大核数
-		runtime.GoMaxProcs(cpuNum)
-	},
-	PersistentPostRun: func(cmd *cmder.Command, args []string) {
-		//
-	},
-}
-
 // 初始化全部子命令
 func initSubCommands() {
 	initPrint()
@@ -69,6 +43,7 @@ func initSubCommands() {
 	initBackTesting()
 	initTracker()
 	initTools()
+	initService()
 }
 
 // InitCommands 公开初始化函数
@@ -79,6 +54,31 @@ func InitCommands() {
 // GlobalFlags engine支持的全部命令
 func GlobalFlags() *cmder.Command {
 	initSubCommands()
+	engineCmd := &cmder.Command{
+		Use: Application,
+		Run: func(cmd *cmder.Command, args []string) {
+			model, err := models.CheckoutStrategy(strategyNumber)
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+			// 输出欢迎语
+			printMotd()
+			barIndex := 1
+			tracker.ExecuteStrategy(model, &barIndex)
+		},
+		PersistentPreRun: func(cmd *cmder.Command, args []string) {
+			// 重置全局调试状态
+			runtime.SetDebug(businessDebug)
+			// AVX2 加速
+			stat.SetAvx2Enabled(cpuAvx2)
+			// 设置CPU最大核数
+			runtime.GoMaxProcs(cpuNum)
+		},
+		PersistentPostRun: func(cmd *cmder.Command, args []string) {
+			//
+		},
+	}
 	engineCmd.Flags().Uint64Var(&strategyNumber, "strategy", models.DefaultStrategy, models.UsageStrategyList())
 	engineCmd.Flags().IntVar(&models.CountDays, "count", 0, "统计多少天")
 	engineCmd.Flags().IntVar(&models.CountTopN, "top", models.AllStockTopN(), "输出前排几名")

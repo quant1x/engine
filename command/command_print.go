@@ -13,53 +13,61 @@ var (
 	printModules = []cmdFlag[string]{}
 )
 
-// CmdPrint 打印命令
-var CmdPrint = &cmder.Command{
-	Use:     "print",
-	Example: Application + " print sh000001",
-	Short:   "打印K线概要",
-	//Args:  cmder.MinimumNArgs(1),
-	Run: func(cmd *cmder.Command, args []string) {
-		tradeDate := cache.DefaultCanReadDate()
-		if len(flagDate.Value) > 0 {
-			tradeDate = exchange.FixTradeDate(flagDate.Value)
-		}
-		keywords := ""
-		code := ""
-		for _, m := range printModules {
-			if len(m.Value) > 0 {
-				keywords = m.Name
-				code = m.Value
-				break
-			}
-		}
-		if len(keywords) > 0 {
-			plugins := cache.PluginsWithName(cache.PluginMaskFeature, keywords)
-			if len(plugins) == 0 {
-				fmt.Printf("没有找到名字是[%s]的数据插件\n", keywords)
-			} else {
-				handlePrintData(code, tradeDate, plugins[0])
-			}
-		} else {
-			if len(args) != 1 {
-				fmt.Println(cmd.Help())
-				return
-			}
-			// 默认输出K线信息
-			securityCode := args[0]
-			printKline(securityCode, tradeDate)
-		}
-	},
-}
+const (
+	printCommand     = "print"
+	printDescription = "打印数据概要"
+)
+
+var (
+	CmdPrint *cmder.Command = nil // CmdPrint 打印命令
+)
 
 func initPrint() {
+	CmdPrint = &cmder.Command{
+		Use:     printCommand,
+		Example: Application + " print sh000001",
+		Short:   printDescription,
+		//Args:  cmder.MinimumNArgs(1),
+		Run: func(cmd *cmder.Command, args []string) {
+			tradeDate := cache.DefaultCanReadDate()
+			if len(flagDate.Value) > 0 {
+				tradeDate = exchange.FixTradeDate(flagDate.Value)
+			}
+			keywords := ""
+			code := ""
+			for _, m := range printModules {
+				if len(m.Value) > 0 {
+					keywords = m.Name
+					code = m.Value
+					break
+				}
+			}
+			if len(keywords) > 0 {
+				plugins := cache.PluginsWithName(cache.PluginMaskFeature, keywords)
+				if len(plugins) == 0 {
+					fmt.Printf("没有找到名字是[%s]的数据插件\n", keywords)
+				} else {
+					handlePrintData(code, tradeDate, plugins[0])
+				}
+			} else {
+				if len(args) != 1 {
+					fmt.Println(cmd.Help())
+					return
+				}
+				// 默认输出K线信息
+				securityCode := args[0]
+				printKline(securityCode, tradeDate)
+			}
+		},
+	}
+
 	commandInit(CmdPrint, &flagDate)
 	plugins := cache.Plugins(cache.PluginMaskFeature)
 	printModules = make([]cmdFlag[string], len(plugins))
 	for i, plugin := range plugins {
 		key := plugin.Key()
-		usage := plugin.Usage()
-		printModules[i] = cmdFlag[string]{Name: key, Usage: plugin.Owner() + ": " + usage, Value: ""}
+		name := plugin.Name()
+		printModules[i] = cmdFlag[string]{Name: key, Usage: plugin.Owner() + ": " + name, Value: ""}
 		CmdPrint.Flags().StringVar(&(printModules[i].Value), printModules[i].Name, "", printModules[i].Usage)
 	}
 }

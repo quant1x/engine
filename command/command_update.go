@@ -12,43 +12,46 @@ const (
 	updateDescription = "更新数据"
 )
 
-// CmdUpdate 更新数据
-var CmdUpdate = &cmder.Command{
-	Use:     updateCommand,
-	Example: Application + " " + updateCommand + " --all",
-	//Args:    args.MinimumNArgs(0),
-	Args: func(cmd *cmder.Command, args []string) error {
-		return nil
-	},
-	Short: updateDescription,
-	Long:  updateDescription,
-	Run: func(cmd *cmder.Command, args []string) {
-		fmt.Println()
-		currentDate := cache.DefaultCanUpdateDate()
-		cacheDate, featureDate := cache.CorrectDate(currentDate)
-		if flagAll.Value {
-			// 全部更新
-			handleUpdateAll(cacheDate, featureDate)
-		} else if len(flagBaseData.Value) > 0 {
-			all, keywords := parseFields(flagBaseData.Value)
-			if all || len(keywords) == 0 {
-				clear(keywords)
-			}
-			handleUpdateBaseDataWithKeywords(cacheDate, featureDate, keywords...)
-		} else if len(flagFeatures.Value) > 0 {
-			all, keywords := parseFields(flagFeatures.Value)
-			if all || len(keywords) == 0 {
-				clear(keywords)
-			}
-			handleUpdateFeaturesWithKeywords(cacheDate, featureDate, keywords...)
-		} else {
-			fmt.Println("Error: 非全部更新, 必须携带--features或--base")
-			_ = cmd.Usage()
-		}
-	},
-}
+var (
+	// CmdUpdate 更新数据
+	CmdUpdate *cmder.Command = nil
+)
 
 func initUpdate() {
+	CmdUpdate = &cmder.Command{
+		Use:     updateCommand,
+		Example: Application + " " + updateCommand + " --all",
+		//Args:    args.MinimumNArgs(0),
+		Args: func(cmd *cmder.Command, args []string) error {
+			return nil
+		},
+		Short: updateDescription,
+		Long:  updateDescription,
+		Run: func(cmd *cmder.Command, args []string) {
+			fmt.Println()
+			currentDate := cache.DefaultCanUpdateDate()
+			cacheDate, featureDate := cache.CorrectDate(currentDate)
+			if flagAll.Value {
+				// 全部更新
+				handleUpdateAll(cacheDate, featureDate)
+			} else if len(flagBaseData.Value) > 0 {
+				all, keywords := parseFields(flagBaseData.Value)
+				if all || len(keywords) == 0 {
+					clear(keywords)
+				}
+				handleUpdateBaseDataWithKeywords(cacheDate, featureDate, keywords...)
+			} else if len(flagFeatures.Value) > 0 {
+				all, keywords := parseFields(flagFeatures.Value)
+				if all || len(keywords) == 0 {
+					clear(keywords)
+				}
+				handleUpdateFeaturesWithKeywords(cacheDate, featureDate, keywords...)
+			} else {
+				fmt.Println("Error: 非全部更新, 必须携带--features或--base")
+				_ = cmd.Usage()
+			}
+		},
+	}
 	commandInit(CmdUpdate, &flagAll)
 
 	// 1. 基础数据

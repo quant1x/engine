@@ -18,61 +18,64 @@ const (
 	repairDescription = "修复数据"
 )
 
-// CmdRepair 补登历史数据
-var CmdRepair = &cmder.Command{
-	Use:     repairCommand,
-	Example: Application + " " + repairCommand + " --all",
-	//Args:    args.MinimumNArgs(0),
-	Args: func(cmd *cmder.Command, args []string) error {
-		return nil
-	},
-	Short: repairDescription,
-	Long:  repairDescription,
-	Run: func(cmd *cmder.Command, args []string) {
-		beginDate := exchange.FixTradeDate(flagStartDate.Value)
-		endDate := cache.DefaultCanReadDate()
-		if len(flagEndDate.Value) > 0 {
-			endDate = exchange.FixTradeDate(flagEndDate.Value)
-		}
-		dates := exchange.TradingDateRange(beginDate, endDate)
-		count := len(dates)
-		fmt.Printf("修复数据: %s => %s"+strings.Repeat("\r\n", 2), dates[0], dates[count-1])
-		base.UpdateBeginDateOfHistoricalTradingData(dates[0])
-		if flagAll.Value {
-			handleRepairAll(dates)
-		} else if len(flagBaseData.Value) > 0 {
-			all, keywords := parseFields(flagBaseData.Value)
-			if all || len(keywords) == 0 {
-				handleRepairAllDataSets(dates)
-			} else {
-				plugins := cache.PluginsWithName(cache.PluginMaskBaseData, keywords...)
-				if len(plugins) == 0 {
-					fmt.Printf("没有找到名字是[%s]的数据插件\n", strings.Join(keywords, ","))
-				} else {
-					handleRepairDataSetsWithPlugins(dates, plugins)
-				}
-			}
-		} else if len(flagFeatures.Value) > 0 {
-			all, keywords := parseFields(flagFeatures.Value)
-			if all || len(keywords) == 0 {
-				handleRepairAllFeatures(dates)
-			} else {
-				plugins := cache.PluginsWithName(cache.PluginMaskFeature, keywords...)
-				if len(plugins) == 0 {
-					fmt.Printf("没有找到名字是[%s]的数据插件\n", strings.Join(keywords, ","))
-				} else {
-					handleRepairFeaturesWithPlugins(dates, plugins)
-				}
-			}
-		} else {
-			fmt.Println("Error: 非全部修复, 必须携带--features或--base")
-			_ = cmd.Usage()
-		}
-
-	},
-}
+var (
+	// CmdRepair 补登历史数据
+	CmdRepair *cmder.Command = nil
+)
 
 func initRepair() {
+	CmdRepair = &cmder.Command{
+		Use:     repairCommand,
+		Example: Application + " " + repairCommand + " --all",
+		//Args:    args.MinimumNArgs(0),
+		Args: func(cmd *cmder.Command, args []string) error {
+			return nil
+		},
+		Short: repairDescription,
+		Long:  repairDescription,
+		Run: func(cmd *cmder.Command, args []string) {
+			beginDate := exchange.FixTradeDate(flagStartDate.Value)
+			endDate := cache.DefaultCanReadDate()
+			if len(flagEndDate.Value) > 0 {
+				endDate = exchange.FixTradeDate(flagEndDate.Value)
+			}
+			dates := exchange.TradingDateRange(beginDate, endDate)
+			count := len(dates)
+			fmt.Printf("修复数据: %s => %s"+strings.Repeat("\r\n", 2), dates[0], dates[count-1])
+			base.UpdateBeginDateOfHistoricalTradingData(dates[0])
+			if flagAll.Value {
+				handleRepairAll(dates)
+			} else if len(flagBaseData.Value) > 0 {
+				all, keywords := parseFields(flagBaseData.Value)
+				if all || len(keywords) == 0 {
+					handleRepairAllDataSets(dates)
+				} else {
+					plugins := cache.PluginsWithName(cache.PluginMaskBaseData, keywords...)
+					if len(plugins) == 0 {
+						fmt.Printf("没有找到名字是[%s]的数据插件\n", strings.Join(keywords, ","))
+					} else {
+						handleRepairDataSetsWithPlugins(dates, plugins)
+					}
+				}
+			} else if len(flagFeatures.Value) > 0 {
+				all, keywords := parseFields(flagFeatures.Value)
+				if all || len(keywords) == 0 {
+					handleRepairAllFeatures(dates)
+				} else {
+					plugins := cache.PluginsWithName(cache.PluginMaskFeature, keywords...)
+					if len(plugins) == 0 {
+						fmt.Printf("没有找到名字是[%s]的数据插件\n", strings.Join(keywords, ","))
+					} else {
+						handleRepairFeaturesWithPlugins(dates, plugins)
+					}
+				}
+			} else {
+				fmt.Println("Error: 非全部修复, 必须携带--features或--base")
+				_ = cmd.Usage()
+			}
+
+		},
+	}
 	commandInit(CmdRepair, &flagAll)
 	commandInit(CmdRepair, &flagStartDate)
 	commandInit(CmdRepair, &flagEndDate)

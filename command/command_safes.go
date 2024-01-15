@@ -11,21 +11,25 @@ var (
 	safesSecurityCode string
 )
 
-// CmdSafes 安全类-黑白名单
-var CmdSafes = &cmder.Command{
-	Use:     "safes",
-	Example: Application + " safes --code=sh000001 --type=1",
-	Short:   "黑白名单",
-	Run: func(cmd *cmder.Command, args []string) {
-		if len(safesSecurityCode) == 0 {
-			fmt.Println("证券代码不能为空")
-			return
-		}
-		trader.AddCodeToBlackList(safesSecurityCode, trader.SecureType(safesSecureType))
-	},
-}
+var (
+	// CmdSafes 安全类-黑白名单
+	CmdSafes *cmder.Command = nil
+)
 
 func initSafes() {
+	CmdSafes = &cmder.Command{
+		Use:     "safes",
+		Example: Application + " safes --code=sh000001 --type=1",
+		Short:   "黑白名单",
+		Run: func(cmd *cmder.Command, args []string) {
+			if len(safesSecurityCode) == 0 {
+				fmt.Println("证券代码不能为空")
+				return
+			}
+			trader.AddCodeToBlackList(safesSecurityCode, trader.SecureType(safesSecureType))
+		},
+	}
+
 	CmdSafes.Flags().StringVar(&safesSecurityCode, "code", "", "证券代码")
 	CmdSafes.Flags().IntVar(&safesSecureType, "type", 0, trader.UsageOfSecureType())
 }

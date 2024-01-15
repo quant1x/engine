@@ -4,18 +4,84 @@ import (
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/services"
+	"gitee.com/quant1x/gox/daemon"
+	"gitee.com/quant1x/gox/logger"
+	cmder "github.com/spf13/cobra"
 	"os"
 	"runtime"
 	"strings"
+)
 
-	"gitee.com/quant1x/gox/daemon"
-	"gitee.com/quant1x/gox/logger"
-	"github.com/spf13/cobra"
+const (
+	serviceCommand = "service"
 )
 
 var (
+	// CmdService 守护进程
+	CmdService *cmder.Command
+)
+
+// FirstUpper 字符串首字母大写
+func FirstUpper(s string) string {
+	if s == "" {
+		return ""
+	}
+	return strings.ToUpper(s[:1]) + s[1:]
+}
+
+// FirstLower 字符串首字母小写
+func FirstLower(s string) string {
+	if s == "" {
+		return ""
+	}
+	return strings.ToLower(s[:1]) + s[1:]
+}
+
+func initService() {
+	CmdService = &cmder.Command{
+		Use:     serviceCommand,
+		Example: Application + " " + serviceCommand + " install | uninstall | remove | start | stop | list | status",
+		Short:   "守护进程/服务",
+		//Args:  cobra.MinimumNArgs(1),
+		Run: func(cmd *cmder.Command, args []string) {
+			if len(args) > 0 {
+				serviceSubCommand = args[0]
+			}
+			//logger.Infof("serviceCommand:%s", serviceCommand)
+			daemonKind := daemon.SystemDaemon
+			applicationName, _, _ := strings.Cut(Application, ".")
+			serviceName := applicationName
+			switch runtime.GOOS {
+			case "darwin":
+				daemonKind = daemon.UserAgent
+			case "windows":
+				//serviceName = "Quant1X-Stock"
+				serviceName = "Quant1X-" + FirstUpper(applicationName)
+			}
+			srv, err := daemon.New(serviceName, serviceDescription, daemonKind)
+			if err != nil {
+				logger.Errorf("Error: %+v", err)
+				fmt.Println("Error: ", err)
+				os.Exit(1)
+			}
+			service := &Service{srv}
+			replacer := strings.NewReplacer("${ROOT_PATH}", cache.GetRootPath(), "${LOG_PATH}", cache.GetLoggerPath())
+			properties := replacer.Replace(propertyList)
+			_ = service.daemon.SetTemplate(properties)
+			status, err := service.Manage()
+			if err != nil {
+				logger.Errorf("Error: %+v", err)
+				fmt.Println(status, "\nError: ", err)
+				os.Exit(1)
+			}
+			fmt.Println(status)
+		},
+	}
+}
+
+var (
 	serviceDescription      = "Quant1X量化系统数据服务"
-	serviceCommand          = "" // 守护进程维护指令
+	serviceSubCommand       = "" // 守护进程维护指令
 	serviceProgramArguments = "service"
 )
 
@@ -39,8 +105,8 @@ func (service *Service) Run() {
 
 // Manage by daemon commands or run the daemon
 func (service *Service) Manage() (string, error) {
-	if len(serviceCommand) > 1 {
-		switch serviceCommand {
+	if len(serviceSubCommand) > 1 {
+		switch serviceSubCommand {
 		case "install":
 			return service.daemon.Install(serviceProgramArguments)
 		case "remove", "uninstall":
@@ -61,43 +127,4 @@ func (service *Service) Manage() (string, error) {
 	}
 	// serviceCommand = service
 	return service.daemon.Run(service)
-}
-
-// CmdService 守护进程
-var CmdService = &cobra.Command{
-	Use:     "service",
-	Example: Application + " service install | uninstall | remove | start | stop | list | status",
-	Short:   "守护进程/服务",
-	//Args:  cobra.MinimumNArgs(1),
-	Run: func(cmd *cobra.Command, args []string) {
-		if len(args) > 0 {
-			serviceCommand = args[0]
-		}
-		//logger.Infof("serviceCommand:%s", serviceCommand)
-		daemonKind := daemon.SystemDaemon
-		serviceName := Application
-		switch runtime.GOOS {
-		case "darwin":
-			daemonKind = daemon.UserAgent
-		case "windows":
-			serviceName = "Quant1X-Stock"
-		}
-		srv, err := daemon.New(serviceName, serviceDescription, daemonKind)
-		if err != nil {
-			logger.Errorf("Error: %+v", err)
-			fmt.Println("Error: ", err)
-			os.Exit(1)
-		}
-		service := &Service{srv}
-		replacer := strings.NewReplacer("${ROOT_PATH}", cache.GetRootPath(), "${LOG_PATH}", cache.GetLoggerPath())
-		properties := replacer.Replace(propertyList)
-		_ = service.daemon.SetTemplate(properties)
-		status, err := service.Manage()
-		if err != nil {
-			logger.Errorf("Error: %+v", err)
-			fmt.Println(status, "\nError: ", err)
-			os.Exit(1)
-		}
-		fmt.Println(status)
-	},
 }

@@ -1,8 +1,6 @@
 package command
 
-import (
-	"gitee.com/quant1x/gox/runtime"
-)
+import "gitee.com/quant1x/gox/runtime"
 
 var (
 	Application = "stock"

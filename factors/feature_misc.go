@@ -120,7 +120,14 @@ func (this *Misc) Repair(code, cacheDate, featureDate string, complete bool) {
 	// 1. K线相关
 	miscKLineExtend(this, code, featureDate)
 	// 2. 成交量, 使用cacheDate作为特征的缓存日期
-	miscTurnZ(this, code, cacheDate, cacheDate)
+	marketSessionEnd := exchange.TradeSessionHasEnd(cacheDate)
+	if marketSessionEnd {
+		// 收盘后, 用当日数据
+		miscTurnZ(this, code, cacheDate, cacheDate)
+	} else {
+		// 盘中修复, 用上一个交易日的数据
+		miscTurnZ(this, code, cacheDate, featureDate)
+	}
 	// 3. 情绪
 	miscSentiment(this, code, cacheDate, featureDate)
 	// 4. 资金流向

@@ -40,14 +40,14 @@ var CmdTracker = &cmder.Command{
 			medel, err := models.CheckoutStrategy(code)
 			if err != nil {
 				fmt.Printf("策略编号%d, 不存在\n", code)
-				logger.Errorf("策略编号%d, 不存在\n", code)
+				logger.Errorf("策略编号%d, 不存在", code)
 				continue
 			}
 			// 2. 确定策略是否有权限
 			err = permissions.CheckPermission(medel)
 			if err != nil {
 				fmt.Printf("策略编号%d, 权限验证失败: %+v\n", code, err)
-				logger.Errorf("策略编号%d, 权限验证失败: %+v\n", code, err)
+				logger.Errorf("策略编号%d, 权限验证失败: %+v", code, err)
 				continue
 			}
 			strategyCodes = append(strategyCodes, code)

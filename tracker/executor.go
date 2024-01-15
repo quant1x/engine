@@ -52,8 +52,8 @@ func ExecuteStrategy(model models.Strategy, barIndex *int) {
 	models.SyncAllSnapshots(barIndex)
 	// 计算市场情绪
 	MarketSentiment()
-	// 执行策略
-	ScanSectors(barIndex, model)
+	// 扫描板块
+	ScanAllSectors(barIndex, model)
 	// 扫描个股
 	AllScan(barIndex, model)
 }

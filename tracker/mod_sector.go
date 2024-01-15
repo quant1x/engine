@@ -23,8 +23,8 @@ import (
 	"time"
 )
 
-// ScanSectors 扫描板块
-func ScanSectors(barIndex *int, model models.Strategy) {
+// ScanAllSectors 扫描板块
+func ScanAllSectors(barIndex *int, model models.Strategy) {
 	// 执行板块指数的检测
 	typeBlocks := TopBlockWithType(barIndex)
 	// 不分板块类型, 所有的板块放在一起排序

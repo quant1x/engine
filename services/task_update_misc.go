@@ -150,7 +150,6 @@ func realtimeUpdateMiscAndSnapshot() {
 		if len(cacheList) > 0 {
 			mapSnapshot[securityCode] = cacheList
 		}
-		//logger.Infof("%s: begin-1-3", moduleName)
 	}
 	// 刷新Misc快照本地cache
 	factors.RefreshL5Misc()

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.2.8] - 2024-01-15
+### Changed
+- 调整命令字, 以支持服务名等关键信息, 可以从下游的项目名传递过来.
+
 ## [1.2.7] - 2024-01-15
 ### Changed
 - 调整成交记录的取法, 先从缓存获取, 缓存没有再从服务器读取.
@@ -919,8 +923,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.2.7...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.2.8...HEAD
 
+[1.2.8]: https://gitee.com/quant1x/engine/compare/v1.2.7...v1.2.8
 [1.2.7]: https://gitee.com/quant1x/engine/compare/v1.2.6...v1.2.7
 [1.2.6]: https://gitee.com/quant1x/engine/compare/v1.2.5...v1.2.6
 [1.2.5]: https://gitee.com/quant1x/engine/compare/v1.2.4...v1.2.5

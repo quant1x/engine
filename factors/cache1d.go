@@ -48,6 +48,7 @@ func NewCache1D[T Feature](key string, factory func(date, securityCode string) T
 	d1.Date = cache.DefaultCanReadDate()
 	d1.allCodes = market.GetCodeList()
 	//d1.Checkout(d1.Date)
+	d1.filename = getCache1DFilepath(d1.cacheKey, d1.Date)
 	d1.tShadow = d1.factory(d1.Date, defaultSecurityCode)
 	RegisterCacheLoader(key, d1)
 	return d1
@@ -95,6 +96,7 @@ func (this *Cache1D[T]) loadCache(date string) {
 	this.allCodes = market.GetCodeList()
 	this.Date = exchange.FixTradeDate(date)
 	this.filename = getCache1DFilepath(this.cacheKey, this.Date)
+	logger.Warnf("%s: date=%s, filename=%s", this.cacheKey, this.Date, this.filename)
 	var list []T
 	err := api.CsvToSlices(this.filename, &list)
 	if err != nil || len(list) == 0 {
@@ -103,8 +105,6 @@ func (this *Cache1D[T]) loadCache(date string) {
 	}
 	for _, v := range list {
 		code := v.GetSecurityCode()
-		//this.mapCache[code] = v
-		//this.mapCache.Set(code, v)
 		this.mapCache.Put(code, v)
 	}
 }
@@ -158,7 +158,6 @@ func (this *Cache1D[T]) Print(code string, date ...string) {
 	if len(date) > 0 {
 		tradeDate = exchange.FixTradeDate(date[0])
 	}
-	//fmt.Printf("%s: %s, %s\n", securityCode, name, tradeDate)
 	value := this.Get(securityCode, tradeDate)
 	if value != nil {
 		headers, records := checkoutTable(*value)

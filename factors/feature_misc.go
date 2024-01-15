@@ -112,6 +112,8 @@ func (this *Misc) Update(code, cacheDate, featureDate string, complete bool) {
 	miscSentiment(this, code, cacheDate, featureDate)
 	// 4. 资金流向
 	miscFundFlow(this, code, cacheDate, featureDate)
+
+	_ = complete
 }
 
 func (this *Misc) Repair(code, cacheDate, featureDate string, complete bool) {
@@ -123,6 +125,8 @@ func (this *Misc) Repair(code, cacheDate, featureDate string, complete bool) {
 	miscSentiment(this, code, cacheDate, featureDate)
 	// 4. 资金流向
 	miscFundFlow(this, code, cacheDate, featureDate)
+
+	_ = complete
 }
 
 func (this *Misc) Increase(snapshot QuoteSnapshot) Feature {

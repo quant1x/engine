@@ -36,13 +36,13 @@ func printMotd() {
 var engineCmd = &cmder.Command{
 	Use: Application,
 	Run: func(cmd *cmder.Command, args []string) {
+		// 输出欢迎语
+		printMotd()
 		model, err := models.CheckoutStrategy(strategyNumber)
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
-		// 输出欢迎语
-		printMotd()
 		barIndex := 1
 		tracker.ExecuteStrategy(model, &barIndex)
 	},

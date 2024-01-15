@@ -70,45 +70,45 @@ func NewExchangeKLine(code, date string) *ExchangeKLine {
 	// 2. 计算3日均量
 	mv3 := MA(VOL, 3)
 	ma3 := MA(CLOSE, 3)
-	ek.MV3 = utils.SeriesIndexOf(mv3, -1)
-	ek.MA3 = utils.SeriesIndexOf(ma3, -1)
+	ek.MV3 = utils.Float64IndexOf(mv3, -1)
+	ek.MA3 = utils.Float64IndexOf(ma3, -1)
 	// 2. 计算5日分钟均量
 	mv5 := MA(VOL, 5) // 5日均量
 	mv5m := mv5.Div(exchange.CN_DEFAULT_TOTALFZNUM)
-	ma5Volume := utils.SeriesIndexOf(mv5m, -1)
+	ma5Volume := utils.Float64IndexOf(mv5m, -1)
 	ek.MV5 = num.Decimal(ma5Volume, digits)
 	ma5 := MA(CLOSE, 5)
-	ek.MA5 = utils.SeriesIndexOf(ma5, -1)
+	ek.MA5 = utils.Float64IndexOf(ma5, -1)
 	ma10 := MA(CLOSE, 10)
-	ek.MA10 = utils.SeriesIndexOf(ma10, -1)
+	ek.MA10 = utils.Float64IndexOf(ma10, -1)
 	ma20 := MA(CLOSE, 20)
-	ek.MA20 = utils.SeriesIndexOf(ma20, -1)
+	ek.MA20 = utils.Float64IndexOf(ma20, -1)
 	// 3. 隔日成交量放大比例
 	vr := VOL.Div(REF(VOL, 1))
-	volumeChangeRate := utils.SeriesIndexOf(vr, -1)
+	volumeChangeRate := utils.Float64IndexOf(vr, -1)
 	ek.VolumeRatio = num.Decimal(volumeChangeRate, digits)
 	// 换手率
 	f10 := GetL5F10(securityCode)
 	if f10 != nil {
 		turnoverRate := VOL.Div(f10.Capital).Mul(100.00)
-		ek.TurnoverRate = num.Decimal(utils.SeriesIndexOf(turnoverRate, -1))
+		ek.TurnoverRate = num.Decimal(utils.Float64IndexOf(turnoverRate, -1))
 	}
 	// 振幅, 这里只比对最高价和最低价的幅度, 不参考前一天的收盘价
 	ar := HIGH.Div(LOW).Sub(1.00).Mul(100.00)
-	ek.AmplitudeRatio = utils.SeriesIndexOf(ar, -1)
+	ek.AmplitudeRatio = utils.Float64IndexOf(ar, -1)
 
 	// 4. 当日K线图形概要
 	shape := KLineShape(df, securityCode)
 	ek.Shape = shape
 	// 均价线
 	averagePrice := AMOUNT.Div(VOL)
-	ap := utils.SeriesIndexOf(averagePrice, -1)
+	ap := utils.Float64IndexOf(averagePrice, -1)
 	ek.AveragePrice = num.Decimal(ap, digits)
 	// 5. 计算阶段涨幅
 	chg5 := CLOSE.Div(REF(CLOSE, 5)).Sub(1.00).Mul(100)
 	chg10 := CLOSE.Div(REF(CLOSE, 10)).Sub(1.00).Mul(100)
-	change5 := utils.SeriesIndexOf(chg5, -1)
-	change10 := utils.SeriesIndexOf(chg10, -1)
+	change5 := utils.Float64IndexOf(chg5, -1)
+	change10 := utils.Float64IndexOf(chg10, -1)
 	ek.Change5 = num.Decimal(change5, digits)
 	ek.Change10 = num.Decimal(change10, digits)
 
@@ -136,12 +136,12 @@ func NewExchangeKLine(code, date string) *ExchangeKLine {
 	shortIntensity := qd1
 	//中线强度:QD2-REF(QD2,1),NODRAW;
 	mediumIntensity := qd2
-	ek.ShortIntensity = utils.SeriesIndexOf(shortIntensity, -1)
+	ek.ShortIntensity = utils.Float64IndexOf(shortIntensity, -1)
 	shortIntensityDiff := qd1.Sub(REF(qd1, 1))
-	ek.ShortIntensityDiff = utils.SeriesIndexOf(shortIntensityDiff, -1)
-	ek.MediumIntensity = utils.SeriesIndexOf(mediumIntensity, -1)
+	ek.ShortIntensityDiff = utils.Float64IndexOf(shortIntensityDiff, -1)
+	ek.MediumIntensity = utils.Float64IndexOf(mediumIntensity, -1)
 	mediumIntensityDiff := qd2.Sub(REF(qd2, 1))
-	ek.MediumIntensityDiff = utils.SeriesIndexOf(mediumIntensityDiff, -1)
+	ek.MediumIntensityDiff = utils.Float64IndexOf(mediumIntensityDiff, -1)
 
 	// 7. 波动率
 	N := 3
@@ -166,17 +166,17 @@ func NewExchangeKLine(code, date string) *ExchangeKLine {
 	//10,DOTLINE,COLORGREEN;
 	//50,DOTLINE,COLORYELLOW;
 	vix := MYSTDDEV.Sub(MINB).Div(MAXB.Sub(MINB)).Mul(100)
-	ek.Vix = utils.SeriesIndexOf(vix, -1)
+	ek.Vix = utils.Float64IndexOf(vix, -1)
 
-	// 8. 短线底部(Short-Term Bottom),股价最近一次上串5日均线
+	// 8. 短线底部(Short-Term Bottom),股价最近一次上穿5日均线
 	closeCrossMa5 := CROSS(CLOSE, ma5)
 	crossPeriod := BARSLAST(closeCrossMa5)
 	crossPrice := REF(OPEN, crossPeriod)
-	ek.InitialPrice = num.Decimal(utils.SeriesIndexOf(crossPrice, -1))
+	ek.InitialPrice = num.Decimal(utils.Float64IndexOf(crossPrice, -1))
 
-	// 情绪值 情绪一致
-	up := utils.SeriesIndexOf(UP, -1)
-	down := utils.SeriesIndexOf(DOWN, -1)
+	// 指数类情绪值 情绪一致
+	up := utils.Float64IndexOf(UP, -1)
+	down := utils.Float64IndexOf(DOWN, -1)
 	ek.Sentiment, ek.Consistent = market.SecuritySentiment(up, down)
 
 	return ek

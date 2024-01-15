@@ -16,16 +16,16 @@ import (
 )
 
 // 更新快照
-func jobUpdateExchangeAndSnapshot() {
+func jobUpdateMiscAndSnapshot() {
 	//funcName, _, _ := runtime.Caller()
 	now := time.Now()
 	updateInRealTime, _ := exchange.CanUpdateInRealtime()
 	// 09:15:00~09:27:00, 14:57:00~15:01:00之间更新数据
 	if updateInRealTime && exchange.CheckCallAuctionTime(now) {
-		realtimeUpdateExchangeAndSnapshot()
+		realtimeUpdateMiscAndSnapshot()
 	} else {
 		if runtime.Debug() {
-			realtimeUpdateExchangeAndSnapshot()
+			realtimeUpdateMiscAndSnapshot()
 		}
 		//logger.Infof("%s, 非集合竞价时段", funcName)
 	}
@@ -45,15 +45,14 @@ func resetSnapshotCache() {
 	}
 }
 
-// realtimeUpdateExchangeAndSnapshot 更新快照缓存
-func realtimeUpdateExchangeAndSnapshot() {
+// realtimeUpdateMiscAndSnapshot 更新快照缓存
+func realtimeUpdateMiscAndSnapshot() {
 	resetSnapshotCache()
 	moduleName := "执行[同步exchange]"
 	logger.Infof("%s: begin", moduleName)
 	allCodes := market.GetCodeList()
 	count := len(allCodes)
 	currentDate := cache.DefaultCanReadDate()
-	logger.Infof("%s: begin-1", moduleName)
 	bar := progressbar.NewBar(barIndexUpdateExchangeAndSnapshot, moduleName, count)
 	for _, securityCode := range allCodes {
 		bar.Add(1)
@@ -69,7 +68,6 @@ func realtimeUpdateExchangeAndSnapshot() {
 		timestamp := time.Now()
 		// 1. 修订日期
 		v.Date = currentDate
-		//cacheSnapshots := []flash.Exchange{}
 		securityCode := v.SecurityCode
 		misc := factors.GetL5Misc(securityCode)
 		if misc == nil {
@@ -155,10 +153,8 @@ func realtimeUpdateExchangeAndSnapshot() {
 		}
 		//logger.Infof("%s: begin-1-3", moduleName)
 	}
-	logger.Infof("%s: begin-2", moduleName)
 	// 刷新Misc快照本地cache
 	factors.RefreshL5Misc()
-	logger.Infof("%s: begin-3", moduleName)
 	timestamp := time.Now()
 	if exchange.CheckCallAuctionOpenFinished(timestamp) || exchange.CheckCallAuctionCloseFinished(timestamp) {
 		// 早盘和尾盘集合竞价结束后刷新缓存文件
@@ -196,6 +192,5 @@ func realtimeUpdateExchangeAndSnapshot() {
 			}
 		}
 	}
-	logger.Infof("%s: begin-4", moduleName)
 	logger.Infof("%s: end", moduleName)
 }

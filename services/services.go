@@ -27,7 +27,7 @@ const (
 	keyCronReset            = "global_reset"    // 全局重置
 	keyCronRealTimeKLine    = "realtime_kline"  // 实时更新K线
 	keyCronUpdateSnapshot   = "update_snapshot" // 更新快照
-	keyCronUpdateExchange   = "update_exchange" // 更新exchange
+	keyCronUpdateMisc       = "update_misc"     // 更新misc
 	keyCronUpdateAll        = "update_all"      // 更新全部数据, 包括基础数据和特征数据
 	keyCronCookieCutterSell = "sell_117"        // 一刀切卖出, one-size-fits-all
 	keyCronSyncQmtOrder     = "sync_orders"     // 同步订单
@@ -45,7 +45,7 @@ func init() {
 		logger.Fatal(err)
 	}
 	// 更新快照
-	err = Register(keyCronUpdateExchange, CronTickInterval, jobUpdateExchangeAndSnapshot)
+	err = Register(keyCronUpdateMisc, CronTickInterval, jobUpdateMiscAndSnapshot)
 	if err != nil {
 		logger.Fatal(err)
 	}

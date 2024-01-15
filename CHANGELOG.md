@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.2.6] - 2024-01-15
+### Changed
+- K线数据少于约定的120天会提示没有K线.
+- 移除并修复收盘判断当日的bug.
+- 删除废弃的日志输出.
+- 删除废弃的日志输出.
+
 ## [1.2.5] - 2024-01-15
 ### Changed
 - Mac笔记本misc实时更新存在文件名空的现象, 但是其它机器未发现, 增加一条文件名切换时的告警信息输出.
@@ -908,8 +915,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.2.5...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.2.6...HEAD
 
+[1.2.6]: https://gitee.com/quant1x/engine/compare/v1.2.5...v1.2.6
 [1.2.5]: https://gitee.com/quant1x/engine/compare/v1.2.4...v1.2.5
 [1.2.4]: https://gitee.com/quant1x/engine/compare/v1.2.3...v1.2.4
 [1.2.3]: https://gitee.com/quant1x/engine/compare/v1.2.2...v1.2.3

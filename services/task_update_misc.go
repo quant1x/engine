@@ -59,7 +59,6 @@ func realtimeUpdateMiscAndSnapshot() {
 		if api.StartsWith(securityCode, []string{"88"}) {
 			securityCode = "sh" + securityCode
 		}
-		//logger.Infof("%s: begin-1-2", moduleName)
 		v := models.GetTickFromMemory(securityCode)
 		if v == nil || v.Date != currentDate {
 			// 如果snapshot缓存无效, 或者日期不是当前日期, 跳过

@@ -92,7 +92,6 @@ func FetchListForFirstPurchase(date, qmtStrategyName string, direction trader.Di
 	pattern := prefix + "*" + orderStateFileExtension
 	files, err := filepath.Glob(pattern)
 	if err != nil || len(files) == 0 {
-		logger.Errorf("没有指定日期的个股买入列表, error=%+v", err)
 		return list
 	}
 	for _, filename := range files {

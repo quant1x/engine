@@ -19,7 +19,8 @@ func TestNewExchangeKLine(t *testing.T) {
 	code = "sz300377"
 	code = "sz000828"
 	code = "sz300904"
-	date := "2024-01-12"
+	code = "sh603038"
+	date := "2024-01-15"
 	ek := NewExchangeKLine(code, date)
 	data, _ := json.Marshal(ek)
 	text := api.Bytes2String(data)

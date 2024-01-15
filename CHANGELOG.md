@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.2.7] - 2024-01-15
+### Changed
+- 调整成交记录的取法, 先从缓存获取, 缓存没有再从服务器读取.
+
 ## [1.2.6] - 2024-01-15
 ### Changed
 - K线数据少于约定的120天会提示没有K线.
@@ -915,8 +919,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.2.6...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.2.7...HEAD
 
+[1.2.7]: https://gitee.com/quant1x/engine/compare/v1.2.6...v1.2.7
 [1.2.6]: https://gitee.com/quant1x/engine/compare/v1.2.5...v1.2.6
 [1.2.5]: https://gitee.com/quant1x/engine/compare/v1.2.4...v1.2.5
 [1.2.4]: https://gitee.com/quant1x/engine/compare/v1.2.3...v1.2.4

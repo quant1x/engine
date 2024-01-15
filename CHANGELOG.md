@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.2.5] - 2024-01-15
+### Changed
+- Mac笔记本misc实时更新存在文件名空的现象, 但是其它机器未发现, 增加一条文件名切换时的告警信息输出.
+- 调整tracker部分输出信息.
+- 调整misc实时更新的任务名称.
+- 删除不必要的日志.
+- 权限检测失败前, 不显示欢迎语.
+
 ## [1.2.4] - 2024-01-15
 ### Changed
 - 调整欢迎语的显示顺序.
@@ -900,8 +908,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.2.4...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.2.5...HEAD
 
+[1.2.5]: https://gitee.com/quant1x/engine/compare/v1.2.4...v1.2.5
 [1.2.4]: https://gitee.com/quant1x/engine/compare/v1.2.3...v1.2.4
 [1.2.3]: https://gitee.com/quant1x/engine/compare/v1.2.2...v1.2.3
 [1.2.2]: https://gitee.com/quant1x/engine/compare/v1.2.1...v1.2.2

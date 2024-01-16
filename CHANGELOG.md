@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.2.9] - 2024-01-16
+### Changed
+- 新增宽表的缓存机制.
+- 清楚过时的todo.
+- 更新gotdx版本.
+- 修订部分即将废弃的函数.
+
 ## [1.2.8] - 2024-01-15
 ### Changed
 - 调整命令字, 以支持服务名等关键信息, 可以从下游的项目名传递过来.
@@ -923,8 +930,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.2.8...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.2.9...HEAD
 
+[1.2.9]: https://gitee.com/quant1x/engine/compare/v1.2.8...v1.2.9
 [1.2.8]: https://gitee.com/quant1x/engine/compare/v1.2.7...v1.2.8
 [1.2.7]: https://gitee.com/quant1x/engine/compare/v1.2.6...v1.2.7
 [1.2.6]: https://gitee.com/quant1x/engine/compare/v1.2.5...v1.2.6

@@ -103,6 +103,9 @@ func (this *F10) Update(code, cacheDate, featureDate string, complete bool) {
 	// 2. 前十大流通股股东
 	shareHolder := checkoutShareHolder(securityCode, featureDate)
 	_ = api.Copy(this, shareHolder)
+	if this.FreeCapital == 0 {
+		this.FreeCapital = this.Capital
+	}
 	// 3. 上市公司公告
 	notice := getOneNotice(securityCode, featureDate)
 	_ = api.Copy(this, &notice)

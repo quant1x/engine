@@ -7,6 +7,7 @@ import (
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/gox/num"
 	"slices"
 )
 
@@ -179,7 +180,20 @@ func pullWideByDate(securityCode, date string) []SecurityFeature {
 			list = append(list, info)
 		}
 	}
-	// 6. 保存文件
+	// 6. 修正last_close和change_rate
+	lastClose := 0.000
+	for i := 0; i < len(list); i++ {
+		v := &list[i]
+		if i == 0 {
+			v.LastClose = v.Open
+		} else {
+			v.LastClose = lastClose
+		}
+		v.ChangeRate = num.NetChangeRate(v.LastClose, v.Close)
+		lastClose = v.Close
+	}
+
+	// 7. 保存文件
 	_ = api.SlicesToCsv(filename, list)
 	return list
 }

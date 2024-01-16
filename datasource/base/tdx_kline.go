@@ -9,8 +9,7 @@ import (
 )
 
 var (
-	klineMutex sync.RWMutex
-	// TODO: 隔日需要清空重新缓存
+	klineMutex         sync.RWMutex
 	routineLocalKLines = map[string][]KLine{}
 )
 

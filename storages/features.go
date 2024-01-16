@@ -85,6 +85,7 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 					feature = feature.FromHistory(*history)
 				}
 			}
+			sb.Name = feature.Name()
 			sb.Kind = feature.Kind()
 			wg.Add(1)
 			go updateStockFeature(wg, barCode, feature, code, cacheDate, featureDate, op, mapFeature, &sb)

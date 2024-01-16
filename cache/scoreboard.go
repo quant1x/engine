@@ -9,12 +9,18 @@ import (
 // ScoreBoard 记分牌
 type ScoreBoard struct {
 	m         sync.Mutex
+	Name      string        `name:"name"`       // 名称
 	Kind      Kind          `name:"kind"`       // 类型
 	Count     int           `name:"count"`      // 总数
 	Max       time.Duration `name:"max"`        // 最大值
 	Min       time.Duration `name:"min"`        // 最小值
 	CrossTime time.Duration `name:"cross_time"` // 总耗时
 	Speed     float64       `name:"speed"`      // 速度
+}
+
+func (this *ScoreBoard) From(adapter DataAdapter) {
+	this.Name = adapter.Name()
+	this.Kind = adapter.Kind()
 }
 
 func (this *ScoreBoard) Add(delta int, take time.Duration) {

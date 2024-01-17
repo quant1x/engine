@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.1] - 2024-01-17
+### Changed
+- 修复持仓存在上一个交易日卖出未成交的持仓bug, 修正的逻辑应该继续当作最后一个持股日卖出.
+- 调整测试代码.
+- 宽表的获取缓存文件, 暂时不做内存缓存.
+- 调整宽表部分信息.
+
 ## [1.3.0] - 2024-01-17
 ### Changed
 - 调整数据适配器部分结构名.
@@ -938,8 +945,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.3.0...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.3.1...HEAD
 
+[1.3.1]: https://gitee.com/quant1x/engine/compare/v1.3.0...v1.3.1
 [1.3.0]: https://gitee.com/quant1x/engine/compare/v1.2.9...v1.3.0
 [1.2.9]: https://gitee.com/quant1x/engine/compare/v1.2.8...v1.2.9
 [1.2.8]: https://gitee.com/quant1x/engine/compare/v1.2.7...v1.2.8

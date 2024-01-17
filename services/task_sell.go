@@ -50,7 +50,16 @@ func cookieCutterSell() {
 		return
 	}
 	// 5. 确定持股到期的个股列表
-	finalCodeList := CheckoutCanSellStockList(sellStrategyCode)
+	var holdings []string
+	for _, position := range positions {
+		if position.CanUseVolume < 1 {
+			continue
+		}
+		stockCode := position.StockCode
+		securityCode := exchange.CorrectSecurityCode(stockCode)
+		holdings = append(holdings, securityCode)
+	}
+	finalCodeList := CheckoutCanSellStockList(sellStrategyCode, holdings)
 	// 6. 遍历持仓
 	direction := trader.SELL
 	strategyName := sellRule.QmtStrategyName()

@@ -60,6 +60,17 @@ func Register(plugin DataAdapter) error {
 	return nil
 }
 
+// GetDataAdapter 获取数据适配器
+func GetDataAdapter(kind Kind) DataAdapter {
+	pluginMutex.Lock()
+	defer pluginMutex.Unlock()
+	adapter, ok := mapDataPlugins[kind]
+	if ok {
+		return adapter
+	}
+	return nil
+}
+
 // Plugins 按照类型标志位捡出数据插件
 func Plugins(mask ...Kind) (list []DataAdapter) {
 	pluginMutex.Lock()

@@ -28,10 +28,10 @@ func getCache1DFilepath(key, date string) string {
 	return filename
 }
 
-// CacheAdapter 缓存适配器
+// FeatureRotationAdapter 特征缓存日旋转适配器
 //
 //	一天一个特征组合缓存文件
-type CacheAdapter interface {
+type FeatureRotationAdapter interface {
 	// Name 名称
 	Name() string
 	// Checkout 加载指定日期的缓存
@@ -43,25 +43,25 @@ type CacheAdapter interface {
 }
 
 var (
-	__loadMutex sync.Mutex
-	__mapLoader = map[string]CacheAdapter{}
+	__mutexFeatureRotationAdapters sync.Mutex
+	__mapFeatureRotationAdapters   = map[string]FeatureRotationAdapter{}
 )
 
-func RegisterCacheLoader(key string, loader CacheAdapter) {
-	__loadMutex.Lock()
-	defer __loadMutex.Unlock()
-	__mapLoader[key] = loader
+func RegisterFeatureRotationAdapter(key string, adapter FeatureRotationAdapter) {
+	__mutexFeatureRotationAdapters.Lock()
+	defer __mutexFeatureRotationAdapters.Unlock()
+	__mapFeatureRotationAdapters[key] = adapter
 }
 
 // SwitchDate 统一切换数据的缓存日期
 func SwitchDate(date string) {
-	__loadMutex.Lock()
-	defer __loadMutex.Unlock()
-	for _, v := range __mapLoader {
+	__mutexFeatureRotationAdapters.Lock()
+	defer __mutexFeatureRotationAdapters.Unlock()
+	for _, v := range __mapFeatureRotationAdapters {
 		v.Checkout(date)
 	}
 }
 
-func Get(key string) CacheAdapter {
-	return __mapLoader[key]
+func Get(key string) FeatureRotationAdapter {
+	return __mapFeatureRotationAdapters[key]
 }

@@ -50,7 +50,7 @@ func NewCache1D[T Feature](key string, factory func(date, securityCode string) T
 	//d1.Checkout(d1.Date)
 	d1.filename = getCache1DFilepath(d1.cacheKey, d1.Date)
 	d1.tShadow = d1.factory(d1.Date, defaultSecurityCode)
-	RegisterCacheLoader(key, d1)
+	RegisterFeatureRotationAdapter(key, d1)
 	return d1
 }
 

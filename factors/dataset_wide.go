@@ -180,10 +180,11 @@ func pullWideByDate(securityCode, date string) []SecurityFeature {
 			list = append(list, info)
 		}
 	}
-	// 6. 修正last_close和change_rate
+	// 6. 最后再修订数据
 	lastClose := 0.000
 	for i := 0; i < len(list); i++ {
 		v := &list[i]
+		// 6.1 修正last_close和change_rate
 		if i == 0 {
 			v.LastClose = v.Open
 		} else {
@@ -191,6 +192,15 @@ func pullWideByDate(securityCode, date string) []SecurityFeature {
 		}
 		v.ChangeRate = num.NetChangeRate(v.LastClose, v.Close)
 		lastClose = v.Close
+		// 6.2 修正up和down
+		//// 指数类, up和down对应涨跌家数
+		//// 股票类, 对应内外盘
+		//if v.Up == 0 {
+		//	v.Up = int(v.OuterVolume)
+		//}
+		//if v.Down == 0 {
+		//	v.Down = int(v.InnerVolume)
+		//}
 	}
 
 	// 7. 保存文件

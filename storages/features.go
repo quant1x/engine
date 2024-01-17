@@ -42,10 +42,10 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 		moduleName = "更新" + moduleName
 	}
 	moduleName += cacheDate
-	var adapters []factors.CacheAdapter
+	var adapters []factors.FeatureRotationAdapter
 	maxWidth := 0
 	for _, plugin := range plugins {
-		adapter, ok := plugin.(factors.CacheAdapter)
+		adapter, ok := plugin.(factors.FeatureRotationAdapter)
 		if ok {
 			adapters = append(adapters, adapter)
 			width := runewidth.StringWidth(adapter.Name())
@@ -85,8 +85,7 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 					feature = feature.FromHistory(*history)
 				}
 			}
-			sb.Name = feature.Name()
-			sb.Kind = feature.Kind()
+			sb.From(cache.GetDataAdapter(feature.Kind()))
 			wg.Add(1)
 			go updateStockFeature(wg, barCode, feature, code, cacheDate, featureDate, op, mapFeature, &sb)
 		}
@@ -102,6 +101,7 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 		logger.Infof("%s: %s, end", moduleName, adapter.Name())
 	}
 	wgAdapter.Wait()
+	barAdapter.Wait()
 	logger.Infof("%s: all, end", moduleName)
 	// 输出衡量性能的指标列表
 	fmt.Println()

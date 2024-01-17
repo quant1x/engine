@@ -55,7 +55,7 @@ func Test_pullWideByDate(t *testing.T) {
 }
 
 func TestWideTableValuate(t *testing.T) {
-	code := "881432"
+	code := "002615"
 	date := "20240116"
 	lines := CheckoutWideKLines(code, date)
 	df := pandas.LoadStructs(lines)

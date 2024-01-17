@@ -8,8 +8,8 @@ import (
 )
 
 var (
-	wideKLinesMutex        sync.RWMutex
-	routineLocalWideKLines = map[string][]SecurityFeature{}
+	wideTableMutex        sync.RWMutex
+	routineLocalWideTable = map[string][]SecurityFeature{}
 )
 
 // loadWideKLines 加载基础K线
@@ -44,9 +44,9 @@ func updateCacheWideKLines(securityCode string, lines []SecurityFeature) {
 	if len(lines) == 0 {
 		return
 	}
-	wideKLinesMutex.Lock()
-	defer wideKLinesMutex.Unlock()
-	routineLocalWideKLines[securityCode] = lines
+	wideTableMutex.Lock()
+	defer wideTableMutex.Unlock()
+	routineLocalWideTable[securityCode] = lines
 
 }
 
@@ -55,9 +55,9 @@ func CheckoutWideKLines(code, date string) []SecurityFeature {
 	securityCode := exchange.CorrectSecurityCode(code)
 	date = exchange.FixTradeDate(date)
 	// 1. 取缓存的K线
-	wideKLinesMutex.RLock()
-	cacheKLines, ok := routineLocalWideKLines[securityCode]
-	wideKLinesMutex.RUnlock()
+	wideTableMutex.RLock()
+	cacheKLines, ok := routineLocalWideTable[securityCode]
+	wideTableMutex.RUnlock()
 	if !ok {
 		cacheKLines = loadWideKLines(securityCode)
 		updateCacheWideKLines(securityCode, cacheKLines)

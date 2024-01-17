@@ -35,7 +35,7 @@ func TestTradePlaceOrder(t *testing.T) {
 	price := 13.68
 	volume := 100
 
-	orderId, err := PlaceOrder(direction, model, securityCode, price, volume)
+	orderId, err := PlaceOrder(direction, model, securityCode, FIX_PRICE, price, volume)
 	fmt.Println(orderId, err)
 }
 

@@ -8,7 +8,7 @@ import (
 
 func TestCalculateAvailableFund(t *testing.T) {
 	id := 2
-	tradeRule := config.GetStrategyParameterByCode(id)
+	tradeRule := config.GetStrategyParameterByCode(uint64(id))
 	if tradeRule == nil {
 		return
 	}

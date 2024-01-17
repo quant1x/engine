@@ -117,7 +117,7 @@ func stockPoolMerge(model models.Strategy, date string, orders []models.Statisti
 		local.Status.Set(StrategyCancel, true)
 		local.UpdateTime = updateTime
 	}
-	newList := []StockPool{}
+	var newList []StockPool
 	for _, v := range cacheStatistics {
 		if v.Status == StrategyAlreadyExists {
 			continue

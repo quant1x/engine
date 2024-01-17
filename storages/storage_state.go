@@ -8,7 +8,6 @@ import (
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
-	"os"
 	"path"
 	"path/filepath"
 	"strings"
@@ -19,29 +18,23 @@ const (
 	orderStateFileExtension = ".done"
 )
 
-// Touch 创建一个空文件
-func Touch(filename string) error {
-	_ = api.CheckFilepath(filename, true)
-	return os.WriteFile(filename, nil, 0644)
-}
-
 // 获取状态机路径
-func state_filepath(state_date string) string {
-	flagPath := filepath.Join(cache.GetQmtCachePath(), "var", state_date)
+func state_filepath(stateDate string) string {
+	flagPath := filepath.Join(cache.GetQmtCachePath(), "var", stateDate)
 	return flagPath
 }
 
 // 获取状态文件前缀
-func state_prefix(state_date, qmtStrategyName string, direction trader.Direction) string {
+func state_prefix(stateDate, qmtStrategyName string, direction trader.Direction) string {
 	qmtStrategyName = strings.ToLower(qmtStrategyName)
-	prefix := fmt.Sprintf("%s-%s-%s-%s", state_date, traderConfig.AccountId, qmtStrategyName, direction.Flag())
+	prefix := fmt.Sprintf("%s-%s-%s-%s", stateDate, traderConfig.AccountId, qmtStrategyName, direction.Flag())
 	return prefix
 }
 
 // 订单状态文件前缀
-func order_state_prefix(state_date string, model models.Strategy, direction trader.Direction) string {
+func order_state_prefix(stateDate string, model models.Strategy, direction trader.Direction) string {
 	qmtStrategyName := models.QmtStrategyName(model)
-	prefix := state_prefix(state_date, qmtStrategyName, direction)
+	prefix := state_prefix(stateDate, qmtStrategyName, direction)
 	return prefix
 }
 
@@ -65,7 +58,7 @@ func CheckOrderState(date string, model models.Strategy, code string, direction 
 // PushOrderState 推送订单完成状态
 func PushOrderState(date string, model models.Strategy, code string, direction trader.Direction) error {
 	filename := order_state_filename(date, model, code, direction)
-	return Touch(filename)
+	return api.Touch(filename)
 }
 
 // CountStrategyOrders 统计策略订单数

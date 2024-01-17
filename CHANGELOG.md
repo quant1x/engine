@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.0] - 2024-01-17
+### Changed
+- 调整数据适配器部分结构名.
+- 更新gox版本号, 进度条增加等待结束信号.
+- 调整记分牌结构, 增加名称.
+- 更新时如果自由流通股本为0, 则用流通股本覆盖.
+- 修复宽表重做丢失昨日收盘和涨跌幅的bug.
+
 ## [1.2.9] - 2024-01-16
 ### Changed
 - 新增宽表的缓存机制.
@@ -930,8 +938,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.2.9...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.3.0...HEAD
 
+[1.3.0]: https://gitee.com/quant1x/engine/compare/v1.2.9...v1.3.0
 [1.2.9]: https://gitee.com/quant1x/engine/compare/v1.2.8...v1.2.9
 [1.2.8]: https://gitee.com/quant1x/engine/compare/v1.2.7...v1.2.8
 [1.2.7]: https://gitee.com/quant1x/engine/compare/v1.2.6...v1.2.7

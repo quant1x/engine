@@ -37,20 +37,6 @@ var (
 	traderQmtOrderPath = filepath.Join(cache.GetQmtCachePath(), traderParameter.AccountId)
 )
 
-// 获得订单文件名
-//
-//	qmt/账户id/orders.yyyy-mm-dd
-func GetOrderFilename(date ...string) string {
-	var tradeDate string
-	if len(date) > 0 {
-		tradeDate = exchange.FixTradeDate(date[0])
-	} else {
-		tradeDate = exchange.LastTradeDate()
-	}
-	filename := filepath.Join(traderQmtOrderPath, "orders."+tradeDate)
-	return filename
-}
-
 // Direction 交易方向
 type Direction string
 

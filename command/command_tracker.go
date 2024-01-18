@@ -55,7 +55,7 @@ func initTracker() {
 			}
 			if len(strategyCodes) == 0 {
 				fmt.Println("没有有效的策略编号, 实时扫描结束")
-				logger.Errorf("没有有效的策略编号, 实时扫描结束")
+				logger.Info("没有有效的策略编号, 实时扫描结束")
 				return
 			}
 			tracker.Tracker(strategyCodes...)

@@ -10,11 +10,15 @@ import (
 	"time"
 )
 
+const (
+	// 状态文件时间格式
+	timeLayoutOfState = "150405"
+)
+
 func stateFilename(date, timestamp string) string {
 	date = exchange.FixTradeDate(date)
 	t, _ := time.ParseInLocation(exchange.CN_SERVERTIME_FORMAT, timestamp, time.Local)
-	//timestamp = t.Format(trading.CN_SERVERTIME_SHORT_FORMAT)
-	timestamp = t.Format("150405")
+	timestamp = t.Format(timeLayoutOfState)
 	tm := date + "T" + timestamp
 	filename := fmt.Sprintf("%s/update.%s", cache.GetVariablePath(), tm)
 	return filename
@@ -39,7 +43,8 @@ func doneUpdate(date, timestamp string) {
 // 清理过期的状态文件
 func cleanExpiredStateFiles() error {
 	statePath := cache.GetVariablePath()
-	filePaths, err := filepath.Glob(statePath + "/update.*")
+	pattern := filepath.Join(statePath, "update.*")
+	filePaths, err := filepath.Glob(pattern)
 	if err != nil {
 		return err
 	}

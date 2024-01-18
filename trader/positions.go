@@ -117,14 +117,9 @@ func (p *Position) MergeFromOrder(order OrderDetail) bool {
 }
 
 var (
-	accountType = SECURITY_ACCOUNT // 账户类型
-	accountId   = "888xxxxxxx"     // 账户ID
-)
-
-var (
-	periodicOnce coroutine.PeriodicOnce
-	rwMutex      sync.RWMutex
-	mapPositions = concurrent.NewTreeMap[string, *Position]()
+	periodicOnce   coroutine.PeriodicOnce
+	mutexPositions sync.RWMutex
+	mapPositions   = concurrent.NewTreeMap[string, *Position]()
 )
 
 // 持仓缓存路径

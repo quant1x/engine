@@ -74,6 +74,17 @@ func lazyLoadHoldingOrder() {
 	// 清空缓存
 	clear(holdingOrders)
 	// 2. 用持仓列表遍历历史订单缓存文件, 补全持仓订单
+	dates := GetLocalOrderDates()
+	if len(dates) == 0 {
+		return
+	}
+	// 3. 重新评估持仓范围, 有可能存在日期没有成交的可能
+	firstDate := dates[0]
+	lastTradeDate := exchange.LastTradeDate()
+	dates = exchange.TradingDateRange(firstDate, lastTradeDate)
+	// 反转日期切片
+	slices.Reverse(dates)
+	// 4. 用持仓列表遍历历史订单缓存文件, 补全持仓订单
 	for _, position := range positions {
 		var holding HoldingPosition
 		_ = api.Copy(&holding, &position)
@@ -81,16 +92,15 @@ func lazyLoadHoldingOrder() {
 		volume := position.Volume
 		// 矫正证券代码
 		securityCode := exchange.CorrectSecurityCode(position.StockCode)
-		lastTradeDate := exchange.LastTradeDate()
-		dates := exchange.TradingDateRange(exchange.MARKET_CH_FIRST_LISTTIME, lastTradeDate)
-		// 反转日期切片
-		slices.Reverse(dates)
 		// 历史记录合计买数量
 		tmpTradedVolume := 0
 		// 最早的持股日期
 		earlierDate := lastTradeDate
 		// 持股周期
 		holdingPeriod := 0
+		//if code == "001216.SZ" {
+		//	fmt.Println(code)
+		//}
 		// 从当前日期往前回溯订单
 		for _, date := range dates {
 			isLastTradeDate := date == lastTradeDate
@@ -101,8 +111,8 @@ func lazyLoadHoldingOrder() {
 				orders, _ = QueryOrders()
 			}
 			if len(orders) == 0 {
-				// 如果订单列表为空, 中断循环
-				break
+				// 如果订单列表为空, 跳过
+				continue
 			}
 			orders = api.Filter(orders, func(detail OrderDetail) bool {
 				return detail.StockCode == code
@@ -138,12 +148,12 @@ func lazyLoadHoldingOrder() {
 			logger.Errorf("[%s]: 加载(%s)持仓记录异常, 历史委托记录合并持仓量不一致", methodName, securityCode)
 		}
 		// 计算持股周期
-		dates = exchange.TradingDateRange(earlierDate, lastTradeDate)
-		holdingPeriod = len(dates) - 1
+		dateRanges := exchange.TradingDateRange(earlierDate, lastTradeDate)
+		holdingPeriod = len(dateRanges) - 1
 		holding.HoldingPeriod = holdingPeriod
 		holdingOrders = append(holdingOrders, holding)
 	}
-	// 3. 对于非策略订单的处理
+	// 5. 对于非策略订单的处理
 }
 
 // GetHoldingPeriodList 获取持仓周期列表

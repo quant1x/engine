@@ -45,7 +45,7 @@ func Test_strategyOrderIsFinished(t *testing.T) {
 }
 
 func Test_checkOrderForBuy(t *testing.T) {
-	list := GetStockPool()
+	list := getStockPoolFromCache()
 	model := TestModel{}
 	date := exchange.LastTradeDate()
 	v := checkOrderForBuy(list, model, date)

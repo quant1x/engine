@@ -102,7 +102,7 @@ func GetStockCodeList() []string {
 func GetCodeList() []string {
 	allCodes := make([]string, 0)
 	// 添加指数代码
-	allCodes = append(allCodes, securities.IndexList()...)
+	allCodes = append(allCodes, exchange.IndexList()...)
 
 	// 板块信息
 	blocks := securities.BlockList()

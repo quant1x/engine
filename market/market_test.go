@@ -2,7 +2,7 @@ package market
 
 import (
 	"fmt"
-	"gitee.com/quant1x/gotdx/proto"
+	"gitee.com/quant1x/exchange"
 	"strings"
 	"testing"
 )
@@ -27,7 +27,7 @@ func TestGetQmtCodeList(t *testing.T) {
 	codes = codes[0:batchMax]
 	var list []string
 	for _, v := range codes {
-		_, mflag, symbol := proto.DetectMarket(v)
+		_, mflag, symbol := exchange.DetectMarket(v)
 		securityCode := fmt.Sprintf("%s.%s", symbol, strings.ToUpper(mflag))
 		list = append(list, securityCode)
 	}

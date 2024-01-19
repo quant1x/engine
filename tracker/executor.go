@@ -2,6 +2,7 @@ package tracker
 
 import (
 	"fmt"
+	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/permissions"
@@ -46,6 +47,11 @@ func ExecuteStrategy(model models.Strategy, barIndex *int) {
 	err := permissions.CheckPermission(model)
 	if err != nil {
 		logger.Error(err)
+		return
+	}
+	tradeRule := config.GetStrategyParameterByCode(model.Code())
+	if tradeRule == nil {
+		fmt.Printf("strategy[%d]: trade rule not found\n", model.Code())
 		return
 	}
 	// 加载快照数据

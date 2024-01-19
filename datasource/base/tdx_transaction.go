@@ -56,10 +56,7 @@ func GetHistoricalTradingData(securityCode, tradeDate string) []quotes.TickTrans
 	start := uint16(0)
 	history := make([]quotes.TickTransaction, 0)
 	hs := make([]quotes.TransactionReply, 0)
-	u32Date, err := toTdxProtocolDate(tradeDate)
-	if err != nil {
-		return history
-	}
+	u32Date := exchange.ToUint32Date(tradeDate)
 	for {
 		var data *quotes.TransactionReply
 		var err error
@@ -160,10 +157,6 @@ func CheckoutTransactionData(securityCode string, date string, ignorePreviousDat
 	securityCode = exchange.CorrectSecurityCode(securityCode)
 	// 对齐日期格式: YYYYMMDD
 	tradeDate := exchange.FixTradeDate(date, cache.TDX_FORMAT_PROTOCOL_DATE)
-	u32Date, err := toTdxProtocolDate(tradeDate)
-	if err != nil {
-		return
-	}
 	if ignorePreviousData {
 		// 在默认日期之前的数据直接返回空
 		startDate := exchange.FixTradeDate(__historicalTradingDataBeginDate, cache.TDX_FORMAT_PROTOCOL_DATE)
@@ -210,6 +203,7 @@ func CheckoutTransactionData(securityCode string, date string, ignorePreviousDat
 
 	tdxApi := gotdx.GetTdxApi()
 	offset := uint16(quotes.TDX_TRANSACTION_MAX)
+	u32Date := exchange.ToUint32Date(tradeDate)
 	// 只求增量, 分笔成交数据是从后往前取数据, 缓存是从前到后顺序存取
 	start := uint16(0)
 	history := make([]quotes.TickTransaction, 0)

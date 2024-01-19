@@ -59,8 +59,89 @@ func GetStrategySnapshot(securityCode string) *factors.QuoteSnapshot {
 	return &snapshot
 }
 
-// SyncAllSnapshots 同步快照数据
 func SyncAllSnapshots(barIndex *int) {
+
+	modName := "同步快照数据"
+	allCodes := securities.AllCodeList()
+	count := len(allCodes)
+	var bar *progressbar.Bar = nil
+	if barIndex != nil {
+		bar = progressbar.NewBar(*barIndex, "执行["+modName+"]", count)
+	}
+	currentDate := exchange.GetCurrentlyDay()
+	tdxApi := gotdx.GetTdxApi()
+	parallelCount := tdxApi.NumOfServers()
+	//parallelCount := 2
+	var snapshots []quotes.Snapshot
+	var wg sync.WaitGroup
+	var mutex sync.Mutex
+	codeCh := make(chan []string, parallelCount)
+
+	// 启动goroutine来处理快照获取
+	for i := 0; i < parallelCount; i++ {
+		go func() {
+			for subCodes := range codeCh {
+				for i := 0; i < quotes.DefaultRetryTimes; i++ {
+					list, err := tdxApi.GetSnapshot(subCodes)
+					if err != nil {
+						logger.Errorf("ZS: 网络异常: %+v, 重试: %d", err, i+1)
+						continue
+					}
+
+					mutex.Lock()
+					for _, v := range list {
+						// 修订日期
+						v.Date = currentDate
+						snapshots = append(snapshots, v)
+					}
+					mutex.Unlock()
+
+					break
+				}
+			}
+
+			wg.Done()
+		}()
+	}
+
+	for start := 0; start < count; start += quotes.TDX_SECURITY_QUOTES_MAX {
+		length := count - start
+		if length >= quotes.TDX_SECURITY_QUOTES_MAX {
+			length = quotes.TDX_SECURITY_QUOTES_MAX
+		}
+		var subCodes []string
+		for i := 0; i < length; i++ {
+			securityCode := allCodes[start+i]
+			subCodes = append(subCodes, securityCode)
+			if barIndex != nil {
+				bar.Add(1)
+			}
+		}
+		if len(subCodes) == 0 {
+			continue
+		}
+
+		codeCh <- subCodes
+	}
+
+	close(codeCh)
+
+	wg.Add(parallelCount)
+	wg.Wait()
+
+	mutex.Lock()
+	for _, v := range snapshots {
+		__cacheTicks[v.SecurityCode] = v
+	}
+	mutex.Unlock()
+
+	if barIndex != nil {
+		*barIndex++
+	}
+}
+
+// SyncAllSnapshots 同步快照数据
+func SyncAllSnapshotsSingle(barIndex *int) {
 	modName := "同步快照数据"
 	allCodes := securities.AllCodeList()
 	count := len(allCodes)

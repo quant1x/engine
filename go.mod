@@ -3,8 +3,8 @@ module gitee.com/quant1x/engine
 go 1.21.5
 
 require (
-	gitee.com/quant1x/exchange v0.2.3
-	gitee.com/quant1x/gotdx v1.19.3
+	gitee.com/quant1x/exchange v0.2.5
+	gitee.com/quant1x/gotdx v1.19.5
 	gitee.com/quant1x/gox v1.17.9
 	gitee.com/quant1x/pandas v1.2.8
 	gitee.com/quant1x/pkg v0.2.6
@@ -15,6 +15,11 @@ require (
 	github.com/syndtr/goleveldb v1.0.0
 	golang.org/x/exp v0.0.0-20240112132812-db7319d0e0e3
 	golang.org/x/sys v0.16.0
+)
+
+replace (
+	gitee.com/quant1x/exchange v0.2.5 => ../exchange
+	gitee.com/quant1x/gotdx v1.19.5 => ../gotdx
 )
 
 require (

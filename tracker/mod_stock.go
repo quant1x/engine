@@ -59,15 +59,21 @@ func AllScan(barIndex *int, model models.Strategy) {
 	}
 	var stockCodes []string
 	needFilter := false
+	// 检查板块扫描的结果是否存在股票列表
 	if len(__allStocks) > 0 {
+		// 确定前排板块中的前排个股
 		__allStocks = api.Unique(__allStocks)
 		stockCodes = __allStocks
 		needFilter = true
 	} else {
+		// 板块扫描结果没有输出个股列表
+		// 查看规则配置
 		if tradeRule == nil {
+			// 如果规则没有配置, 则取全部有效的代码列表
 			stockCodes = market.GetStockCodeList()
 			needFilter = true
 		} else {
+			// 如果规则配置有效, 股票代码列表从规则中获取
 			stockCodes = tradeRule.StockList()
 		}
 	}

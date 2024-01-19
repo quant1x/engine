@@ -8,7 +8,6 @@ import (
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/runtime"
 	"golang.org/x/exp/maps"
@@ -49,7 +48,7 @@ func resetSnapshotCache() {
 func realtimeUpdateMiscAndSnapshot() {
 	resetSnapshotCache()
 	moduleName := "执行[同步exchange]"
-	logger.Infof("%s: begin", moduleName)
+	//logger.Infof("%s: begin", moduleName)
 	allCodes := market.GetCodeList()
 	count := len(allCodes)
 	currentDate := cache.DefaultCanReadDate()
@@ -190,5 +189,5 @@ func realtimeUpdateMiscAndSnapshot() {
 			}
 		}
 	}
-	logger.Infof("%s: end", moduleName)
+	//logger.Infof("%s: end", moduleName)
 }

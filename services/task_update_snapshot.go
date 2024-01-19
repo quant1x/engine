@@ -3,6 +3,7 @@ package services
 import (
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/runtime"
 )
 
@@ -26,5 +27,7 @@ func jobUpdateSnapshot() {
 // 更新快照
 func realtimeUpdateSnapshot() {
 	defer runtime.IgnorePanic()
+	logger.Infof("同步snapshot...")
 	models.SyncAllSnapshots(nil)
+	logger.Infof("同步snapshot...OK")
 }

@@ -71,6 +71,10 @@ func SyncAllSnapshots(barIndex *int) {
 	currentDate := exchange.GetCurrentlyDay()
 	tdxApi := gotdx.GetTdxApi()
 	parallelCount := tdxApi.NumOfServers()
+	parallelCount /= 2
+	if parallelCount < 2 {
+		parallelCount = 2
+	}
 	var snapshots []quotes.Snapshot
 	var wg sync.WaitGroup
 	var mutex sync.Mutex

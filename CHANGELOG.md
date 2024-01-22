@@ -4,6 +4,31 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.2] - 2024-01-22
+### Changed
+- 控制台输出统计表格, 去掉涨速和力度两个字段.
+- 补充公开函数的注释.
+- 更新依赖库版本.
+- !2 snapshot多线程 * 多线程更新snapshot.
+- 收敛日期字符串到uint32类型转换的函数到exchange.
+- 适配exchange.
+- 简化实时更新任务的日志.
+- 增加策略执行时个股列表的三个来源的描述.
+- 执行策略之前判断是否配置了交易规则.
+- 更新gotdx版本号.
+- 调整记分牌String方法.
+- 修订tracker有效策略为空时, 应该输出info类型日志.
+- 更新依赖库版本.
+- 优化订单日期的列表, 从本地缓存的订单文件列表获取.
+- 优化本地订单文件的日期列表函数.
+- 优化每日全部更新的完成状态文件的处理方法.
+- 重做持仓周期列表.
+- 优化持仓部分代码.
+- 简化更新股票池功能, 取消单一策略的选股列表的落盘, 统一归到股票池.
+- 调整股票池结构.
+- 拆分每日订单缓存处理方法.
+- 优化部分缓存代码.
+
 ## [1.3.1] - 2024-01-17
 ### Changed
 - 修复持仓存在上一个交易日卖出未成交的持仓bug, 修正的逻辑应该继续当作最后一个持股日卖出.
@@ -945,8 +970,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.3.1...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.3.2...HEAD
 
+[1.3.2]: https://gitee.com/quant1x/engine/compare/v1.3.1...v1.3.2
 [1.3.1]: https://gitee.com/quant1x/engine/compare/v1.3.0...v1.3.1
 [1.3.0]: https://gitee.com/quant1x/engine/compare/v1.2.9...v1.3.0
 [1.2.9]: https://gitee.com/quant1x/engine/compare/v1.2.8...v1.2.9

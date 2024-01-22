@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.4] - 2024-01-22
+### Changed
+- 修订实时更新快照的队列长度不超过服务器数量的一半.
+
 ## [1.3.3] - 2024-01-22
 ### Changed
 - 更新依赖库版本.
@@ -974,8 +978,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.3.3...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.3.4...HEAD
 
+[1.3.4]: https://gitee.com/quant1x/engine/compare/v1.3.3...v1.3.4
 [1.3.3]: https://gitee.com/quant1x/engine/compare/v1.3.2...v1.3.3
 [1.3.2]: https://gitee.com/quant1x/engine/compare/v1.3.1...v1.3.2
 [1.3.1]: https://gitee.com/quant1x/engine/compare/v1.3.0...v1.3.1

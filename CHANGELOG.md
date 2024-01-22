@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.6] - 2024-01-22
+### Changed
+- 更新依赖库exchange,gotdx版本号.
+
 ## [1.3.5] - 2024-01-22
 ### Changed
 - 新增windows下python的编译脚本.
@@ -989,8 +993,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.3.5...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.3.6...HEAD
 
+[1.3.6]: https://gitee.com/quant1x/engine/compare/v1.3.5...v1.3.6
 [1.3.5]: https://gitee.com/quant1x/engine/compare/v1.3.4...v1.3.5
 [1.3.4]: https://gitee.com/quant1x/engine/compare/v1.3.3...v1.3.4
 [1.3.3]: https://gitee.com/quant1x/engine/compare/v1.3.2...v1.3.3

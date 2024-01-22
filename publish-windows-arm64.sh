@@ -7,7 +7,7 @@ cd $p1
 
 source ./publish-compile.sh
 
-# windows amd64
+# windows arm64
 GOOS=windows
 GOARCH=arm64
 app=stock

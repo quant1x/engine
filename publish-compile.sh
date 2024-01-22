@@ -2,7 +2,7 @@
 # 获取当前路径, 用于返回
 #p0=`pwd`
 # 获取脚本所在路径, 防止后续操作在非项目路径
-#p1=$(cd $(dirname $0);pwd)
+p2=$(cd $(dirname $0);pwd)
 
 #COLOR_NORMAL="\033[0m"
 #COLOR_GREEN="\033[1;32m"
@@ -38,7 +38,7 @@ echo " author: ${author}"
 
 function compile() {
     echo "----------------< compile >----------------"
-    BIN=./bin
+    BIN=$p2/bin
     app=$1
     EXT=$2
     echo "   GOOS: ${GOOS}"
@@ -47,8 +47,3 @@ function compile() {
     env GOOS=$GOOS GOARCH=$GOARCH go build -ldflags "-s -w -X 'main.MinVersion=${version}'" -o ${BIN}/${app}${EXT} ${module}
     echo "正在编译应用:${app} => ${BIN}/${app}${EXT}...OK"
 }
-
-#compile "stock" ""
-
-# 返回当前路径
-#cd $p0

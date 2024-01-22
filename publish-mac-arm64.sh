@@ -7,9 +7,9 @@ cd $p1
 
 source ./publish-compile.sh
 
-# darwin amd64
+# darwin arm64
 GOOS=darwin
-GOARCH=amd64
+GOARCH=arm64
 app=stock
 ext=
 

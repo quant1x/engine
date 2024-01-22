@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.5] - 2024-01-22
+### Changed
+- 新增windows下python的编译脚本.
+- 新增windows下ps1编译脚本.
+- 新增linux amd64编译脚本.
+- 调整windows arm64编译脚本.
+- 调整mac arm64编译脚本.
+- 新增windows操作系统arm64编译脚本.
+- 新增mac操作系统arm64编译脚本.
+- 调整编译脚本允许项目目录外执行脚本.
+
 ## [1.3.4] - 2024-01-22
 ### Changed
 - 修订实时更新快照的队列长度不超过服务器数量的一半.
@@ -978,8 +989,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.3.4...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.3.5...HEAD
 
+[1.3.5]: https://gitee.com/quant1x/engine/compare/v1.3.4...v1.3.5
 [1.3.4]: https://gitee.com/quant1x/engine/compare/v1.3.3...v1.3.4
 [1.3.3]: https://gitee.com/quant1x/engine/compare/v1.3.2...v1.3.3
 [1.3.2]: https://gitee.com/quant1x/engine/compare/v1.3.1...v1.3.2

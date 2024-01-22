@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.3] - 2024-01-22
+### Changed
+- 更新依赖库版本.
+
 ## [1.3.2] - 2024-01-22
 ### Changed
 - 控制台输出统计表格, 去掉涨速和力度两个字段.
@@ -970,8 +974,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.3.2...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.3.3...HEAD
 
+[1.3.3]: https://gitee.com/quant1x/engine/compare/v1.3.2...v1.3.3
 [1.3.2]: https://gitee.com/quant1x/engine/compare/v1.3.1...v1.3.2
 [1.3.1]: https://gitee.com/quant1x/engine/compare/v1.3.0...v1.3.1
 [1.3.0]: https://gitee.com/quant1x/engine/compare/v1.2.9...v1.3.0

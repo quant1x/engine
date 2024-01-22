@@ -59,8 +59,8 @@ func GetStrategySnapshot(securityCode string) *factors.QuoteSnapshot {
 	return &snapshot
 }
 
+// SyncAllSnapshots 实时更新快照
 func SyncAllSnapshots(barIndex *int) {
-
 	modName := "同步快照数据"
 	allCodes := securities.AllCodeList()
 	count := len(allCodes)
@@ -71,7 +71,6 @@ func SyncAllSnapshots(barIndex *int) {
 	currentDate := exchange.GetCurrentlyDay()
 	tdxApi := gotdx.GetTdxApi()
 	parallelCount := tdxApi.NumOfServers()
-	//parallelCount := 2
 	var snapshots []quotes.Snapshot
 	var wg sync.WaitGroup
 	var mutex sync.Mutex
@@ -141,7 +140,7 @@ func SyncAllSnapshots(barIndex *int) {
 }
 
 // SyncAllSnapshots 同步快照数据
-func SyncAllSnapshotsSingle(barIndex *int) {
+func v1SyncAllSnapshots(barIndex *int) {
 	modName := "同步快照数据"
 	allCodes := securities.AllCodeList()
 	count := len(allCodes)

@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.7] - 2024-01-23
+### Changed
+- 更新依赖库gotdx版本, 强化panic之前记录日志.
+- 更新依赖库gotdx版本.
+- 删除废弃的代码.
+- 调整进度条归属源文件到command_update.
+- 调整进度条bar的index.
+- 拆分出进度条bar的index.
+
 ## [1.3.6] - 2024-01-22
 ### Changed
 - 更新依赖库exchange,gotdx版本号.
@@ -993,8 +1002,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.3.6...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.3.7...HEAD
 
+[1.3.7]: https://gitee.com/quant1x/engine/compare/v1.3.6...v1.3.7
 [1.3.6]: https://gitee.com/quant1x/engine/compare/v1.3.5...v1.3.6
 [1.3.5]: https://gitee.com/quant1x/engine/compare/v1.3.4...v1.3.5
 [1.3.4]: https://gitee.com/quant1x/engine/compare/v1.3.3...v1.3.4

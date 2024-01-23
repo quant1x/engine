@@ -15,6 +15,7 @@ const (
 var (
 	// CmdUpdate 更新数据
 	CmdUpdate *cmder.Command = nil
+	barIndex                 = 1
 )
 
 func initUpdate() {

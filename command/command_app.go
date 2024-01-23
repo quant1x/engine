@@ -4,8 +4,7 @@ import "gitee.com/quant1x/gox/runtime"
 
 var (
 	Application = "stock"
-	MinVersion  = "0.0.1" // 版本号
-	barIndex    = 1
+	MinVersion  = "0.0.1" // 主程序版本号
 )
 
 func init() {

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.8] - 2024-01-23
+### Changed
+- 更新gox库, 屏蔽cache.FastCache代码.
+
 ## [1.3.7] - 2024-01-23
 ### Changed
 - 更新依赖库gotdx版本, 强化panic之前记录日志.
@@ -1002,8 +1006,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.3.7...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.3.8...HEAD
 
+[1.3.8]: https://gitee.com/quant1x/engine/compare/v1.3.7...v1.3.8
 [1.3.7]: https://gitee.com/quant1x/engine/compare/v1.3.6...v1.3.7
 [1.3.6]: https://gitee.com/quant1x/engine/compare/v1.3.5...v1.3.6
 [1.3.5]: https://gitee.com/quant1x/engine/compare/v1.3.4...v1.3.5

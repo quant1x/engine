@@ -13,7 +13,6 @@ func jobGlobalReset() {
 	logger.Info("清理过期的更新状态文件...")
 	_ = cleanExpiredStateFiles()
 	logger.Info("清理过期的更新状态文件...OK")
-	//quotes.BestIP()
 	gotdx.ReOpen()
 	logger.Info("重置系统缓存...")
 	factors.SwitchDate(cache.DefaultCanReadDate())

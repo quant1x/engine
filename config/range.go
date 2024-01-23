@@ -2,6 +2,7 @@ package config
 
 import (
 	"gitee.com/quant1x/gox/exception"
+	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/pandas/stat"
 	"regexp"
 	"strings"
@@ -33,7 +34,7 @@ func ParseRange[T ValueType](text string) ValueRange[T] {
 	text = strings.TrimSpace(text)
 	arr := valueRangeRegexp.Split(text, -1)
 	if len(arr) != 2 {
-		panic(ErrTimeFormat)
+		logger.Fatalf("text=%s, %+v", text, ErrTimeFormat)
 	}
 	var begin, end T
 	begin = stat.GenericParse[T](strings.TrimSpace(arr[0]))

@@ -6,13 +6,14 @@ import (
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/exception"
+	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/num"
 )
 
 func init() {
 	err := RegisterFunc(KRuleF10, "基本面", ruleF10)
 	if err != nil {
-		panic(err)
+		logger.Fatalf("%+v", err)
 	}
 }
 

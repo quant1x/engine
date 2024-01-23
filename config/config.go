@@ -64,7 +64,7 @@ func LoadConfig() (config Quant1XConfig, found bool) {
 		}
 		err = parseYamlConfig(filename, &config)
 		if err != nil {
-			panic(err)
+			logger.Fatalf("%+v", err)
 		}
 		found = true
 		break
@@ -84,7 +84,7 @@ func ReadConfig(rootPath string) (config Quant1XConfig) {
 	}
 	err := parseYamlConfig(target, &config)
 	if err != nil {
-		panic(err)
+		logger.Fatalf("%+v", err)
 	}
 	return
 }

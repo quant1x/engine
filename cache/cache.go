@@ -41,7 +41,7 @@ func initCache() {
 		if err == nil {
 			baseDir = __path
 		} else {
-			panic(err)
+			logger.Fatalf("%+v", err)
 		}
 	} else {
 		baseDir = cacheRootPath
@@ -49,33 +49,33 @@ func initCache() {
 	// 校验配置文件的路径
 	__path, err := homedir.Expand(baseDir)
 	if err != nil {
-		panic(err)
+		logger.Fatalf("%+v", err)
 	}
 	cacheRootPath = __path
 	// 创建根路径
 	if err := os.MkdirAll(cacheRootPath, cacheDirMode); err != nil {
-		panic(err)
+		logger.Fatalf("%+v", err)
 	}
 	// 创建日志路径
 	cacheLogPath = cacheRootPath + "/logs"
 	__logsPath, err := homedir.Expand(cacheLogPath)
 	if err != nil {
-		panic(err)
+		logger.Fatalf("%+v", err)
 	}
 	cacheLogPath = __logsPath
 	if err := os.MkdirAll(cacheLogPath, cacheDirMode); err != nil {
-		panic(err)
+		logger.Fatalf("%+v", err)
 	}
 	logger.InitLogger(cacheLogPath, logger.INFO)
 	// 创建var路径
 	cacheVariablePath = cacheRootPath + "/var"
 	__varPath, err := homedir.Expand(cacheVariablePath)
 	if err != nil {
-		panic(err)
+		logger.Fatalf("%+v", err)
 	}
 	cacheVariablePath = __varPath
 	if err := os.MkdirAll(cacheVariablePath, cacheDirMode); err != nil {
-		panic(err)
+		logger.Fatalf("%+v", err)
 	}
 	// 检查配置文件并加载配置
 	if !found {

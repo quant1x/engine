@@ -4,6 +4,7 @@ import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/gotdx/quotes"
+	"gitee.com/quant1x/gox/logger"
 )
 
 const (
@@ -54,7 +55,7 @@ var (
 func GetDataDescript(kind cache.Kind) cache.DataSummary {
 	v, ok := mapDataSets[kind]
 	if !ok {
-		panic("类型不存在")
+		logger.Fatalf("类型不存在, name=%d", kind)
 	}
 	return v
 }

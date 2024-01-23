@@ -4,13 +4,14 @@ import (
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/gox/exception"
+	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/num"
 )
 
 func init() {
 	err := RegisterFunc(KRuleBase, "基础规则", ruleBase)
 	if err != nil {
-		panic(err)
+		logger.Fatalf("%+v", err)
 	}
 }
 

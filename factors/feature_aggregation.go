@@ -2,6 +2,7 @@ package factors
 
 import (
 	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/gox/logger"
 	"sync"
 )
 
@@ -26,25 +27,25 @@ func lazyInitFeatures() {
 	__l5History = NewCache1D[*History](cacheL5KeyHistory, NewHistory)
 	err := cache.Register(__l5History)
 	if err != nil {
-		panic(err)
+		logger.Fatalf("%+v", err)
 	}
 	// 基本面F10
 	__l5F10 = NewCache1D[*F10](cacheL5KeyF10, NewF10)
 	err = cache.Register(__l5F10)
 	if err != nil {
-		panic(err)
+		logger.Fatalf("%+v", err)
 	}
 	// 扩展信息
 	__l5Misc = NewCache1D[*Misc](cacheL5KeyMisc, NewMisc)
 	err = cache.Register(__l5Misc)
 	if err != nil {
-		panic(err)
+		logger.Fatalf("%+v", err)
 	}
 	// 平台
 	__l5Box = NewCache1D[*Box](cacheL5KeyBox, NewBox)
 	err = cache.Register(__l5Box)
 	if err != nil {
-		panic(err)
+		logger.Fatalf("%+v", err)
 	}
 }
 

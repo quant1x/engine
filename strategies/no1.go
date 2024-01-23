@@ -7,6 +7,7 @@ import (
 	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gox/concurrent"
+	"gitee.com/quant1x/gox/logger"
 	. "gitee.com/quant1x/pandas/formula"
 	"gitee.com/quant1x/pandas/stat"
 )
@@ -19,7 +20,7 @@ const (
 func init() {
 	err := models.Register(ModelNo1{})
 	if err != nil {
-		panic(err)
+		logger.Fatalf("%+v", err)
 	}
 }
 

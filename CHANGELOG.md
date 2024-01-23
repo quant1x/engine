@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.4.0] - 2024-01-23
+### Changed
+- 更新依赖库gotdx版本.
+
 ## [1.3.9] - 2024-01-23
 ### Changed
 - 更新依赖库gotdx版本.
@@ -1010,8 +1014,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.3.9...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.4.0...HEAD
 
+[1.4.0]: https://gitee.com/quant1x/engine/compare/v1.3.9...v1.4.0
 [1.3.9]: https://gitee.com/quant1x/engine/compare/v1.3.8...v1.3.9
 [1.3.8]: https://gitee.com/quant1x/engine/compare/v1.3.7...v1.3.8
 [1.3.7]: https://gitee.com/quant1x/engine/compare/v1.3.6...v1.3.7

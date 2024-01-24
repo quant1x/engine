@@ -21,8 +21,8 @@ var (
 // GetTickFromMemory 获取快照缓存
 func GetTickFromMemory(securityCode string) *quotes.Snapshot {
 	__mutexTicks.RLock()
-	defer __mutexTicks.RUnlock()
 	v, found := __cacheTicks[securityCode]
+	__mutexTicks.RUnlock()
 	if found {
 		return &v
 	}
@@ -90,7 +90,6 @@ func SyncAllSnapshots(barIndex *int) {
 						logger.Errorf("ZS: 网络异常: %+v, 重试: %d", err, i+1)
 						continue
 					}
-
 					mutex.Lock()
 					for _, v := range list {
 						// 修订日期
@@ -102,7 +101,6 @@ func SyncAllSnapshots(barIndex *int) {
 					break
 				}
 			}
-
 			wg.Done()
 		}()
 	}
@@ -123,73 +121,25 @@ func SyncAllSnapshots(barIndex *int) {
 		if len(subCodes) == 0 {
 			continue
 		}
-
 		codeCh <- subCodes
 	}
-
+	// channel 关闭后, 仍然可以读, 一直到读完全部数据
 	close(codeCh)
 
 	wg.Add(parallelCount)
 	wg.Wait()
+	// 如果有进度条
+	if bar != nil {
+		// 等待进度条结束
+		bar.Wait()
+	}
 
-	mutex.Lock()
-	for _, v := range snapshots {
-		__cacheTicks[v.SecurityCode] = v
-	}
-	mutex.Unlock()
-
-	if barIndex != nil {
-		*barIndex++
-	}
-}
-
-// SyncAllSnapshots 同步快照数据
-func v1SyncAllSnapshots(barIndex *int) {
-	modName := "同步快照数据"
-	allCodes := securities.AllCodeList()
-	count := len(allCodes)
-	var bar *progressbar.Bar = nil
-	if barIndex != nil {
-		bar = progressbar.NewBar(*barIndex, "执行["+modName+"]", count)
-	}
-	currentDate := exchange.GetCurrentlyDay()
-	tdxApi := gotdx.GetTdxApi()
-	var snapshots []quotes.Snapshot
-	for start := 0; start < count; start += quotes.TDX_SECURITY_QUOTES_MAX {
-		length := count - start
-		if length >= quotes.TDX_SECURITY_QUOTES_MAX {
-			length = quotes.TDX_SECURITY_QUOTES_MAX
-		}
-		var subCodes []string
-		for i := 0; i < length; i++ {
-			securityCode := allCodes[start+i]
-			subCodes = append(subCodes, securityCode)
-			if barIndex != nil {
-				bar.Add(1)
-			}
-		}
-		if len(subCodes) == 0 {
-			continue
-		}
-		for i := 0; i < quotes.DefaultRetryTimes; i++ {
-			list, err := tdxApi.GetSnapshot(subCodes)
-			if err != nil {
-				logger.Errorf("ZS: 网络异常: %+v, 重试: %d", err, i+1)
-				continue
-			}
-			for _, v := range list {
-				// 修订日期
-				v.Date = currentDate
-				snapshots = append(snapshots, v)
-			}
-			break
-		}
-	}
 	__mutexTicks.Lock()
 	for _, v := range snapshots {
 		__cacheTicks[v.SecurityCode] = v
 	}
 	__mutexTicks.Unlock()
+
 	if barIndex != nil {
 		*barIndex++
 	}

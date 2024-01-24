@@ -26,6 +26,7 @@ func jobOneSizeFitsAllSales() {
 
 // 一刀切卖出
 func cookieCutterSell() {
+	defer runtime.IgnorePanic()
 	sellStrategyCode := models.ModelOneSizeFitsAllSells
 	// 1. 获取117号策略(卖出)
 	sellRule := config.GetStrategyParameterByCode(sellStrategyCode)

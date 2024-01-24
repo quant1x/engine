@@ -8,6 +8,8 @@ import (
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/gox/coroutine"
+	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/runtime"
 	"golang.org/x/exp/maps"
@@ -16,23 +18,22 @@ import (
 
 // 更新快照
 func jobUpdateMiscAndSnapshot() {
-	//funcName, _, _ := runtime.Caller()
 	now := time.Now()
 	updateInRealTime, _ := exchange.CanUpdateInRealtime()
-	// 09:15:00~09:27:00, 14:57:00~15:01:00之间更新数据
+	// 集合竞价时段更新数据
 	if updateInRealTime && exchange.CheckCallAuctionTime(now) {
 		realtimeUpdateMiscAndSnapshot()
 	} else {
 		if runtime.Debug() {
 			realtimeUpdateMiscAndSnapshot()
 		}
-		//logger.Infof("%s, 非集合竞价时段", funcName)
 	}
 }
 
 var (
 	snapshotDate = cache.DefaultCanReadDate()
 	mapSnapshot  = map[string][]quotes.Snapshot{}
+	onceSnapshot coroutine.RollingOnce
 )
 
 func resetSnapshotCache() {
@@ -46,9 +47,9 @@ func resetSnapshotCache() {
 
 // realtimeUpdateMiscAndSnapshot 更新快照缓存
 func realtimeUpdateMiscAndSnapshot() {
-	resetSnapshotCache()
-	moduleName := "执行[同步exchange]"
-	//logger.Infof("%s: begin", moduleName)
+	onceSnapshot.Do(resetSnapshotCache)
+	moduleName := "执行[misc]"
+	logger.Infof("%s: begin", moduleName)
 	allCodes := market.GetCodeList()
 	count := len(allCodes)
 	currentDate := cache.DefaultCanReadDate()
@@ -189,5 +190,5 @@ func realtimeUpdateMiscAndSnapshot() {
 			}
 		}
 	}
-	//logger.Infof("%s: end", moduleName)
+	logger.Infof("%s: end", moduleName)
 }

@@ -12,8 +12,8 @@ const (
 	CronDefaultInterval = "@every 10s"
 	// CronTickInterval tick级别数据的更新频次
 	CronTickInterval = "@every 1s"
-	// 同步订单触发时间, 每交易日15点02分
-	cronSyncOrdersInterval = "2 15 * * *"
+	// 同步订单触发时间, 每交易日15点~23点的02分
+	cronSyncOrdersInterval = "2 15-23 * * *"
 )
 
 const (

@@ -5,6 +5,7 @@ import (
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/models"
 	"reflect"
+	"slices"
 	"testing"
 )
 
@@ -48,4 +49,11 @@ func TestStructPtr(t *testing.T) {
 
 func Test_cookieCutterSell(t *testing.T) {
 	cookieCutterSell()
+}
+
+func TestFinal(t *testing.T) {
+	var list []string = nil
+	v := slices.Contains(list, "1")
+	fmt.Println(v)
+
 }

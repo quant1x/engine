@@ -3,9 +3,9 @@ module gitee.com/quant1x/engine
 go 1.21.5
 
 require (
-	gitee.com/quant1x/exchange v0.3.5
-	gitee.com/quant1x/gotdx v1.20.6
-	gitee.com/quant1x/gox v1.19.2
+	gitee.com/quant1x/exchange v0.3.6
+	gitee.com/quant1x/gotdx v1.20.7
+	gitee.com/quant1x/gox v1.19.3
 	gitee.com/quant1x/pandas v1.2.8
 	gitee.com/quant1x/pkg v0.2.6
 	gitee.com/quant1x/ta-lib v0.3.2

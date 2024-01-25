@@ -19,9 +19,8 @@ import (
 	"time"
 )
 
-func updateStockFeature(wg *coroutine.RollingWaitGroup, bar *progressbar.Bar, feature factors.Feature, code string, cacheDate, featureDate string, op cache.OpKind, p *treemap.Map, sb *cache.ScoreBoard) {
+func updateStockFeature(wg *coroutine.RollingWaitGroup, bar *progressbar.Bar, feature factors.Feature, code string, cacheDate, featureDate string, op cache.OpKind, p *treemap.Map, sb *cache.ScoreBoard, now time.Time) {
 	defer runtime.CatchPanic("code[%s]: cacheDate=%s,featureDate=%s", code, cacheDate, featureDate)
-	now := time.Now()
 	defer sb.Add(1, time.Since(now))
 	if op == cache.OpRepair {
 		feature.Repair(code, cacheDate, featureDate, true)
@@ -69,8 +68,6 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 		wgAdapter.Add(1)
 		var sb cache.ScoreBoard
 		barCode := progressbar.NewBar(*barIndex+1, "执行["+adapter.Name()+"]", codeCount)
-		//updateOneFeature(barAdapter, barCode, adapter, cacheDate, featureDate, op, barIndex)
-
 		mapFeature := treemap.NewWithStringComparator()
 		wg := coroutine.NewRollingWaitGroup(5)
 		dataSource := adapter.Factory(featureDate, "")
@@ -78,6 +75,7 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 		ctx := context.WithValue(parent, cache.KBarIndex, barIndex)
 		_ = dataSource.Init(ctx, featureDate)
 		for _, code := range allCodes {
+			now := time.Now()
 			feature := adapter.Factory(cacheDate, code).(factors.Feature)
 			if feature.Kind() != factors.FeatureHistory {
 				history := factors.GetL5History(code, cacheDate)
@@ -87,7 +85,7 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 			}
 			sb.From(cache.GetDataAdapter(feature.Kind()))
 			wg.Add(1)
-			go updateStockFeature(wg, barCode, feature, code, cacheDate, featureDate, op, mapFeature, &sb)
+			go updateStockFeature(wg, barCode, feature, code, cacheDate, featureDate, op, mapFeature, &sb, now)
 		}
 		wg.Wait()
 		// 加载缓存

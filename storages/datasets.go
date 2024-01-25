@@ -93,7 +93,9 @@ func BaseDataUpdate(barIndex int, date string, plugins []cache.DataAdapter, op c
 		} else {
 			updateOneDataSet(&wg, barCache, barCode, dataSet, date, op, allCodes)
 		}
+		barCode.Wait()
 	}
+	barCache.Wait()
 	wg.Wait()
 	logger.Infof("%s: all, end", moduleName)
 }

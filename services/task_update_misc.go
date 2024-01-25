@@ -151,6 +151,7 @@ func realtimeUpdateMiscAndSnapshot() {
 			mapSnapshot[securityCode] = cacheList
 		}
 	}
+	bar.Wait()
 	// 刷新Misc快照本地cache
 	factors.RefreshL5Misc()
 	timestamp := time.Now()

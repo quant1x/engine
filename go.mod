@@ -5,7 +5,7 @@ go 1.21.5
 require (
 	gitee.com/quant1x/exchange v0.3.6
 	gitee.com/quant1x/gotdx v1.20.7
-	gitee.com/quant1x/gox v1.19.3
+	gitee.com/quant1x/gox v1.19.4
 	gitee.com/quant1x/pandas v1.2.8
 	gitee.com/quant1x/pkg v0.2.6
 	gitee.com/quant1x/ta-lib v0.3.2
@@ -16,12 +16,6 @@ require (
 	golang.org/x/exp v0.0.0-20240119083558-1b970713d09a
 	golang.org/x/sys v0.16.0
 )
-
-//replace (
-//	//gitee.com/quant1x/engine v1.4.0 => ../engine
-//	gitee.com/quant1x/gotdx v1.20.3 => ../gotdx
-//	gitee.com/quant1x/gox v1.18.8 => ../../mymmsc/gox
-//)
 
 require (
 	git.sr.ht/~sbinet/gg v0.5.0 // indirect

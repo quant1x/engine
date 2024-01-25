@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.4.5] - 2024-01-25
+### Changed
+- 调整进度条, 增加wait方法.
+
 ## [1.4.4] - 2024-01-25
 ### Changed
 - 更新依赖库版本.
@@ -1031,8 +1035,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.4.4...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.4.5...HEAD
 
+[1.4.5]: https://gitee.com/quant1x/engine/compare/v1.4.4...v1.4.5
 [1.4.4]: https://gitee.com/quant1x/engine/compare/v1.4.3...v1.4.4
 [1.4.3]: https://gitee.com/quant1x/engine/compare/v1.4.2...v1.4.3
 [1.4.2]: https://gitee.com/quant1x/engine/compare/v1.4.1...v1.4.2

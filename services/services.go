@@ -6,6 +6,8 @@ import (
 )
 
 const (
+	// CronTriggerNetwork 网络重置每天8点55分
+	CronTriggerNetwork = "55 8 * * *"
 	// CronTriggerInit 定制任务初始化cron定位9点
 	CronTriggerInit = "0 9 * * *"
 	// CronDefaultInterval 默认的执行频次
@@ -31,20 +33,25 @@ const (
 	keyCronUpdateAll        = "update_all"      // 更新全部数据, 包括基础数据和特征数据
 	keyCronCookieCutterSell = "sell_117"        // 一刀切卖出, one-size-fits-all
 	keyCronSyncQmtOrder     = "sync_orders"     // 同步订单
+	keyCronResetNetwork     = "reset_network"   // 重置网络
 )
 
 func init() {
-	// 定时重置缓存
-	err := Register(keyCronReset, CronTriggerInit, jobGlobalReset)
+	err := Register(keyCronResetNetwork, CronTriggerNetwork, jobResetNetwork)
 	if err != nil {
 		logger.Fatal(err)
 	}
-	// 刷新快照
+	// 定时重置缓存
+	err = Register(keyCronReset, CronTriggerInit, jobGlobalReset)
+	if err != nil {
+		logger.Fatal(err)
+	}
+	// 实时更新快照
 	err = Register(keyCronUpdateSnapshot, CronTickInterval, jobUpdateSnapshot)
 	if err != nil {
 		logger.Fatal(err)
 	}
-	// 更新快照
+	// 更新misc特征数据
 	err = Register(keyCronUpdateMisc, CronTickInterval, jobUpdateMiscAndSnapshot)
 	if err != nil {
 		logger.Fatal(err)

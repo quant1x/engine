@@ -1,6 +1,7 @@
 basedir: ~/.quant1x # 数据路径
 trader: # 交易配置
-  account_id: "888xxxxxxx"              # qmt账号
+  account_id: "888xxxxxxx"              # QMT账号
+  order_path: ~/.quant1x/qmt            # 订单路径
   proxy_url: http://127.0.0.1:18168/qmt # miniQMT Proxy地址
   stamp_duty_rate_for_buy: 0.0000       # 买入印花税率
   stamp_duty_rate_for_sell: 0.0010      # 卖出印花税率

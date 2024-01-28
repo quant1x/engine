@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.4.7] - 2024-01-28
+### Changed
+- 新增实时计算MACD的函数.
+- 新增实时计算EMA的函数.
+- 调整ma源文件名.
+- 更新依赖库pandas,ta-lib版本.
+
 ## [1.4.6] - 2024-01-27
 ### Changed
 - 更新依赖库版本.
@@ -1040,8 +1047,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.4.6...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.4.7...HEAD
 
+[1.4.7]: https://gitee.com/quant1x/engine/compare/v1.4.6...v1.4.7
 [1.4.6]: https://gitee.com/quant1x/engine/compare/v1.4.5...v1.4.6
 [1.4.5]: https://gitee.com/quant1x/engine/compare/v1.4.4...v1.4.5
 [1.4.4]: https://gitee.com/quant1x/engine/compare/v1.4.3...v1.4.4

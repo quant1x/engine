@@ -6,9 +6,9 @@ require (
 	gitee.com/quant1x/exchange v0.3.7
 	gitee.com/quant1x/gotdx v1.20.8
 	gitee.com/quant1x/gox v1.19.6
-	gitee.com/quant1x/pandas v1.2.8
+	gitee.com/quant1x/pandas v1.3.0
 	gitee.com/quant1x/pkg v0.2.6
-	gitee.com/quant1x/ta-lib v0.3.2
+	gitee.com/quant1x/ta-lib v0.3.3
 	github.com/bits-and-blooms/bitset v1.13.0
 	github.com/shirou/gopsutil/v3 v3.23.12
 	github.com/spf13/cobra v1.8.0

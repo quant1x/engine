@@ -13,8 +13,8 @@ import (
 	"gitee.com/quant1x/pandas/stat"
 )
 
-// ExchangeKLine K线特征
-type ExchangeKLine struct {
+// MiscKLine K线特征
+type MiscKLine struct {
 	Date                string  // 日期
 	Code                string  // 证券代码
 	Shape               uint64  // K线形态
@@ -40,8 +40,8 @@ type ExchangeKLine struct {
 	Consistent          int     // 情绪一致
 }
 
-// NewExchangeKLine 构建制定日期的K线数据
-func NewExchangeKLine(code, date string) *ExchangeKLine {
+// NewMiscKLine 构建制定日期的K线数据
+func NewMiscKLine(code, date string) *MiscKLine {
 	securityCode := exchange.CorrectSecurityCode(code)
 	klines := base.CheckoutKLines(securityCode, date)
 	if len(klines) < cache.KLineMin {
@@ -52,7 +52,7 @@ func NewExchangeKLine(code, date string) *ExchangeKLine {
 	if ok {
 		digits = int(securityInfo.DecimalPoint)
 	}
-	ek := &ExchangeKLine{
+	ek := &MiscKLine{
 		Date: date,
 		Code: securityCode,
 	}
@@ -182,10 +182,10 @@ func NewExchangeKLine(code, date string) *ExchangeKLine {
 	return ek
 }
 
-func (k *ExchangeKLine) Kind() cache.Kind {
+func (k *MiscKLine) Kind() cache.Kind {
 	return FeatureKLineShap
 }
 
-func (k *ExchangeKLine) Name() string {
+func (k *MiscKLine) Name() string {
 	return "K线形态"
 }

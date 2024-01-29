@@ -151,7 +151,7 @@ func (this *Misc) ValidateSample() error {
 
 // ExchangeKLineExtend 更新Exchange K线相关数据
 func miscKLineExtend(info *Misc, securityCode string, featureDate string) {
-	cover := NewExchangeKLine(securityCode, featureDate)
+	cover := NewMiscKLine(securityCode, featureDate)
 	if cover == nil {
 		logger.Errorf("code[%s, %s] kline not found", securityCode, featureDate)
 		return

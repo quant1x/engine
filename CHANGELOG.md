@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.4.8] - 2024-01-30
+### Changed
+- 修复宽表计算的bug.
+- 调整misc结构体名, 去掉早期的exchange字样.
+
 ## [1.4.7] - 2024-01-28
 ### Changed
 - 新增实时计算MACD的函数.
@@ -1047,8 +1052,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.4.7...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.4.8...HEAD
 
+[1.4.8]: https://gitee.com/quant1x/engine/compare/v1.4.7...v1.4.8
 [1.4.7]: https://gitee.com/quant1x/engine/compare/v1.4.6...v1.4.7
 [1.4.6]: https://gitee.com/quant1x/engine/compare/v1.4.5...v1.4.6
 [1.4.5]: https://gitee.com/quant1x/engine/compare/v1.4.4...v1.4.5

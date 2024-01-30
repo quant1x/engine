@@ -6,9 +6,12 @@ import (
 	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/datasource/dfcf"
 	"gitee.com/quant1x/engine/market"
+	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
+	"gitee.com/quant1x/pandas"
+	"gitee.com/quant1x/pandas/formula"
 )
 
 const (
@@ -66,6 +69,8 @@ type Misc struct {
 	MediumIntensity       float64 `name:"中线强度" dataframe:"中线强度"`         // 中线强度
 	MediumIntensityDiff   float64 `name:"中线强度增幅" dataframe:"中线强度增幅"`     // 中线强度
 	Vix                   float64 `name:"波动率" dataframe:"波动率"`           // 波动率
+	BullPower             float64 `name:"多方强度" dataframe:"多方强度"`
+	BearPower             float64 `name:"空方强度" dataframe:"空方强度"`
 	State                 uint64  `name:"样本状态" dataframe:"样本状态"`
 }
 
@@ -112,7 +117,7 @@ func (this *Misc) Update(code, cacheDate, featureDate string, complete bool) {
 	miscSentiment(this, code, cacheDate, featureDate)
 	// 4. 资金流向
 	miscFundFlow(this, code, cacheDate, featureDate)
-
+	miscPower(this, code, cacheDate, featureDate)
 	_ = complete
 }
 
@@ -132,6 +137,7 @@ func (this *Misc) Repair(code, cacheDate, featureDate string, complete bool) {
 	miscSentiment(this, code, cacheDate, featureDate)
 	// 4. 资金流向
 	miscFundFlow(this, code, cacheDate, featureDate)
+	miscPower(this, code, cacheDate, featureDate)
 
 	_ = complete
 }
@@ -250,4 +256,23 @@ func miscFundFlow(info *Misc, securityCode string, cacheDate, featureDate string
 	last := list[len(list)-1]
 	cover := last.Medium
 	info.FundFlow = cover
+	_ = cacheDate
+	_ = featureDate
+}
+
+func miscPower(info *Misc, securityCode string, cacheDate, featureDate string) {
+	lines := CheckoutWideTableByDate(securityCode, featureDate)
+	if len(lines) == 0 {
+		return
+	}
+	df := pandas.LoadStructs(lines)
+	if df.Nrow() == 0 {
+		return
+	}
+	ia := df.ColAsNDArray("inner_amount")
+	oa := df.ColAsNDArray("outer_amount")
+	diffIA := ia.Sub(formula.REF(ia, 1))
+	diffOA := oa.Sub(formula.REF(oa, 1))
+	info.BullPower = utils.Float64IndexOf(diffOA, -1)
+	info.BearPower = utils.Float64IndexOf(diffIA, -1)
 }

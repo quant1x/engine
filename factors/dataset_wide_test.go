@@ -48,15 +48,18 @@ func TestGetKLineAll(t *testing.T) {
 func Test_pullWideByDate(t *testing.T) {
 	code := "880424"
 	code = "sh000001"
-	date := "20231009"
+	code = "002615"
+	date := "20240129"
 	securityCode := exchange.CorrectSecurityCode(code)
-	data := pullWideByDate(securityCode, date)
-	fmt.Println(data)
+	lines := pullWideByDate(securityCode, date)
+	df := pandas.LoadStructs(lines)
+	fmt.Println(df)
 }
 
 func TestWideTableValuate(t *testing.T) {
 	code := "002615"
-	date := "20240116"
+	code = "sh000001"
+	date := "20240130"
 	lines := CheckoutWideTableByDate(code, date)
 	df := pandas.LoadStructs(lines)
 	fmt.Println(df)

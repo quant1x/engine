@@ -155,7 +155,7 @@ func pullWideByDate(securityCode, date string) []SecurityFeature {
 		if featureDate >= transBeginDate {
 			// 成交数据
 			trans := base.CheckoutTransactionData(securityCode, featureDate, true)
-			if len(list) > 0 {
+			if len(trans) > 0 {
 				cover := CountInflow(trans, securityCode, featureDate)
 				// 修正f10的缓存, 应该是缓存日期为准
 				f10 := GetL5F10(securityCode, cacheDate)

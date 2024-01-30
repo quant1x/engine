@@ -115,6 +115,7 @@ func handleRepairAllDataSets(dates []string) {
 		storages.BaseDataUpdate(barIndex, date, plugins, cache.OpRepair)
 		bar.Add(1)
 	}
+	bar.Wait()
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())
 	fmt.Println()
 }

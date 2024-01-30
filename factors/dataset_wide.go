@@ -72,6 +72,7 @@ func pullWideByDate(securityCode, date string) []SecurityFeature {
 		cacheEndDate = cacheBeginDate
 		beginDate = cacheBeginDate
 	} else {
+		//list = list[:len(list)-1]
 		cacheBeginDate = list[0].Date
 		last := list[len(list)-1]
 		cacheEndDate = last.Date

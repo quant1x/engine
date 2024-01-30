@@ -49,7 +49,8 @@ func Test_pullWideByDate(t *testing.T) {
 	code := "880424"
 	code = "sh000001"
 	code = "002615"
-	date := "20240129"
+	code = "sh000002"
+	date := "20240130"
 	securityCode := exchange.CorrectSecurityCode(code)
 	lines := pullWideByDate(securityCode, date)
 	df := pandas.LoadStructs(lines)
@@ -58,7 +59,7 @@ func Test_pullWideByDate(t *testing.T) {
 
 func TestWideTableValuate(t *testing.T) {
 	code := "002615"
-	code = "sh000001"
+	code = "sh000002"
 	date := "20240130"
 	lines := CheckoutWideTableByDate(code, date)
 	df := pandas.LoadStructs(lines)

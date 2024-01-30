@@ -41,6 +41,10 @@ func initRepair() {
 			}
 			dates := exchange.TradingDateRange(beginDate, endDate)
 			count := len(dates)
+			if count == 0 {
+				fmt.Printf("start=%s ~ end=%s 休市, 没有数据\n", beginDate, endDate)
+				return
+			}
 			fmt.Printf("修复数据: %s => %s"+strings.Repeat("\r\n", 2), dates[0], dates[count-1])
 			base.UpdateBeginDateOfHistoricalTradingData(dates[0])
 			if flagAll.Value {

@@ -23,7 +23,7 @@ type Schema interface {
 
 // Initialization 初始化接口
 type Initialization interface {
-	// Init 初始化, 接受context, 日期和证券代码作为入参
+	// Init 初始化, 接受context, 日期作为入参
 	Init(ctx context.Context, date string) error
 }
 

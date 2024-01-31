@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.5.0] - 2024-01-31
+### Changed
+- 修复宽表更新时由于成交数据只更新当日数据造成的缺少上一个交易数据的bug.
+- 新增多空趋势信号及周期.
+- 实验misc新因子.
+- 调整修复操作时进度条不满100%的bug.
+
 ## [1.4.9] - 2024-01-30
 ### Changed
 - 修复repair命令行参数日期范围可能存在休市的情况.
@@ -1056,8 +1063,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.4.9...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.5.0...HEAD
 
+[1.5.0]: https://gitee.com/quant1x/engine/compare/v1.4.9...v1.5.0
 [1.4.9]: https://gitee.com/quant1x/engine/compare/v1.4.8...v1.4.9
 [1.4.8]: https://gitee.com/quant1x/engine/compare/v1.4.7...v1.4.8
 [1.4.7]: https://gitee.com/quant1x/engine/compare/v1.4.6...v1.4.7

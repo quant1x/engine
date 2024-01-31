@@ -19,7 +19,7 @@ var (
 	ErrRangeOfOpeningTurnZ         = exception.New(errorRuleBase+0, "非开盘换手范围")
 	ErrRangeOfOpeningQuantityRatio = exception.New(errorRuleBase+1, "非开盘量比范围")
 	ErrRangeOfOpeningChangeRate    = exception.New(errorRuleBase+2, "非开盘涨跌幅范围")
-	ErrRangeOfFundFlow             = exception.New(errorRuleBase+3, "非资金流出")
+	ErrRangeOfFundFlow             = exception.New(errorRuleBase+3, "非资金流出范围")
 	ErrHistoryNotExist             = exception.New(errorRuleBase+4, "没有找到history数据")
 	ErrRiskOfGapDown               = exception.New(errorRuleBase+5, "开盘存在向下跳空缺口")
 	ErrExchangeNotExist            = exception.New(errorRuleBase+4, "没有找到history数据")

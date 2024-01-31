@@ -27,7 +27,7 @@ func lazyInitQmt() {
 	traderParameter := &config.GlobalConfig.Trader
 	traderParameter.OrderPath = strings.TrimSpace(traderParameter.OrderPath)
 	if len(traderParameter.OrderPath) > 0 && api.CheckFilepath(traderParameter.OrderPath, true) == nil {
-		// 如果配置了路径且
+		// 如果配置了路径且有效
 		qmtOrderPath = traderParameter.OrderPath
 	} else {
 		qmtOrderPath = defaultQmtCachePath()

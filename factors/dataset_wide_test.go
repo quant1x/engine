@@ -50,7 +50,7 @@ func Test_pullWideByDate(t *testing.T) {
 	code = "sh000001"
 	code = "002615"
 	code = "sh000002"
-	date := "20240130"
+	date := "20240131"
 	securityCode := exchange.CorrectSecurityCode(code)
 	lines := pullWideByDate(securityCode, date)
 	df := pandas.LoadStructs(lines)

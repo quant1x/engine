@@ -15,15 +15,17 @@ import (
 )
 
 const (
-	TradingFirstTime        = "09:25" // 第一个时间
-	TradingStartTime        = "09:30" // 开盘时间
-	TradingFinalBiddingTime = "14:57" // 尾盘集合竞价时间
-	TradingLastTime         = "15:00" // 最后一个时间
+	TradingFirstTime            = "09:25" // 第一个时间
+	TradingStartTime            = "09:30" // 开盘时间
+	TradingFinalBiddingTime     = "14:57" // 尾盘集合竞价时间
+	TradingLastTime             = "15:00" // 最后一个时间
+	defaultTradingDataBeginDate = "20231001"
 )
 
 var (
 	__historicalTradingDataOnce      sync.Once
-	__historicalTradingDataBeginDate = "20231001" // 最早的时间
+	__historicalTradingDataMutex     sync.Mutex
+	__historicalTradingDataBeginDate = defaultTradingDataBeginDate // 最早的时间
 )
 
 func lazyInitHistoricalTradingData() {
@@ -34,6 +36,8 @@ func lazyInitHistoricalTradingData() {
 // UpdateBeginDateOfHistoricalTradingData 修改tick数据开始下载的日期
 func UpdateBeginDateOfHistoricalTradingData(date string) {
 	__historicalTradingDataOnce.Do(lazyInitHistoricalTradingData)
+	__historicalTradingDataMutex.Lock()
+	defer __historicalTradingDataMutex.Unlock()
 	dt, err := api.ParseTime(date)
 	if err != nil {
 		return
@@ -42,13 +46,22 @@ func UpdateBeginDateOfHistoricalTradingData(date string) {
 	__historicalTradingDataBeginDate = date
 }
 
+// RestoreBeginDateOfHistoricalTradingData 恢复默认的成交数据最早日期
+func RestoreBeginDateOfHistoricalTradingData() {
+	UpdateBeginDateOfHistoricalTradingData(defaultTradingDataBeginDate)
+}
+
 // GetBeginDateOfHistoricalTradingData 获取系统默认的历史成交数据的最早日期
 func GetBeginDateOfHistoricalTradingData() string {
 	__historicalTradingDataOnce.Do(lazyInitHistoricalTradingData)
+	__historicalTradingDataMutex.Lock()
+	defer __historicalTradingDataMutex.Unlock()
 	return __historicalTradingDataBeginDate
 }
 
 // GetHistoricalTradingData 获取指定日期的历史成交数据
+//
+// Deprecated: 废弃的函数, 推荐 CheckoutTransactionData [wangfeng on 2024/1/31 17:26]
 func GetHistoricalTradingData(securityCode, tradeDate string) []quotes.TickTransaction {
 	securityCode = exchange.CorrectSecurityCode(securityCode)
 	tdxApi := gotdx.GetTdxApi()
@@ -100,7 +113,7 @@ func GetAllHistoricalTradingData(securityCode string) {
 		return
 	}
 	tStart := strconv.FormatInt(int64(info.IPODate), 10)
-	fixStart := __historicalTradingDataBeginDate
+	fixStart := GetBeginDateOfHistoricalTradingData()
 	if tStart < fixStart {
 		tStart = fixStart
 	}
@@ -159,7 +172,7 @@ func CheckoutTransactionData(securityCode string, date string, ignorePreviousDat
 	tradeDate := exchange.FixTradeDate(date, cache.TDX_FORMAT_PROTOCOL_DATE)
 	if ignorePreviousData {
 		// 在默认日期之前的数据直接返回空
-		startDate := exchange.FixTradeDate(__historicalTradingDataBeginDate, cache.TDX_FORMAT_PROTOCOL_DATE)
+		startDate := exchange.FixTradeDate(GetBeginDateOfHistoricalTradingData(), cache.TDX_FORMAT_PROTOCOL_DATE)
 		if tradeDate < startDate {
 			logger.Errorf("tick: code=%s, trade-date=%s, start-date=%s, 没有数据", securityCode, tradeDate, startDate)
 			return list
@@ -248,6 +261,7 @@ func CheckoutTransactionData(securityCode string, date string, ignorePreviousDat
 		}
 		start += offset
 	}
+	// 这里需要反转一下
 	hs = stat.Reverse(hs)
 	for _, v := range hs {
 		history = append(history, v.List...)

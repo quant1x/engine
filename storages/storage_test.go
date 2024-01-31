@@ -7,6 +7,7 @@ import (
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/trader"
 	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/concurrent"
 	"path/filepath"
 	"testing"
@@ -24,7 +25,7 @@ func TestOrderFlag(t *testing.T) {
 	direction := trader.BUY
 	filename := order_state_filename(date, model, code, direction)
 	fmt.Println(filename)
-	err := Touch(filename)
+	err := api.Touch(filename)
 	fmt.Println(err)
 	ok := CheckOrderState(date, model, code, direction)
 	fmt.Println(ok)

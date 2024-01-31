@@ -262,7 +262,7 @@ func miscFundFlow(info *Misc, securityCode string, cacheDate, featureDate string
 	_ = featureDate
 }
 
-type PowerTrend int
+type PowerTrend = int
 
 const (
 	// SignalNegative indicates that a particular value is a negative peak.

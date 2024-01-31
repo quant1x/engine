@@ -21,7 +21,8 @@ func TestMisc(t *testing.T) {
 func TestFilterL5Misc(t *testing.T) {
 	rows := FilterL5Misc(func(v *Misc) bool {
 		c1 := v.BullPower > v.BearPower
-		c2 := v.BullPower > 0 && v.BearPower != 0
+		//c2 := v.BullPower > 0 && v.BearPower != 0
+		c2 := v.PowerTrendPeriod == 1
 		return c1 && c2
 	}, "20240131")
 	for _, v := range rows {

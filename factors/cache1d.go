@@ -194,6 +194,22 @@ func (this *Cache1D[T]) Set(securityCode string, newValue T, date ...string) {
 	this.mapCache.Put(securityCode, newValue)
 }
 
+func (this *Cache1D[T]) Filter(f func(v T) bool) []T {
+	var list []T
+	if f == nil {
+		return nil
+	}
+	for _, securityCode := range this.allCodes {
+		v, found := this.mapCache.Get(securityCode)
+		if found {
+			if ok := f(v); ok {
+				list = append(list, v)
+			}
+		}
+	}
+	return list
+}
+
 // Apply 数据合并
 //
 //	泛型T需要保持一个string类型的Date字段

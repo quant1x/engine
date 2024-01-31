@@ -2,6 +2,7 @@ package factors
 
 import (
 	"fmt"
+	"gitee.com/quant1x/gotdx/securities"
 	"testing"
 )
 
@@ -15,4 +16,16 @@ func TestMisc(t *testing.T) {
 	code := "sh000001"
 	v := GetL5Misc(code)
 	fmt.Println(v)
+}
+
+func TestFilterL5Misc(t *testing.T) {
+	rows := FilterL5Misc(func(v *Misc) bool {
+		c1 := v.BullPower > v.BearPower
+		c2 := v.BullPower > 0 && v.BearPower != 0
+		return c1 && c2
+	}, "20240131")
+	for _, v := range rows {
+		fmt.Println(v.Code, securities.GetStockName(v.Code))
+	}
+	fmt.Println("total:", len(rows))
 }

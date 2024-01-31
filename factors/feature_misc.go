@@ -11,7 +11,7 @@ import (
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/pandas"
-	"gitee.com/quant1x/pandas/formula"
+	. "gitee.com/quant1x/pandas/formula"
 )
 
 const (
@@ -69,9 +69,11 @@ type Misc struct {
 	MediumIntensity       float64 `name:"中线强度" dataframe:"中线强度"`         // 中线强度
 	MediumIntensityDiff   float64 `name:"中线强度增幅" dataframe:"中线强度增幅"`     // 中线强度
 	Vix                   float64 `name:"波动率" dataframe:"波动率"`           // 波动率
-	BullPower             float64 `name:"多方强度" dataframe:"多方强度"`
-	BearPower             float64 `name:"空方强度" dataframe:"空方强度"`
-	State                 uint64  `name:"样本状态" dataframe:"样本状态"`
+	BullPower             float64 `name:"多方强度" dataframe:"多方强度"`         // 多方强度
+	BearPower             float64 `name:"空方强度" dataframe:"空方强度"`         // 空方强度
+	PowerTrendReversal    int     `name:"多空反转" dataframe:"多空反转"`         // 多空反转
+	PowerTrendPeriod      int     `name:"多空趋势周期" dataframe:"多空趋势周期"`     // 多空趋势周期
+	State                 uint64  `name:"样本状态" dataframe:"样本状态"`         // 样本状态
 }
 
 func NewMisc(date, code string) *Misc {
@@ -260,6 +262,18 @@ func miscFundFlow(info *Misc, securityCode string, cacheDate, featureDate string
 	_ = featureDate
 }
 
+type PowerTrend int
+
+const (
+	// SignalNegative indicates that a particular value is a negative peak.
+	SignalNegative PowerTrend = -1
+	// SignalNeutral indicates that a particular value is not a peak.
+	SignalNeutral PowerTrend = 0
+	// SignalPositive indicates that a particular value is a positive peak.
+	SignalPositive PowerTrend = 1
+)
+
+// 更新 - misc - 资金多空强度
 func miscPower(info *Misc, securityCode string, cacheDate, featureDate string) {
 	lines := CheckoutWideTableByDate(securityCode, featureDate)
 	if len(lines) == 0 {
@@ -271,8 +285,16 @@ func miscPower(info *Misc, securityCode string, cacheDate, featureDate string) {
 	}
 	ia := df.ColAsNDArray("inner_amount")
 	oa := df.ColAsNDArray("outer_amount")
-	diffIA := ia.Sub(formula.REF(ia, 1))
-	diffOA := oa.Sub(formula.REF(oa, 1))
+	diffIA := ia.Sub(REF(ia, 1))
+	diffOA := oa.Sub(REF(oa, 1))
 	info.BullPower = utils.Float64IndexOf(diffOA, -1)
 	info.BearPower = utils.Float64IndexOf(diffIA, -1)
+	bull := CROSS(diffOA, diffIA)
+	bear := CROSS(diffIA, diffOA)
+	nBull := BARSLAST(bull)
+	nBear := BARSLAST(bear)
+	trend := IFF(nBull.Lt(nBear), SignalPositive, SignalNegative)
+	period := IFF(trend.Eq(SignalPositive), nBull, nBear)
+	info.PowerTrendReversal = utils.IntegerIndexOf(trend, -1)
+	info.PowerTrendPeriod = utils.IntegerIndexOf(period, -1)
 }

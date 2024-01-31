@@ -12,7 +12,8 @@ func TestFeatureMisc(t *testing.T) {
 	code := "sh880652"
 	code = "sz300904"
 	code = "sh603038"
-	date := "2024-01-16"
+	code = "sh600178"
+	date := "2024-01-30"
 	cacheDate, featureDate := cache.CorrectDate(date)
 	misc := NewMisc(code, date)
 	misc.Update(code, cacheDate, featureDate, false)

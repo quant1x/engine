@@ -89,6 +89,12 @@ func RefreshL5Misc() {
 	__l5Misc.Apply(nil)
 }
 
+func FilterL5Misc(f func(v *Misc) bool, date ...string) []*Misc {
+	__l5Once.Do(lazyInitFeatures)
+	__l5Misc.Checkout(date...)
+	return __l5Misc.Filter(f)
+}
+
 // GetL5Box 获取平台数据
 func GetL5Box(securityCode string, date ...string) *Box {
 	__l5Once.Do(lazyInitFeatures)

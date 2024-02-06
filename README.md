@@ -77,3 +77,7 @@ v${Major}.${Minor}.${Revision}
 - 提交PR
 - PR审核, 不通过, 驳回
 - PR审核, 通过, 按照不同的issue级别, 合并当前次级版本分支, 并发布版本
+
+### 4.4 开发中的问题
+
+- go test won't build: Call has possible formatting directive, 出现这个问题是因为test时会进行vet校验, 关闭(-vet=off)即可

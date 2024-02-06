@@ -24,7 +24,7 @@ func TestFilterL5Misc(t *testing.T) {
 		//c2 := v.BullPower > 0 && v.BearPower != 0
 		c2 := v.PowerTrendPeriod == 1
 		return c1 && c2
-	}, "20240131")
+	}, "20240205")
 	for _, v := range rows {
 		fmt.Println(v.Code, securities.GetStockName(v.Code))
 	}

@@ -14,18 +14,14 @@ import (
 	"sync"
 )
 
-const (
-	TradingFirstTime            = "09:25" // 第一个时间
-	TradingStartTime            = "09:30" // 开盘时间
-	TradingFinalBiddingTime     = "14:57" // 尾盘集合竞价时间
-	TradingLastTime             = "15:00" // 最后一个时间
-	defaultTradingDataBeginDate = "20231001"
-)
+//const (
+//	defaultTradingDataBeginDate = "20231001"
+//)
 
 var (
 	__historicalTradingDataOnce      sync.Once
 	__historicalTradingDataMutex     sync.Mutex
-	__historicalTradingDataBeginDate = defaultTradingDataBeginDate // 最早的时间
+	__historicalTradingDataBeginDate = config.GetDataConfig().Trans.BeginDate // 最早的时间
 )
 
 func lazyInitHistoricalTradingData() {
@@ -48,7 +44,7 @@ func UpdateBeginDateOfHistoricalTradingData(date string) {
 
 // RestoreBeginDateOfHistoricalTradingData 恢复默认的成交数据最早日期
 func RestoreBeginDateOfHistoricalTradingData() {
-	UpdateBeginDateOfHistoricalTradingData(defaultTradingDataBeginDate)
+	UpdateBeginDateOfHistoricalTradingData(config.GetDataConfig().Trans.BeginDate)
 }
 
 // GetBeginDateOfHistoricalTradingData 获取系统默认的历史成交数据的最早日期
@@ -178,7 +174,7 @@ func CheckoutTransactionData(securityCode string, date string, ignorePreviousDat
 			return list
 		}
 	}
-	startTime := TradingFirstTime
+	startTime := exchange.HistoricalTransactionDataFirstTime
 	filename := cache.TransFilename(securityCode, tradeDate)
 	if api.FileExist(filename) {
 		// 如果缓存存在
@@ -186,7 +182,7 @@ func CheckoutTransactionData(securityCode string, date string, ignorePreviousDat
 		cacheLength := len(list)
 		if err == nil && cacheLength > 0 {
 			lastTime := list[cacheLength-1].Time
-			if lastTime == TradingLastTime {
+			if lastTime == exchange.HistoricalTransactionDataLastTime {
 				//logger.Warnf("tick: code=%s, trade-date=%s, 缓存存在", securityCode, tradeDate)
 				return
 			}

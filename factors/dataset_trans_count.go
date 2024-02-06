@@ -1,7 +1,6 @@
 package factors
 
 import (
-	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/quotes"
 )
@@ -51,11 +50,11 @@ func CountInflow(list []quotes.TickTransaction, securityCode string, date string
 			summary.InnerAmount += float64(sellOffset) * price
 		}
 		// 计算开盘竞价数据
-		if tm >= base.TradingFirstTime && tm < base.TradingStartTime {
+		if tm >= exchange.HistoricalTransactionDataFirstTime && tm < exchange.HistoricalTransactionDataStartTime {
 			summary.OpenVolume += vol
 		}
 		// 计算收盘竞价数据
-		if tm > base.TradingFinalBiddingTime && tm <= base.TradingLastTime {
+		if tm > exchange.HistoricalTransactionDataFinalBiddingTime && tm <= exchange.HistoricalTransactionDataLastTime {
 			summary.CloseVolume += vol
 		}
 		lastPrice = price

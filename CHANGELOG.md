@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.5.1] - 2024-02-12
+### Changed
+- 适配新版本的pandas.
+- 迁移成交数据常量到exchange.
+- 增加开发可能遇到问题的解决方案。 可能会出现"call has possible Printf formatting directive %s"的问题,这是由于go vet导致的, 函数本身没有问题。.
+- 修订资金范围的错误信息.
+- 修订miniQMT配置中订单路径的注释.
+- 修订初始化接口Init方法注释, 去掉证券代码.
+
 ## [1.5.0] - 2024-01-31
 ### Changed
 - 修复宽表更新时由于成交数据只更新当日数据造成的缺少上一个交易数据的bug.
@@ -1063,8 +1072,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.5.0...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.5.1...HEAD
 
+[1.5.1]: https://gitee.com/quant1x/engine/compare/v1.5.0...v1.5.1
 [1.5.0]: https://gitee.com/quant1x/engine/compare/v1.4.9...v1.5.0
 [1.4.9]: https://gitee.com/quant1x/engine/compare/v1.4.8...v1.4.9
 [1.4.8]: https://gitee.com/quant1x/engine/compare/v1.4.7...v1.4.8

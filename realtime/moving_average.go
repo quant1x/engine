@@ -2,13 +2,13 @@ package realtime
 
 import (
 	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/gox/num"
+	"gitee.com/quant1x/num"
+	"gitee.com/quant1x/pandas"
 	"gitee.com/quant1x/pandas/formula"
-	"gitee.com/quant1x/pandas/stat"
 )
 
 // MovingAverage 计算均线范围
-func MovingAverage(CLOSE, HIGH, LOW stat.Series, PN int) (ma, half, maMax, maMin stat.Series) {
+func MovingAverage(CLOSE, HIGH, LOW pandas.Series, PN int) (ma, half, maMax, maMin pandas.Series) {
 	half = formula.MA(CLOSE, PN-1)
 	r1Half := formula.REF(half, 1)
 	maMax = r1Half.Mul(PN - 1).Add(HIGH).Div(PN)

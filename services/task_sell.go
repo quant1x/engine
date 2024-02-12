@@ -9,8 +9,8 @@ import (
 	"gitee.com/quant1x/engine/trader"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/gox/num"
 	"gitee.com/quant1x/gox/runtime"
+	"gitee.com/quant1x/num"
 	"slices"
 )
 

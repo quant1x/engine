@@ -7,7 +7,7 @@ import (
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/exception"
 	"gitee.com/quant1x/gox/http"
-	"gitee.com/quant1x/pandas/stat"
+	"gitee.com/quant1x/num"
 	"math"
 	urlpkg "net/url"
 	"strings"
@@ -176,7 +176,7 @@ func AllNotices(noticeType EMNoticeType, date string, pageNumber ...int) (notice
 		}
 		code := v.Codes[0]
 		mc := strings.TrimSpace(code.MarketCode)
-		marketCode = exchange.MarketType(stat.AnyToInt64(mc))
+		marketCode = exchange.MarketType(num.AnyToInt64(mc))
 		securityCode := exchange.GetSecurityCode(marketCode, strings.TrimSpace(code.StockCode))
 		securityName := strings.TrimSpace(code.ShortName)
 		//if securityCode == "sz300027" {
@@ -302,7 +302,7 @@ func StockNotices(securityCode, beginDate, endDate string, pageNumber ...int) (n
 		}
 		code := v.Codes[0]
 		mc := strings.TrimSpace(code.MarketCode)
-		marketCode = exchange.MarketType(stat.AnyToInt64(mc))
+		marketCode = exchange.MarketType(num.AnyToInt64(mc))
 		securityCode := exchange.GetSecurityCode(marketCode, strings.TrimSpace(code.StockCode))
 		securityName := strings.TrimSpace(code.ShortName)
 		//if securityCode == "sz300027" {

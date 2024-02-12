@@ -5,7 +5,7 @@ import (
 	"gitee.com/quant1x/gotdx"
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/pandas/stat"
+	"gitee.com/quant1x/num"
 )
 
 const (
@@ -47,7 +47,7 @@ func IndexSentiment(codes ...string) (sentiment float64, consistent int) {
 // SecuritySentiment 计算证券情绪
 func SecuritySentiment[E ~int | ~int64 | ~float32 | ~float64](up, down E) (sentiment float64, consistent int) {
 	sentiment = 100 * float64(up) / float64(up+down)
-	if stat.Float64IsNaN(sentiment) {
+	if num.Float64IsNaN(sentiment) {
 		sentiment = 0
 		return
 	}

@@ -7,10 +7,9 @@ import (
 	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/securities"
-	"gitee.com/quant1x/gox/num"
+	"gitee.com/quant1x/num"
 	"gitee.com/quant1x/pandas"
 	. "gitee.com/quant1x/pandas/formula"
-	"gitee.com/quant1x/pandas/stat"
 )
 
 // MiscKLine K线特征
@@ -157,7 +156,7 @@ func NewMiscKLine(code, date string) *MiscKLine {
 	var2 := var1.Mul(var1)
 	var3 := SUM(var2, N)
 	var4 := SQRT(var3.Div(N))
-	MYSTDDEV := stat.NewSeries[stat.DType](var4...)
+	MYSTDDEV := pandas.ToSeries[num.DType](var4...)
 	//MAXB:=HHV(MYSTDDEV,M);
 	MAXB := HHV(MYSTDDEV, M)
 	//MINB:=LLV(MYSTDDEV,M);

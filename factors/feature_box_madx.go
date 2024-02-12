@@ -2,8 +2,8 @@ package factors
 
 import (
 	"gitee.com/quant1x/engine/utils"
+	"gitee.com/quant1x/pandas"
 	. "gitee.com/quant1x/pandas/formula"
-	"gitee.com/quant1x/pandas/stat"
 )
 
 type JuXianDongXiang struct {
@@ -16,7 +16,7 @@ type JuXianDongXiang struct {
 }
 
 // 多空趋势
-func computeJuXianDongXiang(OPEN, CLOSE, HIGH, LOW stat.Series) *JuXianDongXiang {
+func computeJuXianDongXiang(OPEN, CLOSE, HIGH, LOW pandas.Series) *JuXianDongXiang {
 	//{均线动向, V1.0.3, 2023-09-18}
 	//P0:=3;
 	P0 := 3

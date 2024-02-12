@@ -5,9 +5,9 @@ import (
 	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/num"
 	"gitee.com/quant1x/pandas"
 	. "gitee.com/quant1x/pandas/formula"
-	"gitee.com/quant1x/pandas/stat"
 )
 
 // KLineBox 有效突破(BreaksThrough)平台
@@ -82,7 +82,7 @@ func NewKLineBox(code, date string) *KLineBox {
 	//BLN:=IFF(BLN1>=0,BLN1,BLN1),NODRAW;
 	BLN := BLN1
 	v1 := BLN.IndexOf(-1)
-	doublePeriod := int(stat.AnyToInt64(v1))
+	doublePeriod := int(num.AnyToInt64(v1))
 	//BLH:=IFF(BLN=0,BOXH,REF(BOXH,BLN)),DOTLINE;
 	BLH := IFF(BLN.Eq(0), BOXH, REF(BOXH, BLN))
 	//BLL:=IFF(BLN=0,BOXL,REF(BOXL,BLN)),DOTLINE;
@@ -102,7 +102,7 @@ func NewKLineBox(code, date string) *KLineBox {
 	//B:CROSS(CLOSE,倍量H),COLORRED;
 	B := CROSS(CLOSE, dvH)
 	v2 := B.IndexOf(-1)
-	buy := stat.AnyToBool(v2)
+	buy := num.AnyToBool(v2)
 	//B1:CLOSE>倍量H AND REF(CLOSE,1)<MA3,COLORRED;
 	//DRAWICON(B,LOW*ICON_B_RATIO,1);
 	//
@@ -110,7 +110,7 @@ func NewKLineBox(code, date string) *KLineBox {
 	//S:CROSS(MA3,CLOSE);
 	S := CROSS(MA3, CLOSE)
 	v3 := S.IndexOf(-1)
-	sell := stat.AnyToBool(v3)
+	sell := num.AnyToBool(v3)
 	//DRAWICON(S,HIGH*ICON_S_RATIO,2);
 	//df = df.Join(BLN, dvH, dvL, B, S)
 	//fmt.Println(df)
@@ -138,7 +138,7 @@ func NewKLineBox(code, date string) *KLineBox {
 		DoubleLow:      doubleLow,
 		Buy:            buy,
 		Sell:           sell,
-		TendencyPeriod: int(stat.AnyToInt64(tendencyPeriod)),
+		TendencyPeriod: int(num.AnyToInt64(tendencyPeriod)),
 	}
 	// 附加 趋势反转
 	qsfz := computeQuShiFanZhuan(tradeDate, OPEN, CLOSE, HIGH, LOW, VOL)

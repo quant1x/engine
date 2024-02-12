@@ -8,8 +8,8 @@ import (
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gox/concurrent"
 	"gitee.com/quant1x/gox/logger"
+	"gitee.com/quant1x/pandas"
 	. "gitee.com/quant1x/pandas/formula"
-	"gitee.com/quant1x/pandas/stat"
 )
 
 const (
@@ -74,9 +74,9 @@ func (m ModelNo1) Evaluate(securityCode string, result *concurrent.TreeMap[strin
 	ma20 := today.MA20
 
 	// 组织series
-	s5 := stat.NewSeries(r1MA5, ma5)
-	s10 := stat.NewSeries(r1MA10, ma10)
-	s20 := stat.NewSeries(r1MA20, ma20)
+	s5 := pandas.ToSeries(r1MA5, ma5)
+	s10 := pandas.ToSeries(r1MA10, ma10)
+	s20 := pandas.ToSeries(r1MA20, ma20)
 
 	// 两个金叉
 	c1 := CROSS(s5, s10)

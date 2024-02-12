@@ -3,7 +3,7 @@ package models
 import (
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/pandas/stat"
+	"gitee.com/quant1x/num"
 	"gitee.com/quant1x/ta-lib/linear"
 	"sort"
 )
@@ -45,11 +45,11 @@ func (this *ResultInfo) Predict() {
 	CLOSE := df.Col("close").Select(limit)
 	HIGH := df.Col("high").Select(limit)
 	LOW := df.Col("low").Select(limit)
-	lastClose := stat.AnyToFloat64(CLOSE.IndexOf(-1))
-	po := linear.CurveRegression(OPEN).IndexOf(-1).(stat.DType)
-	pc := linear.CurveRegression(CLOSE).IndexOf(-1).(stat.DType)
-	ph := linear.CurveRegression(HIGH).IndexOf(-1).(stat.DType)
-	pl := linear.CurveRegression(LOW).IndexOf(-1).(stat.DType)
+	lastClose := num.AnyToFloat64(CLOSE.IndexOf(-1))
+	po := linear.CurveRegression(OPEN).IndexOf(-1).(num.DType)
+	pc := linear.CurveRegression(CLOSE).IndexOf(-1).(num.DType)
+	ph := linear.CurveRegression(HIGH).IndexOf(-1).(num.DType)
+	pl := linear.CurveRegression(LOW).IndexOf(-1).(num.DType)
 	if po > lastClose {
 		this.Tendency = "高开"
 	} else if po == lastClose {

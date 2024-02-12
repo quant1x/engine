@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/securities"
-	"gitee.com/quant1x/gox/num"
+	"gitee.com/quant1x/num"
 )
 
 func GetStockCodeList() []string {

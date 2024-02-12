@@ -3,7 +3,7 @@ package trader
 import (
 	"fmt"
 	"gitee.com/quant1x/engine/config"
-	"gitee.com/quant1x/gox/num"
+	"gitee.com/quant1x/num"
 	"math"
 )
 

@@ -4,10 +4,9 @@ import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gox/num"
+	"gitee.com/quant1x/num"
 	"gitee.com/quant1x/pandas"
 	. "gitee.com/quant1x/pandas/formula"
-	"gitee.com/quant1x/pandas/stat"
 	"math"
 )
 
@@ -64,16 +63,16 @@ func KLineShape(df pandas.DataFrame, securityCode string) (shape ShapeType) {
 	m := df.IndexOf(-1)
 	// 1.1 最高价
 	tmpValue, _ := m["high"]
-	HIGH := stat.AnyToFloat64(tmpValue)
+	HIGH := num.AnyToFloat64(tmpValue)
 	// 1.2 最低价
 	tmpValue, _ = m["low"]
-	LOW := stat.AnyToFloat64(tmpValue)
+	LOW := num.AnyToFloat64(tmpValue)
 	// 1.3 开盘价
 	tmpValue, _ = m["open"]
-	OPEN := stat.AnyToFloat64(tmpValue)
+	OPEN := num.AnyToFloat64(tmpValue)
 	// 1.4 收盘价
 	tmpValue, _ = m["close"]
-	CLOSE := stat.AnyToFloat64(tmpValue)
+	CLOSE := num.AnyToFloat64(tmpValue)
 	// 1.5 昨日收盘价
 	//tmpValue, _ = m["last_close"]
 	//LAST_CLOSE := stat.AnyToFloat64(tmpValue)
@@ -178,9 +177,9 @@ func KLineShape(df pandas.DataFrame, securityCode string) (shape ShapeType) {
 	}
 	// 10. 尾盘抢筹
 	tmpValue, _ = m["open_turnz"]
-	openTurnZ := stat.AnyToFloat64(tmpValue)
+	openTurnZ := num.AnyToFloat64(tmpValue)
 	tmpValue, _ = m["close_turnz"]
-	closeTurnZ := stat.AnyToFloat64(tmpValue)
+	closeTurnZ := num.AnyToFloat64(tmpValue)
 	if openTurnZ > 0 && closeTurnZ > 0 && closeTurnZ > openTurnZ {
 		shape |= KLineShapeGrabChipInFinalRound
 	}

@@ -9,7 +9,6 @@ import (
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/runtime"
-	"gitee.com/quant1x/pandas/stat"
 	"strconv"
 	"sync"
 )
@@ -91,7 +90,7 @@ func GetHistoricalTradingData(securityCode, tradeDate string) []quotes.TickTrans
 		start += offset
 	}
 	// 这里需要反转一下
-	hs = stat.Reverse(hs)
+	hs = api.Reverse(hs)
 	for _, v := range hs {
 		history = append(history, v.List...)
 	}
@@ -116,7 +115,7 @@ func GetAllHistoricalTradingData(securityCode string) {
 	tEnd := exchange.Today()
 	dateRange := exchange.TradingDateRange(tStart, tEnd)
 	// 反转切片
-	dateRange = stat.Reverse(dateRange)
+	dateRange = api.Reverse(dateRange)
 	if len(dateRange) == 0 {
 		return
 	}
@@ -240,7 +239,7 @@ func CheckoutTransactionData(securityCode string, date string, ignorePreviousDat
 			break
 		}
 		var tmp quotes.TransactionReply
-		tmpList := stat.Reverse(data.List)
+		tmpList := api.Reverse(data.List)
 		for _, td := range tmpList {
 			// 追加包含startTime之后的记录
 			if td.Time >= startTime {
@@ -248,7 +247,7 @@ func CheckoutTransactionData(securityCode string, date string, ignorePreviousDat
 				tmp.List = append(tmp.List, td)
 			}
 		}
-		tmp.List = stat.Reverse(tmp.List)
+		tmp.List = api.Reverse(tmp.List)
 		hs = append(hs, tmp)
 		if tmp.Count < offset {
 			// 已经是最早的记录
@@ -258,7 +257,7 @@ func CheckoutTransactionData(securityCode string, date string, ignorePreviousDat
 		start += offset
 	}
 	// 这里需要反转一下
-	hs = stat.Reverse(hs)
+	hs = api.Reverse(hs)
 	for _, v := range hs {
 		history = append(history, v.List...)
 	}

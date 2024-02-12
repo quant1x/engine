@@ -3,8 +3,9 @@ package factors
 import (
 	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/num"
+	"gitee.com/quant1x/pandas"
 	. "gitee.com/quant1x/pandas/formula"
-	"gitee.com/quant1x/pandas/stat"
 )
 
 // QuShiFanZhuan 趋势反转
@@ -18,7 +19,7 @@ type QuShiFanZhuan struct {
 }
 
 // 趋势反转
-func computeQuShiFanZhuan(date string, OPEN, CLOSE, HIGH, LOW, VOL stat.Series) *QuShiFanZhuan {
+func computeQuShiFanZhuan(date string, OPEN, CLOSE, HIGH, LOW, VOL pandas.Series) *QuShiFanZhuan {
 	CURRBARSCOUNT := utils.IndexReverse(OPEN)
 	// {趋势反转, V1.0.7, 2023-09-15}
 	// MV5:=MA(VOL,5);
@@ -54,7 +55,7 @@ func computeQuShiFanZhuan(date string, OPEN, CLOSE, HIGH, LOW, VOL stat.Series) 
 	// B:CROSS(QSVP,QSVP3),NODRAW;
 	// DRAWICON(B,CLOSE,1);
 	vpBuy := CROSS(vp, vp3)
-	fz := stat.AnyToBool(vpBuy.IndexOf(-1))
+	fz := num.AnyToBool(vpBuy.IndexOf(-1))
 	qsfz := QuShiFanZhuan{
 		QSFZ: fz,
 		CV:   utils.SeriesIndexOf(cv, -1),

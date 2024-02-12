@@ -7,7 +7,7 @@ import (
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/progressbar"
-	"gitee.com/quant1x/pandas/stat"
+	"gitee.com/quant1x/num"
 )
 
 // 板块扫描
@@ -30,7 +30,7 @@ func scanSectorSnapshots(pbarIndex *int, blockType securities.BlockType) (list [
 	fmt.Println()
 	btn, ok := securities.BlockTypeNameByTypeCode(blockType)
 	if !ok {
-		btn = stat.AnyToString(blockType)
+		btn = num.AnyToString(blockType)
 	}
 	bar := progressbar.NewBar(*pbarIndex, "执行[扫描"+btn+"板块指数]", blockCount)
 	*pbarIndex++

@@ -2,7 +2,7 @@ package models
 
 import (
 	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/gox/num"
+	"gitee.com/quant1x/num"
 )
 
 // FeatureToSnapshot 特征缓存数据转快照

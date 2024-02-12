@@ -3,7 +3,7 @@ package config
 import (
 	"fmt"
 	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/pandas/stat"
+	"gitee.com/quant1x/num"
 	"gitee.com/quant1x/pkg/yaml"
 	"regexp"
 	"strings"
@@ -33,11 +33,11 @@ func (this NumberRange) String() string {
 }
 
 func (this *NumberRange) setMinDefault() {
-	this.min = stat.MinFloat64
+	this.min = num.MinFloat64
 }
 
 func (this *NumberRange) setMaxDefault() {
-	this.max = stat.MaxFloat64
+	this.max = num.MaxFloat64
 }
 
 func (this *NumberRange) init() {
@@ -84,13 +84,13 @@ func (this *NumberRange) Parse(text string) error {
 		// 如果begin为空, 设置最小默认值
 		this.setMinDefault()
 	} else {
-		this.min = stat.AnyToFloat64(begin)
+		this.min = num.AnyToFloat64(begin)
 	}
 	if len(end) == 0 {
 		// 如果end为空, 设置最大默认值
 		this.setMaxDefault()
 	} else {
-		this.max = stat.AnyToFloat64(end)
+		this.max = num.AnyToFloat64(end)
 	}
 	if this.min > this.max {
 		this.min, this.max = this.max, this.min

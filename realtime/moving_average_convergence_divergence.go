@@ -2,8 +2,8 @@ package realtime
 
 import (
 	"gitee.com/quant1x/engine/factors"
+	"gitee.com/quant1x/pandas"
 	. "gitee.com/quant1x/pandas/formula"
-	"gitee.com/quant1x/pandas/stat"
 )
 
 // MovingAverageConvergenceDivergence 平滑异同移动平均线(Moving Average Convergence Divergence)
@@ -12,7 +12,7 @@ import (
 //	DIF:EMA(CLOSE,SHORT)-EMA(CLOSE,LONG);
 //	DEA:EMA(DIF,MID)
 //	MACD:(DIF-DEA)*2,COLORSTICK;
-func MovingAverageConvergenceDivergence(CLOSE stat.Series, pShort, pLong, pMid int) (SHORT, LONG, DIF, DEA, MACD float64) {
+func MovingAverageConvergenceDivergence(CLOSE pandas.Series, pShort, pLong, pMid int) (SHORT, LONG, DIF, DEA, MACD float64) {
 	//dif1 := df1["d1"].(float64)
 	//	dif2 := df1["d2"].(float64)
 	//	dif1 = EmaIncr(lastClose, dif1, AlphaOfEMA(SHORT))

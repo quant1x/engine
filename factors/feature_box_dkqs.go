@@ -2,8 +2,8 @@ package factors
 
 import (
 	"gitee.com/quant1x/engine/utils"
+	"gitee.com/quant1x/pandas"
 	. "gitee.com/quant1x/pandas/formula"
-	"gitee.com/quant1x/pandas/stat"
 )
 
 // DuoKongQuShi 多空趋势
@@ -17,7 +17,7 @@ type DuoKongQuShi struct {
 }
 
 // 多空趋势
-func computeDuoKongQuShi(OPEN, CLOSE, HIGH, LOW stat.Series) *DuoKongQuShi {
+func computeDuoKongQuShi(OPEN, CLOSE, HIGH, LOW pandas.Series) *DuoKongQuShi {
 	//{多空趋势, V1.1.2, 2023-09-13}
 	//{量能柱}
 	//SCALE:=100;

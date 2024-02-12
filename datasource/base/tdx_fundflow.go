@@ -4,8 +4,8 @@ import (
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx"
 	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/num"
 	"gitee.com/quant1x/pandas"
-	"gitee.com/quant1x/pandas/stat"
 	"strconv"
 	"strings"
 )
@@ -85,11 +85,11 @@ func splitContent(content, unit string) (headers []string, lines [][]string) {
 							}
 						}
 						if fs, _, ok := strings.Cut(tmp, "万"); ok {
-							tf = stat.AnyToFloat64(fs) * 10000
+							tf = num.AnyToFloat64(fs) * 10000
 						} else if fs, _, ok := strings.Cut(tmp, "亿"); ok {
-							tf = stat.AnyToFloat64(fs) * 100000000
+							tf = num.AnyToFloat64(fs) * 100000000
 						} else {
-							tf = stat.AnyToFloat64(fs)
+							tf = num.AnyToFloat64(fs)
 						}
 						f := strconv.FormatFloat(tf, 'f', -1, 64)
 						cols = append(cols, f)

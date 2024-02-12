@@ -3,7 +3,7 @@ package utils
 import (
 	"errors"
 	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/pandas/stat"
+	"gitee.com/quant1x/num"
 	"golang.org/x/sys/cpu"
 )
 
@@ -15,7 +15,7 @@ var (
 func Optimize() {
 	// 如果支持AVX2就打开
 	if cpu.X86.HasAVX2 && cpu.X86.HasFMA {
-		stat.SetAvx2Enabled(true)
+		num.SetAvx2Enabled(true)
 	} else {
 		logger.Warn(ErrAccelerationNotSupported)
 	}

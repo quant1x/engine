@@ -6,14 +6,14 @@ import (
 	"gitee.com/quant1x/gotdx"
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/pandas/stat"
+	"gitee.com/quant1x/num"
 	"strconv"
 	"time"
 )
 
 // 获取财务数据
 func getFinanceInfo(securityCode, featureDate string) (capital, totalCapital float64, ipoDate, updateDate string) {
-	basicDate := uint32(stat.AnyToInt64(exchange.MARKET_CN_FIRST_DATE))
+	basicDate := uint32(num.AnyToInt64(exchange.MARKET_CN_FIRST_DATE))
 	for i := 0; i < quotes.DefaultRetryTimes; i++ {
 		securityCode := exchange.CorrectSecurityCode(securityCode)
 		tdxApi := gotdx.GetTdxApi()

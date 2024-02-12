@@ -5,7 +5,7 @@ import (
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/gox/exception"
 	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/gox/num"
+	"gitee.com/quant1x/num"
 )
 
 func init() {

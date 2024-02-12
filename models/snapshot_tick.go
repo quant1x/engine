@@ -8,8 +8,8 @@ import (
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/gox/num"
 	"gitee.com/quant1x/gox/progressbar"
+	"gitee.com/quant1x/num"
 	"sync"
 )
 

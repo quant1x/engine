@@ -8,7 +8,6 @@ import (
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/pandas/stat"
 )
 
 var (
@@ -107,7 +106,7 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 			break
 		}
 	}
-	hs = stat.Reverse(hs)
+	hs = api.Reverse(hs)
 	startDate = exchange.FixTradeDate(startDate)
 	for _, v := range hs {
 		for _, row := range v.List {

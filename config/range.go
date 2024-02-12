@@ -3,7 +3,7 @@ package config
 import (
 	"gitee.com/quant1x/gox/exception"
 	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/pandas/stat"
+	"gitee.com/quant1x/num"
 	"regexp"
 	"strings"
 	_ "unsafe"
@@ -37,8 +37,8 @@ func ParseRange[T ValueType](text string) ValueRange[T] {
 		logger.Fatalf("text=%s, %+v", text, ErrTimeFormat)
 	}
 	var begin, end T
-	begin = stat.GenericParse[T](strings.TrimSpace(arr[0]))
-	end = stat.GenericParse[T](strings.TrimSpace(arr[1]))
+	begin = num.GenericParse[T](strings.TrimSpace(arr[0]))
+	end = num.GenericParse[T](strings.TrimSpace(arr[1]))
 	if begin > end {
 		begin, end = end, begin
 	}

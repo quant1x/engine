@@ -3,8 +3,8 @@ package base
 import (
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/num"
 	"gitee.com/quant1x/pandas"
-	"gitee.com/quant1x/pandas/stat"
 	"sync"
 )
 
@@ -127,17 +127,17 @@ func periodKLine(checkPeriod func(date ...string) (s, e string), securityCode st
 			//}
 		}
 		// 周线开盘价以第一天OPEN为准
-		if kline.Open == stat.DType(0) {
+		if kline.Open == num.DType(0) {
 			kline.Open = v.Open
 		}
 		// 周线的收盘价以本周最后一个交易日的CLOSE为准
 		kline.Close = v.Close
-		if kline.High == stat.DType(0) {
+		if kline.High == num.DType(0) {
 			kline.High = v.High
 		} else if kline.High < v.High {
 			kline.High = v.High
 		}
-		if kline.Low == stat.DType(0) {
+		if kline.Low == num.DType(0) {
 			kline.Low = v.Low
 		} else if kline.Low > v.Low {
 			kline.Low = v.Low

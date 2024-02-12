@@ -7,8 +7,7 @@ import (
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/num"
-	"gitee.com/quant1x/pandas/stat"
+	"gitee.com/quant1x/num"
 )
 
 const (
@@ -173,7 +172,7 @@ func (this *F10) TurnZ(v any) float64 {
 	if freeCapital == 0 {
 		return 0.00
 	}
-	n := stat.AnyToFloat64(v)
+	n := num.AnyToFloat64(v)
 	turnoverRateZ := num.ChangeRate(freeCapital, n)
 	turnoverRateZ *= 10000
 	turnoverRateZ = num.Decimal(turnoverRateZ)

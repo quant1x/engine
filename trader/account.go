@@ -4,7 +4,7 @@ import (
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/gox/coroutine"
 	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/gox/num"
+	"gitee.com/quant1x/num"
 )
 
 var (

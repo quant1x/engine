@@ -1,53 +1,54 @@
 package utils
 
 import (
-	"gitee.com/quant1x/pandas/stat"
+	"gitee.com/quant1x/num"
+	"gitee.com/quant1x/pandas"
 )
 
-func IndexReverse(s stat.Series) stat.Series {
+func IndexReverse(s pandas.Series) pandas.Series {
 	var indexes []int
 	rows := s.Len()
 	s.Apply(func(idx int, v any) {
 		indexes = append(indexes, rows-idx)
 	})
-	return stat.NewSeries(indexes...)
+	return pandas.ToSeries(indexes...)
 }
 
 // SeriesIndexOf 获取序列第n索引的值
 //
 // Deprecated: 推荐使用 Float64IndexOf
-func SeriesIndexOf(s stat.Series, n int) float64 {
+func SeriesIndexOf(s pandas.Series, n int) float64 {
 	v := s.IndexOf(n)
-	return stat.AnyToFloat64(v)
+	return num.AnyToFloat64(v)
 }
 
 // SeriesChangeRate 计算两个序列的净增长
-func SeriesChangeRate(base, v stat.Series) stat.Series {
+func SeriesChangeRate(base, v pandas.Series) pandas.Series {
 	chg := v.Div(base).Sub(1.00).Mul(100)
 	return chg
 }
 
-func StringIndexOf(s stat.Series, n int) string {
+func StringIndexOf(s pandas.Series, n int) string {
 	v := s.IndexOf(n)
-	return stat.AnyToString(v)
+	return num.AnyToString(v)
 }
 
-func BoolIndexOf(s stat.Series, n int) bool {
+func BoolIndexOf(s pandas.Series, n int) bool {
 	v := s.IndexOf(n)
-	return stat.AnyToBool(v)
+	return num.AnyToBool(v)
 }
 
-func Float64IndexOf(s stat.Series, n int) float64 {
+func Float64IndexOf(s pandas.Series, n int) float64 {
 	v := s.IndexOf(n)
-	return stat.AnyToFloat64(v)
+	return num.AnyToFloat64(v)
 }
 
-func IntegerIndexOf(s stat.Series, n int) int {
+func IntegerIndexOf(s pandas.Series, n int) int {
 	v := s.IndexOf(n)
-	return int(stat.AnyToInt64(v))
+	return int(num.AnyToInt64(v))
 }
 
-func Int64IndexOf(s stat.Series, n int) int64 {
+func Int64IndexOf(s pandas.Series, n int) int64 {
 	v := s.IndexOf(n)
-	return stat.AnyToInt64(v)
+	return num.AnyToInt64(v)
 }

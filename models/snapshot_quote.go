@@ -7,7 +7,7 @@ import (
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/gox/num"
+	"gitee.com/quant1x/num"
 )
 
 func QuoteSnapshotFromProtocol(v quotes.Snapshot) factors.QuoteSnapshot {

@@ -9,9 +9,9 @@ import (
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
+	"gitee.com/quant1x/num"
 	"gitee.com/quant1x/pandas"
 	. "gitee.com/quant1x/pandas/formula"
-	"gitee.com/quant1x/pandas/stat"
 	"reflect"
 	"strconv"
 )
@@ -115,32 +115,32 @@ func GetCacheKLine(code string, adjust ...bool) pandas.DataFrame {
 		if idx+1 < total {
 			return v
 		} else {
-			tmp := stat.Any2DType(v)
-			ms := stat.DType(exchange.Minutes(lastDay)) / float64(exchange.CN_TOTALFZNUM)
+			tmp := num.Any2DType(v)
+			ms := num.DType(exchange.Minutes(lastDay)) / float64(exchange.CN_TOTALFZNUM)
 			tmp /= ms
 			return tmp
 		}
 	}, true)
 
 	// 链接量比序列
-	oLB := pandas.NewSeries(stat.SERIES_TYPE_DTYPE, "lb", lb.DTypes())
-	oMV5 := pandas.NewSeries(stat.SERIES_TYPE_DTYPE, "mv5", mv5.Div(exchange.CN_DEFAULT_TOTALFZNUM).DTypes())
+	oLB := pandas.NewSeries(pandas.SERIES_TYPE_DTYPE, "lb", lb.DTypes())
+	oMV5 := pandas.NewSeries(pandas.SERIES_TYPE_DTYPE, "mv5", mv5.Div(exchange.CN_DEFAULT_TOTALFZNUM).DTypes())
 	vr := VOL.Div(REF(VOL, 1))
-	oVR := pandas.NewSeries(stat.SERIES_TYPE_DTYPE, "vr", vr.DTypes())
+	oVR := pandas.NewSeries(pandas.SERIES_TYPE_DTYPE, "vr", vr.DTypes())
 	CLOSE := df.Col("close")
 	chg5 := CLOSE.Div(REF(CLOSE, 5)).Sub(1.00).Mul(100)
 	chg10 := CLOSE.Div(REF(CLOSE, 10)).Sub(1.00).Mul(100)
-	oChg5 := pandas.NewSeries(stat.SERIES_TYPE_FLOAT64, "chg5", chg5.DTypes())
-	oChg10 := pandas.NewSeries(stat.SERIES_TYPE_FLOAT64, "chg10", chg10.DTypes())
+	oChg5 := pandas.NewSeries(pandas.SERIES_TYPE_FLOAT64, "chg5", chg5.DTypes())
+	oChg10 := pandas.NewSeries(pandas.SERIES_TYPE_FLOAT64, "chg10", chg10.DTypes())
 	ma5 := MA(CLOSE, 5)
 	ma10 := MA(CLOSE, 10)
 	ma20 := MA(CLOSE, 20)
-	oMA5 := pandas.NewSeries(stat.SERIES_TYPE_FLOAT64, "ma5", ma5.DTypes())
-	oMA10 := pandas.NewSeries(stat.SERIES_TYPE_FLOAT64, "ma10", ma10.DTypes())
-	oMA20 := pandas.NewSeries(stat.SERIES_TYPE_FLOAT64, "ma20", ma20.DTypes())
+	oMA5 := pandas.NewSeries(pandas.SERIES_TYPE_FLOAT64, "ma5", ma5.DTypes())
+	oMA10 := pandas.NewSeries(pandas.SERIES_TYPE_FLOAT64, "ma10", ma10.DTypes())
+	oMA20 := pandas.NewSeries(pandas.SERIES_TYPE_FLOAT64, "ma20", ma20.DTypes())
 	AMOUNT := df.Col("amount")
 	averagePrice := AMOUNT.Div(VOL)
-	oAP := pandas.NewSeries(stat.SERIES_TYPE_FLOAT64, "ap", averagePrice.DTypes())
+	oAP := pandas.NewSeries(pandas.SERIES_TYPE_FLOAT64, "ap", averagePrice.DTypes())
 	df = df.Join(oLB, oMV5, oVR, oChg5, oChg10, oMA5, oMA10, oMA20, oAP)
 	return df
 }
@@ -226,7 +226,7 @@ func GetKLineAll(securityCode string, argv ...int) pandas.DataFrame {
 			break
 		}
 	}
-	hs = stat.Reverse(hs)
+	hs = api.Reverse(hs)
 	startDate = exchange.FixTradeDate(startDate)
 	for _, v := range hs {
 		for _, row := range v.List {
@@ -300,8 +300,8 @@ func GetKLineAll(securityCode string, argv ...int) pandas.DataFrame {
 	LAST := CLOSE.Shift(1)
 	rate := CLOSE.Sub(LAST).Div(LAST).Mul(100.00).DTypes()
 
-	lc := pandas.NewSeries(stat.SERIES_TYPE_FLOAT64, "last_close", LAST.DTypes())
-	tr := pandas.NewSeries(stat.SERIES_TYPE_FLOAT64, "change_rate", rate)
+	lc := pandas.NewSeries(pandas.SERIES_TYPE_FLOAT64, "last_close", LAST.DTypes())
+	tr := pandas.NewSeries(pandas.SERIES_TYPE_FLOAT64, "change_rate", rate)
 	df = df.Join(lc, tr)
 	df = df.Select(FBarsWideFields)
 	if df.Nrow() > 0 {
@@ -320,14 +320,14 @@ func attachVolume(df pandas.DataFrame, securityCode string) pandas.DataFrame {
 	}
 	buyVolumes := []int64{}
 	sellVolumes := []int64{}
-	buyAmounts := []stat.DType{}
-	sellAmounts := []stat.DType{}
+	buyAmounts := []num.DType{}
+	sellAmounts := []num.DType{}
 
 	openVolumes := []int64{}
-	openTurnZ := []stat.DType{}
+	openTurnZ := []num.DType{}
 	openUnmatched := []int64{}
 	closeVolumes := []int64{}
-	closeTurnZ := []stat.DType{}
+	closeTurnZ := []num.DType{}
 	closeUnmatched := []int64{}
 	for _, tradeDate := range dates {
 		tmp := base.CheckoutTransactionData(securityCode, tradeDate, true)
@@ -347,18 +347,18 @@ func attachVolume(df pandas.DataFrame, securityCode string) pandas.DataFrame {
 		closeUnmatched = append(closeUnmatched, summary.CloseUnmatched)
 	}
 	// 调整字段名
-	bv := pandas.NewSeries(stat.SERIES_TYPE_INT64, "outer_volume", buyVolumes)
-	sv := pandas.NewSeries(stat.SERIES_TYPE_INT64, "inner_volume", sellVolumes)
-	ba := pandas.NewSeries(stat.SERIES_TYPE_DTYPE, "outer_amount", buyAmounts)
-	sa := pandas.NewSeries(stat.SERIES_TYPE_DTYPE, "inner_amount", sellAmounts)
+	bv := pandas.NewSeries(pandas.SERIES_TYPE_INT64, "outer_volume", buyVolumes)
+	sv := pandas.NewSeries(pandas.SERIES_TYPE_INT64, "inner_volume", sellVolumes)
+	ba := pandas.NewSeries(pandas.SERIES_TYPE_DTYPE, "outer_amount", buyAmounts)
+	sa := pandas.NewSeries(pandas.SERIES_TYPE_DTYPE, "inner_amount", sellAmounts)
 
 	// 新增字段
-	ov := pandas.NewSeries(stat.SERIES_TYPE_INT64, "open_volume", openVolumes)
-	ot := pandas.NewSeries(stat.SERIES_TYPE_FLOAT64, "open_turnz", openTurnZ)
-	ou := pandas.NewSeries(stat.SERIES_TYPE_INT64, "open_unmatched", openUnmatched)
-	cv := pandas.NewSeries(stat.SERIES_TYPE_INT64, "close_volume", closeVolumes)
-	ct := pandas.NewSeries(stat.SERIES_TYPE_FLOAT64, "close_turnz", closeTurnZ)
-	cu := pandas.NewSeries(stat.SERIES_TYPE_INT64, "close_unmatched", closeUnmatched)
+	ov := pandas.NewSeries(pandas.SERIES_TYPE_INT64, "open_volume", openVolumes)
+	ot := pandas.NewSeries(pandas.SERIES_TYPE_FLOAT64, "open_turnz", openTurnZ)
+	ou := pandas.NewSeries(pandas.SERIES_TYPE_INT64, "open_unmatched", openUnmatched)
+	cv := pandas.NewSeries(pandas.SERIES_TYPE_INT64, "close_volume", closeVolumes)
+	ct := pandas.NewSeries(pandas.SERIES_TYPE_FLOAT64, "close_turnz", closeTurnZ)
+	cu := pandas.NewSeries(pandas.SERIES_TYPE_INT64, "close_unmatched", closeUnmatched)
 
 	df = df.Join(bv, sv, ba, sa, ov, ot, ou, cv, ct, cu)
 	return df

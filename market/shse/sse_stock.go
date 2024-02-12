@@ -6,7 +6,7 @@ import (
 	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/http"
-	"gitee.com/quant1x/pandas/stat"
+	"gitee.com/quant1x/num"
 	urlpkg "net/url"
 )
 
@@ -73,7 +73,7 @@ func GetSecurityList() (list []sseSecurityEntity, err error) {
 	for _, vs := range raw.List {
 		arr := []string{}
 		for _, v := range vs {
-			arr = append(arr, stat.AnyToString(v))
+			arr = append(arr, num.AnyToString(v))
 		}
 		var info sseSecurityEntity
 		_ = api.Convert(arr, &info)

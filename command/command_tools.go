@@ -3,7 +3,7 @@ package command
 import (
 	"fmt"
 	"gitee.com/quant1x/engine/tools"
-	"gitee.com/quant1x/pandas/stat"
+	"gitee.com/quant1x/num"
 	"gitee.com/quant1x/pkg/tools/tail"
 	cmder "github.com/spf13/cobra"
 	"slices"
@@ -53,7 +53,7 @@ func toolsInitTail() {
 				taiConfig.Follow = true
 				taiConfig.Poll = true
 			} else if args[0][:1] == "-" {
-				n = int(stat.AnyToInt64(args[0]))
+				n = int(num.AnyToInt64(args[0]))
 				n = -n
 			}
 			name := args[1]

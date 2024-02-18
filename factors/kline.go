@@ -114,18 +114,18 @@ func KLineToWeekly(kline pandas.DataFrame) pandas.DataFrame {
 		}
 		if last {
 			df0 := pandas.NewDataFrame(
-				pandas.NewSeries(pandas.SERIES_TYPE_STRING, "date", wdate),
-				pandas.NewSeries(pandas.SERIES_TYPE_DTYPE, "open", o),
-				pandas.NewSeries(pandas.SERIES_TYPE_DTYPE, "close", c),
-				pandas.NewSeries(pandas.SERIES_TYPE_DTYPE, "high", h),
-				pandas.NewSeries(pandas.SERIES_TYPE_DTYPE, "low", l),
-				pandas.NewSeries(pandas.SERIES_TYPE_DTYPE, "volume", v),
-				pandas.NewSeries(pandas.SERIES_TYPE_DTYPE, "amount", a),
-				pandas.NewSeries(pandas.SERIES_TYPE_DTYPE, "bv", bv),
-				pandas.NewSeries(pandas.SERIES_TYPE_DTYPE, "sv", sv),
-				pandas.NewSeries(pandas.SERIES_TYPE_DTYPE, "ba", ba),
-				pandas.NewSeries(pandas.SERIES_TYPE_DTYPE, "sa", sa),
-				pandas.NewSeries(pandas.SERIES_TYPE_DTYPE, "zf", zf),
+				pandas.NewSeriesWithType(pandas.SERIES_TYPE_STRING, "date", wdate),
+				pandas.NewSeriesWithType(pandas.SERIES_TYPE_DTYPE, "open", o),
+				pandas.NewSeriesWithType(pandas.SERIES_TYPE_DTYPE, "close", c),
+				pandas.NewSeriesWithType(pandas.SERIES_TYPE_DTYPE, "high", h),
+				pandas.NewSeriesWithType(pandas.SERIES_TYPE_DTYPE, "low", l),
+				pandas.NewSeriesWithType(pandas.SERIES_TYPE_DTYPE, "volume", v),
+				pandas.NewSeriesWithType(pandas.SERIES_TYPE_DTYPE, "amount", a),
+				pandas.NewSeriesWithType(pandas.SERIES_TYPE_DTYPE, "bv", bv),
+				pandas.NewSeriesWithType(pandas.SERIES_TYPE_DTYPE, "sv", sv),
+				pandas.NewSeriesWithType(pandas.SERIES_TYPE_DTYPE, "ba", ba),
+				pandas.NewSeriesWithType(pandas.SERIES_TYPE_DTYPE, "sa", sa),
+				pandas.NewSeriesWithType(pandas.SERIES_TYPE_DTYPE, "zf", zf),
 			)
 			df = df.Concat(df0)
 			wdate = ""

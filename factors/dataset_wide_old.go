@@ -123,24 +123,24 @@ func GetCacheKLine(code string, adjust ...bool) pandas.DataFrame {
 	}, true)
 
 	// 链接量比序列
-	oLB := pandas.NewSeries(pandas.SERIES_TYPE_DTYPE, "lb", lb.DTypes())
-	oMV5 := pandas.NewSeries(pandas.SERIES_TYPE_DTYPE, "mv5", mv5.Div(exchange.CN_DEFAULT_TOTALFZNUM).DTypes())
+	oLB := pandas.NewSeriesWithType(pandas.SERIES_TYPE_DTYPE, "lb", lb.DTypes())
+	oMV5 := pandas.NewSeriesWithType(pandas.SERIES_TYPE_DTYPE, "mv5", mv5.Div(exchange.CN_DEFAULT_TOTALFZNUM).DTypes())
 	vr := VOL.Div(REF(VOL, 1))
-	oVR := pandas.NewSeries(pandas.SERIES_TYPE_DTYPE, "vr", vr.DTypes())
+	oVR := pandas.NewSeriesWithType(pandas.SERIES_TYPE_DTYPE, "vr", vr.DTypes())
 	CLOSE := df.Col("close")
 	chg5 := CLOSE.Div(REF(CLOSE, 5)).Sub(1.00).Mul(100)
 	chg10 := CLOSE.Div(REF(CLOSE, 10)).Sub(1.00).Mul(100)
-	oChg5 := pandas.NewSeries(pandas.SERIES_TYPE_FLOAT64, "chg5", chg5.DTypes())
-	oChg10 := pandas.NewSeries(pandas.SERIES_TYPE_FLOAT64, "chg10", chg10.DTypes())
+	oChg5 := pandas.NewSeriesWithType(pandas.SERIES_TYPE_FLOAT64, "chg5", chg5.DTypes())
+	oChg10 := pandas.NewSeriesWithType(pandas.SERIES_TYPE_FLOAT64, "chg10", chg10.DTypes())
 	ma5 := MA(CLOSE, 5)
 	ma10 := MA(CLOSE, 10)
 	ma20 := MA(CLOSE, 20)
-	oMA5 := pandas.NewSeries(pandas.SERIES_TYPE_FLOAT64, "ma5", ma5.DTypes())
-	oMA10 := pandas.NewSeries(pandas.SERIES_TYPE_FLOAT64, "ma10", ma10.DTypes())
-	oMA20 := pandas.NewSeries(pandas.SERIES_TYPE_FLOAT64, "ma20", ma20.DTypes())
+	oMA5 := pandas.NewSeriesWithType(pandas.SERIES_TYPE_FLOAT64, "ma5", ma5.DTypes())
+	oMA10 := pandas.NewSeriesWithType(pandas.SERIES_TYPE_FLOAT64, "ma10", ma10.DTypes())
+	oMA20 := pandas.NewSeriesWithType(pandas.SERIES_TYPE_FLOAT64, "ma20", ma20.DTypes())
 	AMOUNT := df.Col("amount")
 	averagePrice := AMOUNT.Div(VOL)
-	oAP := pandas.NewSeries(pandas.SERIES_TYPE_FLOAT64, "ap", averagePrice.DTypes())
+	oAP := pandas.NewSeriesWithType(pandas.SERIES_TYPE_FLOAT64, "ap", averagePrice.DTypes())
 	df = df.Join(oLB, oMV5, oVR, oChg5, oChg10, oMA5, oMA10, oMA20, oAP)
 	return df
 }
@@ -300,8 +300,8 @@ func GetKLineAll(securityCode string, argv ...int) pandas.DataFrame {
 	LAST := CLOSE.Shift(1)
 	rate := CLOSE.Sub(LAST).Div(LAST).Mul(100.00).DTypes()
 
-	lc := pandas.NewSeries(pandas.SERIES_TYPE_FLOAT64, "last_close", LAST.DTypes())
-	tr := pandas.NewSeries(pandas.SERIES_TYPE_FLOAT64, "change_rate", rate)
+	lc := pandas.NewSeriesWithType(pandas.SERIES_TYPE_FLOAT64, "last_close", LAST.DTypes())
+	tr := pandas.NewSeriesWithType(pandas.SERIES_TYPE_FLOAT64, "change_rate", rate)
 	df = df.Join(lc, tr)
 	df = df.Select(FBarsWideFields)
 	if df.Nrow() > 0 {
@@ -347,18 +347,18 @@ func attachVolume(df pandas.DataFrame, securityCode string) pandas.DataFrame {
 		closeUnmatched = append(closeUnmatched, summary.CloseUnmatched)
 	}
 	// 调整字段名
-	bv := pandas.NewSeries(pandas.SERIES_TYPE_INT64, "outer_volume", buyVolumes)
-	sv := pandas.NewSeries(pandas.SERIES_TYPE_INT64, "inner_volume", sellVolumes)
-	ba := pandas.NewSeries(pandas.SERIES_TYPE_DTYPE, "outer_amount", buyAmounts)
-	sa := pandas.NewSeries(pandas.SERIES_TYPE_DTYPE, "inner_amount", sellAmounts)
+	bv := pandas.NewSeriesWithType(pandas.SERIES_TYPE_INT64, "outer_volume", buyVolumes)
+	sv := pandas.NewSeriesWithType(pandas.SERIES_TYPE_INT64, "inner_volume", sellVolumes)
+	ba := pandas.NewSeriesWithType(pandas.SERIES_TYPE_DTYPE, "outer_amount", buyAmounts)
+	sa := pandas.NewSeriesWithType(pandas.SERIES_TYPE_DTYPE, "inner_amount", sellAmounts)
 
 	// 新增字段
-	ov := pandas.NewSeries(pandas.SERIES_TYPE_INT64, "open_volume", openVolumes)
-	ot := pandas.NewSeries(pandas.SERIES_TYPE_FLOAT64, "open_turnz", openTurnZ)
-	ou := pandas.NewSeries(pandas.SERIES_TYPE_INT64, "open_unmatched", openUnmatched)
-	cv := pandas.NewSeries(pandas.SERIES_TYPE_INT64, "close_volume", closeVolumes)
-	ct := pandas.NewSeries(pandas.SERIES_TYPE_FLOAT64, "close_turnz", closeTurnZ)
-	cu := pandas.NewSeries(pandas.SERIES_TYPE_INT64, "close_unmatched", closeUnmatched)
+	ov := pandas.NewSeriesWithType(pandas.SERIES_TYPE_INT64, "open_volume", openVolumes)
+	ot := pandas.NewSeriesWithType(pandas.SERIES_TYPE_FLOAT64, "open_turnz", openTurnZ)
+	ou := pandas.NewSeriesWithType(pandas.SERIES_TYPE_INT64, "open_unmatched", openUnmatched)
+	cv := pandas.NewSeriesWithType(pandas.SERIES_TYPE_INT64, "close_volume", closeVolumes)
+	ct := pandas.NewSeriesWithType(pandas.SERIES_TYPE_FLOAT64, "close_turnz", closeTurnZ)
+	cu := pandas.NewSeriesWithType(pandas.SERIES_TYPE_INT64, "close_unmatched", closeUnmatched)
 
 	df = df.Join(bv, sv, ba, sa, ov, ot, ou, cv, ct, cu)
 	return df

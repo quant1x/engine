@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/pandas"
+	pd "gitee.com/quant1x/pandas"
 	. "gitee.com/quant1x/pandas/formula"
 	"testing"
 	"time"
@@ -17,7 +17,7 @@ func TestIncrementalMovingAverageConvergenceDivergence(t *testing.T) {
 	if len(klines) == 0 {
 		panic("no data")
 	}
-	df := pandas.LoadStructs(klines)
+	df := pd.LoadStructs(klines)
 	if df.Nrow() == 0 {
 		panic("加载k线失败")
 	}
@@ -36,13 +36,13 @@ func TestIncrementalMovingAverageConvergenceDivergence(t *testing.T) {
 	DEA := EMA(DIF, MID)
 	MACD := DIF.Sub(DEA).Mul(2)
 
-	df = pandas.NewDataFrame(
+	df = pd.NewDataFrame(
 		DATE,
-		pandas.NewSeriesWithoutType("short", short),
-		pandas.NewSeriesWithoutType("long", long),
-		pandas.NewSeriesWithoutType("DIF", DIF),
-		pandas.NewSeriesWithoutType("DEA", DEA),
-		pandas.NewSeriesWithoutType("MACD", MACD),
+		pd.NewSeriesWithoutType("short", short),
+		pd.NewSeriesWithoutType("long", long),
+		pd.NewSeriesWithoutType("DIF", DIF),
+		pd.NewSeriesWithoutType("DEA", DEA),
+		pd.NewSeriesWithoutType("MACD", MACD),
 	)
 	fmt.Println(df)
 	fmt.Println("==============================================================================================================")
@@ -71,7 +71,7 @@ func TestDynamicMovingAverageConvergenceDivergence(t *testing.T) {
 	if len(klines) == 0 {
 		panic("no data")
 	}
-	df := pandas.LoadStructs(klines)
+	df := pd.LoadStructs(klines)
 	if df.Nrow() == 0 {
 		panic("加载k线失败")
 	}
@@ -90,13 +90,13 @@ func TestDynamicMovingAverageConvergenceDivergence(t *testing.T) {
 	DEA := EMA(DIF, MID)
 	MACD := DIF.Sub(DEA).Mul(2)
 
-	df = pandas.NewDataFrame(
+	df = pd.NewDataFrame(
 		DATE,
-		pandas.NewSeriesWithoutType("short", short),
-		pandas.NewSeriesWithoutType("long", long),
-		pandas.NewSeriesWithoutType("DIF", DIF),
-		pandas.NewSeriesWithoutType("DEA", DEA),
-		pandas.NewSeriesWithoutType("MACD", MACD),
+		pd.NewSeriesWithoutType("short", short),
+		pd.NewSeriesWithoutType("long", long),
+		pd.NewSeriesWithoutType("DIF", DIF),
+		pd.NewSeriesWithoutType("DEA", DEA),
+		pd.NewSeriesWithoutType("MACD", MACD),
 	)
 	fmt.Println(df)
 	fmt.Println("==============================================================================================================")

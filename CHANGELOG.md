@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.5.3] - 2024-02-19
+### Changed
+- 更新依赖库版本.
+- 调整pandas接口.
+
 ## [1.5.2] - 2024-02-12
 ### Changed
 - 更新ta-lib版本.
@@ -1076,8 +1081,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.5.2...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.5.3...HEAD
 
+[1.5.3]: https://gitee.com/quant1x/engine/compare/v1.5.2...v1.5.3
 [1.5.2]: https://gitee.com/quant1x/engine/compare/v1.5.1...v1.5.2
 [1.5.1]: https://gitee.com/quant1x/engine/compare/v1.5.0...v1.5.1
 [1.5.0]: https://gitee.com/quant1x/engine/compare/v1.4.9...v1.5.0

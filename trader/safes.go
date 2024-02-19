@@ -8,7 +8,6 @@ import (
 	"gitee.com/quant1x/gox/concurrent"
 	"gitee.com/quant1x/gox/coroutine"
 	"gitee.com/quant1x/gox/logger"
-	"golang.org/x/exp/maps"
 	"os"
 	"path"
 	"slices"
@@ -48,7 +47,7 @@ var (
 )
 
 func UsageOfSecureType() string {
-	keys := maps.Keys(mapSecureTypes)
+	keys := api.Keys(mapSecureTypes)
 	slices.Sort(keys)
 	var builder strings.Builder
 	for _, typ := range keys {

@@ -12,7 +12,6 @@ import (
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/runtime"
-	"golang.org/x/exp/maps"
 	"time"
 )
 
@@ -39,7 +38,7 @@ var (
 func resetSnapshotCache() {
 	date := cache.DefaultCanReadDate()
 	if date > snapshotDate {
-		maps.Clear(mapSnapshot)
+		clear(mapSnapshot)
 		snapshotDate = date
 		factors.SwitchDate(snapshotDate)
 	}

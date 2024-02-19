@@ -6,8 +6,8 @@ import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
+	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/concurrent"
-	"golang.org/x/exp/maps"
 	"slices"
 	"sync"
 )
@@ -135,7 +135,7 @@ func CheckoutStrategy(strategyNumber uint64) (Strategy, error) {
 // UsageStrategyList 输出策略列表
 func UsageStrategyList() string {
 	// 规则按照kind排序
-	kinds := maps.Keys(_mapStrategies)
+	kinds := api.Keys(_mapStrategies)
 	slices.Sort(kinds)
 	usage := ""
 	for _, kind := range kinds {

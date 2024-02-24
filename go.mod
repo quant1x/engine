@@ -6,10 +6,10 @@ require (
 	gitee.com/quant1x/exchange v0.3.8
 	gitee.com/quant1x/gotdx v1.21.0
 	gitee.com/quant1x/gox v1.20.1
-	gitee.com/quant1x/num v0.1.2
-	gitee.com/quant1x/pandas v1.3.5
+	gitee.com/quant1x/num v0.1.5
+	gitee.com/quant1x/pandas v1.3.7
 	gitee.com/quant1x/pkg v0.2.6
-	gitee.com/quant1x/ta-lib v0.3.8
+	gitee.com/quant1x/ta-lib v0.4.0
 	github.com/bits-and-blooms/bitset v1.13.0
 	github.com/shirou/gopsutil/v3 v3.23.12
 	github.com/spf13/cobra v1.8.0
@@ -17,7 +17,7 @@ require (
 	golang.org/x/sys v0.17.0
 )
 
-//replace gitee.com/quant1x/num v0.1.1 => ../num
+//replace gitee.com/quant1x/num v0.1.5 => ../num
 
 require (
 	git.sr.ht/~sbinet/gg v0.5.0 // indirect

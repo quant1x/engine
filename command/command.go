@@ -8,10 +8,15 @@ import (
 	"gitee.com/quant1x/num"
 	"github.com/shirou/gopsutil/v3/cpu"
 	"github.com/shirou/gopsutil/v3/mem"
-
 	cmder "github.com/spf13/cobra"
 	goruntime "runtime"
 	"strings"
+)
+
+const (
+	KB = 1024      // Kilo Byte
+	MB = 1024 * KB // Mega Byte
+	GB = 1024 * MB // Giga Byte
 )
 
 var (
@@ -30,7 +35,7 @@ func printMotd() {
 	infos, _ := cpu.Info()
 	cpuInfo := infos[0]
 	memory, _ := mem.VirtualMemory()
-	fmt.Printf("CPU: %s %dCores, AVX2: %t, Mem: total %dGB, free %dGB\n", cpuInfo.ModelName, cpuInfo.Cores, num.GetAvx2Enabled(), memory.Total/(1024*1024*1024), memory.Free/(1024*1024*1024))
+	fmt.Printf("CPU: %s %dCores, AVX2: %t, Mem: total %.02fGB, free %.02fGB\n", cpuInfo.ModelName, cpuInfo.Cores, num.GetAvx2Enabled(), float64(memory.Total)/GB, float64(memory.Free)/GB)
 	fmt.Println()
 }
 

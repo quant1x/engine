@@ -36,7 +36,7 @@ func main() {
 	}
 	mainStart := time.Now()
 	defer func() {
-		runtime.CatchPanic()
+		runtime.CatchPanic("")
 		elapsedTime := time.Since(mainStart) / time.Millisecond
 		fmt.Printf("\n总耗时: %.3fs\n", float64(elapsedTime)/1000)
 	}()

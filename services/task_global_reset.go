@@ -10,7 +10,7 @@ import (
 
 // 任务 - 交易日数据缓存重置
 func jobGlobalReset() {
-	defer runtime.IgnorePanic()
+	defer runtime.IgnorePanic("")
 	logger.Info("系统初始化...")
 	logger.Info("清理过期的更新状态文件...")
 	_ = cleanExpiredStateFiles()

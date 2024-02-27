@@ -10,7 +10,7 @@ import (
 
 // 同步委托订单
 func jobSyncTraderOrders() {
-	defer runtime.IgnorePanic()
+	defer runtime.IgnorePanic("")
 	// 非交易日直接退出
 	if !exchange.DateIsTradingDay() {
 		return

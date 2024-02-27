@@ -29,7 +29,7 @@ func jobRealtimeKLine() {
 
 // 更新K线
 func realtimeUpdateOfKLine() {
-	defer runtime.IgnorePanic()
+	defer runtime.IgnorePanic("")
 	barIndex := barIndexRealtimeKLine
 	allCodes := market.GetCodeList()
 	wg := coroutine.NewRollingWaitGroup(5)

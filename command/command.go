@@ -11,7 +11,11 @@ import (
 	cmder "github.com/spf13/cobra"
 	goruntime "runtime"
 	"strings"
+	_ "unsafe" // For go:linkname
 )
+
+//go:linkname cpuModelName internal/cpu.Name
+func cpuModelName() string
 
 const (
 	KB = 1024      // Kilo Byte

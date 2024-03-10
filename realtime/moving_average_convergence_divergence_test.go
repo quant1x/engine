@@ -12,7 +12,7 @@ import (
 
 func TestIncrementalMovingAverageConvergenceDivergence(t *testing.T) {
 	code := "002528"
-	date := "20240126"
+	date := "20240301"
 	klines := base.CheckoutKLines(code, date)
 	if len(klines) == 0 {
 		panic("no data")

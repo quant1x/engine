@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.5.5] - 2024-03-10
+### Changed
+- 更新依赖库版本.
+- 调整测试代码.
+- 使用//go:linkname从internal/cpu包中导出获取cpu型号函数.
+- 调整捕获异常的参数.
+- 优化内存显示.
+- 更新依赖库版本.
+- 更新依赖库num,pandas,ta-lib版本.
+
 ## [1.5.4] - 2024-02-25
 ### Changed
 - 更新依赖库版本.
@@ -1087,8 +1097,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.5.4...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.5.5...HEAD
 
+[1.5.5]: https://gitee.com/quant1x/engine/compare/v1.5.4...v1.5.5
 [1.5.4]: https://gitee.com/quant1x/engine/compare/v1.5.3...v1.5.4
 [1.5.3]: https://gitee.com/quant1x/engine/compare/v1.5.2...v1.5.3
 [1.5.2]: https://gitee.com/quant1x/engine/compare/v1.5.1...v1.5.2

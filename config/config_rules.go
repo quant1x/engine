@@ -11,7 +11,7 @@ type RuleParameter struct {
 	MaximumIncreaseWithin10days float64     `yaml:"maximum_increase_within_10d" default:"70.00"` // 70.00 10日累计最大涨幅
 	MaxReduceAmount             float64     `yaml:"max_reduce_amount" default:"-1000"`           // -1000 最大流出1000万
 	SafetyScore                 NumberRange `yaml:"safety_score" default:"80~"`                  // 80 通达信安全分最小值
-	VolumeRatio                 NumberRange `yaml:"volume_ratio" default:"0.382~3.820"`          // 1.800 成交量放大不能超过1.8
+	VolumeRatio                 NumberRange `yaml:"volume_ratio" default:"0.382~1.800"`          // 1.800 成交量放大不能超过1.8
 	Capital                     NumberRange `yaml:"capital" default:"0.5~20"`                    // 流通股本, 默认0.5亿~20亿
 	MarketCap                   NumberRange `yaml:"market_cap" default:"4~600"`                  // 流通市值, 默认4亿~600亿
 	Price                       NumberRange `yaml:"price" default:"2~"`                          // 股价: 4.9E-324~1.7976931348623157e+308

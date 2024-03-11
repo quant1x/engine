@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.5.8] - 2024-03-11
+### Changed
+- 更新依赖库版本.
+
 ## [1.5.7] - 2024-03-11
 ### Changed
 - 调整默认的最大放量比例为1.8倍.
@@ -1105,8 +1109,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.5.7...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.5.8...HEAD
 
+[1.5.8]: https://gitee.com/quant1x/engine/compare/v1.5.7...v1.5.8
 [1.5.7]: https://gitee.com/quant1x/engine/compare/v1.5.6...v1.5.7
 [1.5.6]: https://gitee.com/quant1x/engine/compare/v1.5.5...v1.5.6
 [1.5.5]: https://gitee.com/quant1x/engine/compare/v1.5.4...v1.5.5

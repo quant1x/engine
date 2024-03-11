@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.5.7] - 2024-03-11
+### Changed
+- 调整默认的最大放量比例为1.8倍.
+
 ## [1.5.6] - 2024-03-11
 ### Changed
 - 增加misc数据获取失败的错误日志.
@@ -1101,8 +1105,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.5.6...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.5.7...HEAD
 
+[1.5.7]: https://gitee.com/quant1x/engine/compare/v1.5.6...v1.5.7
 [1.5.6]: https://gitee.com/quant1x/engine/compare/v1.5.5...v1.5.6
 [1.5.5]: https://gitee.com/quant1x/engine/compare/v1.5.4...v1.5.5
 [1.5.4]: https://gitee.com/quant1x/engine/compare/v1.5.3...v1.5.4

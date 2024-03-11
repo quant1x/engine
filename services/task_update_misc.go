@@ -69,6 +69,7 @@ func realtimeUpdateMiscAndSnapshot() {
 		securityCode := v.SecurityCode
 		misc := factors.GetL5Misc(securityCode)
 		if misc == nil {
+			logger.Errorf("加载misc[%s-%s]失败", currentDate, securityCode)
 			misc = &factors.Misc{
 				Date: currentDate,
 				Code: securityCode,

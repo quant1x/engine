@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.5.9] - 2024-03-12
+### Changed
+- 更新依赖库版本.
+
 ## [1.5.8] - 2024-03-11
 ### Changed
 - 更新依赖库版本.
@@ -1109,8 +1113,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.5.8...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.5.9...HEAD
 
+[1.5.9]: https://gitee.com/quant1x/engine/compare/v1.5.8...v1.5.9
 [1.5.8]: https://gitee.com/quant1x/engine/compare/v1.5.7...v1.5.8
 [1.5.7]: https://gitee.com/quant1x/engine/compare/v1.5.6...v1.5.7
 [1.5.6]: https://gitee.com/quant1x/engine/compare/v1.5.5...v1.5.6

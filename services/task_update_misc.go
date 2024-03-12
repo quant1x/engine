@@ -38,7 +38,7 @@ var (
 func resetSnapshotCache() {
 	date := cache.DefaultCanReadDate()
 	if date > snapshotDate {
-		//clear(mapSnapshot)
+		clear(mapSnapshot)
 		snapshotDate = date
 		factors.SwitchDate(snapshotDate)
 	}

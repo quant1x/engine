@@ -1,15 +1,15 @@
 module gitee.com/quant1x/engine
 
-go 1.21.5
+go 1.21.8
 
 require (
-	gitee.com/quant1x/exchange v0.4.2
-	gitee.com/quant1x/gotdx v1.21.3
-	gitee.com/quant1x/gox v1.20.5
-	gitee.com/quant1x/num v0.2.2
-	gitee.com/quant1x/pandas v1.3.9
+	gitee.com/quant1x/exchange v0.4.3
+	gitee.com/quant1x/gotdx v1.21.4
+	gitee.com/quant1x/gox v1.20.7
+	gitee.com/quant1x/num v0.2.3
+	gitee.com/quant1x/pandas v1.4.0
 	gitee.com/quant1x/pkg v0.2.6
-	gitee.com/quant1x/ta-lib v0.4.6
+	gitee.com/quant1x/ta-lib v0.4.8
 	github.com/bits-and-blooms/bitset v1.13.0
 	github.com/shirou/gopsutil/v3 v3.24.1
 	github.com/spf13/cobra v1.8.0

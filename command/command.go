@@ -6,8 +6,6 @@ import (
 	"gitee.com/quant1x/engine/tracker"
 	"gitee.com/quant1x/gox/runtime"
 	"gitee.com/quant1x/num"
-	"github.com/shirou/gopsutil/v3/cpu"
-	"github.com/shirou/gopsutil/v3/mem"
 	cmder "github.com/spf13/cobra"
 	goruntime "runtime"
 	"strings"
@@ -36,10 +34,7 @@ var (
 
 // 输出欢迎语
 func printMotd() {
-	infos, _ := cpu.Info()
-	cpuInfo := infos[0]
-	memory, _ := mem.VirtualMemory()
-	fmt.Printf("CPU: %s %dCores, AVX2: %t, Mem: total %.02fGB, free %.02fGB\n", cpuInfo.ModelName, cpuInfo.Cores, num.GetAvx2Enabled(), float64(memory.Total)/GB, float64(memory.Free)/GB)
+	fmt.Printf("CPU: %s %dCores, AVX2: %t, Mem: total %.02fGB, free %.02fGB\n", cpuModelName, goruntime.NumCPU(), num.GetAvx2Enabled())
 	fmt.Println()
 }
 

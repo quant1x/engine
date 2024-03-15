@@ -22,7 +22,8 @@ var (
 	ErrRangeOfFundFlow             = exception.New(errorRuleBase+3, "非资金流出范围")
 	ErrHistoryNotExist             = exception.New(errorRuleBase+4, "没有找到history数据")
 	ErrRiskOfGapDown               = exception.New(errorRuleBase+5, "开盘存在向下跳空缺口")
-	ErrExchangeNotExist            = exception.New(errorRuleBase+4, "没有找到history数据")
+	ErrExchangeNotExist            = exception.New(errorRuleBase+6, "没有找到history数据")
+	ErrRangeOfChangeRate           = exception.New(errorRuleBase+7, "非开盘涨跌幅范围")
 )
 
 // ruleBase 基础规则
@@ -40,6 +41,10 @@ func ruleBase(ruleParameter config.RuleParameter, snapshot factors.QuoteSnapshot
 	// 3. 当日 - 开盘涨幅
 	if num.IsNaN(snapshot.OpeningChangeRate) || !ruleParameter.OpenChangeRate.Validate(snapshot.OpeningChangeRate) {
 		return ErrRangeOfOpeningChangeRate
+	}
+	// 3.1 当日 - 涨幅
+	if num.IsNaN(snapshot.ChangeRate) || !ruleParameter.ChangeRate.Validate(snapshot.ChangeRate) {
+		return ErrRangeOfChangeRate
 	}
 	//// 4. 委托量
 	//if snapshot.AverageBiddingVolume > RuleParameters.BiddingVolumeMax || snapshot.AverageBiddingVolume < RuleParameters.BiddingVolumeMin {

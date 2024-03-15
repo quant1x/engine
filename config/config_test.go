@@ -2,15 +2,16 @@ package config
 
 import (
 	"fmt"
-	"gitee.com/quant1x/gotdx/securities"
 	"testing"
+
+	"gitee.com/quant1x/gotdx/securities"
 )
 
 func TestConfig(t *testing.T) {
 	config, found := LoadConfig()
 	fmt.Println(found)
 	fmt.Println(config)
-	strategyCode := 82
+	strategyCode := uint64(82)
 	v := GetStrategyParameterByCode(strategyCode)
 	fmt.Println(v)
 }

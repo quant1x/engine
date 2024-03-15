@@ -58,6 +58,8 @@ func calculate_price_limit_for_buy(last_price, price_cage_ratio, minimum_price_f
 //
 //	价格笼子, +2%和+0.10哪个大
 //	目前使用, 当前价格+0.05
+//
+// Deprecated: 推荐使用 CalculatePriceCage [wangfeng on 2024/3/15 08:35]
 func CalculateBuyPriceLimit(price float64) float64 {
 	priceLimit := calculate_price_limit_for_buy(price, validDeclarationPriceRange, minimumPriceFluctuationUnit)
 	return priceLimit
@@ -78,6 +80,8 @@ func calculate_price_limit_for_sell(last_price, price_cage_ratio, minimum_price_
 }
 
 // CalculateSellPriceLimit 计算卖出价格笼子
+//
+// Deprecated: 推荐使用 CalculatePriceCage [wangfeng on 2024/3/15 08:35]
 func CalculateSellPriceLimit(price float64) float64 {
 	priceLimit := calculate_price_limit_for_sell(price, validDeclarationPriceRange, minimumPriceFluctuationUnit)
 	return priceLimit

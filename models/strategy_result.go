@@ -1,13 +1,5 @@
 package models
 
-import (
-	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/num"
-	"gitee.com/quant1x/ta-lib/linear"
-	"sort"
-)
-
 // ResultInfo 策略结果
 type ResultInfo struct {
 	Code           string  `name:"证券代码" dataframe:"code"`
@@ -35,40 +27,40 @@ type ResultInfo struct {
 
 // Predict 预测趋势
 func (this *ResultInfo) Predict() {
-	N := 3
-	df := factors.BasicKLine(this.Code)
-	if df.Nrow() < N+1 {
-		return
-	}
-	limit := api.RangeFinite(-N)
-	OPEN := df.Col("open").Select(limit)
-	CLOSE := df.Col("close").Select(limit)
-	HIGH := df.Col("high").Select(limit)
-	LOW := df.Col("low").Select(limit)
-	lastClose := num.AnyToFloat64(CLOSE.IndexOf(-1))
-	po := linear.CurveRegression(OPEN).IndexOf(-1).(num.DType)
-	pc := linear.CurveRegression(CLOSE).IndexOf(-1).(num.DType)
-	ph := linear.CurveRegression(HIGH).IndexOf(-1).(num.DType)
-	pl := linear.CurveRegression(LOW).IndexOf(-1).(num.DType)
-	if po > lastClose {
-		this.Tendency = "高开"
-	} else if po == lastClose {
-		this.Tendency = "平开"
-	} else {
-		this.Tendency = "低开"
-	}
-	if pl > ph {
-		this.Tendency += ",冲高回落"
-	} else if pl > pc {
-		this.Tendency += ",探底回升"
-	} else if pc < pl {
-		this.Tendency += ",趋势向下"
-	} else {
-		this.Tendency += ",短线向好"
-	}
-
-	fs := []float64{float64(po), float64(pc), float64(ph), float64(pl)}
-	sort.Float64s(fs)
-
-	_ = lastClose
+	//N := 3
+	//df := factors.BasicKLine(this.Code)
+	//if df.Nrow() < N+1 {
+	//	return
+	//}
+	//limit := api.RangeFinite(-N)
+	//OPEN := df.Col("open").Select(limit)
+	//CLOSE := df.Col("close").Select(limit)
+	//HIGH := df.Col("high").Select(limit)
+	//LOW := df.Col("low").Select(limit)
+	//lastClose := num.AnyToFloat64(CLOSE.IndexOf(-1))
+	//po := linear.CurveRegression(OPEN).IndexOf(-1).(num.DType)
+	//pc := linear.CurveRegression(CLOSE).IndexOf(-1).(num.DType)
+	//ph := linear.CurveRegression(HIGH).IndexOf(-1).(num.DType)
+	//pl := linear.CurveRegression(LOW).IndexOf(-1).(num.DType)
+	//if po > lastClose {
+	//	this.Tendency = "高开"
+	//} else if po == lastClose {
+	//	this.Tendency = "平开"
+	//} else {
+	//	this.Tendency = "低开"
+	//}
+	//if pl > ph {
+	//	this.Tendency += ",冲高回落"
+	//} else if pl > pc {
+	//	this.Tendency += ",探底回升"
+	//} else if pc < pl {
+	//	this.Tendency += ",趋势向下"
+	//} else {
+	//	this.Tendency += ",短线向好"
+	//}
+	//
+	//fs := []float64{float64(po), float64(pc), float64(ph), float64(pl)}
+	//sort.Float64s(fs)
+	//
+	//_ = lastClose
 }

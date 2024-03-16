@@ -18,7 +18,7 @@ type RuleParameter struct {
 	OpenChangeRate              NumberRange `yaml:"open_change_rate"  default:""`                // 开盘涨幅, 默认不限制
 	OpenQuantityRatio           NumberRange `yaml:"open_quantity_ratio" default:""`              // 开盘量比, 默认不限制
 	OpenTurnZ                   NumberRange `yaml:"open_turn_z" default:""`                      // 开盘换手, 默认不限制
-	ChangeRate                  NumberRange `yaml:"change_rate"  default:""`                     // 涨幅, 默认不限制
+	ChangeRate                  NumberRange `yaml:"change_rate"  default:""`                     // 盘中策略涨幅范围, 默认不限制
 	Vix                         NumberRange `yaml:"vix" default:""`                              // 波动率, 默认不限制
 	TurnoverRate                NumberRange `yaml:"turnover_rate" default:""`                    // 换手率范围, 默认不限制
 	AmplitudeRatio              NumberRange `yaml:"amplitude_ratio" default:""`                  // 振幅范围, 默认不限制

@@ -131,47 +131,8 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 		}
 		newKLines = append(newKLines, kline)
 	}
-	if len(newKLines) > 0 {
-		// 复权之前, 假定当前缓存之中的数据都是复权过的数据
-		// 那么就应该只拉取缓存最后1条记录之后的除权除息记录进行复权
-		// 前复权adjust
-		xdxrs := GetCacheXdxrList(securityCode)
-		cacheLastDay := newKLines[len(newKLines)-1].Date
-		for i := 0; i < len(xdxrs); i++ {
-			xdxr := xdxrs[i]
-			if xdxr.Category != 1 || xdxr.Date < startDate || xdxr.Date > cacheLastDay {
-				// 忽略非除权信息以及除权数据在新数据之前的除权记录
-				continue
-			}
-			xdxrDate := xdxr.Date
-			factor := xdxr.Adjust()
-			for j := 0; j < len(newKLines); j++ {
-				kl := &newKLines[j]
-				barCurrentDate := kl.Date
-				if barCurrentDate > xdxrDate {
-					break
-				}
-				if barCurrentDate < xdxrDate {
-					kl.Open = factor(kl.Open)
-					kl.Close = factor(kl.Close)
-					kl.High = factor(kl.High)
-					kl.Low = factor(kl.Low)
-					// 成交量复权
-					// 1. 计算均价线
-					maPrice := kl.Amount / kl.Volume
-					// 2. 均价线复权
-					maPrice = factor(maPrice)
-					// 3. 以成交金额为基准, 用复权均价线计算成交量
-					kl.Volume = kl.Amount / maPrice
-				}
-				//plc := m1["last_close"].(reflect.Value)
-				//plc.SetFloat(fuquan(plc.Float()))
-				if barCurrentDate == xdxrDate {
-					break
-				}
-			}
-		}
-	}
+	// 前复权
+	calculatePreAdjustedStockPrice(securityCode, newKLines, startDate)
 	var klines []KLine
 	if kLength > klineDaysOffset {
 		klines = cacheKLines[:kLength-klineDaysOffset]
@@ -187,4 +148,50 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 		_ = api.SlicesToCsv(fname, klines)
 	}
 	return klines
+}
+
+// 计算前复权
+// startDate 表示已经除权的日期
+func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDate string) {
+	rows := len(kLines)
+	if rows == 0 {
+		return
+	}
+	// 复权之前, 假定当前缓存之中的数据都是复权过的数据
+	// 那么就应该只拉取缓存最后1条记录之后的除权除息记录进行复权
+	// 前复权adjust
+	dividends := GetCacheXdxrList(securityCode)
+	cacheLastDay := kLines[rows-1].Date
+	for i := 0; i < len(dividends); i++ {
+		xdxr := dividends[i]
+		if xdxr.Category != 1 || xdxr.Date < startDate || xdxr.Date > cacheLastDay {
+			// 忽略非除权信息以及除权数据在新数据之前的除权记录
+			continue
+		}
+		xdxrDate := xdxr.Date
+		factor := xdxr.Adjust()
+		for j := 0; j < rows; j++ {
+			kl := &kLines[j]
+			barCurrentDate := kl.Date
+			if barCurrentDate > xdxrDate {
+				break
+			}
+			if barCurrentDate < xdxrDate {
+				kl.Open = factor(kl.Open)
+				kl.Close = factor(kl.Close)
+				kl.High = factor(kl.High)
+				kl.Low = factor(kl.Low)
+				// 成交量复权
+				// 1. 计算均价线
+				maPrice := kl.Amount / kl.Volume
+				// 2. 均价线复权
+				maPrice = factor(maPrice)
+				// 3. 以成交金额为基准, 用复权均价线计算成交量
+				kl.Volume = kl.Amount / maPrice
+			}
+			if barCurrentDate == xdxrDate {
+				break
+			}
+		}
+	}
 }

@@ -34,7 +34,7 @@ var (
 
 // 输出欢迎语
 func printMotd() {
-	fmt.Printf("CPU: %s %dCores, AVX2: %t, Mem: total %.02fGB, free %.02fGB\n", cpuModelName, goruntime.NumCPU(), num.GetAvx2Enabled())
+	fmt.Printf("CPU: %s %dCores, AVX2: %t\n", cpuModelName(), goruntime.NumCPU(), num.GetAvx2Enabled())
 	fmt.Println()
 }
 

@@ -17,15 +17,16 @@ var (
 
 // KLine 日K线基础结构
 type KLine struct {
-	Date   string  `name:"日期" dataframe:"date"`       // 日期
-	Open   float64 `name:"开盘" dataframe:"open"`       // 开盘价
-	Close  float64 `name:"收盘" dataframe:"close"`      // 收盘价
-	High   float64 `name:"最高" dataframe:"high"`       // 最高价
-	Low    float64 `name:"最低" dataframe:"low"`        // 最低价
-	Volume float64 `name:"成交量(股)" dataframe:"volume"` // 成交量
-	Amount float64 `name:"成交额(元)" dataframe:"amount"` // 成交金额
-	Up     int     `name:"上涨/外盘" dataframe:"up"`      // 上涨家数
-	Down   int     `name:"下跌/内盘" dataframe:"down"`    // 下跌家数
+	Date     string  `name:"日期" dataframe:"date"`       // 日期
+	Open     float64 `name:"开盘" dataframe:"open"`       // 开盘价
+	Close    float64 `name:"收盘" dataframe:"close"`      // 收盘价
+	High     float64 `name:"最高" dataframe:"high"`       // 最高价
+	Low      float64 `name:"最低" dataframe:"low"`        // 最低价
+	Volume   float64 `name:"成交量(股)" dataframe:"volume"` // 成交量
+	Amount   float64 `name:"成交额(元)" dataframe:"amount"` // 成交金额
+	Up       int     `name:"上涨/外盘" dataframe:"up"`      // 上涨家数
+	Down     int     `name:"下跌/内盘" dataframe:"down"`    // 下跌家数
+	Datetime string  `name:"时间" dataframe:"datetime"`   // 时间
 }
 
 // LoadBasicKline 加载基础K线
@@ -117,15 +118,16 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 	for _, v := range history {
 		date := exchange.FixTradeDate(v.DateTime)
 		kline := KLine{
-			Date:   date,
-			Open:   v.Open,
-			Close:  v.Close,
-			High:   v.High,
-			Low:    v.Low,
-			Volume: v.Vol,
-			Amount: v.Amount,
-			Up:     int(v.UpCount),
-			Down:   int(v.DownCount),
+			Date:     date,
+			Open:     v.Open,
+			Close:    v.Close,
+			High:     v.High,
+			Low:      v.Low,
+			Volume:   v.Vol,
+			Amount:   v.Amount,
+			Up:       int(v.UpCount),
+			Down:     int(v.DownCount),
+			Datetime: v.DateTime,
 		}
 		newKLines = append(newKLines, kline)
 	}

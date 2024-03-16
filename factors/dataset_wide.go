@@ -7,7 +7,6 @@ import (
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/num"
 	"slices"
 )
@@ -85,7 +84,7 @@ func pullWideByDate(securityCode, date string) []SecurityFeature {
 	// 2. 确定补齐数据的日期
 	endDate = exchange.FixTradeDate(date)
 	// 2.1 结束日期经过交易日历的校对处理一次
-	logger.Warnf("[%s]: begin=%s, end= %s", securityCode, beginDate, endDate)
+	//logger.Warnf("[%s]: begin=%s, end= %s", securityCode, beginDate, endDate)
 	if len(beginDate) == 0 {
 		beginDate = exchange.MARKET_CH_FIRST_LISTTIME
 	}

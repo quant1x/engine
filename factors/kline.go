@@ -20,7 +20,8 @@ func BasicKLine(securityCode string) pandas.DataFrame {
 // KLine 加载日K线宽表
 func KLine(securityCode string) pandas.DataFrame {
 	securityCode = exchange.CorrectSecurityCode(securityCode)
-	df := GetCacheKLine(securityCode, false)
+	filename := cache.WideFilename(securityCode)
+	df := pandas.ReadCSV(filename)
 	return df
 }
 

@@ -39,6 +39,7 @@ func LoadBasicKline(securityCode string) []KLine {
 
 // UpdateAllBasicKLine 更新全部日K线基础数据并保存文件
 func UpdateAllBasicKLine(securityCode string) []KLine {
+	// 1. 确定本地有效数据最后1条数据作为拉取数据的开始日期
 	startDate := exchange.MARKET_CN_FIRST_DATE
 	securityCode = exchange.CorrectSecurityCode(securityCode)
 	isIndex := exchange.AssertIndexBySecurityCode(securityCode)
@@ -57,6 +58,7 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 		//	startDate = trading.FixTradeDate(startDate)
 		//}
 	}
+	// 2. 确定结束日期
 	endDate := exchange.Today()
 	ts := exchange.TradeRange(startDate, endDate)
 	history := make([]quotes.SecurityBar, 0)
@@ -66,6 +68,7 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 	hs := make([]quotes.SecurityBarsReply, 0)
 	kType := uint16(proto.KLINE_TYPE_RI_K)
 	tdxApi := gotdx.GetTdxApi()
+	// 3. 拉取数据
 	for {
 		count := step
 		if total-start >= step {
@@ -102,8 +105,10 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 			break
 		}
 	}
+	// 4. 由于K线数据，每次获取数据是从后往前获取, 所以这里需要反转历史数据的切片
 	hs = api.Reverse(hs)
 	startDate = exchange.FixTradeDate(startDate)
+	// 5. 调整成交量, 单位从手改成股, vol字段 * 100
 	for _, v := range hs {
 		for _, row := range v.List {
 			dateTime := exchange.FixTradeDate(row.DateTime)
@@ -114,6 +119,7 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 			history = append(history, row)
 		}
 	}
+	// 6. k线数据转换成KLine结构
 	var newKLines []KLine
 	for _, v := range history {
 		date := exchange.FixTradeDate(v.DateTime)
@@ -131,17 +137,21 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 		}
 		newKLines = append(newKLines, kline)
 	}
-	// 前复权
+	// 7. 前复权
 	calculatePreAdjustedStockPrice(securityCode, newKLines, startDate)
+	// 8. 拼接缓存和新增的数据
 	var klines []KLine
+	// 8.1 先截取本地缓存的数据
 	if kLength > klineDaysOffset {
 		klines = cacheKLines[:kLength-klineDaysOffset]
 	}
+	// 8.2 拼接新增的数据
 	if len(klines) > 0 {
 		klines = append(klines, newKLines...)
 	} else {
 		klines = newKLines
 	}
+	// 9. 刷新缓存文件
 	if len(klines) > 0 {
 		UpdateCacheKLines(securityCode, klines)
 		fname := cache.KLineFilename(securityCode)

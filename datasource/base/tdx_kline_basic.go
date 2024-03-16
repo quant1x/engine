@@ -11,11 +11,6 @@ import (
 )
 
 var (
-	// BasicFields 特征基础字段
-	BasicFields = []string{"date", "open", "close", "high", "low", "volume", "amount"}
-)
-
-var (
 	// DataDaysDiff 日期差异偏移量
 	DataDaysDiff = 1
 )

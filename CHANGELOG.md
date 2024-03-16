@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.6.1] - 2024-03-16
+### Changed
+- 修订规则中涨幅字段ChangeRate的描述.
+- 梳理更新K线的业务流程.
+- 拆分前复权计算方法为独立的私有函数.
+- K线新增时间戳Datetime字段.
+- 删除废弃的变量.
+- 修订测试代码中的bug.
+- 剔除短期用不到的依赖库.
+- 增加涨幅规则, 适用于盘中或者尾盘策略的过滤.
+- 标注部分公开函数为不推荐.
+- 调整成交量比的范围,这里的比例是当日成交量除以前日成交量,非净增比例.
+- 修订测试代码.
+
 ## [1.6.0] - 2024-03-12
 ### Changed
 - 更新依赖库版本及go版本.
@@ -1119,8 +1133,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.6.0...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.6.1...HEAD
 
+[1.6.1]: https://gitee.com/quant1x/engine/compare/v1.6.0...v1.6.1
 [1.6.0]: https://gitee.com/quant1x/engine/compare/v1.5.9...v1.6.0
 [1.5.9]: https://gitee.com/quant1x/engine/compare/v1.5.8...v1.5.9
 [1.5.8]: https://gitee.com/quant1x/engine/compare/v1.5.7...v1.5.8

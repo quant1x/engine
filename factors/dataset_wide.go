@@ -134,14 +134,20 @@ func pullWideByDate(securityCode, date string) []SecurityFeature {
 	transBeginDate := base.GetBeginDateOfHistoricalTradingData()
 	transBeginDate = exchange.FixTradeDate(transBeginDate)
 	for i, v := range klines {
-		if v.Date < beginDate {
+		featureDate := v.Date
+		cacheDate := v.Date
+		// 强制更新标志
+		forceUpdate := false
+		if i < list_length && featureDate >= transBeginDate {
+			checksum := list[i].CheckSum()
+			forceUpdate = checksum == 0
+		}
+		if !forceUpdate && v.Date < beginDate {
 			continue
 		}
 		if v.Date > endDate {
 			break
 		}
-		featureDate := v.Date
-		cacheDate := v.Date
 		var info SecurityFeature
 		// 复制k线
 		info.Date = v.Date

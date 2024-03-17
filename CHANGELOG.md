@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.6.5] - 2024-03-18
+### Changed
+- 更新exchange,gotdx版本,调整尾盘集合竞价的数据结束时间,预留30s给misc更新收盘数据.
+
 ## [1.6.4] - 2024-03-17
 ### Changed
 - 宽表数据中, 在约定的可更新成交数据的时间范围内, 如果宽表的成交数据部分校验和为0会强制更新.
@@ -1150,8 +1154,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.6.4...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.6.5...HEAD
 
+[1.6.5]: https://gitee.com/quant1x/engine/compare/v1.6.4...v1.6.5
 [1.6.4]: https://gitee.com/quant1x/engine/compare/v1.6.3...v1.6.4
 [1.6.3]: https://gitee.com/quant1x/engine/compare/v1.6.2...v1.6.3
 [1.6.2]: https://gitee.com/quant1x/engine/compare/v1.6.1...v1.6.2

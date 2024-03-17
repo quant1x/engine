@@ -94,7 +94,7 @@ func realtimeUpdateMiscAndSnapshot() {
 			// 3.2 计算早盘情绪
 			misc.OpenSentiment, misc.OpenConsistent = market.SnapshotSentiment(*v)
 		} else {
-			// 3.3盘 中及盘后的数据的计算都没有问题
+			// 3.3 盘中及盘后的数据的计算都没有问题
 			// 计算收盘竞价方向
 			misc.CloseBiddingDirection, misc.CloseVolumeDirection = v.CheckDirection()
 			// 3.4 计算收盘情绪

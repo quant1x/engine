@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.6.3] - 2024-03-17
+### Changed
+- 新增输出周线(非dataframe)函数.
+- 修订注释.
+
 ## [1.6.2] - 2024-03-17
 ### Changed
 - 更新依赖库版本.
@@ -1140,8 +1145,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.6.2...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.6.3...HEAD
 
+[1.6.3]: https://gitee.com/quant1x/engine/compare/v1.6.2...v1.6.3
 [1.6.2]: https://gitee.com/quant1x/engine/compare/v1.6.1...v1.6.2
 [1.6.1]: https://gitee.com/quant1x/engine/compare/v1.6.0...v1.6.1
 [1.6.0]: https://gitee.com/quant1x/engine/compare/v1.5.9...v1.6.0

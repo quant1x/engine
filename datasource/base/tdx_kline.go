@@ -76,7 +76,7 @@ func CheckoutKLines(code, date string) []KLine {
 }
 
 // 由日线计算日线以上级别的K线
-func periodKLine(checkPeriod func(date ...string) (s, e string), securityCode string, cacheKLine ...[]KLine) (df pandas.DataFrame) {
+func getPeriodKLine(checkPeriod func(date ...string) (s, e string), securityCode string, cacheKLine ...[]KLine) (list []KLine) {
 	baseKLines := []KLine{}
 	if len(cacheKLine) > 0 {
 		baseKLines = cacheKLine[0]
@@ -96,14 +96,7 @@ func periodKLine(checkPeriod func(date ...string) (s, e string), securityCode st
 			// 重新计算周线, 先确认周线范围
 			ws, we := checkPeriod(v.Date)
 			_ = ws
-			//dates := trading.TradeRange(ws, we)
-			//days := len(dates)
-			//days = 7
-			//if days > 0 {
 			periodLastDate := exchange.FixTradeDate(we)
-			//if periodLastDate == "2023-07-30" {
-			//	fmt.Println(1)
-			//}
 			offset := i
 			for {
 				destDate := baseKLines[offset].Date
@@ -122,9 +115,6 @@ func periodKLine(checkPeriod func(date ...string) (s, e string), securityCode st
 				}
 			}
 			kline.Date = periodLastDate
-			//} else {
-			//	return
-			//}
 		}
 		// 周线开盘价以第一天OPEN为准
 		if kline.Open == num.DType(0) {
@@ -152,9 +142,20 @@ func periodKLine(checkPeriod func(date ...string) (s, e string), securityCode st
 			kline = KLine{}
 		}
 	}
+	return klines
+}
+
+// 由日线计算日线以上级别的K线
+func periodKLine(checkPeriod func(date ...string) (s, e string), securityCode string, cacheKLine ...[]KLine) (df pandas.DataFrame) {
+	klines := getPeriodKLine(checkPeriod, securityCode, cacheKLine...)
 	df = pandas.LoadStructs(klines)
-	//fmt.Println(df)
 	return
+}
+
+// WKLine 周线
+func WKLine(securityCode string, cacheKLine ...[]KLine) []KLine {
+	klines := getPeriodKLine(api.GetWeekDay, securityCode, cacheKLine...)
+	return klines
 }
 
 // WeeklyKLine 周线

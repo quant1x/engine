@@ -26,6 +26,22 @@ type SecurityFeature struct {
 	//State          int     `name:"数据状态" dataframe:"state"`
 }
 
+// CheckSum 校验和
+func (this SecurityFeature) CheckSum() int {
+	sign := 0
+	sign += int(this.OpenVolume)
+	sign += int(this.OpenTurnZ)
+	sign += int(this.OpenUnmatched)
+	sign += int(this.CloseVolume)
+	sign += int(this.CloseTurnZ)
+	sign += int(this.CloseUnmatched)
+	sign += int(this.InnerVolume)
+	sign += int(this.OuterVolume)
+	sign += int(this.InnerAmount)
+	sign += int(this.OuterAmount)
+	return sign
+}
+
 // TurnoverDataSummary 换手数据概要
 type TurnoverDataSummary struct {
 	OpenVolume     int64   `name:"开盘量" dataframe:"open_volume,int64"`

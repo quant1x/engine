@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.6.6] - 2024-03-19
+### Changed
+- 更新gotdx版本到1.21.7, 更新行业板块数据.
+- 板块排序增加早盘和盘中排序两个方式, 早盘和盘中通过规则flag来判断.
+
 ## [1.6.5] - 2024-03-18
 ### Changed
 - 更新exchange,gotdx版本,调整尾盘集合竞价的数据结束时间,预留30s给misc更新收盘数据.
@@ -1154,8 +1159,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.6.5...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.6.6...HEAD
 
+[1.6.6]: https://gitee.com/quant1x/engine/compare/v1.6.5...v1.6.6
 [1.6.5]: https://gitee.com/quant1x/engine/compare/v1.6.4...v1.6.5
 [1.6.4]: https://gitee.com/quant1x/engine/compare/v1.6.3...v1.6.4
 [1.6.3]: https://gitee.com/quant1x/engine/compare/v1.6.2...v1.6.3

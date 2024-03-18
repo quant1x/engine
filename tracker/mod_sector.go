@@ -25,8 +25,13 @@ import (
 
 // ScanAllSectors 扫描板块
 func ScanAllSectors(barIndex *int, model models.Strategy) {
+	tradeRule := config.GetStrategyParameterByCode(model.Code())
+	if tradeRule == nil {
+		logger.Errorf("strategy[%d]: trade rule not found", model.Code())
+		return
+	}
 	// 执行板块指数的检测
-	typeBlocks := TopBlockWithType(barIndex)
+	typeBlocks := TopBlockWithType(barIndex, tradeRule)
 	// 不分板块类型, 所有的板块放在一起排序
 	allBlocks := []SectorInfo{}
 	for _, v := range typeBlocks {
@@ -35,12 +40,6 @@ func ScanAllSectors(barIndex *int, model models.Strategy) {
 	// 扫描板块内个股排名
 	blockCount := len(allBlocks)
 	fmt.Println()
-	tradeRule := config.GetStrategyParameterByCode(model.Code())
-	if tradeRule == nil {
-		logger.Errorf("strategy[%d]: trade rule not found", model.Code())
-		return
-	}
-	//ruleParameter
 	bar := progressbar.NewBar(*barIndex, "执行[板块个股涨幅扫描]", blockCount)
 	for i := 0; i < blockCount; i++ {
 		bar.Add(1)

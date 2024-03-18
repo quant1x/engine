@@ -11,7 +11,7 @@ import (
 )
 
 // 板块扫描
-func scanSectorSnapshots(pbarIndex *int, blockType securities.BlockType) (list []factors.QuoteSnapshot) {
+func scanSectorSnapshots(pbarIndex *int, blockType securities.BlockType, isHead bool) (list []factors.QuoteSnapshot) {
 	// 执行板块指数的检测
 	blockInfos := securities.BlockList()
 	// 获取指定类型的板块代码列表
@@ -43,6 +43,10 @@ func scanSectorSnapshots(pbarIndex *int, blockType securities.BlockType) (list [
 		}
 		list = append(list, *snapshot)
 	}
-	api.SliceSort(list, SectorSort)
+	if isHead {
+		api.SliceSort(list, SectorSortForHead)
+	} else {
+		api.SliceSort(list, SectorSortForTick)
+	}
 	return list
 }

@@ -1,6 +1,8 @@
 package tracker
 
 import (
+	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/gotdx/securities"
 )
 
@@ -30,9 +32,10 @@ type SectorInfo struct {
 // 通过板块类型扫描板块
 //
 //	板块排名从1开始
-func scanBlockByType(pbarIndex *int, blockType securities.BlockType) []SectorInfo {
+func scanBlockByType(pbarIndex *int, blockType securities.BlockType, rule *config.StrategyParameter) []SectorInfo {
 	bs := []SectorInfo{}
-	blocks := scanSectorSnapshots(pbarIndex, blockType)
+	isHead := rule.Flag == models.OrderFlagHead
+	blocks := scanSectorSnapshots(pbarIndex, blockType, isHead)
 	rank := 0
 	for i := 0; i < len(blocks); i++ {
 		v := blocks[i]
@@ -62,7 +65,7 @@ func scanBlockByType(pbarIndex *int, blockType securities.BlockType) []SectorInf
 
 func scanBlockByTypeForTick(pbarIndex *int, blockType securities.BlockType) []SectorInfo {
 	bs := []SectorInfo{}
-	blocks := scanSectorSnapshots(pbarIndex, blockType)
+	blocks := scanSectorSnapshots(pbarIndex, blockType, false)
 	rank := 0
 	for i := 0; i < len(blocks); i++ {
 		v := blocks[i]
@@ -90,24 +93,12 @@ func scanBlockByTypeForTick(pbarIndex *int, blockType securities.BlockType) []Se
 	return bs
 }
 
-// TopBlock 板块排行
-func v1TopBlock(pbarIndex *int) []SectorInfo {
-	bs := []SectorInfo{}
-	blockTypes := []securities.BlockType{securities.BK_HANGYE, securities.BK_GAINIAN}
-	for _, bt := range blockTypes {
-		*pbarIndex += 1
-		blocks := scanBlockByType(pbarIndex, bt)
-		bs = append(bs, blocks...)
-	}
-	return bs
-}
-
 // TopBlockWithType 板块排行
-func TopBlockWithType(pbarIndex *int) map[securities.BlockType][]SectorInfo {
+func TopBlockWithType(pbarIndex *int, rule *config.StrategyParameter) map[securities.BlockType][]SectorInfo {
 	tmpMap := map[securities.BlockType][]SectorInfo{}
 	blockTypes := []securities.BlockType{securities.BK_GAINIAN}
 	for _, blockType := range blockTypes {
-		blocks := scanBlockByType(pbarIndex, blockType)
+		blocks := scanBlockByType(pbarIndex, blockType, rule)
 		tmpMap[blockType] = blocks
 	}
 	return tmpMap

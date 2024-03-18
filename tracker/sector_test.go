@@ -7,16 +7,9 @@ import (
 	"testing"
 )
 
-func TestCheckBlock(t *testing.T) {
-	pbarIndex := 0
-	data := v1TopBlock(&pbarIndex)
-	df := pandas.LoadStructs(data)
-	fmt.Println(df)
-}
-
 func Test_scanBlock(t *testing.T) {
 	pbarIndex := 0
-	data := scanSectorSnapshots(&pbarIndex, securities.BK_HANGYE)
+	data := scanSectorSnapshots(&pbarIndex, securities.BK_HANGYE, false)
 	df := pandas.LoadStructs(data)
 	fmt.Println(df)
 }

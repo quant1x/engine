@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.6.8] - 2024-03-19
+### Changed
+- 去掉过期订单的日志.
+
 ## [1.6.7] - 2024-03-19
 ### Changed
 - 细化板块过滤规则, 盘中过滤不宜使用早盘数据.
@@ -1164,8 +1168,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.6.7...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.6.8...HEAD
 
+[1.6.8]: https://gitee.com/quant1x/engine/compare/v1.6.7...v1.6.8
 [1.6.7]: https://gitee.com/quant1x/engine/compare/v1.6.6...v1.6.7
 [1.6.6]: https://gitee.com/quant1x/engine/compare/v1.6.5...v1.6.6
 [1.6.5]: https://gitee.com/quant1x/engine/compare/v1.6.4...v1.6.5

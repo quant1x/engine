@@ -142,7 +142,13 @@ func ScanAllSectors(barIndex *int, model models.Strategy) {
 	}
 
 	// 输出 板块排行表格
-	lastBlocks := api.Filter(allBlocks, sectorFilter)
+	var lastBlocks []SectorInfo
+	isHead := tradeRule.Flag == models.OrderFlagHead
+	if isHead {
+		lastBlocks = api.Filter(allBlocks, sectorFilterForHead)
+	} else {
+		lastBlocks = api.Filter(allBlocks, sectorFilterForTick)
+	}
 	bn := len(lastBlocks)
 	if bn >= tradeRule.Rules.SectorsTopN {
 		bn = tradeRule.Rules.SectorsTopN

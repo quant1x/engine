@@ -16,8 +16,8 @@ var (
 	blockIgnoreList = []string{"sh880516"} // ST板块
 )
 
-// 板块过滤规则
-func sectorFilter(info SectorInfo) bool {
+// 板块过滤规则, 早盘
+func sectorFilterForHead(info SectorInfo) bool {
 	if slices.Contains(blockIgnoreList, info.Code) {
 		return false
 	}
@@ -25,6 +25,17 @@ func sectorFilter(info SectorInfo) bool {
 		return false
 	}
 	if info.OpenAmount <= SectorMinVolume {
+		return false
+	}
+	return true
+}
+
+// 板块过滤规则, 盘中
+func sectorFilterForTick(info SectorInfo) bool {
+	if slices.Contains(blockIgnoreList, info.Code) {
+		return false
+	}
+	if info.ChangeRate <= SectorMinChangeRate {
 		return false
 	}
 	return true

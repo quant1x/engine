@@ -10,10 +10,8 @@ func tickWeight(snapshot factors.QuoteSnapshot) float64 {
 	weight1 := snapshot.ChangeRate
 	// 2. 涨速
 	weight2 := snapshot.Rate
-	// 3. 量比
-	weight3 := snapshot.QuantityRatio
 
-	return num.Mean([]float64{weight1, weight2, weight3})
+	return num.Mean([]float64{weight1, weight2})
 }
 
 // SectorSortForTick 板块排序, 盘中

@@ -145,7 +145,6 @@ func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool
 		for i := 0; i < length && numberOfStrategy < strategyParameter.Total; i++ {
 			v := &(list[i])
 			if v.Date != tradeDate {
-				logger.Errorf("订单日期不匹配: order[%s], trading[%s]", v.Date, tradeDate)
 				continue
 			}
 			if v.StrategyCode == model.Code() && v.OrderStatus == 1 {

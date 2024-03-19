@@ -102,7 +102,9 @@ func stockPoolMerge(model models.Strategy, date string, orders []models.Statisti
 	}
 	if len(newList) > 0 {
 		localStockPool = append(localStockPool, newList...)
+		logger.Infof("检查是否需要委托下单...")
 		checkOrderForBuy(localStockPool, model, date)
+		logger.Infof("检查是否需要委托下单...OK")
 		saveStockPoolToCache(localStockPool)
 	}
 }
@@ -136,13 +138,14 @@ func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool
 		direction := trader.BUY
 		numberOfStrategy := CountStrategyOrders(tradeDate, model, direction)
 		if numberOfStrategy >= strategyParameter.Total {
-			logger.Warnf("%s %s: 计划买入=%d, 已完成=%d. ", tradeDate, model.Name(), strategyParameter.Total, numberOfStrategy)
+			logger.Errorf("%s %s: 计划买入=%d, 已完成=%d. ", tradeDate, model.Name(), strategyParameter.Total, numberOfStrategy)
 			return true
 		}
 		length := len(list)
 		for i := 0; i < length && numberOfStrategy < strategyParameter.Total; i++ {
 			v := &(list[i])
 			if v.Date != tradeDate {
+				logger.Errorf("订单日期不匹配: order[%s], trading[%s]", v.Date, tradeDate)
 				continue
 			}
 			if v.StrategyCode == model.Code() && v.OrderStatus == 1 {

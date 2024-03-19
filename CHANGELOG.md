@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.6.7] - 2024-03-19
+### Changed
+- 细化板块过滤规则, 盘中过滤不宜使用早盘数据.
+- 细化买入委托的处理过程日志.
+
 ## [1.6.6] - 2024-03-19
 ### Changed
 - 更新gotdx版本到1.21.7, 更新行业板块数据.
@@ -1159,8 +1164,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.6.6...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.6.7...HEAD
 
+[1.6.7]: https://gitee.com/quant1x/engine/compare/v1.6.6...v1.6.7
 [1.6.6]: https://gitee.com/quant1x/engine/compare/v1.6.5...v1.6.6
 [1.6.5]: https://gitee.com/quant1x/engine/compare/v1.6.4...v1.6.5
 [1.6.4]: https://gitee.com/quant1x/engine/compare/v1.6.3...v1.6.4

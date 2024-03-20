@@ -36,10 +36,10 @@ var (
 
 // Quant1XConfig Quant1X基础配置
 type Quant1XConfig struct {
-	BaseDir    string           `yaml:"basedir"` // 基础路径
-	DataSource DataParameter    `yaml:"data"`    // 数据源
-	Runtime    RuntimeParameter `yaml:"runtime"` // 运行时参数
-	Trader     TraderParameter  `yaml:"trader"`  // 预览交易参数
+	BaseDir string           `yaml:"basedir"` // 基础路径
+	Data    DataParameter    `yaml:"data"`    // 数据源
+	Runtime RuntimeParameter `yaml:"runtime"` // 运行时参数
+	Trader  TraderParameter  `yaml:"trader"`  // 预览交易参数
 }
 
 // GetConfigFilename 获取配置文件路径

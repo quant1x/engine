@@ -140,6 +140,9 @@ func AllScan(barIndex *int, model models.Strategy) {
 	tbl := tablewriter.NewWriter(os.Stdout)
 	tbl.SetHeader(tags.GetHeadersByTags(models.Statistics{}))
 	topN := models.CountTopN
+	if topN <= 0 {
+		topN = tradeRule.Total
+	}
 	if topN > len(stockSnapshots) {
 		topN = len(stockSnapshots)
 	}

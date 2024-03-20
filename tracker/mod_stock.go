@@ -124,14 +124,18 @@ func AllScan(barIndex *int, model models.Strategy) {
 		return model.Filter(tradeRule.Rules, snapshot) == nil
 	})
 	// 排序
-	sort.Slice(stockSnapshots, func(i, j int) bool {
-		a := stockSnapshots[i]
-		b := stockSnapshots[j]
-		if a.OpenTurnZ > b.OpenTurnZ {
-			return true
-		}
-		return a.OpenTurnZ == b.OpenTurnZ && a.OpeningChangeRate > b.OpeningChangeRate
-	})
+	sortedStatus := model.Sort(stockSnapshots)
+	if sortedStatus == models.SortDefault || sortedStatus == models.SortNotExecuted {
+		sort.Slice(stockSnapshots, func(i, j int) bool {
+			a := stockSnapshots[i]
+			b := stockSnapshots[j]
+			if a.OpenTurnZ > b.OpenTurnZ {
+				return true
+			}
+			return a.OpenTurnZ == b.OpenTurnZ && a.OpeningChangeRate > b.OpeningChangeRate
+		})
+	}
+
 	// 输出二维表格
 	tbl := tablewriter.NewWriter(os.Stdout)
 	tbl.SetHeader(tags.GetHeadersByTags(models.Statistics{}))

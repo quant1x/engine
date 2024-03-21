@@ -145,9 +145,7 @@ func SyncLoadListOfBlackAndWhite() {
 		}
 		list = append(list, BlackAndWhite{Code: key, Type: value})
 	})
-	if len(list) > 0 {
-		_ = api.SlicesToCsv(filename, list)
-	}
+	_ = api.SlicesToCsv(filename, list)
 }
 
 // 校验和修正证券代码

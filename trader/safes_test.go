@@ -12,3 +12,9 @@ func TestProhibitTradingToBlackList(t *testing.T) {
 	ProhibitTradingToBlackList("sh000002")
 	time.Sleep(20 * time.Second)
 }
+
+func TestAddCodeToBlackList(t *testing.T) {
+	code := "sh603230"
+	secureType := FreeTrading
+	AddCodeToBlackList(code, secureType)
+}

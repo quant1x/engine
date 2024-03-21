@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.6.9] - 2024-03-21
+### Changed
+- 调整快照更新时间为竞价数据结束后.
+- 更新依赖库版本.
+- 修复黑白名单不能清空的bug.
+- 如果控制台传入参数小于等于0,则使用策略配置的股票数量.
+- 修订排序规则.
+- 数据配置新增特征采用规则, 股价主导还是趋势主导.
+- 修复涨幅错误信息的描述.
+
 ## [1.6.8] - 2024-03-19
 ### Changed
 - 去掉过期订单的日志.
@@ -1168,8 +1178,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.6.8...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.6.9...HEAD
 
+[1.6.9]: https://gitee.com/quant1x/engine/compare/v1.6.8...v1.6.9
 [1.6.8]: https://gitee.com/quant1x/engine/compare/v1.6.7...v1.6.8
 [1.6.7]: https://gitee.com/quant1x/engine/compare/v1.6.6...v1.6.7
 [1.6.6]: https://gitee.com/quant1x/engine/compare/v1.6.5...v1.6.6

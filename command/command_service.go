@@ -57,6 +57,7 @@ func initService() {
 			case "windows":
 				//serviceName = "Quant1X-Stock"
 				serviceName = "Quant1X-" + FirstUpper(applicationName)
+				serviceDescription += " V" + MinVersion
 			}
 			srv, err := daemon.New(serviceName, serviceDescription, daemonKind)
 			if err != nil {

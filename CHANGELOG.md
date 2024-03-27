@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.7.0] - 2024-03-28
+### Changed
+- 特征配置新增波浪(wave)使用的字段及周期数.
+- 新增财报数据营业总收入错误信息.
+- 修订dfcf包名.
+- Windows服务描述信息增加版本号.
+
 ## [1.6.9] - 2024-03-21
 ### Changed
 - 调整快照更新时间为竞价数据结束后.
@@ -1178,8 +1185,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.6.9...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.7.0...HEAD
 
+[1.7.0]: https://gitee.com/quant1x/engine/compare/v1.6.9...v1.7.0
 [1.6.9]: https://gitee.com/quant1x/engine/compare/v1.6.8...v1.6.9
 [1.6.8]: https://gitee.com/quant1x/engine/compare/v1.6.7...v1.6.8
 [1.6.7]: https://gitee.com/quant1x/engine/compare/v1.6.6...v1.6.7

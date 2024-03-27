@@ -29,6 +29,7 @@ var (
 	ErrF10RangeOfBasicEPS             = exception.New(errorRuleF10+8, "非每股收益范围")
 	ErrF10RangeOfBPS                  = exception.New(errorRuleF10+9, "非净增长范围")
 	ErrF10RangeOfMarketCap            = exception.New(errorRuleF10+10, "非市值范围")
+	ErrF10RangeOfTotalOperateIncome   = exception.New(errorRuleF10+11, "非营业总收入")
 )
 
 // RuleF10 基本面规则

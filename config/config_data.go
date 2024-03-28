@@ -24,11 +24,11 @@ type FeatureParameter struct {
 
 // FeatureWave 特征 - 波浪
 type FeatureWave struct {
-	Field   FeatureWaveField `name:"波浪检测字段" yaml:"field"`             // K线检测字段
-	Periods int              `name:"周期数" yaml:"periods" default:"89"` // 波浪检测K线周期数, 默认89天
+	Fields  FeatureWaveFields `name:"波浪检测字段" yaml:"fields"`            // K线检测字段
+	Periods int               `name:"周期数" yaml:"periods" default:"89"` // 波浪检测K线周期数, 默认89天
 }
 
-type FeatureWaveField struct {
+type FeatureWaveFields struct {
 	Peak   string `yaml:"peak" default:"close"`   // K线检测 - 波峰字段, 默认是收盘价
 	Valley string `yaml:"valley" default:"close"` // K线检测 - 波谷字段, 默认是收盘价
 }

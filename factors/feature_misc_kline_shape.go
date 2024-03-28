@@ -2,6 +2,7 @@ package factors
 
 import (
 	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/num"
@@ -76,7 +77,7 @@ func KLineShape(df pandas.DataFrame, securityCode string) (shape ShapeType) {
 	// 1.5 昨日收盘价
 	//tmpValue, _ = m["last_close"]
 	//LAST_CLOSE := stat.AnyToFloat64(tmpValue)
-	LAST_CLOSE := utils.SeriesIndexOf(CLOSEs, -2)
+	LAST_CLOSE := utils.Float64IndexOf(CLOSEs, -2)
 
 	// 2. 判断基本形态
 	if CLOSE > LAST_CLOSE {
@@ -116,22 +117,27 @@ func KLineShape(df pandas.DataFrame, securityCode string) (shape ShapeType) {
 		// 4.4 曾跌停
 		shape |= KLineShapeNotLimitDown
 	}
-	// 5. 十字星
-	boxHeight := num.ChangeRate(LAST_CLOSE, math.Abs(OPEN-CLOSE)) * 100
-	doji := math.Abs(boxHeight) < kBoxDojiHeight && HIGH > LOW
-	if doji {
-		shape |= KLineShapeDoji
-	}
-	// 6. 计算K线实体
+	// 5. 计算K线实体
 	boxTop := CLOSE
 	boxBottom := OPEN
-	// 6.1 确定K线实体顶部和底部
+	// 5.1 确定K线实体顶部和底部
 	if CLOSE < OPEN {
 		boxTop, boxBottom = boxBottom, boxTop
 	}
-	// 7. 计算影线长度
+	// 6. 计算影线长度
 	shadowTop := HIGH - boxTop
 	shadowBottom := boxBottom - LOW
+	// 7. 十字星
+	boxHeight := boxTop - boxBottom
+	klineHeight := HIGH - LOW
+	boxRatio := num.ChangeRate(klineHeight, boxHeight)
+	boxDojiHeight := config.GetDataConfig().Feature.CrossStarRatio
+	minHeight := min(boxHeight, shadowTop, shadowBottom)
+	doji := math.Abs(boxRatio) < boxDojiHeight && minHeight == boxHeight
+	if doji {
+		shape |= KLineShapeDoji
+	}
+	// 7.1 确定上下影线
 	if shadowTop > shadowBottom {
 		// 7.1 长上影线
 		shape |= KLineShapeLongUpShadow

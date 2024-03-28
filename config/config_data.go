@@ -18,8 +18,9 @@ type HistoricalTradingDataParameter struct {
 
 // FeatureParameter 特征参数
 type FeatureParameter struct {
-	Tendency int         `yaml:"tendency" default:"0"` // 策略是趋势主导还是股价主导, 默认是0, 0-股价主导,1-趋势主导,2-股价或趋势
-	Wave     FeatureWave `name:"波浪" yaml:"wave"`
+	Tendency       int         `yaml:"tendency" default:"0"` // 策略是趋势主导还是股价主导, 默认是0, 0-股价主导,1-趋势主导,2-股价或趋势
+	Wave           FeatureWave `name:"波浪" yaml:"wave"`
+	CrossStarRatio float64     `name:"十字星实体占比" yaml:"cross_star_ratio" default:"0.50"` // 判断十字星, K线实体(OPEN-CLOSE)在K线长度(HIGH-LOW)中的占比
 }
 
 // FeatureWave 特征 - 波浪

@@ -13,10 +13,12 @@ func TestFeatureMisc(t *testing.T) {
 	code = "sz300904"
 	code = "sh603038"
 	code = "sh600178"
-	date := "2024-02-01"
+	code = "sz300261"
+	date := "2024-03-27"
 	cacheDate, featureDate := cache.CorrectDate(date)
 	misc := NewMisc(code, date)
 	misc.Update(code, cacheDate, featureDate, false)
+	fmt.Println(misc.Shape & KLineShapeDoji)
 	data, _ := json.Marshal(misc)
 	text := api.Bytes2String(data)
 	fmt.Println(text)

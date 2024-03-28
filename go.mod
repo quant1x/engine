@@ -6,8 +6,8 @@ require (
 	gitee.com/quant1x/exchange v0.4.6
 	gitee.com/quant1x/gotdx v1.21.8
 	gitee.com/quant1x/gox v1.20.9
-	gitee.com/quant1x/num v0.2.5
-	gitee.com/quant1x/pandas v1.4.2
+	gitee.com/quant1x/num v0.2.6
+	gitee.com/quant1x/pandas v1.4.3
 	gitee.com/quant1x/pkg v0.2.7
 	github.com/bits-and-blooms/bitset v1.13.0
 	github.com/spf13/cobra v1.8.0
@@ -18,7 +18,7 @@ require (
 	github.com/dlclark/regexp2 v1.11.0 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/go-sourcemap/sourcemap v2.1.4+incompatible // indirect
-	github.com/google/pprof v0.0.0-20240320155624-b11c3daa6f07 // indirect
+	github.com/google/pprof v0.0.0-20240327155427-868f304927ed // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect

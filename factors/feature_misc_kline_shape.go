@@ -76,7 +76,6 @@ func KLineShape(df pandas.DataFrame, securityCode string) (shape ShapeType) {
 	CLOSE := num.AnyToFloat64(tmpValue)
 	// 1.5 昨日收盘价
 	//tmpValue, _ = m["last_close"]
-	//LAST_CLOSE := stat.AnyToFloat64(tmpValue)
 	LAST_CLOSE := utils.Float64IndexOf(CLOSEs, -2)
 
 	// 2. 判断基本形态

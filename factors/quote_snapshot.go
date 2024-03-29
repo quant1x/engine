@@ -55,3 +55,21 @@ type QuoteSnapshot struct {
 	AverageBiddingVolume  int                  `name:"委托均量"` // 委托均量
 	UpdateTime            string               // 本地时间戳
 }
+
+// ExistUpwardGap 是否存在向上跳空缺口
+func (q QuoteSnapshot) ExistUpwardGap() bool {
+	history := GetL5History(q.SecurityCode, q.Date)
+	if history == nil {
+		return false
+	}
+	return history.HIGH < q.Low
+}
+
+// ExistDownwardGap 是否存在向下跳空缺口
+func (q QuoteSnapshot) ExistDownwardGap() bool {
+	history := GetL5History(q.SecurityCode, q.Date)
+	if history == nil {
+		return false
+	}
+	return history.LOW > q.High
+}

@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.7.1] - 2024-04-04
+### Changed
+- 新增获取股价的小数点位数.
+- 更新依赖库版本.
+- 调整两融测试代码.
+- 删除部分废弃的代码.
+- 快照新增跳空缺口判断的方法.
+- 修订wave字段注释.
+- 修订wave字段注释.
+- 特征配置十字星在K线的占比, 默认0.5%且K线实体在上影线和下影线三者之中最小.
+- 调整波浪使用字段的配置字段名成, 从filed改为fields.
+- 更新依赖库版本.
+
 ## [1.7.0] - 2024-03-28
 ### Changed
 - 特征配置新增波浪(wave)使用的字段及周期数.
@@ -1185,8 +1198,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.7.0...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.7.1...HEAD
 
+[1.7.1]: https://gitee.com/quant1x/engine/compare/v1.7.0...v1.7.1
 [1.7.0]: https://gitee.com/quant1x/engine/compare/v1.6.9...v1.7.0
 [1.6.9]: https://gitee.com/quant1x/engine/compare/v1.6.8...v1.6.9
 [1.6.8]: https://gitee.com/quant1x/engine/compare/v1.6.7...v1.6.8

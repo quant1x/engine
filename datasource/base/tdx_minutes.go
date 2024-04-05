@@ -31,3 +31,9 @@ func UpdateMinutes(securityCode, date string) {
 		_ = api.SlicesToCsv(filename, list)
 	}
 }
+func LoadMinutes(securityCode string, date string) []quotes.MinuteTime {
+	filename := cache.MinuteFilename(securityCode, date)
+	var mintues []quotes.MinuteTime
+	_ = api.CsvToSlices(filename, &mintues)
+	return mintues
+}

@@ -1,16 +1,18 @@
 package models
 
 import (
+	"fmt"
 	"gitee.com/quant1x/engine/factors"
+	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx"
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/num"
 	"sync"
+	"time"
 )
 
 var (
@@ -60,29 +62,31 @@ func GetStrategySnapshot(securityCode string) *factors.QuoteSnapshot {
 }
 
 // SyncAllSnapshots 实时更新快照
-func SyncAllSnapshots(barIndex *int) {
+func SyncAllSnapshots() {
+	start := time.Now()
+
 	modName := "同步快照数据"
 	allCodes := securities.AllCodeList()
 	count := len(allCodes)
-	var bar *progressbar.Bar = nil
-	if barIndex != nil {
-		bar = progressbar.NewBar(*barIndex, "执行["+modName+"]", count)
-	}
+
+	progressManager := utils.NewProgressBarManager(modName, count)
+	progressManager.Start()
+	defer progressManager.Wait()
+
 	currentDate := exchange.GetCurrentlyDay()
 	tdxApi := gotdx.GetTdxApi()
-	parallelCount := tdxApi.NumOfServers()
-	parallelCount /= 2
+	parallelCount := tdxApi.NumOfServers() / 2
 	if parallelCount < 2 {
 		parallelCount = 2
 	}
-	var snapshots []quotes.Snapshot
+
 	var wg sync.WaitGroup
-	var mutex sync.Mutex
 	codeCh := make(chan []string, parallelCount)
 
-	// 启动goroutine来处理快照获取
 	for i := 0; i < parallelCount; i++ {
+		wg.Add(1)
 		go func() {
+			defer wg.Done()
 			for subCodes := range codeCh {
 				for i := 0; i < quotes.DefaultRetryTimes; i++ {
 					list, err := tdxApi.GetSnapshot(subCodes)
@@ -90,57 +94,38 @@ func SyncAllSnapshots(barIndex *int) {
 						logger.Errorf("ZS: 网络异常: %+v, 重试: %d", err, i+1)
 						continue
 					}
-					mutex.Lock()
+
 					for _, v := range list {
-						// 修订日期
 						v.Date = currentDate
-						snapshots = append(snapshots, v)
+						__mutexTicks.Lock()
+						__cacheTicks[v.SecurityCode] = v
+						__mutexTicks.Unlock()
 					}
-					mutex.Unlock()
 
 					break
 				}
 			}
-			wg.Done()
 		}()
 	}
 
 	for start := 0; start < count; start += quotes.TDX_SECURITY_QUOTES_MAX {
 		length := count - start
-		if length >= quotes.TDX_SECURITY_QUOTES_MAX {
+		if length > quotes.TDX_SECURITY_QUOTES_MAX {
 			length = quotes.TDX_SECURITY_QUOTES_MAX
 		}
-		var subCodes []string
+		subCodes := make([]string, 0, length)
 		for i := 0; i < length; i++ {
 			securityCode := allCodes[start+i]
 			subCodes = append(subCodes, securityCode)
-			if barIndex != nil {
-				bar.Add(1)
-			}
 		}
-		if len(subCodes) == 0 {
-			continue
-		}
+		progressManager.Update(length)
+
 		codeCh <- subCodes
 	}
-	// channel 关闭后, 仍然可以读, 一直到读完全部数据
+
 	close(codeCh)
-
-	wg.Add(parallelCount)
 	wg.Wait()
-	// 如果有进度条
-	if bar != nil {
-		// 等待进度条结束
-		bar.Wait()
-	}
 
-	__mutexTicks.Lock()
-	for _, v := range snapshots {
-		__cacheTicks[v.SecurityCode] = v
-	}
-	__mutexTicks.Unlock()
-
-	if barIndex != nil {
-		*barIndex++
-	}
+	elapsed := time.Since(start)
+	fmt.Printf("Execution time: %v\n", elapsed)
 }

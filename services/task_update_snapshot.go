@@ -25,6 +25,6 @@ func jobUpdateSnapshot() {
 // 更新快照
 func realtimeUpdateSnapshot() {
 	logger.Infof("同步snapshot...")
-	models.SyncAllSnapshots(nil)
+	models.SyncAllSnapshots()
 	logger.Infof("同步snapshot...OK")
 }

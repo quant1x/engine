@@ -19,7 +19,7 @@ import (
 func v1ExecuteStrategy(model models.Strategy, barIndex *int) {
 	fmt.Printf("策略模块: %s\n", model.Name())
 	// 加载即时行情
-	models.SyncAllSnapshots(barIndex)
+	models.SyncAllSnapshots()
 	fmt.Println()
 	// 执行策略
 	allCodes := market.GetCodeList()
@@ -55,7 +55,7 @@ func ExecuteStrategy(model models.Strategy, barIndex *int) {
 		return
 	}
 	// 加载快照数据
-	models.SyncAllSnapshots(barIndex)
+	models.SyncAllSnapshots()
 	// 计算市场情绪
 	MarketSentiment()
 	// 扫描板块

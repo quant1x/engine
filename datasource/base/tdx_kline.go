@@ -42,6 +42,12 @@ func UpdateCacheKLines(securityCode string, klines []KLine) {
 	klineMutex.Unlock()
 }
 
+func ClearCachedKLines() {
+	klineMutex.Lock()
+	routineLocalKLines = make(map[string][]KLine)
+	klineMutex.Unlock()
+}
+
 // CheckoutKLines 捡出指定日期的K线数据
 func CheckoutKLines(code, date string) []KLine {
 	securityCode := exchange.CorrectSecurityCode(code)
@@ -73,6 +79,28 @@ func CheckoutKLines(code, date string) []KLine {
 	// 3. 返回指定日期前的K线数据
 	klines := cacheKLines[0 : rows-offset]
 	return klines
+}
+
+func CheckoutKLine(code, date string) *KLine {
+	securityCode := exchange.CorrectSecurityCode(code)
+	date = exchange.FixTradeDate(date)
+
+	cacheKLines := LoadBasicKline(securityCode)
+
+	rows := len(cacheKLines)
+	if rows == 0 {
+		return nil
+	}
+
+	// 2. 对齐数据缓存的日期, 过滤可能存在停牌没有数据的情况
+	offset := checkKLineOffset(cacheKLines, date)
+	if offset < 0 {
+		return nil
+	}
+	// 3. 返回指定日期前的K线数据
+	klines := cacheKLines[0 : rows-offset]
+	kline := klines[len(klines)-1]
+	return &kline
 }
 
 // 由日线计算日线以上级别的K线

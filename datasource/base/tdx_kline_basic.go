@@ -1,6 +1,7 @@
 package base
 
 import (
+	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx"
@@ -8,6 +9,7 @@ import (
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
+	"time"
 )
 
 var (
@@ -27,6 +29,46 @@ type KLine struct {
 	Up       int     `name:"上涨/外盘" dataframe:"up"`      // 上涨家数
 	Down     int     `name:"下跌/内盘" dataframe:"down"`    // 下跌家数
 	Datetime string  `name:"时间" dataframe:"datetime"`   // 时间
+}
+
+func timeIndexToString(currentMinuteIndex int) string {
+	var startTime time.Time
+	if currentMinuteIndex < 120 {
+		// 如果 currentMinuteIndex 小于 120，则从早上 9:30 开始加 currentMinuteIndex 分钟
+		startTime = time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), 9, 30, 0, 0, time.Local)
+	} else {
+		// 如果 currentMinuteIndex 大于等于 120，则从下午 13:00 开始加（即加上上午的分钟数再加上当前分钟数）
+		startTime = time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), 13, 0, 0, 0, time.Local)
+		currentMinuteIndex -= 120 // 减去上午的分钟数
+	}
+
+	startTime = startTime.Add(time.Minute * time.Duration(currentMinuteIndex))
+
+	return startTime.Format("15:04:05.000")
+}
+
+func CombineKLinesToSnapshot(securityCode string, currentMinuteIndex int, kline *KLine, minuteTime *quotes.MinuteTime) *quotes.Snapshot {
+	timeString := timeIndexToString(currentMinuteIndex)
+	return &quotes.Snapshot{
+		Market:        exchange.GetMarketId(securityCode),
+		Code:          securityCode[2:],
+		Date:          kline.Date,
+		ServerTime:    timeString,
+		Price:         float64(minuteTime.Price),
+		ExchangeState: quotes.TDX_EXCHANGE_STATE_NORMAL,       // 交易状态
+		State:         quotes.TDX_SECURITY_TRADE_STATE_NORMAL, // 上市公司状态
+		LastClose:     kline.Close,
+		Open:          kline.Open,
+		High:          kline.High,
+		Low:           kline.Low,
+		Amount:        0,
+		Vol:           minuteTime.Vol,
+		Bid1:          0,
+		Ask1:          0,
+		BidVol1:       0,
+		AskVol1:       0,
+		TimeStamp:     fmt.Sprintf("%s %s", kline.Date, timeString),
+	}
 }
 
 // LoadBasicKline 加载基础K线

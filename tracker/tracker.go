@@ -2,13 +2,14 @@ package tracker
 
 import (
 	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/engine/datasource"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/permissions"
+	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/runtime"
 	"sort"
 	"time"
@@ -16,16 +17,19 @@ import (
 
 // Tracker 盘中跟踪
 func Tracker(strategyNumbers ...uint64) {
+	tickDataAdapter := &datasource.RealTickDataAdapter{}
+	updateInRealTime, status := exchange.CanUpdateInRealtime()
+	isTrading := updateInRealTime && status == exchange.ExchangeTrading
+	if !runtime.Debug() && !isTrading {
+		// 非调试且非交易时段返回
+		return
+	}
+
 	for {
-		updateInRealTime, status := exchange.CanUpdateInRealtime()
-		isTrading := updateInRealTime && status == exchange.ExchangeTrading
-		if !runtime.Debug() && !isTrading {
-			// 非调试且非交易时段返回
-			return
-		}
-		barIndex := 1
-		models.SyncAllSnapshots(&barIndex)
 		//stockCodes := radar.ScanSectorForTick(barIndex)
+
+		tickDataAdapter.SyncAllSnapshots()
+
 		for _, strategyNumber := range strategyNumbers {
 			model, err := models.CheckoutStrategy(strategyNumber)
 			if err != nil || model == nil {
@@ -41,10 +45,10 @@ func Tracker(strategyNumbers ...uint64) {
 				continue
 			}
 			if strategyParameter.Session.IsTrading() {
-				snapshotTracker(&barIndex, model, strategyParameter)
+				snapshotTracker(tickDataAdapter, model, strategyParameter)
 			} else {
 				if runtime.Debug() {
-					snapshotTracker(&barIndex, model, strategyParameter)
+					snapshotTracker(tickDataAdapter, model, strategyParameter)
 				} else {
 					break
 				}
@@ -54,7 +58,7 @@ func Tracker(strategyNumbers ...uint64) {
 	}
 }
 
-func snapshotTracker(barIndex *int, model models.Strategy, tradeRule *config.StrategyParameter) {
+func snapshotTracker(provider datasource.TickDataProvider, model models.Strategy, tradeRule *config.StrategyParameter) {
 	if tradeRule == nil {
 		return
 	}
@@ -64,17 +68,22 @@ func snapshotTracker(barIndex *int, model models.Strategy, tradeRule *config.Str
 	}
 	var stockSnapshots []factors.QuoteSnapshot
 	stockCount := len(stockCodes)
-	bar := progressbar.NewBar(*barIndex, "执行["+model.Name()+"全市场扫描]", stockCount)
+
+	progressManager := utils.NewProgressBarManager("执行["+model.Name()+"全市场扫描]", stockCount)
+	progressManager.Start()
+	defer progressManager.Wait()
+
 	for start := 0; start < stockCount; start++ {
-		bar.Add(1)
+		progressManager.Update(1)
+
 		code := stockCodes[start]
 		securityCode := exchange.CorrectSecurityCode(code)
 		if exchange.AssertIndexBySecurityCode(securityCode) {
 			continue
 		}
-		v := models.GetTickFromMemory(securityCode)
+		v := provider.GetTickFromMemory(securityCode)
 		if v != nil {
-			snapshot := models.QuoteSnapshotFromProtocol(*v)
+			snapshot := provider.QuoteSnapshotFromProtocol(*v)
 			stockSnapshots = append(stockSnapshots, snapshot)
 		}
 	}

@@ -4,13 +4,16 @@ import (
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/engine/datasource"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/models"
+	"gitee.com/quant1x/engine/permissions"
 	"gitee.com/quant1x/engine/storages"
 	"gitee.com/quant1x/engine/strategies"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/tags"
 	"gitee.com/quant1x/num"
@@ -244,5 +247,38 @@ func BackTesting(countDays, countTopN int) {
 		filename := fmt.Sprintf("%s/backtesting-%s-%d.csv", storages.GetResultCachePath(), today, countTopN)
 		_ = dfRecords.WriteCSV(filename)
 	}
+	//fmt.Println("\n")
+}
+
+func BackTestingNew(start, end string, countTopN int, strategyCode uint64) {
+
+	tickDataAdapter := datasource.NewBacktestingTickDataAdapter(start, end)
+
+	model, err := models.CheckoutStrategy(strategyCode)
+	if err != nil || model == nil {
+		return
+	}
+
+	err = permissions.CheckPermission(model)
+	if err != nil {
+		logger.Error(err)
+		return
+	}
+	strategyParameter := config.GetStrategyParameterByCode(strategyCode)
+	if strategyParameter == nil {
+		return
+	}
+
+	for {
+		//stockCodes := radar.ScanSectorForTick(barIndex)
+
+		tickDataAdapter.SyncAllSnapshots()
+
+		snapshotTracker(tickDataAdapter, model, strategyParameter)
+		if !tickDataAdapter.Next() {
+			return
+		}
+	}
+
 	//fmt.Println("\n")
 }

@@ -250,6 +250,10 @@ func BackTesting(countDays, countTopN int) {
 	//fmt.Println("\n")
 }
 
+func BackTestingDaily() {
+
+}
+
 func BackTestingNew(start, end string, countTopN int, strategyCode uint64) {
 
 	tickDataAdapter := datasource.NewBacktestingTickDataAdapter(start, end)
@@ -264,10 +268,13 @@ func BackTestingNew(start, end string, countTopN int, strategyCode uint64) {
 		logger.Error(err)
 		return
 	}
+
 	strategyParameter := config.GetStrategyParameterByCode(strategyCode)
 	if strategyParameter == nil {
 		return
 	}
+
+	tickDataAdapter.RegisterDaily(BackTestingDaily)
 
 	for {
 		//stockCodes := radar.ScanSectorForTick(barIndex)

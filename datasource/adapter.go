@@ -17,6 +17,7 @@ type TickDataProvider interface {
 	QuoteSnapshotFromProtocol(quote quotes.Snapshot) factors.QuoteSnapshot
 	SyncAllSnapshots()
 	Next() bool
+	RegisterDaily(func())
 }
 
 type RealTickDataAdapter struct {
@@ -39,6 +40,9 @@ func (a *RealTickDataAdapter) Next() bool {
 	return true
 }
 
+func (a *RealTickDataAdapter) RegisterDaily(dailyFunc func()) {
+}
+
 ////////////////////
 
 type BacktestingTickDataAdapter struct {
@@ -48,6 +52,7 @@ type BacktestingTickDataAdapter struct {
 	snapshots          map[string]quotes.Snapshot
 	snapshotsMutex     sync.RWMutex
 	securityCodes      []string
+	dailyFunc          func()
 }
 
 func NewBacktestingTickDataAdapter(startDate, endDate string) *BacktestingTickDataAdapter {
@@ -98,9 +103,17 @@ func (a *BacktestingTickDataAdapter) Next() bool {
 		if a.currentDateIndex >= len(a.dates) {
 			return false
 		}
+
+		if a.dailyFunc != nil {
+			a.dailyFunc()
+		}
 	}
 	a.clearSnapshots()
 	return true
+}
+
+func (a *BacktestingTickDataAdapter) RegisterDaily(dailyFunc func()) {
+	a.dailyFunc = dailyFunc
 }
 
 func (a *BacktestingTickDataAdapter) SyncAllSnapshots() {

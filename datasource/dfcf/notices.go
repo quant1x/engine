@@ -366,3 +366,123 @@ func StockNotices(securityCode, beginDate, endDate string, pageNumber ...int) (n
 	}
 	return notices, pages, nil
 }
+
+//https://emweb.securities.eastmoney.com/pc_hsf10/pages/index.html?type=web&code=SH603045&color=b#/gsds
+//https://datacenter.eastmoney.com/securities/api/data/get
+//type: RTP_F10_DETAIL
+//params: 603045.SH,02
+//p: 1
+//source: HSF10
+//client: PC
+//v: 07214522120592637
+
+const (
+	urlEastmoneyWarning = "https://datacenter.eastmoney.com/securities/api/data/get"
+)
+
+type WarningDetail struct {
+	EventType         string   `json:"EVENT_TYPE"`         // 事件类型
+	SpecificEventType string   `json:"SPECIFIC_EVENTTYPE"` // 事件类型
+	NoticeDate        string   `json:"NOTICE_DATE"`        // 公告日期
+	Level1Content     string   `json:"LEVEL1_CONTENT"`     // 1级内容
+	Level2Content     []string `json:"LEVEL2_CONTENT"`     // 2级内容
+	InfoCode          string   `json:"INFO_CODE"`          // 信息代码
+}
+
+type RawWarning struct {
+	Code    int               `json:"code"`    // 状态码
+	Success bool              `json:"success"` // 接口是否调用成功
+	Message string            `json:"message"` // 状态信息
+	Data    [][]WarningDetail `json:"data"`
+	HasNext int               `json:"hasNext"` // 是否有下一页
+}
+
+// StockWarning 大事提醒
+func StockWarning(securityCode string, pageNumber ...int) (warning RawWarning, err error) {
+	pageNo := 1
+	if len(pageNumber) > 0 {
+		pageNo = pageNumber[0]
+	}
+	_, flag, code := exchange.DetectMarket(securityCode)
+	flag = strings.ToUpper(flag)
+	params := urlpkg.Values{
+		"type":     {"RTP_F10_DETAIL"},
+		"params":   {fmt.Sprint(code, ".", flag)},
+		"p":        {fmt.Sprintf("%d", pageNo)},
+		"ann_type": {"A"},
+		"source":   {"HSF10"},
+		"client":   {"PC"},
+	}
+	// Host: np-anotice-stock.eastmoney.com
+	header := map[string]any{
+		//"User-Agent": config.HTTP_REQUEST_HEADER_USER_AGENT,
+		//"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+	}
+	url := urlEastmoneyWarning + "?" + params.Encode()
+	data, err := http.Get(url, header)
+	if err != nil {
+		return
+	}
+	//fmt.Println(api.Bytes2String(data))
+	var raw RawWarning
+	err = json.Unmarshal(data, &raw)
+	if err != nil {
+		return
+	}
+	if !raw.Success || len(raw.Data) == 0 {
+		err = ErrNoticeNotFound
+		return
+	}
+
+	return raw, nil
+}
+
+// 获取年报披露日期
+func getAnnualReportDate(year string, events []WarningDetail) (annualReportDate, quarterlyReportDate string) {
+	for _, v := range events {
+		date := exchange.FixTradeDate(v.NoticeDate)
+		tmpYear := date[0:4]
+		if v.EventType != "报表披露" {
+			continue
+		}
+		if v.SpecificEventType == "年报预披露" && tmpYear >= year {
+			annualReportDate = date
+		} else if strings.HasSuffix(v.SpecificEventType, "季报预披露") {
+			quarterlyReportDate = date
+		}
+
+		if len(annualReportDate) > 0 && len(quarterlyReportDate) > 0 {
+			break
+		}
+	}
+	return
+}
+
+// NoticeDateForReport 年报季报披露日期
+func NoticeDateForReport(code string, date string) (annualReportDate, quarterlyReportDate string) {
+	date = exchange.FixTradeDate(date)
+	year := date[:4]
+	pageNo := 1
+	for {
+		warning, err := StockWarning(code, pageNo)
+		if err != nil {
+			break
+		}
+		for _, events := range warning.Data {
+			tmpYearReportDate, tmpQuarterlyReportDate := getAnnualReportDate(year, events)
+			if len(tmpYearReportDate) > 0 {
+				annualReportDate = tmpYearReportDate
+			}
+			if len(tmpQuarterlyReportDate) > 0 {
+				quarterlyReportDate = tmpQuarterlyReportDate
+			}
+		}
+		if len(annualReportDate) > 0 && len(quarterlyReportDate) > 0 {
+			break
+		}
+		if warning.HasNext > 0 {
+			pageNo++
+		}
+	}
+	return
+}

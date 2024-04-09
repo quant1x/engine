@@ -3,8 +3,11 @@ package factors
 import (
 	"context"
 	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/engine/datasource/dfcf"
 	"gitee.com/quant1x/engine/datasource/tdxweb"
 	"gitee.com/quant1x/engine/market"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/num"
@@ -17,34 +20,37 @@ const (
 // F10 证券基本面
 type F10 struct {
 	cache.DataSummary    `dataframe:"-"`
-	Date                 string  `name:"日期" dataframe:"Date"`                    // 日期
-	Code                 string  `name:"代码" dataframe:"Code"`                    // 证券代码
-	SecurityName         string  `name:"名称" dataframe:"Name"`                    // 证券名称
-	SubNew               bool    `name:"次新股" dataframe:"SubNew"`                 // 是否次新股
-	VolUnit              int     `name:"每手" dataframe:"VolUnit"`                 // 每手单位
-	DecimalPoint         int     `name:"小数点" dataframe:"DecimalPoint"`           // 小数点
-	IpoDate              string  `name:"上市日期" dataframe:"IpoDate"`               // 上市日期
-	UpdateDate           string  `name:"更新日期" dataframe:"UpdateDate"`            // 更新日期
-	TotalCapital         float64 `name:"总股本" dataframe:"TotalCapital"`           // 总股本
-	Capital              float64 `name:"流通股本" dataframe:"Capital"`               // 流通股本
-	FreeCapital          float64 `name:"自由流通股本" dataframe:"FreeCapital"`         // 自由流通股本
-	Top10Capital         float64 `name:"前十大流通股东总股本" dataframe:"Top10Capital"`    // 前十大流通股东股本
-	Top10Change          float64 `name:"前十大流通股东总股本变化" dataframe:"Top10Change"`   //前十大流通股东股本变化
-	ChangeCapital        float64 `name:"前十大流通股东持仓变化" dataframe:"ChangeCapital"`  // 前十大流通股东持仓变化
-	IncreaseRatio        float64 `name:"当期增持比例" dataframe:"IncreaseRatio"`       // 当期增持比例
-	ReductionRatio       float64 `name:"当期减持比例" dataframe:"ReductionRatio"`      // 当期减持比例
-	QuarterlyYearQuarter string  `name:"季报期" dataframe:"quarterly_year_quarter"` // 当前市场处于哪个季报期, 用于比较个股的季报数据是否存在拖延的情况
-	QDate                string  `name:"新报告期" dataframe:"qdate"`                 // 最新报告期
-	TotalOperateIncome   float64 `name:"营业总收入" dataframe:"TotalOperateIncome"`   // 当期营业总收入
-	BPS                  float64 `name:"每股净资产" dataframe:"BPS"`                  // 每股净资产
-	BasicEPS             float64 `name:"每股收益" dataframe:"BasicEPS"`              // 每股收益
-	DeductBasicEPS       float64 `name:"每股收益(扣除)" dataframe:"DeductBasicEPS"`    // 每股收益(扣除)
-	SafetyScore          int     `name:"安全分" dataframe:"SafetyScore"`            // 通达信安全分
-	Increases            int     `name:"增持" dataframe:"Increases"`               // 公告-增持
-	Reduces              int     `name:"减持" dataframe:"Reduces"`                 // 公告-减持
-	Risk                 int     `name:"风险数" dataframe:"Risk"`                   // 公告-风险数
-	RiskKeywords         string  `name:"风险关键词" dataframe:"RiskKeywords"`         // 公告-风险关键词
-	UpdateTime           string  `name:"更新时间" dataframe:"update_time"`           // 更新时间
+	Date                 string  `name:"日期" dataframe:"Date"`                      // 日期
+	Code                 string  `name:"代码" dataframe:"Code"`                      // 证券代码
+	SecurityName         string  `name:"名称" dataframe:"Name"`                      // 证券名称
+	SubNew               bool    `name:"次新股" dataframe:"SubNew"`                   // 是否次新股
+	MarginTradingTarget  bool    `name:"两融" dataframe:"MarginTradingTarget"`       // 是否两融标的
+	VolUnit              int     `name:"每手" dataframe:"VolUnit"`                   // 每手单位
+	DecimalPoint         int     `name:"小数点" dataframe:"DecimalPoint"`             // 小数点
+	IpoDate              string  `name:"上市日期" dataframe:"IpoDate"`                 // 上市日期
+	UpdateDate           string  `name:"更新日期" dataframe:"UpdateDate"`              // 更新日期
+	TotalCapital         float64 `name:"总股本" dataframe:"TotalCapital"`             // 总股本
+	Capital              float64 `name:"流通股本" dataframe:"Capital"`                 // 流通股本
+	FreeCapital          float64 `name:"自由流通股本" dataframe:"FreeCapital"`           // 自由流通股本
+	Top10Capital         float64 `name:"前十大流通股东总股本" dataframe:"Top10Capital"`      // 前十大流通股东股本
+	Top10Change          float64 `name:"前十大流通股东总股本变化" dataframe:"Top10Change"`     //前十大流通股东股本变化
+	ChangeCapital        float64 `name:"前十大流通股东持仓变化" dataframe:"ChangeCapital"`    // 前十大流通股东持仓变化
+	IncreaseRatio        float64 `name:"当期增持比例" dataframe:"IncreaseRatio"`         // 当期增持比例
+	ReductionRatio       float64 `name:"当期减持比例" dataframe:"ReductionRatio"`        // 当期减持比例
+	QuarterlyYearQuarter string  `name:"季报期" dataframe:"quarterly_year_quarter"`   // 当前市场处于哪个季报期, 用于比较个股的季报数据是否存在拖延的情况
+	QDate                string  `name:"新报告期" dataframe:"qdate"`                   // 最新报告期
+	AnnualReportDate     string  `name:"年报披露日期" dataframe:"annual_report_date"`    // 年报披露日期
+	QuarterlyReportDate  string  `name:"季报披露日期" dataframe:"quarterly_report_date"` // 最新季报披露日期
+	TotalOperateIncome   float64 `name:"营业总收入" dataframe:"TotalOperateIncome"`     // 当期营业总收入
+	BPS                  float64 `name:"每股净资产" dataframe:"BPS"`                    // 每股净资产
+	BasicEPS             float64 `name:"每股收益" dataframe:"BasicEPS"`                // 每股收益
+	DeductBasicEPS       float64 `name:"每股收益(扣除)" dataframe:"DeductBasicEPS"`      // 每股收益(扣除)
+	SafetyScore          int     `name:"安全分" dataframe:"SafetyScore"`              // 通达信安全分
+	Increases            int     `name:"增持" dataframe:"Increases"`                 // 公告-增持
+	Reduces              int     `name:"减持" dataframe:"Reduces"`                   // 公告-减持
+	Risk                 int     `name:"风险数" dataframe:"Risk"`                     // 公告-风险数
+	RiskKeywords         string  `name:"风险关键词" dataframe:"RiskKeywords"`           // 公告-风险关键词
+	UpdateTime           string  `name:"更新时间" dataframe:"update_time"`             // 更新时间
 	State                uint64  `name:"样本状态" dataframe:"样本状态"`
 }
 
@@ -99,6 +105,8 @@ func (this *F10) Update(code, cacheDate, featureDate string, complete bool) {
 	// 1. 基本信息
 	securityInfo := checkoutSecurityBasicInfo(securityCode, featureDate)
 	_ = api.Copy(this, &securityInfo)
+	// 1.1 检测是否两融标的
+	this.MarginTradingTarget = securities.IsMarginTradingTarget(securityCode)
 	// 2. 前十大流通股股东
 	shareHolder := checkoutShareHolder(securityCode, featureDate)
 	_ = api.Copy(this, shareHolder)
@@ -116,6 +124,11 @@ func (this *F10) Update(code, cacheDate, featureDate string, complete bool) {
 	// 5. 安全分
 	safetyScore := tdxweb.GetSafetyScore(securityCode)
 	this.SafetyScore = safetyScore
+
+	// 6. 年报季报披露日期
+	annualReportDate, quarterlyReportDate := dfcf.NoticeDateForReport(securityCode, cacheDate)
+	this.AnnualReportDate = annualReportDate
+	this.QuarterlyReportDate = quarterlyReportDate
 
 	this.UpdateTime = GetTimestamp()
 	this.State |= this.Kind()
@@ -145,6 +158,11 @@ func (this *F10) Repair(code, cacheDate, featureDate string, complete bool) {
 	// 5. 安全分
 	//safetyScore := tdxweb.GetSafetyScore(securityCode)
 	//this.SafetyScore = safetyScore
+
+	// 6. 年报季报披露日期
+	annualReportDate, quarterlyReportDate := dfcf.NoticeDateForReport(securityCode, cacheDate)
+	this.AnnualReportDate = annualReportDate
+	this.QuarterlyReportDate = quarterlyReportDate
 
 	this.UpdateTime = GetTimestamp()
 	this.State |= this.Kind()
@@ -177,4 +195,16 @@ func (this *F10) TurnZ(v any) float64 {
 	turnoverRateZ *= 10000
 	turnoverRateZ = num.Decimal(turnoverRateZ)
 	return turnoverRateZ
+}
+
+// IsReportingRiskPeriod 是否财报披露前夕
+func (this *F10) IsReportingRiskPeriod() bool {
+	date := this.GetDate()
+	f10Config := config.GetDataConfig().Feature.F10
+	ys := exchange.DateRange(date, this.AnnualReportDate)
+	qs := exchange.DateRange(date, this.QuarterlyReportDate)
+	if len(ys) < f10Config.ReportingRiskPeriod || len(qs) < f10Config.ReportingRiskPeriod {
+		return true
+	}
+	return false
 }

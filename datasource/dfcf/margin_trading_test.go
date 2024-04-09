@@ -6,7 +6,7 @@ import (
 )
 
 func TestMarginTrading(t *testing.T) {
-	date := "20240328"
+	date := "20240408"
 	v, n, err := rawMarginTradingList(date, 2)
 	fmt.Println(v, n, err)
 }

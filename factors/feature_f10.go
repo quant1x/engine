@@ -71,6 +71,8 @@ func NewF10(date, code string) *F10 {
 		v.DecimalPoint = int(securityInfo.DecimalPoint)
 		v.SecurityName = securityInfo.Name
 	}
+	// 检测是否两融标的
+	v.MarginTradingTarget = securities.IsMarginTradingTarget(code)
 	return &v
 }
 
@@ -101,12 +103,11 @@ func (this *F10) FromHistory(history History) Feature {
 
 func (this *F10) Update(code, cacheDate, featureDate string, complete bool) {
 	securityCode := this.GetSecurityCode()
+	//fmt.Println(securityCode)
 
 	// 1. 基本信息
 	securityInfo := checkoutSecurityBasicInfo(securityCode, featureDate)
 	_ = api.Copy(this, &securityInfo)
-	// 1.1 检测是否两融标的
-	this.MarginTradingTarget = securities.IsMarginTradingTarget(securityCode)
 	// 2. 前十大流通股股东
 	shareHolder := checkoutShareHolder(securityCode, featureDate)
 	_ = api.Copy(this, shareHolder)

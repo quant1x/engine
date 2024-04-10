@@ -405,9 +405,12 @@ func StockWarning(securityCode string, pageNumber ...int) (warning RawWarning, e
 	}
 	_, flag, code := exchange.DetectMarket(securityCode)
 	flag = strings.ToUpper(flag)
+	// 全部大事, 重大事项, 业绩披露, 利润分配, 交易提示, 交易行为
+	//        ,     01,      02,      03,     04,      05
 	params := urlpkg.Values{
-		"type":     {"RTP_F10_DETAIL"},
-		"params":   {fmt.Sprint(code, ".", flag)},
+		"type": {"RTP_F10_DETAIL"},
+		//"params":   {fmt.Sprint(code, ".", flag)},
+		"params":   {fmt.Sprint(code, ".", flag, ",02")},
 		"p":        {fmt.Sprintf("%d", pageNo)},
 		"ann_type": {"A"},
 		"source":   {"HSF10"},
@@ -438,6 +441,9 @@ func StockWarning(securityCode string, pageNumber ...int) (warning RawWarning, e
 }
 
 // 获取年报披露日期
+//
+//	event_type: 报表披露, 业绩快报, 业务预告
+//	specific_eventtype: 年报披露, 年报预披露, x季报披露, x季报预披露, 中报披露, 业绩快报, 业绩预告
 func getAnnualReportDate(year string, events []WarningDetail) (annualReportDate, quarterlyReportDate string) {
 	for _, v := range events {
 		date := exchange.FixTradeDate(v.NoticeDate)
@@ -445,13 +451,16 @@ func getAnnualReportDate(year string, events []WarningDetail) (annualReportDate,
 		if v.EventType != "报表披露" {
 			continue
 		}
-		if v.SpecificEventType == "年报预披露" && tmpYear >= year {
+		if len(annualReportDate) == 0 && (v.SpecificEventType == "年报披露" || v.SpecificEventType == "年报预披露") && tmpYear >= year {
 			annualReportDate = date
-		} else if strings.HasSuffix(v.SpecificEventType, "季报预披露") {
+		} else if len(quarterlyReportDate) == 0 && strings.HasSuffix(v.SpecificEventType, "季报披露") || strings.HasSuffix(v.SpecificEventType, "季报预披露") {
 			quarterlyReportDate = date
 		}
-
 		if len(annualReportDate) > 0 && len(quarterlyReportDate) > 0 {
+			break
+		}
+		// 去年的数据略过
+		if tmpYear < year {
 			break
 		}
 	}
@@ -470,11 +479,14 @@ func NoticeDateForReport(code string, date string) (annualReportDate, quarterlyR
 		}
 		for _, events := range warning.Data {
 			tmpYearReportDate, tmpQuarterlyReportDate := getAnnualReportDate(year, events)
-			if len(tmpYearReportDate) > 0 {
+			if len(annualReportDate) == 0 && len(tmpYearReportDate) > 0 {
 				annualReportDate = tmpYearReportDate
 			}
-			if len(tmpQuarterlyReportDate) > 0 {
+			if len(quarterlyReportDate) == 0 && len(tmpQuarterlyReportDate) > 0 {
 				quarterlyReportDate = tmpQuarterlyReportDate
+			}
+			if len(annualReportDate) > 0 && len(quarterlyReportDate) > 0 {
+				break
 			}
 		}
 		if len(annualReportDate) > 0 && len(quarterlyReportDate) > 0 {

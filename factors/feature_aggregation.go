@@ -16,6 +16,8 @@ var (
 	__l5Misc *Cache1D[*Misc] = nil
 	// 平台
 	__l5Box *Cache1D[*Box] = nil
+	// 情绪大师
+	__l5InvestmentSentimentMaster *Cache1D[*InvestmentSentimentMaster] = nil
 )
 
 func init() {
@@ -44,6 +46,12 @@ func lazyInitFeatures() {
 	// 平台
 	__l5Box = NewCache1D[*Box](cacheL5KeyBox, NewBox)
 	err = cache.Register(__l5Box)
+	if err != nil {
+		logger.Fatalf("%+v", err)
+	}
+	// 情绪大师
+	__l5InvestmentSentimentMaster = NewCache1D[*InvestmentSentimentMaster](cacheL5KeyInvestmentSentimentMaster, NewInvestmentSentimentMaster)
+	err = cache.Register(__l5InvestmentSentimentMaster)
 	if err != nil {
 		logger.Fatalf("%+v", err)
 	}
@@ -99,6 +107,16 @@ func FilterL5Misc(f func(v *Misc) bool, date ...string) []*Misc {
 func GetL5Box(securityCode string, date ...string) *Box {
 	__l5Once.Do(lazyInitFeatures)
 	v := __l5Box.Get(securityCode, date...)
+	if v == nil {
+		return nil
+	}
+	return *v
+}
+
+// GetL5InvestmentSentimentMaster 获取情绪大师的数据
+func GetL5InvestmentSentimentMaster(securityCode string, date ...string) (ism *InvestmentSentimentMaster) {
+	__l5Once.Do(lazyInitFeatures)
+	v := __l5InvestmentSentimentMaster.Get(securityCode, date...)
 	if v == nil {
 		return nil
 	}

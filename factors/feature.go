@@ -41,21 +41,22 @@ const (
 
 // 登记所有的特征数据
 const (
-	FeatureF10              = baseFeature + 1 // 特征数据-基本面
-	FeatureHistory          = baseFeature + 2 // 特征数据-历史
-	FeatureNo1              = baseFeature + 3 // 特征数据-1号策略
-	FeatureMisc             = baseFeature + 4 // 特征数据-Misc
-	FeatureBreaksThroughBox = baseFeature + 5 // 特征数据-box
-	FeatureKLineShap        = baseFeature + 6 // 特征数据-K线形态等
-
+	FeatureF10                       = baseFeature + 1 // 特征数据-基本面
+	FeatureHistory                   = baseFeature + 2 // 特征数据-历史
+	FeatureNo1                       = baseFeature + 3 // 特征数据-1号策略
+	FeatureMisc                      = baseFeature + 4 // 特征数据-Misc
+	FeatureBreaksThroughBox          = baseFeature + 5 // 特征数据-box
+	FeatureKLineShap                 = baseFeature + 6 // 特征数据-K线形态等
+	FeatureInvestmentSentimentMaster = baseFeature + 7 // 狩猎者-情绪周期
 )
 
 var (
 	__mapFeatures = map[cache.Kind]cache.DataSummary{
-		FeatureF10:              cache.Summary(FeatureF10, cacheL5KeyF10, "基本面", cache.DefaultDataProvider),
-		FeatureHistory:          cache.Summary(FeatureHistory, cacheL5KeyHistory, "历史数据", cache.DefaultDataProvider),
-		FeatureMisc:             cache.Summary(FeatureMisc, cacheL5KeyMisc, "交易数据集合", cache.DefaultDataProvider),
-		FeatureBreaksThroughBox: cache.Summary(FeatureBreaksThroughBox, cacheL5KeyBox, "有效突破平台", cache.DefaultDataProvider),
+		FeatureF10:                       cache.Summary(FeatureF10, cacheL5KeyF10, "基本面", cache.DefaultDataProvider),
+		FeatureHistory:                   cache.Summary(FeatureHistory, cacheL5KeyHistory, "历史数据", cache.DefaultDataProvider),
+		FeatureMisc:                      cache.Summary(FeatureMisc, cacheL5KeyMisc, "交易数据集合", cache.DefaultDataProvider),
+		FeatureBreaksThroughBox:          cache.Summary(FeatureBreaksThroughBox, cacheL5KeyBox, "有效突破平台", cache.DefaultDataProvider),
+		FeatureInvestmentSentimentMaster: cache.Summary(FeatureInvestmentSentimentMaster, cacheL5KeyInvestmentSentimentMaster, "情绪大师", cache.DefaultDataProvider),
 	}
 )
 

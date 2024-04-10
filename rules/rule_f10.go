@@ -30,6 +30,7 @@ var (
 	ErrF10RangeOfBPS                  = exception.New(errorRuleF10+9, "非净增长范围")
 	ErrF10RangeOfMarketCap            = exception.New(errorRuleF10+10, "非市值范围")
 	ErrF10RangeOfTotalOperateIncome   = exception.New(errorRuleF10+11, "非营业总收入")
+	ErrF10ReportingRiskPeriod         = exception.New(errorRuleF10+12, "财报披露前的风险期")
 )
 
 // RuleF10 基本面规则
@@ -66,17 +67,23 @@ func ruleF10(ruleParameter config.RuleParameter, snapshot factors.QuoteSnapshot)
 			return ErrF10RangeOfMarketCap
 		}
 		// 5.2 安全分太低
-		if f10.SafetyScore != 0 && !ruleParameter.SafetyScore.Validate(float64(f10.SafetyScore)) {
+		if ruleParameter.CheckSafetyScore && f10.SafetyScore != 0 && !ruleParameter.SafetyScore.Validate(float64(f10.SafetyScore)) {
 			return ErrF10RangeOfSafetyCode
 		}
 		// 5.3 季报不理想
-		if f10.BasicEPS != 0 && f10.BasicEPS < 0 {
+		errF10RangeOfBasicEPS := ruleParameter.CheckEPS && f10.BasicEPS != 0 && f10.BasicEPS < 0
+		// 5.4 净增长小于0
+		errF10RangeOfBPS := ruleParameter.CheckBPS && f10.BPS != 0 && f10.BPS < 0
+		// 5.5 年报季报风险期
+		IsReportingRiskPeriod := f10.IsReportingRiskPeriod()
+		if IsReportingRiskPeriod {
+			return ErrF10ReportingRiskPeriod
+		} else if errF10RangeOfBPS {
+			return ErrF10RangeOfBPS
+		} else if errF10RangeOfBasicEPS {
 			return ErrF10RangeOfBasicEPS
 		}
-		// 5.4 净增长小于0
-		if f10.BPS != 0 && f10.BPS < 0 {
-			return ErrF10RangeOfBPS
-		}
+
 		//// 5.5 处理季报有增减持数据, 两个季度前十大流通股总数对比
 		//reportDate, _ := api.ParseTime(f10.UpdateDate)
 		//after := reportDate.AddDate(0, 2, 0).After(time.Now())

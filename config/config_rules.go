@@ -25,4 +25,7 @@ type RuleParameter struct {
 	BiddingVolume               NumberRange `yaml:"bidding_volume" default:""`                   // 5档行情委托平均值范围, 默认不限制
 	Sentiment                   NumberRange `yaml:"sentiment" default:"38.2~61.80"`              // 情绪范围
 	GapDown                     bool        `yaml:"gap_down" default:"true"`                     // 买入是否允许跳空低开, 默认是允许
+	CheckEPS                    bool        `yaml:"check_eps" default:"false"`                   // 是否检测每股收益, 默认不检测
+	CheckBPS                    bool        `yaml:"check_bps" default:"false"`                   // 是否检测每股净资产, 默认不检测
+	CheckSafetyScore            bool        `yaml:"check_safety_score" default:"false"`          // 是否检测安全分
 }

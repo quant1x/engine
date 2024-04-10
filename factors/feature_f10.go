@@ -200,6 +200,10 @@ func (this *F10) TurnZ(v any) float64 {
 
 // IsReportingRiskPeriod 是否财报披露前夕
 func (this *F10) IsReportingRiskPeriod() bool {
+	if len(this.AnnualReportDate) == 0 || len(this.QuarterlyReportDate) == 0 {
+		// 如果年报和季报日期不确定, 判定为非风险期, 返回false
+		return false
+	}
 	date := this.GetDate()
 	f10Config := config.GetDataConfig().Feature.F10
 	ys := exchange.DateRange(date, this.AnnualReportDate)

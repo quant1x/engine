@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.7.4] - 2024-04-10
+### Changed
+- 过滤规则新增安全分、每股收益、每股净资产和财报披露前夕的风险期.
+- 临时增加更新F10数据时告警日志, 以跟踪新增数据项可能潜在的处理bug.
+- 修复没有年报披露和季报披露死循环的bug.
+- 调整财报预警周期默认值为3个交易日.
+- 修复配置文件结构中tag的bug,应该是yaml.
+
 ## [1.7.3] - 2024-04-10
 ### Changed
 - 调整判断财报披露前风险周期的处理逻辑.
@@ -1209,8 +1217,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.7.3...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.7.4...HEAD
 
+[1.7.4]: https://gitee.com/quant1x/engine/compare/v1.7.3...v1.7.4
 [1.7.3]: https://gitee.com/quant1x/engine/compare/v1.7.2...v1.7.3
 [1.7.2]: https://gitee.com/quant1x/engine/compare/v1.7.1...v1.7.2
 [1.7.1]: https://gitee.com/quant1x/engine/compare/v1.7.0...v1.7.1

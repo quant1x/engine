@@ -158,8 +158,10 @@ func (this *F10) Repair(code, cacheDate, featureDate string, complete bool) {
 	_ = api.Copy(this, &report)
 
 	// 5. 安全分
-	//safetyScore := tdxweb.GetSafetyScore(securityCode)
-	//this.SafetyScore = safetyScore
+	if this.SafetyScore == 0 {
+		safetyScore := tdxweb.GetSafetyScore(securityCode)
+		this.SafetyScore = safetyScore
+	}
 
 	// 6. 年报季报披露日期
 	annualReportDate, quarterlyReportDate := dfcf.NoticeDateForReport(securityCode, cacheDate)

@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.7.3] - 2024-04-10
+### Changed
+- 调整判断财报披露前风险周期的处理逻辑.
+- 修复财报披露日期检索中披露和预披露的bug.
+
 ## [1.7.2] - 2024-04-10
 ### Changed
 - F10新增两融标注和年报季报的披露日期.
@@ -1204,8 +1209,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.7.2...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.7.3...HEAD
 
+[1.7.3]: https://gitee.com/quant1x/engine/compare/v1.7.2...v1.7.3
 [1.7.2]: https://gitee.com/quant1x/engine/compare/v1.7.1...v1.7.2
 [1.7.1]: https://gitee.com/quant1x/engine/compare/v1.7.0...v1.7.1
 [1.7.0]: https://gitee.com/quant1x/engine/compare/v1.6.9...v1.7.0

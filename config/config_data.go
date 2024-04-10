@@ -26,7 +26,7 @@ type FeatureParameter struct {
 
 // FeatureF10 F10特征数据参数
 type FeatureF10 struct {
-	ReportingRiskPeriod int `name:"财报预警周期" yaml:"reporting_risk_period" default:"5"` // 预警距离财务报告日期还有多少个交易日, 默认5天
+	ReportingRiskPeriod int `name:"财报预警周期" yaml:"reporting_risk_period" default:"3"` // 预警距离财务报告日期还有多少个交易日, 默认3个交易日
 }
 
 // FeatureWave 特征 - 波浪

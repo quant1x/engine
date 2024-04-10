@@ -18,7 +18,7 @@ func TestStockNoticeReport(t *testing.T) {
 }
 
 func TestNoticeDateForAnnualReport(t *testing.T) {
-	code := "603045"
+	code := "sz301587"
 	date := "2024-04-09"
 	y, q := NoticeDateForReport(code, date)
 	fmt.Println(y, q)

@@ -494,6 +494,8 @@ func NoticeDateForReport(code string, date string) (annualReportDate, quarterlyR
 		}
 		if warning.HasNext > 0 {
 			pageNo++
+		} else {
+			break
 		}
 	}
 	return

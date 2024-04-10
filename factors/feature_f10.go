@@ -10,6 +10,7 @@ import (
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/num"
 )
 
@@ -103,7 +104,7 @@ func (this *F10) FromHistory(history History) Feature {
 
 func (this *F10) Update(code, cacheDate, featureDate string, complete bool) {
 	securityCode := this.GetSecurityCode()
-	//fmt.Println(securityCode)
+	logger.Warnf("update f10, code=%s", securityCode)
 
 	// 1. 基本信息
 	securityInfo := checkoutSecurityBasicInfo(securityCode, featureDate)
@@ -133,7 +134,7 @@ func (this *F10) Update(code, cacheDate, featureDate string, complete bool) {
 
 	this.UpdateTime = GetTimestamp()
 	this.State |= this.Kind()
-
+	logger.Warnf("update f10, code=%s, OK", securityCode)
 	_ = complete
 }
 
@@ -202,6 +203,7 @@ func (this *F10) TurnZ(v any) float64 {
 func (this *F10) IsReportingRiskPeriod() bool {
 	if len(this.AnnualReportDate) == 0 || len(this.QuarterlyReportDate) == 0 {
 		// 如果年报和季报日期不确定, 判定为非风险期, 返回false
+		// 这种情况有可能是次新股的保护期
 		return false
 	}
 	date := this.GetDate()

@@ -23,3 +23,11 @@ func TestFeatureMisc(t *testing.T) {
 	text := api.Bytes2String(data)
 	fmt.Println(text)
 }
+
+func TestMisc_MarginTradingTargets(t *testing.T) {
+	date := cache.DefaultCanReadDate()
+	MarginTradingTargetInit(date)
+	code := "000099"
+	v, ok := GetMarginTradingTarget(code)
+	fmt.Println(v, ok)
+}

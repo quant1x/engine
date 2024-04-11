@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/http"
-	"gitee.com/quant1x/num"
 	urlpkg "net/url"
 )
 
@@ -85,8 +84,8 @@ func rawMarginTradingList(date string, pageNumber int) ([]SecurityMarginTrading,
 		"source":      {"WEB"},
 		"sortColumns": {"scode"},
 		"sortTypes":   {"1"},
-		"pageSize":    {num.AnyToString(rzrqPageSize)},
-		"pageNumber":  {"2"},
+		"pageSize":    {fmt.Sprintf("%d", rzrqPageSize)},
+		"pageNumber":  {fmt.Sprintf("%d", pageNumber)},
 		"client":      {"WEB"},
 		"filter":      {fmt.Sprintf(`(DATE='%s')`, tradeDate)},
 	}

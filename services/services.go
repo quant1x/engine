@@ -16,6 +16,8 @@ const (
 	CronTickInterval = "@every 1s"
 	// 同步订单触发时间, 每交易日15点~23点的02分
 	cronSyncOrdersInterval = "2 15-23 * * *"
+	// cronMarginTrading 更新融资融券
+	cronMarginTrading = "5 9 * * *"
 )
 
 const (
@@ -34,6 +36,7 @@ const (
 	keyCronCookieCutterSell = "sell_117"        // 一刀切卖出, one-size-fits-all
 	keyCronSyncQmtOrder     = "sync_orders"     // 同步订单
 	keyCronResetNetwork     = "reset_network"   // 重置网络
+	keyCronMarginTrading    = "update_rzrq"     // 更新融资融券
 )
 
 func init() {
@@ -76,6 +79,11 @@ func init() {
 	}
 	// 同步QMT订单
 	err = Register(keyCronSyncQmtOrder, cronSyncOrdersInterval, jobSyncTraderOrders)
+	if err != nil {
+		logger.Fatal(err)
+	}
+	// 更新融资融券
+	err = Register(keyCronMarginTrading, cronMarginTrading, jobUpdateMarginTrading)
 	if err != nil {
 		logger.Fatal(err)
 	}

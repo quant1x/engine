@@ -15,12 +15,12 @@ type DataXdxr struct {
 }
 
 func init() {
-	summary := mapDataSets[BaseXdxr]
+	summary := __mapDataSets[BaseXdxr]
 	_ = cache.Register(&DataXdxr{DataSummary: summary})
 }
 
 func (x *DataXdxr) Clone(date string, code string) DataSet {
-	summary := mapDataSets[BaseXdxr]
+	summary := __mapDataSets[BaseXdxr]
 	var dest = DataXdxr{DataSummary: summary, Date: date, Code: code}
 	return &dest
 }

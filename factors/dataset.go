@@ -40,7 +40,7 @@ type DataSet interface {
 
 var (
 	// 数据集集合
-	mapDataSets = map[cache.Kind]cache.DataSummary{
+	__mapDataSets = map[cache.Kind]cache.DataSummary{
 		BaseXdxr:                cache.Summary(BaseXdxr, "xdxr", "除权除息", cache.DefaultDataProvider),
 		BaseKLine:               cache.Summary(BaseKLine, "day", "日K线", cache.DefaultDataProvider),
 		BaseTransaction:         cache.Summary(BaseTransaction, "trans", "成交数据", cache.DefaultDataProvider, "默认最早日期"+config.GetDataConfig().Trans.BeginDate),
@@ -53,7 +53,7 @@ var (
 )
 
 func GetDataDescript(kind cache.Kind) cache.DataSummary {
-	v, ok := mapDataSets[kind]
+	v, ok := __mapDataSets[kind]
 	if !ok {
 		logger.Fatalf("类型不存在, name=%d", kind)
 	}

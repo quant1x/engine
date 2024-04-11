@@ -18,12 +18,12 @@ type TransactionRecord struct {
 }
 
 func init() {
-	summary := mapDataSets[BaseTransaction]
+	summary := __mapDataSets[BaseTransaction]
 	_ = cache.Register(&TransactionRecord{DataSummary: summary})
 }
 
 func (r *TransactionRecord) Clone(date string, code string) DataSet {
-	summary := mapDataSets[BaseTransaction]
+	summary := __mapDataSets[BaseTransaction]
 	var dest = TransactionRecord{DataSummary: summary, Date: date, Code: code}
 	return &dest
 }

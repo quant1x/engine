@@ -17,12 +17,12 @@ type DataPreviewReport struct {
 }
 
 func init() {
-	summary := mapDataSets[BasePerformanceForecast]
+	summary := __mapDataSets[BasePerformanceForecast]
 	_ = cache.Register(&DataPreviewReport{Manifest: Manifest{DataSummary: summary}})
 }
 
 func (this *DataPreviewReport) Clone(date string, code string) DataSet {
-	summary := mapDataSets[BasePerformanceForecast]
+	summary := __mapDataSets[BasePerformanceForecast]
 	var dest = DataPreviewReport{
 		Manifest: Manifest{
 			DataSummary: summary,

@@ -3,7 +3,7 @@ package factors
 import (
 	"context"
 	"gitee.com/quant1x/engine/cache"
-	dfcf2 "gitee.com/quant1x/engine/datasource/dfcf"
+	"gitee.com/quant1x/engine/datasource/dfcf"
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
@@ -15,16 +15,16 @@ type DataQuarterlyReport struct {
 	cache.DataSummary
 	Date  string
 	Code  string
-	cache map[string]dfcf2.QuarterlyReport
+	cache map[string]dfcf.QuarterlyReport
 }
 
 func init() {
-	summary := mapDataSets[BaseQuarterlyReports]
+	summary := __mapDataSets[BaseQuarterlyReports]
 	_ = cache.Register(&DataQuarterlyReport{DataSummary: summary})
 }
 
 func (r *DataQuarterlyReport) Clone(date string, code string) DataSet {
-	summary := mapDataSets[BaseQuarterlyReports]
+	summary := __mapDataSets[BaseQuarterlyReports]
 	var dest = DataQuarterlyReport{DataSummary: summary, Date: date, Code: code}
 	return &dest
 }
@@ -81,12 +81,12 @@ func (r *DataQuarterlyReport) Increase(snapshot quotes.Snapshot) {
 }
 
 // IntegrateQuarterlyReports 更新季报数据
-func IntegrateQuarterlyReports(barIndex int, date string) map[string]dfcf2.QuarterlyReport {
+func IntegrateQuarterlyReports(barIndex int, date string) map[string]dfcf.QuarterlyReport {
 	modName := "季报概要信息"
 	logger.Info(modName + ", 任务开始启动...")
 
-	allReports := []dfcf2.QuarterlyReport{}
-	reports, pages, _ := dfcf2.QuarterlyReports(date)
+	allReports := []dfcf.QuarterlyReport{}
+	reports, pages, _ := dfcf.QuarterlyReports(date)
 	if pages < 1 || len(reports) == 0 {
 		return nil
 	}
@@ -94,7 +94,7 @@ func IntegrateQuarterlyReports(barIndex int, date string) map[string]dfcf2.Quart
 	bar := progressbar.NewBar(barIndex, "执行["+modName+"]", pages-1)
 	for pageNo := 2; pageNo < pages+1; pageNo++ {
 		bar.Add(1)
-		list, pages, err := dfcf2.QuarterlyReports(date, pageNo)
+		list, pages, err := dfcf.QuarterlyReports(date, pageNo)
 		if err != nil || pages < 1 {
 			logger.Error(err)
 			break
@@ -104,11 +104,11 @@ func IntegrateQuarterlyReports(barIndex int, date string) map[string]dfcf2.Quart
 			break
 		}
 		allReports = append(allReports, list...)
-		if count < dfcf2.EastmoneyQuarterlyReportAllPageSize {
+		if count < dfcf.EastmoneyQuarterlyReportAllPageSize {
 			break
 		}
 	}
-	mapReports := map[string]dfcf2.QuarterlyReport{}
+	mapReports := map[string]dfcf.QuarterlyReport{}
 	if len(allReports) > 0 {
 		for _, v := range allReports {
 			mapReports[v.SecurityCode] = v

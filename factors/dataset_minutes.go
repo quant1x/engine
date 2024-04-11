@@ -13,12 +13,12 @@ type DataMinutes struct {
 }
 
 func init() {
-	summary := mapDataSets[BaseMinutes]
+	summary := __mapDataSets[BaseMinutes]
 	_ = cache.Register(&DataMinutes{Manifest: Manifest{DataSummary: summary}})
 }
 
 func (this *DataMinutes) Clone(date string, code string) DataSet {
-	summary := mapDataSets[BaseMinutes]
+	summary := __mapDataSets[BaseMinutes]
 	var dest = DataMinutes{
 		Manifest: Manifest{
 			DataSummary: summary,

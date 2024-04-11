@@ -17,12 +17,12 @@ type DataWideKLine struct {
 }
 
 func init() {
-	summary := mapDataSets[BaseWideKLine]
+	summary := __mapDataSets[BaseWideKLine]
 	_ = cache.Register(&DataWideKLine{Manifest: Manifest{DataSummary: summary}})
 }
 
 func (this *DataWideKLine) Clone(date string, code string) DataSet {
-	summary := mapDataSets[BaseWideKLine]
+	summary := __mapDataSets[BaseWideKLine]
 	var dest = DataWideKLine{
 		Manifest: Manifest{
 			DataSummary: summary,

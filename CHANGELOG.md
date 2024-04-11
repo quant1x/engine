@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.7.5] - 2024-04-11
+### Changed
+- Misc增加融资余额占比字段.
+- 修订基础数据集缓存变量, 增加前缀__.
+- 修复F10数据时, 如果安全分是0, 则更新, 安全分数据没有历史数据.
+- 新增情绪大师(统计类)特征数据.
+
 ## [1.7.4] - 2024-04-10
 ### Changed
 - 过滤规则新增安全分、每股收益、每股净资产和财报披露前夕的风险期.
@@ -1217,8 +1224,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.7.4...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.7.5...HEAD
 
+[1.7.5]: https://gitee.com/quant1x/engine/compare/v1.7.4...v1.7.5
 [1.7.4]: https://gitee.com/quant1x/engine/compare/v1.7.3...v1.7.4
 [1.7.3]: https://gitee.com/quant1x/engine/compare/v1.7.2...v1.7.3
 [1.7.2]: https://gitee.com/quant1x/engine/compare/v1.7.1...v1.7.2

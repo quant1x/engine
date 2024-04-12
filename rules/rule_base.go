@@ -16,14 +16,15 @@ func init() {
 }
 
 var (
-	ErrRangeOfOpeningTurnZ         = exception.New(errorRuleBase+0, "非开盘换手范围")
-	ErrRangeOfOpeningQuantityRatio = exception.New(errorRuleBase+1, "非开盘量比范围")
-	ErrRangeOfOpeningChangeRate    = exception.New(errorRuleBase+2, "非开盘涨跌幅范围")
-	ErrRangeOfFundFlow             = exception.New(errorRuleBase+3, "非资金流出范围")
-	ErrHistoryNotExist             = exception.New(errorRuleBase+4, "没有找到history数据")
-	ErrRiskOfGapDown               = exception.New(errorRuleBase+5, "开盘存在向下跳空缺口")
-	ErrExchangeNotExist            = exception.New(errorRuleBase+6, "没有找到history数据")
-	ErrRangeOfChangeRate           = exception.New(errorRuleBase+7, "非实时涨跌幅范围")
+	ErrRangeOfOpeningTurnZ          = exception.New(errorRuleBase+0, "非开盘换手范围")
+	ErrRangeOfOpeningQuantityRatio  = exception.New(errorRuleBase+1, "非开盘量比范围")
+	ErrRangeOfOpeningChangeRate     = exception.New(errorRuleBase+2, "非开盘涨跌幅范围")
+	ErrRangeOfFundFlow              = exception.New(errorRuleBase+3, "非资金流出范围")
+	ErrHistoryNotExist              = exception.New(errorRuleBase+4, "没有找到history数据")
+	ErrRiskOfGapDown                = exception.New(errorRuleBase+5, "开盘存在向下跳空缺口")
+	ErrExchangeNotExist             = exception.New(errorRuleBase+6, "没有找到history数据")
+	ErrRangeOfChangeRate            = exception.New(errorRuleBase+7, "非实时涨跌幅范围")
+	ErrRangeOfFinancingBalanceRatio = exception.New(errorRuleBase+8, "融资余额占比过大")
 )
 
 // ruleBase 基础规则
@@ -63,6 +64,10 @@ func ruleBase(ruleParameter config.RuleParameter, snapshot factors.QuoteSnapshot
 		//if exchange.FundFlow != 0 && (exchange.FundFlow/TenThousand) < RuleParameters.MaxReduceAmount {
 		//	return ErrRangeOfFundFlow
 		//}
+		// 6.2 检查融资余额占比
+		if misc.RZYEZB > 0 && misc.RZYEZB >= ruleParameter.FinancingBalanceRatio {
+			return ErrRangeOfFinancingBalanceRatio
+		}
 	}
 	// 7. 历史数据
 	history := factors.GetL5History(securityCode)

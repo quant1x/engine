@@ -3,8 +3,8 @@ module gitee.com/quant1x/engine
 go 1.21.8
 
 require (
-	gitee.com/quant1x/exchange v0.4.8
-	gitee.com/quant1x/gotdx v1.22.1
+	gitee.com/quant1x/exchange v0.5.0
+	gitee.com/quant1x/gotdx v1.22.2
 	gitee.com/quant1x/gox v1.21.0
 	gitee.com/quant1x/num v0.2.6
 	gitee.com/quant1x/pandas v1.4.4

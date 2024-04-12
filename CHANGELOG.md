@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.7.6] - 2024-04-12
+### Changed
+- 修订未匹配量不准确的bug, 在竞价结束后不能更新未匹配量.
+- 基础过滤规则新增融资余额占比过大的判断.
+- 更新依赖库gotdx版本到1.22.2.
+
 ## [1.7.5] - 2024-04-11
 ### Changed
 - Misc增加融资余额占比字段.
@@ -1224,8 +1230,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.7.5...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.7.6...HEAD
 
+[1.7.6]: https://gitee.com/quant1x/engine/compare/v1.7.5...v1.7.6
 [1.7.5]: https://gitee.com/quant1x/engine/compare/v1.7.4...v1.7.5
 [1.7.4]: https://gitee.com/quant1x/engine/compare/v1.7.3...v1.7.4
 [1.7.3]: https://gitee.com/quant1x/engine/compare/v1.7.2...v1.7.3

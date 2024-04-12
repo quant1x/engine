@@ -63,6 +63,7 @@ func realtimeUpdateMiscAndSnapshot() {
 			// 如果snapshot缓存无效, 或者日期不是当前日期, 跳过
 			continue
 		}
+		//kind := exchange.AssertCode(securityCode)
 		timestamp := time.Now()
 		// 1. 修订日期
 		v.Date = currentDate
@@ -116,16 +117,18 @@ func realtimeUpdateMiscAndSnapshot() {
 			if misc.BidLow == 0 || misc.BidLow > v.Ask1 {
 				misc.BidLow = v.Ask1
 			}
-			// 4.4 竞价匹配量
-			misc.BidMatched = float64(v.BidVol1)
-			// 4.5 竞价未匹配量
-			if v.BidVol2 == 0 {
-				misc.BidUnmatched = float64(v.AskVol2)
-				misc.BidDirection = -1
-			}
-			if v.AskVol2 == 0 {
-				misc.BidUnmatched = float64(v.BidVol2)
-				misc.BidDirection = 1
+			// 4.4 竞价匹配量, 竞价结束前更新
+			if v.Active == 0 {
+				misc.BidMatched = float64(v.BidVol1)
+				// 4.5 竞价未匹配量
+				if v.BidVol2 == 0 {
+					misc.BidUnmatched = float64(v.AskVol2)
+					misc.BidDirection = -1
+				}
+				if v.AskVol2 == 0 {
+					misc.BidUnmatched = float64(v.BidVol2)
+					misc.BidDirection = 1
+				}
 			}
 		}
 		// 5. 缓存数据

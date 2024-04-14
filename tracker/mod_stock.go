@@ -153,7 +153,7 @@ func AllScan(barIndex *int, model models.Strategy) {
 	for _, v := range stockSnapshots {
 		ticket := models.Statistics{
 			Date:                 currentlyDay,              // 日期
-			Code:                 v.Code,                    // 证券代码
+			Code:                 v.SecurityCode,            // 证券代码
 			Name:                 v.Name,                    // 证券名称
 			Active:               int(v.Active),             // 活跃度
 			LastClose:            v.LastClose,               // 昨收

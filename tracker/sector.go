@@ -40,7 +40,7 @@ func scanBlockByType(pbarIndex *int, blockType securities.BlockType, rule *confi
 	for i := 0; i < len(blocks); i++ {
 		v := blocks[i]
 		// 获取板块内个股列表
-		blockInfo := securities.GetBlockInfo(v.Code)
+		blockInfo := securities.GetBlockInfo(v.SecurityCode)
 		stockCodes := blockInfo.ConstituentStocks
 		stockCount := len(stockCodes)
 		if stockCount == 0 {
@@ -48,9 +48,9 @@ func scanBlockByType(pbarIndex *int, blockType securities.BlockType, rule *confi
 		}
 		rank++
 		bi := SectorInfo{
-			Code:           v.Code,
+			Code:           v.SecurityCode,
 			Name:           v.Name,
-			Type:           BlockTypeName(v.Code),
+			Type:           BlockTypeName(v.SecurityCode),
 			OpenAmount:     float64(v.IndexOpenAmount),
 			OpenChangeRate: v.OpeningChangeRate,
 			ChangeRate:     v.ChangeRate,
@@ -70,7 +70,7 @@ func scanBlockByTypeForTick(pbarIndex *int, blockType securities.BlockType) []Se
 	for i := 0; i < len(blocks); i++ {
 		v := blocks[i]
 		// 获取板块内个股列表
-		blockInfo := securities.GetBlockInfo(v.Code)
+		blockInfo := securities.GetBlockInfo(v.SecurityCode)
 		stockCodes := blockInfo.ConstituentStocks
 		stockCount := len(stockCodes)
 		if stockCount == 0 {
@@ -78,9 +78,9 @@ func scanBlockByTypeForTick(pbarIndex *int, blockType securities.BlockType) []Se
 		}
 		rank++
 		bi := SectorInfo{
-			Code:           v.Code,
+			Code:           v.SecurityCode,
 			Name:           v.Name,
-			Type:           BlockTypeName(v.Code),
+			Type:           BlockTypeName(v.SecurityCode),
 			OpenAmount:     float64(v.IndexOpenAmount),
 			OpenChangeRate: v.OpeningChangeRate,
 			ChangeRate:     v.ChangeRate,

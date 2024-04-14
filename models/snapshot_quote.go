@@ -14,7 +14,6 @@ func QuoteSnapshotFromProtocol(v quotes.Snapshot) factors.QuoteSnapshot {
 	snapshot := factors.QuoteSnapshot{}
 	_ = api.Copy(&snapshot, &v)
 	securityCode := exchange.GetSecurityCode(v.Market, v.Code)
-	snapshot.Code = securityCode
 	snapshot.OpeningChangeRate = num.NetChangeRate(snapshot.LastClose, snapshot.Open)
 	snapshot.ChangeRate = num.NetChangeRate(snapshot.LastClose, snapshot.Price)
 	snapshot.PremiumRate = num.NetChangeRate(snapshot.Open, snapshot.Price)

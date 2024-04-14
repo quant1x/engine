@@ -36,7 +36,7 @@ var (
 // RuleF10 基本面规则
 func ruleF10(ruleParameter config.RuleParameter, snapshot factors.QuoteSnapshot) error {
 	// 基础过滤规则, 检测F10基本面
-	securityCode := snapshot.Code
+	securityCode := snapshot.SecurityCode
 	// 1. 去掉需要忽略的个股
 	if market.IsNeedIgnore(securityCode) {
 		return ErrF10IgnoreStock

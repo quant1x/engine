@@ -78,7 +78,7 @@ func ScanAllSectors(barIndex *int, model models.Strategy) {
 		stockList := []string{}
 		for j := 0; j < len(stockSnapshots) && j < tradeRule.Rules.StockTopNInSector; j++ {
 			si := stockSnapshots[j]
-			stockCode := si.Code
+			stockCode := si.SecurityCode
 			if market.IsNeedIgnore(stockCode) {
 				continue
 			}
@@ -92,7 +92,7 @@ func ScanAllSectors(barIndex *int, model models.Strategy) {
 			return a.ChangeRate > b.ChangeRate
 		})
 		topStock := stockTopList[0]
-		topCode = topStock.Code
+		topCode = topStock.SecurityCode
 		f10 := factors.GetL5F10(topCode)
 		if f10 != nil {
 			topName = f10.SecurityName
@@ -106,7 +106,7 @@ func ScanAllSectors(barIndex *int, model models.Strategy) {
 		for j := 0; j < len(stockSnapshots); j++ {
 			gp := stockSnapshots[j]
 			total += 1
-			zfLimit := exchange.MarketLimit(gp.Code)
+			zfLimit := exchange.MarketLimit(gp.SecurityCode)
 			lastClose := num.Decimal(gp.LastClose)
 			zhangting := num.Decimal(lastClose * float64(1.000+zfLimit))
 			price := num.Decimal(gp.Price)
@@ -121,9 +121,9 @@ func ScanAllSectors(barIndex *int, model models.Strategy) {
 				ling += 1
 			}
 			gp.TopNo = j
-			_, ok := __stock2Rank[gp.Code]
+			_, ok := __stock2Rank[gp.SecurityCode]
 			if !ok {
-				__stock2Rank[gp.Code] = gp
+				__stock2Rank[gp.SecurityCode] = gp
 			}
 		}
 		for j, v := range allBlocks {

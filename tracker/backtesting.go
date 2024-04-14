@@ -226,6 +226,12 @@ func v1BackTesting(strategyNo uint64, countDays, countTopN int) {
 			GtP4:   100 * float64(gtP4) / float64(count),
 			GtP5:   100 * float64(gtP5) / float64(count),
 		}
+		if num.IsNaN(gc.Yields) {
+			gc.Yields = 0
+		}
+		if num.IsNaN(gc.GtP1) {
+			gc.GtP1 = 0
+		}
 		gcs = append(gcs, gc)
 		fmt.Println(date + ", 胜率统计:")
 		fmt.Printf("\t==> 胜    率: %d/%d, %.2f%%, 收益率: %.2f%%\n", gtP1, count, 100*float64(gtP1)/float64(count), yields)
@@ -243,16 +249,16 @@ func v1BackTesting(strategyNo uint64, countDays, countTopN int) {
 	today := cache.Today()
 	dfTotal := pandas.LoadStructs(gcs)
 	if dfTotal.Nrow() > 0 {
-		winningRate := dfTotal.Col("浮动收益率%").Mean()
-		winningAverage := dfTotal.Col("胜率率%").Mean()
+		winningRate := dfTotal.Col("浮动收益率%").FillNa(0, true).Mean()
+		winningAverage := dfTotal.Col("胜率率%").FillNa(0, true).Mean()
 		fmt.Printf("\t==> 平均 浮动溢价率:%.4f%%, 平均 胜率率: %.4f%%\n", winningRate, winningAverage)
 		filename := fmt.Sprintf("%s/total-%s-%s-%d.csv", storages.GetResultCachePath(), tradeRule.QmtStrategyName(), today, countTopN)
 		_ = dfTotal.WriteCSV(filename)
 	}
 	dfRecords := pandas.LoadStructs(allResult)
 	if dfRecords.Nrow() > 0 {
-		fudu := dfRecords.Col("open_premium_rate").Mean()
-		geri := dfRecords.Col("next_premium_rate").Mean()
+		fudu := dfRecords.Col("open_premium_rate").FillNa(0, true).Mean()
+		geri := dfRecords.Col("next_premium_rate").FillNa(0, true).Mean()
 		fmt.Printf("\t==> 平均 浮动溢价率:%.4f%%, 平均 隔日溢价率: %.4f%%\n", fudu, geri)
 		colNames := tags.GetHeadersByTags(allResult[0])
 		_ = dfRecords.SetNames(colNames...)

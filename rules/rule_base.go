@@ -30,7 +30,7 @@ var (
 // ruleBase 基础规则
 func ruleBase(ruleParameter config.RuleParameter, snapshot factors.QuoteSnapshot) error {
 	// 基础过滤规则
-	securityCode := snapshot.Code
+	securityCode := snapshot.SecurityCode
 	// 1. 开盘换手Z的逻辑
 	if num.IsNaN(snapshot.OpenTurnZ) || !ruleParameter.OpenTurnZ.Validate(snapshot.OpenTurnZ) {
 		return ErrRangeOfOpeningTurnZ

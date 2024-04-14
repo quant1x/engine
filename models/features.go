@@ -2,15 +2,21 @@ package models
 
 import (
 	"gitee.com/quant1x/engine/factors"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/num"
+	"time"
 )
 
 // FeatureToSnapshot 特征缓存数据转快照
 func FeatureToSnapshot(feature factors.SecurityFeature, securityCode string) factors.QuoteSnapshot {
+	id, _, symbol := exchange.DetectMarket(securityCode)
 	qs := factors.QuoteSnapshot{
+		Date:         feature.Date,
+		SecurityCode: securityCode,
 		//Market            uint8   // 市场
+		Market: id,
 		//Code              string  `name:"证券代码"`  // 代码
-		Code: securityCode,
+		Code: symbol,
 		//Name              string  `name:"证券名称"`  // 证券名称
 		//Active            uint16  `name:"活跃度"`   // 活跃度
 		//LastClose         float64 `name:"昨收"`    // 昨收
@@ -85,6 +91,16 @@ func FeatureToSnapshot(feature factors.SecurityFeature, securityCode string) fac
 		//OpenTurnZ         float64 `name:"开盘换手Z%"` // 开盘换手
 		//OpenQuantityRatio     float64 `name:"开盘量比"`
 	}
+
+	if exchange.TradeSessionHasEnd(qs.Date) {
+		qs.ServerTime = "15:00:59.999"
+		qs.UpdateTime = qs.Date + " " + qs.ServerTime
+	} else {
+		now := time.Now()
+		qs.ServerTime = now.Format(exchange.CN_SERVERTIME_FORMAT)
+		qs.UpdateTime = now.Format(exchange.TimeStampMilli)
+	}
+
 	f10 := factors.GetL5F10(securityCode)
 	if f10 != nil {
 		qs.Capital = f10.Capital

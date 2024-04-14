@@ -9,10 +9,10 @@ import (
 )
 
 var (
-	days         int    // 统计多少天
-	topN         int    // 统计前N
 	strategyCode uint64 // 策略ID
 	securityCode string // 证券代码
+	topN         int    // 统计前N
+	days         int    // 统计多少天
 )
 
 // CmdBackTesting 回测
@@ -25,7 +25,7 @@ var CmdBackTesting = &cmder.Command{
 		if len(securityCode) > 0 {
 			tracker.CheckStrategy(strategyCode, securityCode)
 		} else {
-			tracker.BackTesting(days, topN)
+			tracker.BackTesting(strategyCode, days, topN)
 		}
 	},
 }

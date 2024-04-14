@@ -39,7 +39,7 @@ func GetStrategySnapshot(securityCode string) *factors.QuoteSnapshot {
 	snapshot := factors.QuoteSnapshot{}
 	_ = api.Copy(&snapshot, &v)
 	snapshot.Name = securities.GetStockName(securityCode)
-	snapshot.Code = securityCode
+	//snapshot.Code = securityCode
 	snapshot.OpeningChangeRate = num.NetChangeRate(snapshot.LastClose, snapshot.Open)
 	snapshot.ChangeRate = num.NetChangeRate(snapshot.LastClose, snapshot.Price)
 	f10 := factors.GetL5F10(securityCode)

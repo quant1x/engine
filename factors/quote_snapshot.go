@@ -53,6 +53,10 @@ type QuoteSnapshot struct {
 	QuantityRatio         float64              `name:"量比"`
 	ChangePower           float64              `name:"涨跌力度"` // 开盘金额除以开盘涨幅
 	AverageBiddingVolume  int                  `name:"委托均量"` // 委托均量
+	NextOpen              float64              // 仅回测有效: 下一个交易日开盘价
+	NextClose             float64              // 仅回测有效: 下一个交易日收盘价
+	NextHigh              float64              // 仅回测有效: 下一个交易日最高价
+	NextLow               float64              // 仅回测有效: 下一个交易日最低价
 	UpdateTime            string               // 本地时间戳
 }
 

@@ -52,31 +52,6 @@ func FeatureToSnapshot(feature factors.SecurityFeature, securityCode string) fac
 		StockOpenAmount: int(float64(feature.OpenVolume) * feature.Open),
 		//OpenVolume        int     `name:"开盘量"` // 集合竞价-开盘量, 单位是股
 		OpenVolume: int(feature.OpenVolume),
-		//Bid1              float64
-		//Ask1              float64
-		//BidVol1           int
-		//AskVol1           int
-		//Bid2              float64
-		//Ask2              float64
-		//BidVol2           int
-		//AskVol2           int
-		//Bid3              float64
-		//Ask3              float64
-		//BidVol3           int
-		//AskVol3           int
-		//Bid4              float64
-		//Ask4              float64
-		//BidVol4           int
-		//AskVol4           int
-		//Bid5              float64
-		//Ask5              float64
-		//BidVol5           int
-		//AskVol5           int
-		//ReversedBytes4    uint16  // 保留
-		//ReversedBytes5    int     // 保留
-		//ReversedBytes6    int     // 保留
-		//ReversedBytes7    int     // 保留
-		//ReversedBytes8    int     // 保留
 		//Rate              float64 // 涨速
 		//Active2           uint16  // 活跃度
 		//TopNo             int     // 板块排名
@@ -90,6 +65,14 @@ func FeatureToSnapshot(feature factors.SecurityFeature, securityCode string) fac
 		//FreeCapital       float64 `name:"自由流通股本"` // 自由流通股本
 		//OpenTurnZ         float64 `name:"开盘换手Z%"` // 开盘换手
 		//OpenQuantityRatio     float64 `name:"开盘量比"`
+		//NextOpen              float64              // 仅回测有效: 下一个交易日开盘价
+		NextOpen: feature.Open,
+		//NextClose             float64              // 仅回测有效: 下一个交易日收盘价
+		NextClose: feature.Close,
+		//NextHigh              float64              // 仅回测有效: 下一个交易日最高价
+		NextHigh: feature.High,
+		//NextLow               float64              // 仅回测有效: 下一个交易日最低价
+		NextLow: feature.Low,
 	}
 
 	if exchange.TradeSessionHasEnd(qs.Date) {

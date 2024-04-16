@@ -37,7 +37,7 @@ type FeatureWave struct {
 	ReferencePeriods int               `name:"均线参照周期" yaml:"reference_periods" default:"5"` // 趋势转变参考均线的周期数, 默认是5日均线
 }
 
-// 波浪的数据字段
+// FeatureWaveFields 波浪的数据字段
 type FeatureWaveFields struct {
 	Peak   string `yaml:"peak" default:"close"`   // K线检测 - 波峰字段, 默认是收盘价
 	Valley string `yaml:"valley" default:"close"` // K线检测 - 波谷字段, 默认是收盘价

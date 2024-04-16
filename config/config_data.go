@@ -2,14 +2,19 @@ package config
 
 // DataParameter 数据源参数
 type DataParameter struct {
-	AnnualInterestRate float64                        `name:"年利率" yaml:"annual_interest_rate" default:"1.65"` // 2024年2月18日建设银行1年期存款利率1.65%
-	Trans              HistoricalTradingDataParameter `name:"历史成交数据" yaml:"trans"`
-	Feature            FeatureParameter               `name:"feature" yaml:"feature"`
+	BackTesting BackTestingParameter           `name:"回测" yaml:"backtesting"`  // 回测参数
+	Trans       HistoricalTradingDataParameter `name:"历史成交数据" yaml:"trans"`    // 历史成交参数
+	Feature     FeatureParameter               `name:"feature" yaml:"feature"` // 特征参数
 }
 
 // GetDataConfig 取得数据配置
 func GetDataConfig() DataParameter {
 	return GlobalConfig.Data
+}
+
+// BackTestingParameter 回测参数
+type BackTestingParameter struct {
+	AnnualInterestRate float64 `name:"年利率" yaml:"annual_interest_rate" default:"1.65"` // 2024年2月18日建设银行1年期存款利率1.65%
 }
 
 // HistoricalTradingDataParameter 历史成交数据参数

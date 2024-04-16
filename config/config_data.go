@@ -2,8 +2,9 @@ package config
 
 // DataParameter 数据源参数
 type DataParameter struct {
-	Trans   HistoricalTradingDataParameter `name:"历史成交数据" yaml:"trans"`
-	Feature FeatureParameter               `name:"feature" yaml:"feature"`
+	AnnualInterestRate float64                        `name:"年利率" yaml:"annual_interest_rate" default:"1.65"` // 2024年2月18日建设银行1年期存款利率1.65%
+	Trans              HistoricalTradingDataParameter `name:"历史成交数据" yaml:"trans"`
+	Feature            FeatureParameter               `name:"feature" yaml:"feature"`
 }
 
 // GetDataConfig 取得数据配置

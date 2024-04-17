@@ -1,6 +1,8 @@
 package models
 
-import "gitee.com/quant1x/engine/config"
+import (
+	"gitee.com/quant1x/engine/config"
+)
 
 const (
 	// CACHE_STRATEGY_PATH 策略文件存储路径

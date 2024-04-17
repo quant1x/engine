@@ -14,7 +14,6 @@ func GetDataConfig() DataParameter {
 
 // BackTestingParameter 回测参数
 type BackTestingParameter struct {
-	AnnualInterestRate float64 `name:"年利率" yaml:"annual_interest_rate" default:"1.65"` // 2024年2月18日建设银行1年期存款利率1.65%
 }
 
 // HistoricalTradingDataParameter 历史成交数据参数

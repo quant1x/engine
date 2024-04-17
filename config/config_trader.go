@@ -1,5 +1,7 @@
 package config
 
+import "gitee.com/quant1x/exchange"
+
 // TraderRole 交易员角色
 type TraderRole int
 
@@ -23,6 +25,7 @@ type TraderParameter struct {
 	HaveETF                     bool                `name:"是否包含ETF" yaml:"have_etf" default:"false"`                                            // 是否包含ETF
 	PriceCageRatio              float64             `name:"价格笼子比例" yaml:"price_cage_ratio" default:"0.02"`                                      // 价格笼子比例, 默认2%, 小于0就是无限制
 	MinimumPriceFluctuationUnit float64             `name:"价格变动最小单位" yaml:"minimum_price_fluctuation_unit" default:"0.10"`                      // 价格最小变动单位, 默认0.10
+	AnnualInterestRate          float64             `name:"年利率" yaml:"annual_interest_rate" default:"1.65"`                                     // 2024年2月18日建设银行1年期存款利率1.65%
 	StampDutyRateForBuy         float64             `name:"买入印花税" yaml:"stamp_duty_rate_for_buy" default:"0.0000"`                              // 印花说-买入, 没有
 	StampDutyRateForSell        float64             `name:"卖出印花税" yaml:"stamp_duty_rate_for_sell" default:"0.0010"`                             // 印花说-卖出, 默认是千分之1
 	TransferRate                float64             `name:"过户费" yaml:"transfer_rate" default:"0.0006"`                                          // 过户费, 双向, 默认是万分之6
@@ -85,6 +88,17 @@ func (t TraderParameter) ResetPositionRatio() {
 			remainingRatio -= v.Weight
 		}
 	}
+}
+
+// DailyRiskFreeRate 计算每日无风险利率
+func (t TraderParameter) DailyRiskFreeRate(date string) float64 {
+	date = exchange.FixTradeDate(date)
+	year := date[0:4]
+	start := year + "-01-01"
+	end := year + "-12-31"
+	dates := exchange.DateRange(start, end)
+	count := len(dates)
+	return t.AnnualInterestRate / float64(count)
 }
 
 // TraderConfig 获取交易配置

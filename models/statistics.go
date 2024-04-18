@@ -25,5 +25,7 @@ type Statistics struct {
 	Speed                float64 `dataframe:"speed"`
 	ChangePower          float64 `dataframe:"change_power"`
 	AverageBiddingVolume int     `name:"委托均量" dataframe:"average_bidding_volume"`
+	Beta                 float64 `name:"Beta" dataframe:"beta"`   // beta值
+	Alpha                float64 `name:"Alpha" dataframe:"alpha"` // alpha值
 	UpdateTime           string  `name:"时间戳" dataframe:"update_time"`
 }

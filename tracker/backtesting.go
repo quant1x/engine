@@ -46,6 +46,8 @@ type SampleFeature struct {
 	OpenPremiumRate   float64
 	NextPremiumRate   float64
 	OpenQuantityRatio float64 // 量比
+	Beta              float64
+	Alpha             float64
 }
 
 // BackTesting 回测
@@ -294,6 +296,10 @@ func v3BackTesting(strategyNo uint64, countDays, countTopN int) {
 	//fmt.Println("\n")
 }
 
+const (
+	targetIndex = "sh000001"
+)
+
 func v2BackTesting(strategyNo uint64, countDays, countTopN int) {
 	currentlyDay := exchange.GetCurrentlyDay()
 	dates := exchange.TradingDateRange(exchange.MARKET_CH_FIRST_LISTTIME, currentlyDay)
@@ -325,12 +331,10 @@ func v2BackTesting(strategyNo uint64, countDays, countTopN int) {
 		samples := []SampleFeature{}
 		total := len(codes)
 		bar := progressbar.NewBar(1, "执行["+date+"涨幅扫描]", total)
+		var marketPrices []float64
 		for _, securityCode := range codes {
 			bar.Add(1)
-			if !exchange.AssertStockBySecurityCode(securityCode) {
-				continue
-			}
-			//features := factors.CheckoutWideTableByDate(securityCode, date)
+			// 缓存数据
 			features, ok := mapStock[securityCode]
 			if !ok {
 				filename := cache.WideFilename(securityCode)
@@ -340,17 +344,26 @@ func v2BackTesting(strategyNo uint64, countDays, countTopN int) {
 				}
 				mapStock[securityCode] = features
 			}
+			if securityCode == targetIndex && len(marketPrices) == 0 {
+				for _, m := range features {
+					marketPrices = append(marketPrices, m.ChangeRate)
+				}
+			}
+			if !exchange.AssertStockBySecurityCode(securityCode) {
+				continue
+			}
 			length := len(features)
 			pos := length - countDays + i
 			if pos < 0 {
 				continue
 			}
+			markets := marketPrices[:pos+1]
+			prices := make([]float64, pos+1)
+			for si, sv := range features[:pos+1] {
+				prices[si] = sv.ChangeRate
+			}
 			feature := features[pos]
 			snapshot := models.FeatureToSnapshot(feature, securityCode)
-			//err := strategies.GeneralFilter(ruleParameter, snapshot)
-			//if err != nil {
-			//	continue
-			//}
 			err := model.Filter(ruleParameter, snapshot)
 			if err != nil {
 				continue
@@ -371,7 +384,7 @@ func v2BackTesting(strategyNo uint64, countDays, countTopN int) {
 				nextOpen = nextFeature.Open
 			}
 
-			turn := SampleFeature{
+			sample := SampleFeature{
 				Name:              securityName,
 				SecurityCode:      securityCode,
 				OpenQuantityRatio: snapshot.OpenQuantityRatio,
@@ -384,11 +397,10 @@ func v2BackTesting(strategyNo uint64, countDays, countTopN int) {
 				OpenPremiumRate:   num.NetChangeRate(feature.Open, feature.Close),
 				NextPremiumRate:   num.NetChangeRate(feature.Open, nextOpen),
 			}
-			//basicInfo, err := security.GetBasicInfo(securityCode)
-			//if err == nil && basicInfo != nil {
-			//	turn.Name = basicInfo.Name
-			//}
-			samples = append(samples, turn)
+			sample.Beta, sample.Alpha = exchange.EvaluateYields(prices, markets, config.TraderConfig().DailyRiskFreeRate(date))
+			sample.Beta *= 100
+			sample.Alpha *= 100
+			samples = append(samples, sample)
 		}
 		bar.Wait()
 		sort.Slice(samples, func(i, j int) bool {
@@ -424,6 +436,16 @@ func v2BackTesting(strategyNo uint64, countDays, countTopN int) {
 				UpRate:          v.UpRate,            // 涨跌幅
 				OpenPremiumRate: v.OpenPremiumRate,   // 集合竞价买入, 溢价率
 				NextPremiumRate: v.NextPremiumRate,   // 隔日溢价率
+				Beta:            v.Beta,
+				Alpha:           v.Alpha,
+			}
+			switch model.OrderFlag() {
+			case models.OrderFlagHead:
+				zs.UpdateTime = zs.Date + " 09:27:10.000"
+			case models.OrderFlagTail:
+				zs.UpdateTime = zs.Date + " 14:56:10.000"
+			case models.OrderFlagTick:
+				zs.UpdateTime = zs.Date + " 14:56:10.000"
 			}
 			results = append(results, zs)
 		}

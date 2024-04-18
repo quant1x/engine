@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.7.8] - 2024-04-18
+### Changed
+- 回测数据样本增加beta和alpha值.
+- 调整部分代码.
+- 交易参数增加无风险利率.
+- 调整配置data下的回测参数.
+- 修订波浪数据字段注释.
+- Data配置项增加一年期存款利率, 默认值1.65%.
+- 更新依赖库gotdx版本到1.22.3.
+- 回测快照增加下一个交易日的开盘、收盘、最高、最低价，便于适应各种策略的溢价计算.
+
 ## [1.7.7] - 2024-04-14
 ### Changed
 - 修订回测日期存在策略没有命中情况，导致求平均值为NaN的bug.
@@ -1236,8 +1247,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.7.7...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.7.8...HEAD
 
+[1.7.8]: https://gitee.com/quant1x/engine/compare/v1.7.7...v1.7.8
 [1.7.7]: https://gitee.com/quant1x/engine/compare/v1.7.6...v1.7.7
 [1.7.6]: https://gitee.com/quant1x/engine/compare/v1.7.5...v1.7.6
 [1.7.5]: https://gitee.com/quant1x/engine/compare/v1.7.4...v1.7.5

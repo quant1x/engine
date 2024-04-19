@@ -1,6 +1,7 @@
 package datasource
 
 import (
+	"fmt"
 	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/models"
@@ -9,6 +10,7 @@ import (
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gotdx/securities"
 	"sync"
+	"time"
 )
 
 // Adapter 数据源适配器
@@ -146,4 +148,92 @@ func (a *BacktestingTickDataAdapter) SyncAllSnapshots() {
 		a.snapshots[securityCode] = *base.CombineKLinesToSnapshot(securityCode, a.currentMinuteIndex, currentKLine, &currentMinKLine)
 		a.snapshotsMutex.Unlock()
 	}
+}
+
+type Stock struct {
+	Date  time.Time
+	Price float64
+}
+
+type Backtest struct {
+	Stocks      map[string][]Stock
+	BuyRecords  map[string][]Stock
+	SellRecords map[string][]Stock
+}
+
+func NewBacktest() *Backtest {
+	return &Backtest{
+		Stocks:      make(map[string][]Stock),
+		BuyRecords:  make(map[string][]Stock),
+		SellRecords: make(map[string][]Stock),
+	}
+}
+
+func (b *Backtest) Buy(stockName string, price float64) {
+	stock := Stock{
+		Date:  time.Now(),
+		Price: price,
+	}
+	b.BuyRecords[stockName] = append(b.BuyRecords[stockName], stock)
+	b.Stocks[stockName] = append(b.Stocks[stockName], stock)
+	fmt.Printf("Bought %s at price %.2f\n", stockName, price)
+}
+
+func (b *Backtest) SellPreviousDayStocks(sellCondition func(stock Stock) bool) {
+	previousDay := time.Now().AddDate(0, 0, -1)
+	sellStocks := make(map[string][]Stock)
+
+	for stockName, stocks := range b.Stocks {
+		var soldStocks []Stock
+		for _, stock := range stocks {
+			if stock.Date.Day() == previousDay.Day() && sellCondition(stock) {
+				sellStocks[stockName] = append(sellStocks[stockName], stock)
+				soldStocks = append(soldStocks, stock)
+			}
+		}
+		b.removeSoldStocks(stockName, soldStocks)
+	}
+
+	for stockName, stocks := range sellStocks {
+		b.SellRecords[stockName] = append(b.SellRecords[stockName], stocks...)
+	}
+
+	printRecords("Sell Records:", b.SellRecords)
+}
+
+func (b *Backtest) removeSoldStocks(stockName string, stocks []Stock) {
+	for _, stock := range stocks {
+		for i, buyStock := range b.Stocks[stockName] {
+			if buyStock.Date == stock.Date && buyStock.Price == stock.Price {
+				b.Stocks[stockName] = append(b.Stocks[stockName][:i], b.Stocks[stockName][i+1:]...)
+				break
+			}
+		}
+	}
+}
+
+func printRecords(title string, records map[string][]Stock) {
+	fmt.Println(title)
+	for stockName, stocks := range records {
+		for _, stock := range stocks {
+			fmt.Printf("Stock Name: %s, Date: %s, Price: %.2f\n", stockName, stock.Date.Format("2006-01-02"), stock.Price)
+		}
+	}
+}
+
+func main() {
+	backtest := NewBacktest()
+
+	// 示例：每天进行买入操作
+	backtest.Buy("AAPL", 150.0)
+	backtest.Buy("GOOGL", 2500.0)
+	backtest.Buy("MSFT", 300.0)
+
+	// 示例：根据条件卖出前一天的股票
+	sellCondition := func(stock Stock) bool {
+		// 根据自定义条件判断是否卖出股票
+		return stock.Price > 200.0
+	}
+
+	backtest.SellPreviousDayStocks(sellCondition)
 }

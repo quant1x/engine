@@ -208,11 +208,13 @@ func (this *F10) IsReportingRiskPeriod() bool {
 		// 这种情况有可能是次新股的保护期
 		return false
 	}
-	date := this.GetDate()
 	f10Config := config.GetDataConfig().Feature.F10
+	date := this.GetDate()
 	ys := exchange.DateRange(date, this.AnnualReportDate)
+	ly := len(ys)
 	qs := exchange.DateRange(date, this.QuarterlyReportDate)
-	if len(ys) < f10Config.ReportingRiskPeriod || len(qs) < f10Config.ReportingRiskPeriod {
+	lq := len(qs)
+	if (ly > 0 && ly < f10Config.ReportingRiskPeriod) || (lq > 0 && lq < f10Config.ReportingRiskPeriod) {
 		return true
 	}
 	return false

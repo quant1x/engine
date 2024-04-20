@@ -77,3 +77,23 @@ func (q QuoteSnapshot) ExistDownwardGap() bool {
 	}
 	return history.LOW > q.High
 }
+
+// BoxUpwardGap K线实体位于昨日K线实体上方
+func (q QuoteSnapshot) BoxUpwardGap() bool {
+	history := GetL5History(q.SecurityCode, q.Date)
+	if history == nil {
+		return false
+	}
+	boxHigh := max(history.OPEN, history.CLOSE)
+	return boxHigh < q.Low
+}
+
+// BoxownwardGap K线实体位于昨日K线实体下方
+func (q QuoteSnapshot) BoxownwardGap() bool {
+	history := GetL5History(q.SecurityCode, q.Date)
+	if history == nil {
+		return false
+	}
+	boxLow := max(history.OPEN, history.CLOSE)
+	return boxLow > q.High
+}

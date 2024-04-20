@@ -14,6 +14,7 @@ func GetDataConfig() DataParameter {
 
 // BackTestingParameter 回测参数
 type BackTestingParameter struct {
+	NextPremiumRate float64 `name:"隔日溢价率" yaml:"next_premium_rate" default:"0.03"` // 隔日溢价率百分比
 }
 
 // HistoricalTradingDataParameter 历史成交数据参数

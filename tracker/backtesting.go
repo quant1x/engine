@@ -52,7 +52,7 @@ type SampleFeature struct {
 
 // BackTesting 回测
 func BackTesting(strategyNo uint64, days, topN int) {
-	v2BackTesting(strategyNo, days, topN)
+	v3BackTesting(strategyNo, days, topN)
 }
 
 func v3BackTesting(strategyNo uint64, countDays, countTopN int) {
@@ -84,6 +84,9 @@ func v3BackTesting(strategyNo uint64, countDays, countTopN int) {
 		factors.SwitchDate(date)
 		stockSnapshots := []factors.QuoteSnapshot{}
 		total := len(codes)
+		//var marketPrices []float64
+		//var stockPrices []float64
+		pos := 0
 		bar := progressbar.NewBar(1, "执行["+date+"涨幅扫描]", total)
 		for _, securityCode := range codes {
 			bar.Add(1)
@@ -98,14 +101,22 @@ func v3BackTesting(strategyNo uint64, countDays, countTopN int) {
 				if err != nil {
 					continue
 				}
+				//if securityCode == targetIndex && len(marketPrices) == 0 {
+				//	for _, m := range features {
+				//		marketPrices = append(marketPrices, m.ChangeRate)
+				//	}
+				//}
 				mapStock[securityCode] = features
 			}
 			length := len(features)
-			pos := length - countDays + i
+			pos = length - countDays + i
 			if pos < 0 {
 				continue
 			}
 			feature := features[pos]
+			//for si, sv := range features {
+			//	stockPrices[si] = sv.ChangeRate
+			//}
 			snapshot := models.FeatureToSnapshot(feature, securityCode)
 			// 下一个交易日开盘价
 			diffDays := 1
@@ -169,11 +180,16 @@ func v3BackTesting(strategyNo uint64, countDays, countTopN int) {
 				sample.NextPremiumRate = num.NetChangeRate(snapshot.Open, snapshot.NextOpen)
 			case models.OrderFlagTail:
 				sample.OpenPremiumRate = num.NetChangeRate(snapshot.Price, snapshot.Price)
-				sample.NextPremiumRate = num.NetChangeRate(snapshot.Price, snapshot.NextClose)
+				sample.NextPremiumRate = num.NetChangeRate(snapshot.Price, snapshot.NextHigh)
+				backTestingParameter := config.GetDataConfig().BackTesting
+				if snapshot.Price < snapshot.NextClose && snapshot.Price*(1+backTestingParameter.NextPremiumRate+0.005) < snapshot.NextHigh {
+					sample.NextPremiumRate = num.NetChangeRate(snapshot.Price, snapshot.Price*(1+backTestingParameter.NextPremiumRate))
+				}
 			case models.OrderFlagTick:
 				sample.OpenPremiumRate = num.NetChangeRate(snapshot.Price, snapshot.Price)
 				sample.NextPremiumRate = num.NetChangeRate(snapshot.Price, snapshot.NextClose)
 			}
+
 			samples = append(samples, sample)
 		}
 

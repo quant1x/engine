@@ -84,8 +84,9 @@ func (q QuoteSnapshot) BoxUpwardGap() bool {
 	if history == nil {
 		return false
 	}
-	boxHigh := max(history.OPEN, history.CLOSE)
-	return boxHigh < q.Low
+	lastBoxHigh := max(history.OPEN, history.CLOSE)
+	boxLow := min(q.Open, q.Price)
+	return lastBoxHigh <= boxLow
 }
 
 // BoxDownwardGap K线实体位于昨日K线实体下方
@@ -94,6 +95,7 @@ func (q QuoteSnapshot) BoxDownwardGap() bool {
 	if history == nil {
 		return false
 	}
-	boxLow := max(history.OPEN, history.CLOSE)
-	return boxLow > q.High
+	lastBoxLow := min(history.OPEN, history.CLOSE)
+	boxHigh := max(q.Open, q.Price)
+	return lastBoxLow >= boxHigh
 }

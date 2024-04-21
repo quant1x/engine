@@ -2,7 +2,7 @@ package factors
 
 import "gitee.com/quant1x/gotdx/quotes"
 
-// QuoteSnapshot 即时行情快照
+// QuoteSnapshot 即时行情快照(副本)
 type QuoteSnapshot struct {
 	Date                  string               // 交易日期
 	ServerTime            string               // 时间
@@ -88,8 +88,8 @@ func (q QuoteSnapshot) BoxUpwardGap() bool {
 	return boxHigh < q.Low
 }
 
-// BoxownwardGap K线实体位于昨日K线实体下方
-func (q QuoteSnapshot) BoxownwardGap() bool {
+// BoxDownwardGap K线实体位于昨日K线实体下方
+func (q QuoteSnapshot) BoxDownwardGap() bool {
 	history := GetL5History(q.SecurityCode, q.Date)
 	if history == nil {
 		return false

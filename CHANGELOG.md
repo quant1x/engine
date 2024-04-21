@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.7.9] - 2024-04-21
+### Changed
+- 快照数据新增竞价承接比的应用强弱判断.
+- 交易数据新增竞价承接比的应用强弱判断.
+- 交易数据新增竞价承接比.
+- 修订K线实体的高低位置.
+- 调整快照注释和部分方法名.
+- 调整回测中保底隔日收益率的逻辑.
+- 增加K线实体相对位置的判断方法, 意图类似于跳空.
+- 修复季报、年报风险提示周期的bug, 披露日期有过期已公布的情况.
+- 回测增加保底的隔日溢价率.
+- 公告风险关键词新增"立案".
+
 ## [1.7.8] - 2024-04-18
 ### Changed
 - 回测数据样本增加beta和alpha值.
@@ -1247,8 +1260,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.7.8...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.7.9...HEAD
 
+[1.7.9]: https://gitee.com/quant1x/engine/compare/v1.7.8...v1.7.9
 [1.7.8]: https://gitee.com/quant1x/engine/compare/v1.7.7...v1.7.8
 [1.7.7]: https://gitee.com/quant1x/engine/compare/v1.7.6...v1.7.7
 [1.7.6]: https://gitee.com/quant1x/engine/compare/v1.7.5...v1.7.6

@@ -99,3 +99,40 @@ func (q QuoteSnapshot) BoxDownwardGap() bool {
 	boxHigh := max(q.Open, q.Price)
 	return lastBoxLow >= boxHigh
 }
+
+// KLineWeaknessToStrength K线弱转强, 毕竟还是弱, 下一个交易日有低吸机会
+func (q QuoteSnapshot) KLineWeaknessToStrength() bool {
+	history := GetL5History(q.SecurityCode, q.Date)
+	if history == nil {
+		return false
+	}
+	// 昨日收盘于均价线之下
+	c1 := history.CLOSE <= history.AveragePrice
+	// 当日开盘不低于昨日均价线
+	c2 := q.Open >= history.AveragePrice
+	return c1 && c2
+}
+
+// WeaknessToStrength 弱转强
+func (q QuoteSnapshot) WeaknessToStrength() bool {
+	history := GetL5History(q.SecurityCode, q.Date)
+	if history == nil {
+		return false
+	}
+	// 1. 昨日转强
+	// 昨日阴线
+	c11 := history.CLOSE < history.OPEN
+	// 昨日收盘于均价线之上
+	c12 := history.CLOSE >= history.AveragePrice
+	// 当日开盘不低于昨日收盘
+	c13 := q.Open >= history.CLOSE
+	frontToStrength := c11 && c12 && c13
+	// 2. 隔日转强
+	// 昨日收盘于均价线之下
+	c21 := history.CLOSE <= history.AveragePrice
+	// 当日开盘不低于昨日均价线
+	c22 := q.Open >= history.AveragePrice
+	nextToStrength := c21 && c22
+
+	return frontToStrength || nextToStrength
+}

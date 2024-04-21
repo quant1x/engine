@@ -3,6 +3,7 @@ package factors
 import (
 	"context"
 	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/datasource/dfcf"
 	"gitee.com/quant1x/engine/market"
@@ -10,6 +11,7 @@ import (
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
+	"gitee.com/quant1x/num"
 	"gitee.com/quant1x/pandas"
 	. "gitee.com/quant1x/pandas/formula"
 )
@@ -306,4 +308,41 @@ func miscPower(info *Misc, securityCode string, cacheDate, featureDate string) {
 	period := IFF(trend.Eq(SignalPositive), nBull, nBear)
 	info.PowerTrendReversal = utils.IntegerIndexOf(trend, -1)
 	info.PowerTrendPeriod = utils.IntegerIndexOf(period, -1)
+}
+
+// AuctionWeaknessToStrength 弱转强, 开盘价下方买入
+func (this *Misc) AuctionWeaknessToStrength() bool {
+	if this.ValidateSample() != nil {
+		return false
+	}
+	// 1. 竞价走低, 但是有承接力量
+	// 竞价走低
+	c1 := this.BidClose < this.BidOpen
+	// 竞价结束不低于竞价最低价
+	c2 := this.BidClose >= this.BidLow
+	// 未匹配量远低于匹配量
+	undertakePower := float64(this.BidUnmatched) / float64(this.BidMatched)
+	diffRatio := 1 - undertakePower
+	c3 := diffRatio >= config.TraderConfig().UndertakeRatio
+	// 竞价落差比
+	bidChangeRate := num.NetChangeRate(this.BidOpen, this.BidClose)
+	c4 := bidChangeRate >= -3.82
+	return c1 && c2 && c3 && c4
+}
+
+// AuctionStrengthToWeakness 竞价强转弱, 开盘就跑
+func (this *Misc) AuctionStrengthToWeakness() bool {
+	if this.ValidateSample() != nil {
+		return false
+	}
+	// 1. 竞价不走低, 但是跟风力量不强, 开盘就跑
+	// 竞价不走低
+	c1 := this.BidClose >= this.BidOpen
+	// 竞价结束不低于竞价最低价
+	c2 := this.BidClose >= this.BidLow
+	// 未匹配量远低于匹配量
+	undertakePower := float64(this.BidUnmatched) / float64(this.BidMatched)
+	diffRatio := undertakePower
+	c3 := diffRatio <= config.TraderConfig().UndertakeRatio
+	return c1 && c2 && c3
 }

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"testing"
 )
@@ -30,4 +31,26 @@ func TestMisc_MarginTradingTargets(t *testing.T) {
 	code := "000099"
 	v, ok := GetMarginTradingTarget(code)
 	fmt.Println(v, ok)
+}
+
+func TestMisc_AuctionWeaknessToStrength(t *testing.T) {
+	date := cache.DefaultCanReadDate()
+	code := "300107"
+	code = "603679"
+	date = "2024-04-19"
+	code = exchange.CorrectSecurityCode(code)
+	misc := GetL5Misc(code, date)
+	v := misc.AuctionWeaknessToStrength()
+	fmt.Println(v)
+}
+
+func TestMisc_AuctionStrengthToWeakness(t *testing.T) {
+	date := cache.DefaultCanReadDate()
+	code := "000612"
+	//code = "000099"
+	date = "2024-04-19"
+	code = exchange.CorrectSecurityCode(code)
+	misc := GetL5Misc(code, date)
+	v := misc.AuctionStrengthToWeakness()
+	fmt.Println(v)
 }

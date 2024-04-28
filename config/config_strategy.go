@@ -25,6 +25,7 @@ type StrategyParameter struct {
 	IgnoreMarginTrading         bool           `name:"剔除两融" yaml:"ignore_margin_trading" default:"true"`               // 剔除两融标的, 默认是剔除
 	HoldingPeriod               int            `name:"持仓周期" yaml:"holding_period" default:"1"`                         // 持仓周期, 默认为1天, 即T+1日触发117号策略
 	SellStrategy                uint64         `name:"卖出策略" yaml:"sell_strategy" default:"117"`                        // 卖出策略, 默认117
+	FixedYield                  float64        `name:"固定收益率" yaml:"fixed_yield" default:"0"`                           // 固定收益率
 	TakeProfitRatio             float64        `name:"止盈比例" yaml:"take_profit_ratio" default:"15.00"`                  // 止盈比例, 默认15%
 	StopLossRatio               float64        `name:"止损比例" yaml:"stop_loss_ratio" default:"-2.00"`                    // 止损比例, 默认-2%
 	Rules                       RuleParameter  `name:"规则参数" yaml:"rules"`                                              // 过滤规则

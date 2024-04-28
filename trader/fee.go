@@ -167,14 +167,37 @@ func EvaluateFeeForSell(securityCode string, price float64, volume int) *TradeFe
 	return &f
 }
 
+// EvaluatePriceForSell 评估卖出价格
+//
+//	固定收益率>0, 重新评估卖出价格, 以确保卖出后的净利润不低于固定收益率
+func EvaluatePriceForSell(securityCode string, price float64, volume int, fixedYield float64) *TradeFee {
+	f := TradeFee{
+		SecurityCode: securityCode,
+		Price:        price,
+		Volume:       volume,
+		Direction:    SELL,
+	}
+	f.TotalFee, f.StampDutyFee, f.TransferFee, f.CommissionFee, f.MarketValue = calculate_transaction_fee(f.Direction, f.Price, f.Volume, true)
+	if fixedYield > 0 {
+		fee := (f.TotalFee-f.TransferFee)*(1+fixedYield) + f.TransferFee
+		amount := float64(volume) * price
+		marketValue := amount * (1 + fixedYield)
+		totalFee := fee + marketValue
+		fixedPrice := totalFee / float64(volume)
+		f.Price = num.Decimal(fixedPrice)
+		f.TotalFee, f.StampDutyFee, f.TransferFee, f.CommissionFee, f.MarketValue = calculate_transaction_fee(f.Direction, f.Price, f.Volume, true)
+	}
+	return &f
+}
+
 // TradeFee 交易费用
 type TradeFee struct {
 	Direction     Direction // 交易方向
 	SecurityCode  string    // 证券代码
 	Price         float64   // 价格
 	Volume        int       // 数量
-	StampDutyFee  float64   // 印花税, 双向, 默认单向, 费率0.1%
-	TransferFee   float64   // 过户费, 双向, 默认是0.06%
+	StampDutyFee  float64   // 印花税, 按照成交金额计算, 双向, 默认单向, 费率0.1%
+	TransferFee   float64   // 过户费, 按照股票数量, 双向, 默认是0.06%
 	CommissionFee float64   // 券商佣金, 按照成交金额计算, 双向, 0.025%
 	MarketValue   float64   // 股票市值
 	TotalFee      float64   // 支出总费用

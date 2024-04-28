@@ -28,3 +28,15 @@ func TestEvaluateFeeForSell(t *testing.T) {
 	fmt.Println(v)
 	v.log()
 }
+
+func TestEvaluatePriceForSell(t *testing.T) {
+	fixedYield := 0.03
+	code := "sh600178"
+	price := 15.24
+	volume := 5000
+	baseAmount := price * float64(volume)
+	fmt.Println(baseAmount)
+	v := EvaluatePriceForSell(code, price, volume, 0.03)
+	fmt.Println(v, v.MarketValue/baseAmount >= (1+fixedYield))
+	v.log()
+}

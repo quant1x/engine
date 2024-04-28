@@ -25,9 +25,9 @@ type InvestmentSentimentMaster struct {
 	ZDF               float64 `name:"涨跌幅" dataframe:"zdf"`
 	R1CLOSE           float64 `name:"昨收盘" dataframe:"r1Close"`
 	ZTJ               float64 `name:"涨停价" dataframe:"ztj"`
-	CTJ               bool    `name:"涨停" dataframe:"ctj"`
+	CZT               bool    `name:"涨停" dataframe:"czt"`
 	BN                int     `name:"板数" dataframe:"bn"`
-	FTZ               int     `name:"距离首次涨停" dataframe:"ftz"`
+	FZT               int     `name:"距离首次涨停" dataframe:"fzt"`
 	TN                int     `name:"天数" dataframe:"tn"`
 	TIAN              int     `name:"天" dataframe:"tian"`
 	BAN               int     `name:"板" dataframe:"ban"`
@@ -164,9 +164,9 @@ func (this *InvestmentSentimentMaster) Update(code, cacheDate, featureDate strin
 		this.ZDF = ZDF
 		this.R1CLOSE = utils.Float64IndexOf(CLOSE, -1)
 		this.ZTJ = utils.Float64IndexOf(ZTJ, -1)
-		this.CTJ = utils.BoolIndexOf(CZT, -1)
+		this.CZT = utils.BoolIndexOf(CZT, -1)
 		this.BN = utils.IntegerIndexOf(BN, -1)
-		this.FTZ = utils.IntegerIndexOf(FTZ, -1)
+		this.FZT = utils.IntegerIndexOf(FTZ, -1)
 		this.TN = utils.IntegerIndexOf(TN, -1)
 		this.TIAN = utils.IntegerIndexOf(TIAN, -1)
 		this.BAN = utils.IntegerIndexOf(BAN, -1)

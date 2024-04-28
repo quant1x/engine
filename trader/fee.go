@@ -65,7 +65,7 @@ func CalculateBuyPriceLimit(price float64) float64 {
 	return priceLimit
 }
 
-// calculate_price_limit_for_sell 计算合适的买入价格
+// calculate_price_limit_for_sell 计算合适的卖出价格
 //
 //	价格笼子, -2%和-0.10哪个大
 //	目前使用, 当前价格-0.01

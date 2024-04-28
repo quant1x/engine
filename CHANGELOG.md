@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.0] - 2024-04-28
+### Changed
+- 新增按照固定收益率评估卖出价格的函数.
+- 策略参数增加固定收益率, 默认是0.
+- 修订私有函数评估价格笼子卖出价格函数的错误注释.
+- 调整ism"涨停"相关字段拼音缩写的拼写错误.
+
 ## [1.7.9] - 2024-04-21
 ### Changed
 - 快照数据新增竞价承接比的应用强弱判断.
@@ -1260,8 +1267,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.7.9...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.0...HEAD
 
+[1.8.0]: https://gitee.com/quant1x/engine/compare/v1.7.9...v1.8.0
 [1.7.9]: https://gitee.com/quant1x/engine/compare/v1.7.8...v1.7.9
 [1.7.8]: https://gitee.com/quant1x/engine/compare/v1.7.7...v1.7.8
 [1.7.7]: https://gitee.com/quant1x/engine/compare/v1.7.6...v1.7.7

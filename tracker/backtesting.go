@@ -180,7 +180,7 @@ func v3BackTesting(strategyNo uint64, countDays, countTopN int) {
 				sample.NextPremiumRate = num.NetChangeRate(snapshot.Open, snapshot.NextOpen)
 			case models.OrderFlagTail:
 				sample.OpenPremiumRate = num.NetChangeRate(snapshot.Price, snapshot.Price)
-				sample.NextPremiumRate = num.NetChangeRate(snapshot.Price, snapshot.NextHigh)
+				sample.NextPremiumRate = num.NetChangeRate(snapshot.Price, snapshot.NextClose)
 				backTestingParameter := config.GetDataConfig().BackTesting
 				if snapshot.Price < snapshot.NextClose && snapshot.Price*(1+backTestingParameter.NextPremiumRate+0.005) < snapshot.NextHigh {
 					sample.NextPremiumRate = num.NetChangeRate(snapshot.Price, snapshot.Price*(1+backTestingParameter.NextPremiumRate))

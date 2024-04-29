@@ -1,5 +1,7 @@
 package config
 
+import "gitee.com/quant1x/exchange"
+
 // DataParameter 数据源参数
 type DataParameter struct {
 	BackTesting BackTestingParameter           `name:"回测" yaml:"backtesting"`  // 回测参数
@@ -9,11 +11,15 @@ type DataParameter struct {
 
 // GetDataConfig 取得数据配置
 func GetDataConfig() DataParameter {
-	return GlobalConfig.Data
+	dataParameter := GlobalConfig.Data
+	backTestingParameter := dataParameter.BackTesting
+	backTestingParameter.TargetIndex = exchange.CorrectSecurityCode(backTestingParameter.TargetIndex)
+	return dataParameter
 }
 
 // BackTestingParameter 回测参数
 type BackTestingParameter struct {
+	TargetIndex     string  `name:"参考指数" yaml:"target_index" default:"sh000001"`   // 阿尔法和贝塔的参考指数, 默认是上证指数
 	NextPremiumRate float64 `name:"隔日溢价率" yaml:"next_premium_rate" default:"0.03"` // 隔日溢价率百分比
 }
 

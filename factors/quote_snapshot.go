@@ -57,6 +57,8 @@ type QuoteSnapshot struct {
 	NextClose             float64              // 仅回测有效: 下一个交易日收盘价
 	NextHigh              float64              // 仅回测有效: 下一个交易日最高价
 	NextLow               float64              // 仅回测有效: 下一个交易日最低价
+	Beta                  float64              // 仅回测有效: 贝塔值
+	Alpha                 float64              // 仅回测有效: 阿尔法值
 	UpdateTime            string               // 本地时间戳
 }
 

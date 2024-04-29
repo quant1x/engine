@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.1] - 2024-04-29
+### Changed
+- 剔除v1和v2两个版本的回测，统一以v3版本的为主，收敛beta和alpha的计算.
+- Backtesting配置项增加beta和alpha计算时的参考标的, 默认是上证指数.
+- 回测中策略的订单标识类型以配置文件为准.
+
 ## [1.8.0] - 2024-04-28
 ### Changed
 - 新增按照固定收益率评估卖出价格的函数.
@@ -1267,8 +1273,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.0...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.1...HEAD
 
+[1.8.1]: https://gitee.com/quant1x/engine/compare/v1.8.0...v1.8.1
 [1.8.0]: https://gitee.com/quant1x/engine/compare/v1.7.9...v1.8.0
 [1.7.9]: https://gitee.com/quant1x/engine/compare/v1.7.8...v1.7.9
 [1.7.8]: https://gitee.com/quant1x/engine/compare/v1.7.7...v1.7.8

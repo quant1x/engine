@@ -174,7 +174,7 @@ func v3BackTesting(strategyNo uint64, countDays, countTopN int) {
 				OpenPremiumRate:   num.NetChangeRate(snapshot.Open, snapshot.Price),
 				NextPremiumRate:   num.NetChangeRate(snapshot.Open, snapshot.NextOpen),
 			}
-			switch model.OrderFlag() {
+			switch tradeRule.Flag {
 			case models.OrderFlagHead:
 				sample.OpenPremiumRate = num.NetChangeRate(snapshot.Open, snapshot.Price)
 				sample.NextPremiumRate = num.NetChangeRate(snapshot.Open, snapshot.NextOpen)
@@ -219,7 +219,7 @@ func v3BackTesting(strategyNo uint64, countDays, countTopN int) {
 				OpenPremiumRate: v.OpenPremiumRate,   // 集合竞价买入, 溢价率
 				NextPremiumRate: v.NextPremiumRate,   // 隔日溢价率
 			}
-			switch model.OrderFlag() {
+			switch tradeRule.Flag {
 			case models.OrderFlagHead:
 				zs.UpdateTime = zs.Date + " 09:27:10.000"
 			case models.OrderFlagTail:

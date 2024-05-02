@@ -36,7 +36,7 @@ func TestEvaluatePriceForSell(t *testing.T) {
 	volume := 5000
 	baseAmount := price * float64(volume)
 	fmt.Println(baseAmount)
-	v := EvaluatePriceForSell(code, price, volume, 0.03)
+	v := EvaluatePriceForSell(code, price, volume, fixedYield)
 	fmt.Println(v, v.MarketValue/baseAmount >= (1+fixedYield))
 	v.log()
 }

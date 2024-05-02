@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	onceAccount            coroutine.PeriodicOnce
+	onceAccount            coroutine.RollingOnce
 	accountTheoreticalFund = 0.00
 	accountRemainingCash   = 0.00
 )

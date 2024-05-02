@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.4] - 2024-05-02
+### Changed
+- 117跳空低开优先于固定收益率卖出逻辑.
+
 ## [1.8.3] - 2024-05-02
 ### Changed
 - 117增加跳空低开卖出逻辑.
@@ -1285,8 +1289,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.3...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.4...HEAD
 
+[1.8.4]: https://gitee.com/quant1x/engine/compare/v1.8.3...v1.8.4
 [1.8.3]: https://gitee.com/quant1x/engine/compare/v1.8.2...v1.8.3
 [1.8.2]: https://gitee.com/quant1x/engine/compare/v1.8.1...v1.8.2
 [1.8.1]: https://gitee.com/quant1x/engine/compare/v1.8.0...v1.8.1

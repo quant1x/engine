@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
@@ -145,14 +146,23 @@ func cookieCutterSell() {
 				}
 			}
 		}
-		// 18168
-		if !isNeedToSell {
-			continue
-		}
 		// 成本价
 		//costPrice := position.OpenPrice
 		orderPrice := lastPrice
 		orderVolume := position.CanUseVolume
+		// 6.11 如果卖出策略配置的固定收益率大于0, 则卖出
+		if !isNeedToSell && sellRule.FixedYield > 0 {
+			fee := trader.EvaluatePriceForSell(securityCode, avgPrice, orderVolume, sellRule.FixedYield)
+			if fee != nil && fee.Price > avgPrice {
+				isNeedToSell = true
+				orderRemark = fmt.Sprintf("FIXEDYIELD:%.2f", sellRule.FixedYield*100)
+				orderPrice = fee.Price
+			}
+		}
+		// 18168
+		if !isNeedToSell {
+			continue
+		}
 		// 卖出
 		order_id, err := trader.DirectOrder(direction, strategyName, orderRemark, securityCode, trader.LATEST_PRICE, orderPrice, orderVolume)
 		if err != nil {

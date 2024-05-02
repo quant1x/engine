@@ -151,7 +151,14 @@ func cookieCutterSell() {
 		//costPrice := position.OpenPrice
 		orderPrice := lastPrice
 		orderVolume := position.CanUseVolume
-		// 7.1 如果卖出策略配置的固定收益率大于0, 则卖出
+		// 7.1 如果跳空低开, 现价卖出, 如果想开盘就挂卖单, 就需要配置一个早盘集合竞价结束后, 早盘交易之前的交易时段
+		// 比如 09:29:00~09:29:59
+		if !isNeedToSell && snapshot.ExistDownwardGap() {
+			isNeedToSell = true
+			orderRemark = "GAP:DOWNWARD"
+			orderPrice = lastPrice
+		}
+		// 7.2 如果卖出策略配置的固定收益率大于0, 则卖出
 		if !isNeedToSell && sellRule.FixedYield > 0 {
 			fee := trader.EvaluatePriceForSell(securityCode, avgPrice, orderVolume, sellRule.FixedYield)
 			if fee != nil && fee.Price > avgPrice {
@@ -159,13 +166,6 @@ func cookieCutterSell() {
 				orderRemark = fmt.Sprintf("FIXEDYIELD:%.2f", sellRule.FixedYield*100)
 				orderPrice = fee.Price
 			}
-		}
-		// 7.2 如果跳空低开, 现价卖出, 如果想开盘就挂卖单, 就需要配置一个早盘集合竞价结束后, 早盘交易之前的交易时段
-		// 比如 09:29:00~09:29:59
-		if !isNeedToSell && snapshot.ExistDownwardGap() {
-			isNeedToSell = true
-			orderRemark = "GAP:DOWNWARD"
-			orderPrice = lastPrice
 		}
 		// 18168
 		if !isNeedToSell {

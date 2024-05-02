@@ -27,6 +27,7 @@ func getStockPoolFilename() string {
 	return filename
 }
 
+// 从本地缓存加载股票池
 func getStockPoolFromCache() (list []StockPool) {
 	filename := getStockPoolFilename()
 	err := api.CsvToSlices(filename, &list)
@@ -34,6 +35,7 @@ func getStockPoolFromCache() (list []StockPool) {
 	return
 }
 
+// 刷新本地股票池缓存
 func saveStockPoolToCache(list []StockPool) {
 	filename := getStockPoolFilename()
 	err := api.SlicesToCsv(filename, list)
@@ -41,6 +43,7 @@ func saveStockPoolToCache(list []StockPool) {
 	return
 }
 
+// 股票池合并
 func stockPoolMerge(model models.Strategy, date string, orders []models.Statistics, topN int) {
 	poolMutex.Lock()
 	defer poolMutex.Unlock()
@@ -100,6 +103,7 @@ func stockPoolMerge(model models.Strategy, date string, orders []models.Statisti
 		logger.Infof("%s[%d]: buy queue append %s", model.Name(), model.Code(), v.Code)
 		newList = append(newList, *v)
 	}
+	// 如果有新增标的, 则执行交易指令
 	if len(newList) > 0 {
 		localStockPool = append(localStockPool, newList...)
 		logger.Infof("检查是否需要委托下单...")
@@ -136,11 +140,16 @@ func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool
 	strategyParameter := config.GetStrategyParameterByCode(model.Code())
 	if strategyParameter != nil && strategyParameter.BuyEnable() {
 		direction := trader.BUY
+		// 统计指定交易日的策略已执行买入的标的数量
 		numberOfStrategy := CountStrategyOrders(tradeDate, model, direction)
 		if numberOfStrategy >= strategyParameter.Total {
 			logger.Errorf("%s %s: 计划买入=%d, 已完成=%d. ", tradeDate, model.Name(), strategyParameter.Total, numberOfStrategy)
 			return true
 		}
+		// 策略是否盘中实时订单
+		//isTickOrder := strategyParameter.Flag == models.OrderFlagTick
+		// 策略最大可交易标的配额余量
+		//remainQuota := strategyParameter.Total - numberOfStrategy
 		length := len(list)
 		for i := 0; i < length && numberOfStrategy < strategyParameter.Total; i++ {
 			v := &(list[i])

@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.2] - 2024-05-02
+### Changed
+- 117增加固定收益率的卖出逻辑.
+- 修订EvaluatePriceForSell测试代码.
+- 修订策略配置中固定收益率FixedYield的说明, 针对买入策略执行, 会存在比较复杂的情况，所以暂时只和卖出策略的关联有效.
+- 调整账户的滑动初始化组件为RollingOnce.
+- 增补部分交易逻辑的注释.
+
 ## [1.8.1] - 2024-04-29
 ### Changed
 - 剔除v1和v2两个版本的回测，统一以v3版本的为主，收敛beta和alpha的计算.
@@ -1273,8 +1281,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.1...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.2...HEAD
 
+[1.8.2]: https://gitee.com/quant1x/engine/compare/v1.8.1...v1.8.2
 [1.8.1]: https://gitee.com/quant1x/engine/compare/v1.8.0...v1.8.1
 [1.8.0]: https://gitee.com/quant1x/engine/compare/v1.7.9...v1.8.0
 [1.7.9]: https://gitee.com/quant1x/engine/compare/v1.7.8...v1.7.9

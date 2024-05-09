@@ -88,7 +88,7 @@ func (q QuoteSnapshot) BoxUpwardGap() bool {
 	}
 	lastBoxHigh := max(history.OPEN, history.CLOSE)
 	boxLow := min(q.Open, q.Price)
-	return lastBoxHigh <= boxLow
+	return lastBoxHigh < boxLow
 }
 
 // BoxDownwardGap K线实体位于昨日K线实体下方
@@ -99,7 +99,7 @@ func (q QuoteSnapshot) BoxDownwardGap() bool {
 	}
 	lastBoxLow := min(history.OPEN, history.CLOSE)
 	boxHigh := max(q.Open, q.Price)
-	return lastBoxLow >= boxHigh
+	return lastBoxLow > boxHigh
 }
 
 // KLineWeaknessToStrength K线弱转强, 毕竟还是弱, 下一个交易日有低吸机会

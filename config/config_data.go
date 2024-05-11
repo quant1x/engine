@@ -2,6 +2,10 @@ package config
 
 import "gitee.com/quant1x/exchange"
 
+const (
+	DefaultMinimumConcurrencyForSnapshots = 2 // 快照默认最小并发数
+)
+
 // DataParameter 数据源参数
 type DataParameter struct {
 	BackTesting BackTestingParameter           `name:"回测" yaml:"backtesting"` // 回测参数

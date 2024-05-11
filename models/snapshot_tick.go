@@ -71,12 +71,13 @@ func SyncAllSnapshots(barIndex *int) {
 	}
 	currentDate := exchange.GetCurrentlyDay()
 	tdxApi := gotdx.GetTdxApi()
+	// 读取配置的并发数
 	parallelCount := config.GetDataConfig().Snapshot.Concurrency
 	if parallelCount < 1 {
 		parallelCount := tdxApi.NumOfServers()
 		parallelCount /= 2
-		if parallelCount < 2 {
-			parallelCount = 2
+		if parallelCount < config.DefaultMinimumConcurrencyForSnapshots {
+			parallelCount = config.DefaultMinimumConcurrencyForSnapshots
 		}
 	}
 	var snapshots []quotes.Snapshot

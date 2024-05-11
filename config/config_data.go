@@ -4,9 +4,10 @@ import "gitee.com/quant1x/exchange"
 
 // DataParameter 数据源参数
 type DataParameter struct {
-	BackTesting BackTestingParameter           `name:"回测" yaml:"backtesting"`  // 回测参数
-	Trans       HistoricalTradingDataParameter `name:"历史成交数据" yaml:"trans"`    // 历史成交参数
-	Feature     FeatureParameter               `name:"feature" yaml:"feature"` // 特征参数
+	BackTesting BackTestingParameter           `name:"回测" yaml:"backtesting"` // 回测参数
+	Trans       HistoricalTradingDataParameter `name:"历史成交数据" yaml:"trans"`   // 历史成交参数
+	Feature     FeatureParameter               `name:"特征" yaml:"feature"`     // 特征参数
+	Snapshot    SnapshotParameter              `name:"快照" yaml:"snapshot"`    // 快照参数
 }
 
 // GetDataConfig 取得数据配置
@@ -52,4 +53,9 @@ type FeatureWave struct {
 type FeatureWaveFields struct {
 	Peak   string `yaml:"peak" default:"close"`   // K线检测 - 波峰字段, 默认是收盘价
 	Valley string `yaml:"valley" default:"close"` // K线检测 - 波谷字段, 默认是收盘价
+}
+
+// SnapshotParameter 快照参数
+type SnapshotParameter struct {
+	Concurrency int `name:"并发数" yaml:"concurrency" default:"0"` // 并发数, 默认是0, 使用服务器数量的半数
 }

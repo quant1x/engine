@@ -1,6 +1,7 @@
 package models
 
 import (
+	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx"
@@ -70,10 +71,13 @@ func SyncAllSnapshots(barIndex *int) {
 	}
 	currentDate := exchange.GetCurrentlyDay()
 	tdxApi := gotdx.GetTdxApi()
-	parallelCount := tdxApi.NumOfServers()
-	parallelCount /= 2
-	if parallelCount < 2 {
-		parallelCount = 2
+	parallelCount := config.GetDataConfig().Snapshot.Concurrency
+	if parallelCount < 1 {
+		parallelCount := tdxApi.NumOfServers()
+		parallelCount /= 2
+		if parallelCount < 2 {
+			parallelCount = 2
+		}
 	}
 	var snapshots []quotes.Snapshot
 	var wg sync.WaitGroup

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gitee.com/quant1x/engine/command"
 	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/engine/storages"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/runtime"
 	_ "net/http/pprof"
@@ -26,6 +27,13 @@ var (
 
 // 更新日线数据工具
 func main() {
+
+	db := storages.Connect()
+	storage := storages.NewDatabaseStorage(db)
+
+	storage.Create()
+	storage.Query()
+
 	if config.PprofEnable() {
 		fCpu, err := os.Create(cpuProfile)
 		if err != nil {

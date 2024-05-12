@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.6] - 2024-05-11
+### Changed
+- 增加快照默认最小并发数的常量.
+- 配置data增加快照snapshot的并发数控制, 默认为0的情况下，并发数为服务器总数的一半.
+- 更新依赖库pandas版本到1.4.7.
+- 更新依赖库gotdx版本到1.22.6,修复服务器连接池可能被耗尽的bug.
+
+## [1.8.5] - 2024-05-09
+### Changed
+- 删除废弃的代码.
+- 调整K线相对位置的判断方法, K线实体不能重合.
+
 ## [1.8.4] - 2024-05-02
 ### Changed
 - 117跳空低开优先于固定收益率卖出逻辑.
@@ -1289,8 +1301,10 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.4...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.6...HEAD
 
+[1.8.6]: https://gitee.com/quant1x/engine/compare/v1.8.5...v1.8.6
+[1.8.5]: https://gitee.com/quant1x/engine/compare/v1.8.4...v1.8.5
 [1.8.4]: https://gitee.com/quant1x/engine/compare/v1.8.3...v1.8.4
 [1.8.3]: https://gitee.com/quant1x/engine/compare/v1.8.2...v1.8.3
 [1.8.2]: https://gitee.com/quant1x/engine/compare/v1.8.1...v1.8.2

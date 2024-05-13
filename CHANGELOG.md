@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.7] - 2024-05-13
+### Changed
+- 修复快照参数重新赋值的bug.
+
 ## [1.8.6] - 2024-05-11
 ### Changed
 - 增加快照默认最小并发数的常量.
@@ -1301,8 +1305,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.6...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.7...HEAD
 
+[1.8.7]: https://gitee.com/quant1x/engine/compare/v1.8.6...v1.8.7
 [1.8.6]: https://gitee.com/quant1x/engine/compare/v1.8.5...v1.8.6
 [1.8.5]: https://gitee.com/quant1x/engine/compare/v1.8.4...v1.8.5
 [1.8.4]: https://gitee.com/quant1x/engine/compare/v1.8.3...v1.8.4

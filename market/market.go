@@ -1,101 +1,14 @@
 package market
 
 import (
-	"fmt"
+	"gitee.com/quant1x/engine/storages"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/num"
 )
 
 func GetStockCodeList() []string {
-	var allCodes []string
-	// 上海
-	// sh600000-sh609999
-	{
-		var (
-			codeBegin = 600000
-			codeEnd   = 609999
-		)
-		for i := codeBegin; i <= codeEnd; i++ {
-			fc := fmt.Sprintf("sh%d", i)
-			if IsNeedIgnore(fc) {
-				continue
-			}
-			allCodes = append(allCodes, fc)
-		}
-	}
-	// 科创板
-	// sh688000-sh688999
-	{
-		var (
-			codeBegin = 688000
-			codeEnd   = 689999
-		)
-		for i := codeBegin; i <= codeEnd; i++ {
-			fc := fmt.Sprintf("sh%d", i)
-			if IsNeedIgnore(fc) {
-				continue
-			}
-			allCodes = append(allCodes, fc)
-		}
-	}
-	// 深圳证券交易所
-	// 深圳主板: sz000000-sz000999
-	{
-		var (
-			codeBegin = 0
-			codeEnd   = 999
-		)
-		for i := codeBegin; i <= codeEnd; i++ {
-			fc := fmt.Sprintf("sz000%03d", i)
-			if IsNeedIgnore(fc) {
-				continue
-			}
-			allCodes = append(allCodes, fc)
-		}
-	}
-	// 中小板: sz001000-sz009999
-	{
-		var (
-			codeBegin = 1000
-			codeEnd   = 9999
-		)
-		for i := codeBegin; i <= codeEnd; i++ {
-			fc := fmt.Sprintf("sz00%04d", i)
-			if IsNeedIgnore(fc) {
-				continue
-			}
-			allCodes = append(allCodes, fc)
-		}
-	}
-	// 创业板: sz300000-sz300999
-	{
-		var (
-			codeBegin = 300000
-			codeEnd   = 309999
-		)
-		for i := codeBegin; i <= codeEnd; i++ {
-			fc := fmt.Sprintf("sz%06d", i)
-			if IsNeedIgnore(fc) {
-				continue
-			}
-			allCodes = append(allCodes, fc)
-		}
-	}
-	//allCodes = allCodes[0:0]
-	// 港股: hk00001-hk09999
-	//{
-	//	var (
-	//		codeBegin = 1
-	//		codeEnd   = 9999
-	//	)
-	//	for i := codeBegin; i <= codeEnd; i++ {
-	//		fc := fmt.Sprintf("hk%05d", i)
-	//		allCodes = append(allCodes, fc)
-	//	}
-	//}
-
-	return allCodes
+	return storages.GlobalDB.GetStockCodeList(true)
 }
 
 // GetCodeList 加载全部股票代码

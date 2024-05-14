@@ -27,12 +27,7 @@ var (
 
 // 更新日线数据工具
 func main() {
-
-	db := storages.Connect()
-	storage := storages.NewDatabaseStorage(db)
-
-	storage.Create()
-	storage.Query()
+	storages.InitDatabase()
 
 	if config.PprofEnable() {
 		fCpu, err := os.Create(cpuProfile)

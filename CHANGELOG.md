@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.9] - 2024-05-15
+### Changed
+- 修订1号策略的测试代码.
+
 ## [1.8.8] - 2024-05-14
 ### Changed
 - 调整快照缓存路径.
@@ -1310,8 +1314,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.8...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.9...HEAD
 
+[1.8.9]: https://gitee.com/quant1x/engine/compare/v1.8.8...v1.8.9
 [1.8.8]: https://gitee.com/quant1x/engine/compare/v1.8.7...v1.8.8
 [1.8.7]: https://gitee.com/quant1x/engine/compare/v1.8.6...v1.8.7
 [1.8.6]: https://gitee.com/quant1x/engine/compare/v1.8.5...v1.8.6

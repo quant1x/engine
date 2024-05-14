@@ -10,6 +10,8 @@ func TestFilename(t *testing.T) {
 	code := "sh600105"
 	filename := QuarterlyReportFilename(code, date)
 	fmt.Println(filename)
+	filename = SnapshotFilename(code, date)
+	fmt.Println(filename)
 }
 
 //// import "github.com/syndtr/goleveldb/leveldb"

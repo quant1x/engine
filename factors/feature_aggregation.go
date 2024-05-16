@@ -94,7 +94,7 @@ func UpdateL5Misc(misc *Misc) {
 // RefreshL5Misc 刷新缓存
 func RefreshL5Misc() {
 	__l5Once.Do(lazyInitFeatures)
-	__l5Misc.Apply(nil)
+	__l5Misc.Apply(nil, true)
 }
 
 func FilterL5Misc(f func(v *Misc) bool, date ...string) []*Misc {

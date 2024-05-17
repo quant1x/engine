@@ -72,21 +72,21 @@ func calculateTheoreticalFund() (theoretical, cash float64) {
 	return theoretical, cash
 }
 
-// CalculateAvailableFund 计算一只股票的可动用资金量
+// CalculateAvailableFundsForSingleTarget 计算一只股票的可动用资金量
 //
 // 参数:
 //
-//	totalBalance: 总账户余额
-//	marketValue: 股票当前市值
-//	averageCost: 平均买入成本（用于计算盈亏）
-//	commission: 交易佣金率
+//	quantityQuota: 可交易标的数配额
+//	weight: 策略可用资金占总仓位比例
+//	feeMax: 可买最大金额
+//	feeMin: 可买最小金额
 //
 // 返回值:
 //
-//	availableFund: 可动用资金量
-func CalculateAvailableFund(strategyParameter *config.StrategyParameter) float64 {
+//	single_funds_available: 可动用资金量
+func CalculateAvailableFundsForSingleTarget(quantityQuota int, weight, feeMax, feeMin float64) float64 {
 	onceAccount.Do(lazyInitFundPool)
-	if strategyParameter.Total < 1 {
+	if quantityQuota < 1 {
 		return InvalidFee
 	}
 	// 1. 检查可用资金
@@ -94,12 +94,12 @@ func CalculateAvailableFund(strategyParameter *config.StrategyParameter) float64
 		return InvalidFee
 	}
 	// 2. 计算策略的可用资金, 总可用资金*策略权重
-	strategy_fund := accountTheoreticalFund * strategyParameter.Weight
-	single_funds_available := num.Decimal(strategy_fund / float64(strategyParameter.Total))
+	strategy_funds := accountTheoreticalFund * weight
+	single_funds_available := num.Decimal(strategy_funds / float64(quantityQuota))
 	// 3. 检查策略的可用资金范围
-	if single_funds_available > strategyParameter.FeeMax {
-		single_funds_available = strategyParameter.FeeMax
-	} else if single_funds_available < strategyParameter.FeeMin {
+	if single_funds_available > feeMax {
+		single_funds_available = feeMax
+	} else if single_funds_available < feeMin {
 		return InvalidFee
 	}
 	// 4. 检查可用资金的最大值和最小值
@@ -108,5 +108,19 @@ func CalculateAvailableFund(strategyParameter *config.StrategyParameter) float64
 	} else if single_funds_available < traderParameter.BuyAmountMin {
 		return InvalidFee
 	}
+	return single_funds_available
+}
+
+// CalculateAvailableFund 计算一只股票的可动用资金量
+//
+// 参数:
+//
+//	strategyParameter: 配置的策略参数
+//
+// 返回值:
+//
+//	availableFund: 可动用资金量
+func CalculateAvailableFund(strategyParameter *config.StrategyParameter) float64 {
+	single_funds_available := CalculateAvailableFundsForSingleTarget(strategyParameter.Total, strategyParameter.Weight, strategyParameter.FeeMax, strategyParameter.FeeMin)
 	return single_funds_available
 }

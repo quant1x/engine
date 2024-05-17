@@ -87,7 +87,7 @@ func NewMiscKLine(code, date string) *MiscKLine {
 	volumeChangeRate := utils.Float64IndexOf(vr, -1)
 	ek.VolumeRatio = num.Decimal(volumeChangeRate, digits)
 	// 换手率
-	f10 := GetL5F10(securityCode)
+	f10 := GetL5F10(securityCode, date)
 	if f10 != nil {
 		turnoverRate := VOL.Div(f10.Capital).Mul(100.00)
 		ek.TurnoverRate = num.Decimal(utils.Float64IndexOf(turnoverRate, -1))

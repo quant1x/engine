@@ -49,7 +49,7 @@ func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool
 		logger.Errorf("%s[%d]: 非交易时段, 放弃", model.Name(), model.Code())
 		return false
 	}
-	// 4. 矫正交易日期
+	// 4. 校对交易日期
 	tradeDate := exchange.FixTradeDate(date)
 	direction := trader.BUY
 	// 5. 统计指定交易日的策略已执行买入的标的数量

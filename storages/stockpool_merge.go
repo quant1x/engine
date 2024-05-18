@@ -43,11 +43,10 @@ func saveStockPoolToCache(list []StockPool) {
 }
 
 // 股票池合并
-func stockPoolMerge(model models.Strategy, date string, orders []models.Statistics, topN int) {
+func stockPoolMerge(model models.Strategy, date string, orders []models.Statistics, maximumNumberOfAvailablePurchases int) {
 	poolMutex.Lock()
 	defer poolMutex.Unlock()
 	localStockPool := getStockPoolFromCache()
-	//targets := []StockPool{}
 	cacheStatistics := map[string]*StockPool{}
 	tradeDate := exchange.FixTradeDate(date)
 	for i, v := range orders {
@@ -65,11 +64,10 @@ func stockPoolMerge(model models.Strategy, date string, orders []models.Statisti
 			CreateTime:   v.UpdateTime,
 			UpdateTime:   v.UpdateTime,
 		}
-		if i < topN {
+		if i < maximumNumberOfAvailablePurchases {
 			//  如果是前排个股标志可以买入
 			sp.OrderStatus = 1
 		}
-		//targets = append(targets, sp)
 		cacheStatistics[sp.Key()] = &sp
 	}
 	count := len(localStockPool)

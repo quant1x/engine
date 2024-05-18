@@ -8,10 +8,11 @@ import (
 )
 
 const (
-	InvalidFee     = float64(0) // 无效的费用
-	InvalidVolume  = int(0)     // 无效的股数
-	UnknownVolume  = int(1)     // 未知的股数
-	InvalidOrderId = int(-1)    // 无效的订单ID
+	InvalidFee            = float64(0) // 无效的费用
+	InvalidVolume         = int(0)     // 无效的股数
+	UnknownVolume         = int(1)     // 未知的股数
+	InvalidOrderId        = int(-1)    // 无效的订单ID
+	MinimumNumberOfOrders = int(2)     // 最小订单数为2, 预防一个策略资金都打到一个标的上面
 )
 
 // 价格笼子

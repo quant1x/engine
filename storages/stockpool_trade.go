@@ -113,7 +113,7 @@ func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool
 	}
 	// 10. 遍历订单
 	length = len(traderTargets)
-	for i := 0; i < length && numberOfStrategy < totalTarget; i++ {
+	for i := 0; i < length && numberOfStrategy < quotaForTheNumberOfTargets; i++ {
 		v := traderTargets[i]
 		// 10.1 非交易日记录, 忽略
 		if v.Date != tradeDate {
@@ -159,5 +159,5 @@ func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool
 		v.OrderId = orderId
 		v.Status |= StrategyOrderSucceeded
 	}
-	return numberOfStrategy >= totalTarget
+	return numberOfStrategy >= quotaForTheNumberOfTargets
 }

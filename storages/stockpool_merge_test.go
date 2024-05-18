@@ -1,23 +1,20 @@
 package storages
 
 import (
-	"fmt"
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/concurrent"
-	"testing"
 )
 
 type TestModel struct{}
 
 func (m TestModel) Code() models.ModelKind {
-	return 81
+	return 0
 }
 
 func (m TestModel) Name() string {
-	return "81号策略"
+	return "0号策略"
 }
 
 func (m TestModel) OrderFlag() string {
@@ -37,17 +34,4 @@ func (m TestModel) Sort(snapshots []factors.QuoteSnapshot) models.SortedStatus {
 func (m TestModel) Evaluate(securityCode string, result *concurrent.TreeMap[string, models.ResultInfo]) {
 	//TODO implement me
 	panic("implement me")
-}
-
-func Test_strategyOrderIsFinished(t *testing.T) {
-	v := strategyOrderIsFinished(TestModel{})
-	fmt.Println(v)
-}
-
-func Test_checkOrderForBuy(t *testing.T) {
-	list := getStockPoolFromCache()
-	model := TestModel{}
-	date := exchange.LastTradeDate()
-	v := checkOrderForBuy(list, model, date)
-	fmt.Println(v)
 }

@@ -128,6 +128,7 @@ func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool
 		// 10.3 检查买入已完成状态
 		ok := CheckOrderState(date, model, securityCode, direction)
 		if ok {
+			// 已买入的标的, 记录日志, 跳过
 			logger.Errorf("%s[%d]: %s 已买入, 放弃", model.Name(), model.Code(), securityCode)
 			continue
 		}
@@ -147,7 +148,9 @@ func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool
 		orderId, err := trader.PlaceOrder(direction, model, securityCode, trader.FIX_PRICE, tradeFee.Price, tradeFee.Volume)
 		v.Status |= StrategyOrderPlaced
 		if err != nil || orderId < 0 {
-			v.OrderId = -1
+			// 设置标的订单ID为无效
+			v.OrderId = trader.InvalidOrderId
+			// 设定订单状态为委托失败
 			v.Status |= StrategyOrderFailed
 			logger.Errorf("%s[%d]: %s 下单失败, error=%+v", model.Name(), model.Code(), securityCode, err)
 			continue

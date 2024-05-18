@@ -47,6 +47,7 @@ func ExecuteStrategy(model models.Strategy, barIndex *int) {
 	err := permissions.CheckPermission(model)
 	if err != nil {
 		logger.Error(err)
+		fmt.Println(err)
 		return
 	}
 	tradeRule := config.GetStrategyParameterByCode(model.Code())

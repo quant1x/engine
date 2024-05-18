@@ -4,6 +4,26 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.10] - 2024-05-18
+### Changed
+- 允许策略覆盖.
+- 控制台增加策略无权限提示.
+- 修订流程的注释, 校对交易日期比矫正日期描述准确一些, 毕竟不是发生了错误, 只是需要统一格式.
+- 股票池中未配置交易参数的情况输出错误日志.
+- 股票池字段OrderStatus增加注释, 明确有效的取值及含义.
+- 修复策略订单配额判断不精准的bug, 遗漏了实时订单的最大数判断逻辑.
+- 新增最小订单数常量.
+- 新增无效订单常量.
+- 优化策略单一标的可用资金量的计算方法，使分配给策略的资金尽可能足额买入。非实时订单的策略的可交易标的列表需要一次性写入股票池, 计算可用金额会用实际发生交易的股票标的数量来计算。.
+- 微调股票池合并函数, 调整参数名, 删除废弃的代码.
+- 拆分股票池合并功能代码.
+- 调整订单状态功能源文件名.
+- 调整计算可用资金量的函数, 允许临时调整策略可交易标的总数.
+- 修复订单状态文件名称不一致的bug.
+- 对齐misc中F10的日期为特征数据日期.
+- 修复错误的测试代码.
+- 调整存储csv文件，默认为不强制刷新, 在特殊环境比如misc的刷新，可以选择强制更新。.
+
 ## [1.8.9] - 2024-05-15
 ### Changed
 - 修订1号策略的测试代码.
@@ -1314,8 +1334,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.9...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.10...HEAD
 
+[1.8.10]: https://gitee.com/quant1x/engine/compare/v1.8.9...v1.8.10
 [1.8.9]: https://gitee.com/quant1x/engine/compare/v1.8.8...v1.8.9
 [1.8.8]: https://gitee.com/quant1x/engine/compare/v1.8.7...v1.8.8
 [1.8.7]: https://gitee.com/quant1x/engine/compare/v1.8.6...v1.8.7

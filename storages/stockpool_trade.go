@@ -40,6 +40,7 @@ func checkOrderForBuy(list []StockPool, model models.Strategy, date string) bool
 	// 2. 获取策略参数
 	strategyParameter := config.GetStrategyParameterByCode(model.Code())
 	if strategyParameter == nil || !strategyParameter.BuyEnable() {
+		logger.Errorf("%s[%d]: 策略未配置或不买入, 放弃", model.Name(), model.Code())
 		return false
 	}
 	// 3. 判断交易时段

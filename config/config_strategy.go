@@ -28,6 +28,7 @@ type StrategyParameter struct {
 	FixedYield                  float64        `name:"固定收益率" yaml:"fixed_yield" default:"0"`                           // 固定收益率, 只能和卖出策略绑定
 	TakeProfitRatio             float64        `name:"止盈比例" yaml:"take_profit_ratio" default:"15.00"`                  // 止盈比例, 默认15%
 	StopLossRatio               float64        `name:"止损比例" yaml:"stop_loss_ratio" default:"-2.00"`                    // 止损比例, 默认-2%
+	LowOpeningAmplitude         float64        `name:"低开幅度" yaml:"low_opening_amplitude" default:"0.618"`              // 低开幅度
 	Rules                       RuleParameter  `name:"规则参数" yaml:"rules"`                                              // 过滤规则
 	excludeCodes                []string       `name:"过滤列表"`                                                           //  需要排除的个股
 }

@@ -58,11 +58,11 @@ func computeQuShiFanZhuan(date string, OPEN, CLOSE, HIGH, LOW, VOL pandas.Series
 	fz := num.AnyToBool(vpBuy.IndexOf(-1))
 	qsfz := QuShiFanZhuan{
 		QSFZ: fz,
-		CV:   utils.SeriesIndexOf(cv, -1),
-		CP:   utils.SeriesIndexOf(cp, -1),
-		VP:   utils.SeriesIndexOf(vp, -1),
-		VP3:  utils.SeriesIndexOf(vp3, -1),
-		VP5:  utils.SeriesIndexOf(vp5, -1),
+		CV:   utils.Float64IndexOf(cv, -1),
+		CP:   utils.Float64IndexOf(cp, -1),
+		VP:   utils.Float64IndexOf(vp, -1),
+		VP3:  utils.Float64IndexOf(vp3, -1),
+		VP5:  utils.Float64IndexOf(vp5, -1),
 	}
 	return &qsfz
 }

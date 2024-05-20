@@ -66,10 +66,10 @@ func computeDuoKongQuShi(OPEN, CLOSE, HIGH, LOW pandas.Series) *DuoKongQuShi {
 	//DRAWICON(B,20,1);
 	//DRAWICON(S,20,2);
 	dkqs := DuoKongQuShi{
-		Col: utils.SeriesIndexOf(MADK, -1),
-		K0:  utils.SeriesIndexOf(K0, -1),
-		K:   utils.SeriesIndexOf(K, -1),
-		D:   utils.SeriesIndexOf(D, -1),
+		Col: utils.Float64IndexOf(MADK, -1),
+		K0:  utils.Float64IndexOf(K0, -1),
+		K:   utils.Float64IndexOf(K, -1),
+		D:   utils.Float64IndexOf(D, -1),
 		B:   utils.BoolIndexOf(B, -1),
 		S:   utils.BoolIndexOf(S, -1),
 	}

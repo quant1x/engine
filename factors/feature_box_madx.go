@@ -54,10 +54,10 @@ func computeJuXianDongXiang(OPEN, CLOSE, HIGH, LOW pandas.Series) *JuXianDongXia
 	B := X0.Gt(0).And(X1.Gt(0)).And(X2.Gt(0))
 	//DRAWICON(B,0.01,1);
 	madx := JuXianDongXiang{
-		Dm0:       utils.SeriesIndexOf(DM0, -1),
-		Dm1:       utils.SeriesIndexOf(DM1, -1),
-		Dm2:       utils.SeriesIndexOf(DM2, -1),
-		Diverging: utils.SeriesIndexOf(DIVERGING, -1),
+		Dm0:       utils.Float64IndexOf(DM0, -1),
+		Dm1:       utils.Float64IndexOf(DM1, -1),
+		Dm2:       utils.Float64IndexOf(DM2, -1),
+		Diverging: utils.Float64IndexOf(DIVERGING, -1),
 		B:         utils.BoolIndexOf(B, -1),
 	}
 	return &madx

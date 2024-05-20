@@ -9,8 +9,8 @@ import (
 )
 
 func TestS8(t *testing.T) {
-	code := "002632"
-	date := "2024-04-10"
+	code := "000737"
+	date := "2024-03-21"
 	cacheDate, featureDate := cache.CorrectDate(date)
 	s8 := NewInvestmentSentimentMaster(cacheDate, code)
 	s8.Update(code, cacheDate, featureDate, true)

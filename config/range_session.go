@@ -1,6 +1,7 @@
 package config
 
 import (
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/pkg/yaml"
 	"slices"
@@ -157,4 +158,15 @@ func (this *TradingSession) CanStopLoss(timestamp ...string) bool {
 func (this *TradingSession) CanTakeProfit(timestamp ...string) bool {
 	_ = timestamp
 	return true
+}
+
+// IsPreMarket 是否盘前交易时段
+func (this *TradingSession) IsPreMarket(timestamp ...string) bool {
+	var tm string
+	if len(timestamp) > 0 {
+		tm = strings.TrimSpace(timestamp[0])
+	} else {
+		tm = getTradingTimestamp()
+	}
+	return tm < exchange.TransactionStartTime
 }

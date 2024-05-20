@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.11] - 2024-05-20
+### Changed
+- 更新依赖库版本, 以支持盘前交易条件判断.
+- 交易时段新增是否盘前交易方法.
+- 策略配置参数新增低开幅度阀值.
+- 修订交易通道参数承接比字段注释.
+- 删除废弃的代码.
+
 ## [1.8.10] - 2024-05-18
 ### Changed
 - 允许策略覆盖.
@@ -1334,8 +1342,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.10...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.11...HEAD
 
+[1.8.11]: https://gitee.com/quant1x/engine/compare/v1.8.10...v1.8.11
 [1.8.10]: https://gitee.com/quant1x/engine/compare/v1.8.9...v1.8.10
 [1.8.9]: https://gitee.com/quant1x/engine/compare/v1.8.8...v1.8.9
 [1.8.8]: https://gitee.com/quant1x/engine/compare/v1.8.7...v1.8.8

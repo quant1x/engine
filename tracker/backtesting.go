@@ -291,6 +291,7 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 	}
 
 	// 合计输出
+	fmt.Printf("策略编号: %d, 策略名称: %s, 订单类型: %s\n", model.Code(), model.Name(), model.OrderFlag())
 	fmt.Printf("%s - %s 合计:\n", dates[0], dates[len(dates)-1])
 	today := cache.Today()
 	dfTotal := pandas.LoadStructs(gcs)

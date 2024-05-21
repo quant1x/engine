@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.14] - 2024-05-21
+### Changed
+- 新增开盘价处于上一个交易日K线实体位置的判断方法.
+- 回测输出策略概要信息.
+
 ## [1.8.13] - 2024-05-20
 ### Changed
 - 调整测试代码.
@@ -1351,8 +1356,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.13...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.14...HEAD
 
+[1.8.14]: https://gitee.com/quant1x/engine/compare/v1.8.13...v1.8.14
 [1.8.13]: https://gitee.com/quant1x/engine/compare/v1.8.12...v1.8.13
 [1.8.12]: https://gitee.com/quant1x/engine/compare/v1.8.11...v1.8.12
 [1.8.11]: https://gitee.com/quant1x/engine/compare/v1.8.10...v1.8.11

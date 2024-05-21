@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.15] - 2024-05-21
+### Changed
+- 调整策略概要中订单类型, 从配置文件加载.
+
 ## [1.8.14] - 2024-05-21
 ### Changed
 - 新增开盘价处于上一个交易日K线实体位置的判断方法.
@@ -1356,8 +1360,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.14...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.15...HEAD
 
+[1.8.15]: https://gitee.com/quant1x/engine/compare/v1.8.14...v1.8.15
 [1.8.14]: https://gitee.com/quant1x/engine/compare/v1.8.13...v1.8.14
 [1.8.13]: https://gitee.com/quant1x/engine/compare/v1.8.12...v1.8.13
 [1.8.12]: https://gitee.com/quant1x/engine/compare/v1.8.11...v1.8.12

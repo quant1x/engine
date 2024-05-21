@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.13] - 2024-05-20
+### Changed
+- 调整测试代码.
+- 优化部分代码.
+
 ## [1.8.12] - 2024-05-20
 ### Changed
 - 增加高开幅度阀值.
@@ -1346,8 +1351,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.12...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.13...HEAD
 
+[1.8.13]: https://gitee.com/quant1x/engine/compare/v1.8.12...v1.8.13
 [1.8.12]: https://gitee.com/quant1x/engine/compare/v1.8.11...v1.8.12
 [1.8.11]: https://gitee.com/quant1x/engine/compare/v1.8.10...v1.8.11
 [1.8.10]: https://gitee.com/quant1x/engine/compare/v1.8.9...v1.8.10

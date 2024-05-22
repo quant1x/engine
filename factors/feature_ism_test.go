@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestS8(t *testing.T) {
+func TestISM(t *testing.T) {
 	code := "000737"
 	date := "2024-03-21"
 	cacheDate, featureDate := cache.CorrectDate(date)

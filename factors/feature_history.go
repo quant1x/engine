@@ -43,6 +43,7 @@ type History struct {
 	VOL               float64 `name:"成交量" dataframe:"vol"`          // 昨日成交量
 	AMOUNT            float64 `name:"成交额" dataframe:"amount"`       // 昨日成交额
 	AveragePrice      float64 `name:"均价" dataframe:"average_price"` // 昨日均价
+	BullN             int     `name:"多头排列周期" dataframe:"bull_n"`    // 多头周期数
 	UpdateTime        string  `name:"更新时间" dataframe:"update_time"` // 更新时间
 	State             uint64  `name:"样本状态" dataframe:"样本状态"`
 }
@@ -153,6 +154,12 @@ func (this *History) Repair(code, cacheDate, featureDate string, complete bool) 
 	this.AMOUNT = utils.Float64IndexOf(AMOUNT, -1)
 	ap := AMOUNT.Div(VOL)
 	this.AveragePrice = utils.Float64IndexOf(ap, -1)
+
+	// 多头排列周期
+	// 如果bullN=1即为条件首次成立
+	bullC := ma5.Gt(ma10).And(ma10.Gt(ma20))
+	bullN := BARSLASTCOUNT(bullC)
+	this.BullN = utils.IntegerIndexOf(bullN, -1)
 
 	this.UpdateTime = GetTimestamp()
 	this.State |= this.Kind()

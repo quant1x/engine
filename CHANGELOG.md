@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.16] - 2024-05-23
+### Changed
+- 历史数据新增多头排列周期数据字段.
+- 删除废弃的函数测试代码.
+- 修订测试代码.
+- 调整测试函数名.
+- 补充均线动向的字段注释.
+- 预留二次排序的todo.
+
 ## [1.8.15] - 2024-05-21
 ### Changed
 - 调整策略概要中订单类型, 从配置文件加载.
@@ -1360,8 +1369,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.15...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.16...HEAD
 
+[1.8.16]: https://gitee.com/quant1x/engine/compare/v1.8.15...v1.8.16
 [1.8.15]: https://gitee.com/quant1x/engine/compare/v1.8.14...v1.8.15
 [1.8.14]: https://gitee.com/quant1x/engine/compare/v1.8.13...v1.8.14
 [1.8.13]: https://gitee.com/quant1x/engine/compare/v1.8.12...v1.8.13

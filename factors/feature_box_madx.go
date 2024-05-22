@@ -7,12 +7,11 @@ import (
 )
 
 type JuXianDongXiang struct {
-	Dm0       float64
-	Dm1       float64
-	Dm2       float64
-	Diverging float64
-	B         bool
-	//S         bool
+	Dm0       float64 // 3日线差
+	Dm1       float64 // 5日线差
+	Dm2       float64 // 10日线差
+	Diverging float64 // 均线发散度
+	B         bool    // 买入信号
 }
 
 // 多空趋势

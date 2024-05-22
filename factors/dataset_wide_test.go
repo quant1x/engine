@@ -38,13 +38,6 @@ func TestKLineWide(t *testing.T) {
 	fmt.Println(df)
 }
 
-func TestGetKLineAll(t *testing.T) {
-	code := "600178"
-	securityCode := exchange.CorrectSecurityCode(code)
-	df := GetKLineAll(securityCode)
-	fmt.Println(df)
-}
-
 func TestDataSetWide_pullWideByDate(t *testing.T) {
 	code := "sz003007"
 	date := "20240315"

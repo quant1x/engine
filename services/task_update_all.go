@@ -12,7 +12,7 @@ var (
 	// 非交易日每天更新一次
 	lastUpdateTime = "22:00:00.000"
 	// 交易日每天更新2次
-	allDateUpdateTimes = []string{"15:10:00.000", "18:10:00.000", lastUpdateTime}
+	allDateUpdateTimes = []string{"15:10:00.000", lastUpdateTime}
 )
 
 // 任务 - 更新全部数据

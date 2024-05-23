@@ -44,6 +44,7 @@ type History struct {
 	AMOUNT            float64 `name:"成交额" dataframe:"amount"`       // 昨日成交额
 	AveragePrice      float64 `name:"均价" dataframe:"average_price"` // 昨日均价
 	BullN             int     `name:"多头排列周期" dataframe:"bull_n"`    // 多头周期数
+	OpenVolume        int     `name:"开盘量" dataframe:"open_volume"`  // 开盘量
 	UpdateTime        string  `name:"更新时间" dataframe:"update_time"` // 更新时间
 	State             uint64  `name:"样本状态" dataframe:"样本状态"`
 }
@@ -160,6 +161,12 @@ func (this *History) Repair(code, cacheDate, featureDate string, complete bool) 
 	bullC := ma5.Gt(ma10).And(ma10.Gt(ma20))
 	bullN := BARSLASTCOUNT(bullC)
 	this.BullN = utils.IntegerIndexOf(bullN, -1)
+	// 加载宽表
+	wides := CheckoutWideTableByDate(securityCode, featureDate)
+	if len(wides) > 0 {
+		wide := wides[len(wides)-1]
+		this.OpenVolume = int(wide.OpenVolume)
+	}
 
 	this.UpdateTime = GetTimestamp()
 	this.State |= this.Kind()

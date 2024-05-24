@@ -20,32 +20,32 @@ const (
 //	记录重要的截止上一个交易日的数据
 type History struct {
 	cache.DataSummary `dataframe:"-"`
-	Date              string  `name:"日期" dataframe:"date"`            // 日期, 数据落地的日期
-	Code              string  `name:"代码" dataframe:"code"`            // 代码
-	MA2               float64 `name:"2日均价" dataframe:"ma2"`          // 2日均价
-	MA3               float64 `name:"3日均价" dataframe:"ma3"`          // 3日均价
-	MV3               float64 `name:"3日均量" dataframe:"mv3"`          // 3日均量
-	MA4               float64 `name:"4日均价" dataframe:"ma4"`          // 4日均价
-	MA5               float64 `name:"5日均价" dataframe:"ma5"`          // 5日均价
-	MV5               float64 `name:"5日均量" dataframe:"mv5"`          // 5日均量
-	MA9               float64 `name:"9日均价" dataframe:"ma9"`          // 9日均价
-	MV9               float64 `name:"9日均量" dataframe:"mv9"`          // 9日均量
-	MA10              float64 `name:"10日均价" dataframe:"ma10"`        // 10日均价
-	MV10              float64 `name:"10日均量" dataframe:"mv10"`        // 10日均量
-	MA19              float64 `name:"19日均价" dataframe:"ma19"`        // 19日均价
-	MV19              float64 `name:"19日均量" dataframe:"mv19"`        // 19日均量
-	MA20              float64 `name:"20日均价" dataframe:"ma20"`        // 20日均价
-	MV20              float64 `name:"20日均量" dataframe:"mv20"`        // 20日均量
-	OPEN              float64 `name:"开盘" dataframe:"open"`            // 昨日开盘
-	CLOSE             float64 `name:"收盘" dataframe:"close"`           // 昨日收盘
-	HIGH              float64 `name:"最高" dataframe:"high"`            // 昨日最高
-	LOW               float64 `name:"最低" dataframe:"low"`             // 昨日最低
-	VOL               float64 `name:"成交量" dataframe:"vol"`           // 昨日成交量
-	AMOUNT            float64 `name:"成交额" dataframe:"amount"`        // 昨日成交额
-	AveragePrice      float64 `name:"均价" dataframe:"average_price"`   // 昨日均价
+	Date              string  `name:"日期" dataframe:"date"`          // 日期, 数据落地的日期
+	Code              string  `name:"代码" dataframe:"code"`          // 代码
+	MA2               float64 `name:"2日均价" dataframe:"ma2"`         // 2日均价
+	MA3               float64 `name:"3日均价" dataframe:"ma3"`         // 3日均价
+	MV3               float64 `name:"3日均量" dataframe:"mv3"`         // 3日均量
+	MA4               float64 `name:"4日均价" dataframe:"ma4"`         // 4日均价
+	MA5               float64 `name:"5日均价" dataframe:"ma5"`         // 5日均价
+	MV5               float64 `name:"5日均量" dataframe:"mv5"`         // 5日均量
+	MA9               float64 `name:"9日均价" dataframe:"ma9"`         // 9日均价
+	MV9               float64 `name:"9日均量" dataframe:"mv9"`         // 9日均量
+	MA10              float64 `name:"10日均价" dataframe:"ma10"`       // 10日均价
+	MV10              float64 `name:"10日均量" dataframe:"mv10"`       // 10日均量
+	MA19              float64 `name:"19日均价" dataframe:"ma19"`       // 19日均价
+	MV19              float64 `name:"19日均量" dataframe:"mv19"`       // 19日均量
+	MA20              float64 `name:"20日均价" dataframe:"ma20"`       // 20日均价
+	MV20              float64 `name:"20日均量" dataframe:"mv20"`       // 20日均量
+	OPEN              float64 `name:"开盘" dataframe:"open"`          // 昨日开盘
+	CLOSE             float64 `name:"收盘" dataframe:"close"`         // 昨日收盘
+	HIGH              float64 `name:"最高" dataframe:"high"`          // 昨日最高
+	LOW               float64 `name:"最低" dataframe:"low"`           // 昨日最低
+	VOL               float64 `name:"成交量" dataframe:"vol"`          // 昨日成交量
+	AMOUNT            float64 `name:"成交额" dataframe:"amount"`       // 昨日成交额
+	AveragePrice      float64 `name:"均价" dataframe:"average_price"` // 昨日均价
 	LastClose         float64 `name:"昨日收盘" dataframe:"last_close"`  // 前日收盘
-	BullN             int     `name:"多头排列周期" dataframe:"bull_n"`  // 多头周期数
-	OpenVolume        int     `name:"开盘量" dataframe:"open_volume"`   // 开盘量
+	BullN             int     `name:"多头排列周期" dataframe:"bull_n"`    // 多头周期数
+	OpenVolume        int     `name:"开盘量" dataframe:"open_volume"`  // 开盘量
 	UpdateTime        string  `name:"更新时间" dataframe:"update_time"` // 更新时间
 	State             uint64  `name:"样本状态" dataframe:"样本状态"`
 }
@@ -157,9 +157,10 @@ func (this *History) Repair(code, cacheDate, featureDate string, complete bool) 
 	ap := AMOUNT.Div(VOL)
 	this.AveragePrice = utils.Float64IndexOf(ap, -1)
 
-	// 多头排列周期
+	// 计算 多头排列周期
 	// 如果bullN=1即为条件首次成立
 	bullC := ma5.Gt(ma10).And(ma10.Gt(ma20))
+	// 条件连续成立的周期数
 	bullN := BARSLASTCOUNT(bullC)
 	this.BullN = utils.IntegerIndexOf(bullN, -1)
 	// 加载宽表

@@ -76,13 +76,14 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 	codes := market.GetCodeList()
 	mapStock := map[string][]factors.SecurityFeature{}
 	for i, date := range dates {
+		testDate := date
 		// 切换策略数据的缓存日期
-		factors.SwitchDate(date)
+		factors.SwitchDate(testDate)
 		var marketPrices []float64
 		stockSnapshots := []factors.QuoteSnapshot{}
 		total := len(codes)
 		pos := 0
-		bar := progressbar.NewBar(1, "执行["+date+"涨幅扫描]", total)
+		bar := progressbar.NewBar(1, "执行["+testDate+"涨幅扫描]", total)
 		for _, securityCode := range codes {
 			bar.Add(1)
 			if !exchange.AssertStockBySecurityCode(securityCode) && securityCode != backTestingParameter.TargetIndex {
@@ -124,7 +125,7 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 				snapshot.NextHigh = nextFeature.High
 				snapshot.NextLow = nextFeature.Low
 			}
-			snapshot.Beta, snapshot.Alpha = exchange.EvaluateYields(prices, markets, config.TraderConfig().DailyRiskFreeRate(date))
+			snapshot.Beta, snapshot.Alpha = exchange.EvaluateYields(prices, markets, config.TraderConfig().DailyRiskFreeRate(testDate))
 			snapshot.Beta *= 100
 			snapshot.Alpha *= 100
 			stockSnapshots = append(stockSnapshots, snapshot)
@@ -136,7 +137,11 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 
 		// 过滤不符合条件的个股
 		stockSnapshots = api.Filter(stockSnapshots, func(snapshot factors.QuoteSnapshot) bool {
-			return model.Filter(tradeRule.Rules, snapshot) == nil
+			err := model.Filter(tradeRule.Rules, snapshot)
+			//if snapshot.SecurityCode == "sz300410" {
+			//	fmt.Println(snapshot, err)
+			//}
+			return err == nil
 		})
 		// 排序
 		sortedStatus := model.Sort(stockSnapshots)
@@ -156,7 +161,7 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 			securityCode := snapshot.SecurityCode
 			// 获取证券名称
 			securityName := "unknown"
-			f10 := factors.GetL5F10(securityCode)
+			f10 := factors.GetL5F10(securityCode, testDate)
 			if f10 != nil {
 				securityName = f10.SecurityName
 			}
@@ -206,7 +211,7 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 		var results []models.Statistics
 		for _, v := range samples {
 			zs := models.Statistics{
-				Date:            date,                // 日期
+				Date:            testDate,            // 日期
 				Code:            v.SecurityCode,      // 证券代码
 				Name:            v.Name,              // 证券名称
 				OpenRaise:       v.OpenChangeRate,    // 开盘涨幅
@@ -263,7 +268,7 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 		tbl.Render()
 		count := len(samples)
 		gc := GoodCase{
-			Date:   date,
+			Date:   testDate,
 			Num:    count,
 			Yields: yields,
 			GtP1:   100 * float64(gtP1) / float64(count),
@@ -279,7 +284,7 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 			gc.GtP1 = 0
 		}
 		gcs = append(gcs, gc)
-		fmt.Println(date + ", 胜率统计:")
+		fmt.Println(testDate + ", 胜率统计:")
 		fmt.Printf("\t==> 胜    率: %d/%d, %.2f%%, 收益率: %.2f%%\n", gtP1, count, 100*float64(gtP1)/float64(count), yields)
 		fmt.Printf("\t==> 溢价超1%%: %d/%d, %.2f%%\n", gtP2, count, 100*float64(gtP2)/float64(count))
 		fmt.Printf("\t==> 溢价超2%%: %d/%d, %.2f%%\n", gtP3, count, 100*float64(gtP3)/float64(count))

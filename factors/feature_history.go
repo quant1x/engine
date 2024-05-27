@@ -169,8 +169,8 @@ func (this *History) Repair(code, cacheDate, featureDate string, complete bool) 
 	gapUpward := LOW.Gt(REF(HIGH, 1))
 	upwardN := BARSLAST(gapUpward)
 	this.UpwardN = utils.IntegerIndexOf(upwardN, -1)
-	// 收盘价和最高价连续走高
-	newHigh := CLOSE.Gt(REF(CLOSE, 1)).And(HIGH.Gt(REF(HIGH, 1)))
+	// 收盘价,最高价和成交量连续走高
+	newHigh := CLOSE.Gt(REF(CLOSE, 1)).And(HIGH.Gt(REF(HIGH, 1))).And(VOL.Gt(REF(VOL, 1)))
 	newHighN := BARSLASTCOUNT(newHigh)
 	this.NewHighN = utils.IntegerIndexOf(newHighN, -1)
 	// 加载宽表

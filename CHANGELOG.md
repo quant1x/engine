@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.18] - 2024-05-27
+### Changed
+- Update changelog.
+
 ## [1.8.17] - 2024-05-27
 ### Changed
 - Update changelog.
@@ -1571,7 +1575,8 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.17...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.18...HEAD
+[1.8.18]: https://gitee.com/quant1x/engine/compare/v1.8.17...v1.8.18
 [1.8.17]: https://gitee.com/quant1x/engine/compare/v1.8.16...v1.8.17
 [1.8.16]: https://gitee.com/quant1x/engine/compare/v1.8.15...v1.8.16
 [1.8.15]: https://gitee.com/quant1x/engine/compare/v1.8.14...v1.8.15

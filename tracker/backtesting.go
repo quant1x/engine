@@ -115,6 +115,11 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 				prices[si] = sv.ChangeRate
 			}
 			feature := features[pos]
+			// 宽表和测试日期没有对齐, 跳过
+			if feature.Date != testDate {
+				// 停牌导致的日期无法从后往前对齐
+				continue
+			}
 			snapshot := models.FeatureToSnapshot(feature, securityCode)
 			// 下一个交易日开盘价
 			diffDays := 1
@@ -138,8 +143,9 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 		// 过滤不符合条件的个股
 		stockSnapshots = api.Filter(stockSnapshots, func(snapshot factors.QuoteSnapshot) bool {
 			err := model.Filter(tradeRule.Rules, snapshot)
-			//if snapshot.SecurityCode == "sz300410" {
-			//	fmt.Println(snapshot, err)
+			//if snapshot.SecurityCode == "sz300956" {
+			//	fmt.Printf("%+v, err=%v\n", snapshot, err)
+			//	//return true
 			//}
 			return err == nil
 		})

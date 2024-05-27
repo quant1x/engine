@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.17] - 2024-05-27
+### Changed
+- �增短线量价齐跌统计字段.
+- �订短线新高为量价齐升.
+- �史数据新增跳空缺口周期和新高次数.
+- �测日期对齐.
+- �测策略单一标的支持指定日期.
+- �一回测中的日期变量.
+- �充计算多头排列的注释信息.
+- �史特征数据增加前日收盘.
+- �整wide转snapshot的开盘量比的计算方法.
+- �史数据增加开盘量.
+- �消交易日18:10的全部更新.
+- �全分接口补充原始的页面链接.
+- �确宽表转快照时引用特征数据的日期.
+
 ## [1.8.16] - 2024-05-23
 ### Changed
 - 历史数据新增多头排列周期数据字段.
@@ -1369,8 +1385,9 @@ All notable changes to this project will be documented in this file.
 - Add LICENSE.
 - First commit.
 
-[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.16...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine/compare/v1.8.17...HEAD
 
+[1.8.17]: https://gitee.com/quant1x/engine/compare/v1.8.16...v1.8.17
 [1.8.16]: https://gitee.com/quant1x/engine/compare/v1.8.15...v1.8.16
 [1.8.15]: https://gitee.com/quant1x/engine/compare/v1.8.14...v1.8.15
 [1.8.14]: https://gitee.com/quant1x/engine/compare/v1.8.13...v1.8.14

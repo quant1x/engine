@@ -47,6 +47,7 @@ type History struct {
 	BullN             int     `name:"多头排列周期" dataframe:"bull_n"`    // 多头周期数
 	UpwardN           int     `name:"向上跳空周期数" dataframe:"upward_n"` // 向上跳空缺口到现在的周期数
 	NewHighN          int     `name:"新高次数" dataframe:"new_high_n"`  // 新高次数
+	NewLowN           int     `name:"新低次数" dataframe:"new_low_n"`   // 新低次数
 	OpenVolume        int     `name:"开盘量" dataframe:"open_volume"`  // 开盘量
 	UpdateTime        string  `name:"更新时间" dataframe:"update_time"` // 更新时间
 	State             uint64  `name:"样本状态" dataframe:"样本状态"`
@@ -173,6 +174,10 @@ func (this *History) Repair(code, cacheDate, featureDate string, complete bool) 
 	newHigh := CLOSE.Gt(REF(CLOSE, 1)).And(HIGH.Gt(REF(HIGH, 1))).And(VOL.Gt(REF(VOL, 1)))
 	newHighN := BARSLASTCOUNT(newHigh)
 	this.NewHighN = utils.IntegerIndexOf(newHighN, -1)
+	// 收盘价,最低价和成交量连续走低
+	newLow := CLOSE.Lt(REF(CLOSE, 1)).And(LOW.Lt(REF(LOW, 1))).And(VOL.Lt(REF(VOL, 1)))
+	newLowN := BARSLASTCOUNT(newLow)
+	this.NewLowN = utils.IntegerIndexOf(newLowN, -1)
 	// 加载宽表
 	wides := CheckoutWideTableByDate(securityCode, featureDate)
 	if len(wides) > 0 {

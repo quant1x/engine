@@ -12,8 +12,9 @@ import (
 func TestHistory(t *testing.T) {
 	code := "300956"
 	code = "300093"
-	code = "000603"
-	date := "2024-05-22"
+	code = "301389"
+	code = "000751"
+	date := "2024-05-21"
 	cacheDate, featureDate := cache.CorrectDate(date)
 	code = exchange.CorrectSecurityCode(code)
 	history := NewHistory(cacheDate, code)

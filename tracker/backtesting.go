@@ -49,6 +49,25 @@ type SampleFeature struct {
 	Alpha             float64
 }
 
+func checkWideOffset(klines []factors.SecurityFeature, date string) (offset int) {
+	rows := len(klines)
+	offset = 0
+	for i := 0; i < rows; i++ {
+		klineDate := klines[rows-1-i].Date
+		if klineDate < date {
+			return -1
+		} else if klineDate == date {
+			break
+		} else {
+			offset++
+		}
+	}
+	if offset+1 >= rows {
+		return -1
+	}
+	return
+}
+
 // BackTesting 回测
 func BackTesting(strategyNo uint64, countDays, countTopN int) {
 	currentlyDay := exchange.GetCurrentlyDay()
@@ -82,7 +101,7 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 		var marketPrices []float64
 		stockSnapshots := []factors.QuoteSnapshot{}
 		total := len(codes)
-		pos := 0
+		//pos := 0
 		bar := progressbar.NewBar(1, "执行["+testDate+"涨幅扫描]", total)
 		for _, securityCode := range codes {
 			bar.Add(1)
@@ -105,16 +124,18 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 				}
 			}
 			length := len(features)
-			pos = length - countDays + i
-			if pos < 0 {
+			offset := checkWideOffset(features, testDate)
+			if offset < 0 {
 				continue
 			}
+			//wides := features[0 : length-offset]
+			pos := length - countDays + i
 			markets := marketPrices[:pos+1]
 			prices := make([]float64, pos+1)
 			for si, sv := range features[:pos+1] {
 				prices[si] = sv.ChangeRate
 			}
-			feature := features[pos]
+			feature := features[length-offset-1]
 			// 宽表和测试日期没有对齐, 跳过
 			if feature.Date != testDate {
 				// 停牌导致的日期无法从后往前对齐
@@ -123,8 +144,9 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 			snapshot := models.FeatureToSnapshot(feature, securityCode)
 			// 下一个交易日开盘价
 			diffDays := 1
-			if pos+diffDays < length {
-				nextFeature := features[pos+diffDays]
+			nextOffset := length - offset - 1 + diffDays
+			if nextOffset < length {
+				nextFeature := features[nextOffset]
 				snapshot.NextOpen = nextFeature.Open
 				snapshot.NextClose = nextFeature.Close
 				snapshot.NextHigh = nextFeature.High
@@ -302,7 +324,7 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 	}
 
 	// 合计输出
-	fmt.Printf("策略编号: %d, 策略名称: %s, 订单类型: %s\n", model.Code(), model.Name(), tradeRule.Flag)
+	fmt.Printf("\n策略编号: %d, 策略名称: %s, 订单类型: %s\n", model.Code(), model.Name(), tradeRule.Flag)
 	fmt.Printf("%s - %s 合计:\n", dates[0], dates[len(dates)-1])
 	today := cache.Today()
 	dfTotal := pandas.LoadStructs(gcs)

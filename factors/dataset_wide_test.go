@@ -39,8 +39,8 @@ func TestKLineWide(t *testing.T) {
 }
 
 func TestDataSetWide_pullWideByDate(t *testing.T) {
-	code := "sz003007"
-	date := "20240315"
+	code := "sz301129"
+	date := "20240528"
 	securityCode := exchange.CorrectSecurityCode(code)
 	lines := pullWideByDate(securityCode, date)
 	df := pandas.LoadStructs(lines)

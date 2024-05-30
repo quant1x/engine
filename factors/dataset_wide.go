@@ -138,9 +138,21 @@ func pullWideByDate(securityCode, date string) []SecurityFeature {
 		cacheDate := v.Date
 		// 强制更新标志
 		forceUpdate := false
-		if i < list_length && featureDate >= transBeginDate {
-			checksum := list[i].CheckSum()
-			forceUpdate = checksum == 0
+		if i < list_length {
+			// 更新数据, 存在历史数据前复权的可能
+			list[i].Date = v.Date
+			list[i].Open = v.Open
+			list[i].Close = v.Close
+			list[i].High = v.High
+			list[i].Low = v.Low
+			list[i].Volume = int64(v.Volume)
+			list[i].Amount = v.Amount
+			list[i].Up = v.Up
+			list[i].Down = v.Down
+			if featureDate >= transBeginDate {
+				checksum := list[i].CheckSum()
+				forceUpdate = checksum == 0
+			}
 		}
 		if !forceUpdate && v.Date < beginDate {
 			continue

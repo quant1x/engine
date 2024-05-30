@@ -28,7 +28,8 @@ func computeQuShiFanZhuan(date string, OPEN, CLOSE, HIGH, LOW, VOL pandas.Series
 	R1MV5 := REF(MV5, 1)
 	LB0 := VOL.Div(R1MV5)
 	// FIX:=IFF(CURRBARSCOUNT=1,FROMOPEN/TOTALFZNUM,1);
-	FIX := IFF(CURRBARSCOUNT.Eq(1), float64(exchange.Minutes(date))/float64(exchange.CN_DEFAULT_TOTALFZNUM), 1.00)
+	minutes := exchange.Minutes(date)
+	FIX := IFF(CURRBARSCOUNT.Eq(1), float64(minutes)/float64(exchange.CN_DEFAULT_TOTALFZNUM), 1.00)
 	// LB:LB0/FIX,NODRAW;
 	LB := LB0.Div(FIX)
 	// NVOL:LB*REF(MV5,1),NODRAW;

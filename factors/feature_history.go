@@ -174,8 +174,8 @@ func (this *History) Repair(code, cacheDate, featureDate string, complete bool) 
 	newHigh := CLOSE.Gt(REF(CLOSE, 1)).And(HIGH.Gt(REF(HIGH, 1))).And(VOL.Gt(REF(VOL, 1)))
 	newHighN := BARSLASTCOUNT(newHigh)
 	this.NewHighN = utils.IntegerIndexOf(newHighN, -1)
-	// 收盘价,最低价和成交量连续走低
-	newLow := CLOSE.Lt(REF(CLOSE, 1)).And(LOW.Lt(REF(LOW, 1))).And(VOL.Lt(REF(VOL, 1)))
+	// 最低价连续走低
+	newLow := LOW.Lt(REF(LOW, 1))
 	newLowN := BARSLASTCOUNT(newLow)
 	this.NewLowN = utils.IntegerIndexOf(newLowN, -1)
 	// 加载宽表

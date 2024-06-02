@@ -30,7 +30,7 @@ engine update --all
 ### 3.2 补登历史特征数据
 
 ```shell
-engine repair --history --start=20230101
+engine repair --features=history --start=20230101
 ```
 
 ### 3.3 执行1号策略

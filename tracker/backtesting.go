@@ -324,8 +324,9 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 	}
 
 	// 合计输出
+	total := len(dates)
 	fmt.Printf("\n策略编号: %d, 策略名称: %s, 订单类型: %s\n", model.Code(), model.Name(), tradeRule.Flag)
-	fmt.Printf("%s - %s 合计:\n", dates[0], dates[len(dates)-1])
+	fmt.Printf("%s - %s 合计: %d 个交易日\n", dates[0], dates[len(dates)-1], total)
 	today := cache.Today()
 	dfTotal := pandas.LoadStructs(gcs)
 	if dfTotal.Nrow() > 0 {
@@ -345,5 +346,36 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 		filename := fmt.Sprintf("%s/backtesting-%s-%s-%d.csv", storages.GetResultCachePath(), tradeRule.QmtStrategyName(), today, countTopN)
 		_ = dfRecords.WriteCSV(filename)
 	}
-	//fmt.Println("\n")
+	var winningRate []float64
+	var winningAverage []float64
+	winningCount := 0
+	for _, gc := range gcs {
+		if gc.Num < 1 {
+			continue
+		}
+		winningCount++
+		if !num.IsNaN(gc.Yields) {
+			winningRate = append(winningRate, gc.Yields)
+		}
+		if !num.IsNaN(gc.GtP1) {
+			winningAverage = append(winningAverage, gc.GtP1)
+		}
+	}
+	if winningCount > 0 {
+		fmt.Printf("\n")
+		fmt.Printf("\t==> 扣除未交易后: %d 个交易日, 策略覆盖交易日率: %d/%d = %.4f%%\n", winningCount, winningCount, total, 100*num.ChangeRate(total, winningCount))
+		fmt.Printf("\t==> 平均 浮动溢价率:%.4f%%, 平均 胜率率: %.4f%%\n", num.Sum(winningRate)/float64(winningCount), num.Sum(winningAverage)/float64(winningCount))
+	}
+
+	var fudong []float64
+	var geri []float64
+	for _, result := range allResult {
+		if !num.IsNaN(result.OpenPremiumRate) {
+			fudong = append(fudong, result.OpenPremiumRate)
+		}
+		if !num.IsNaN(result.NextPremiumRate) {
+			geri = append(geri, result.NextPremiumRate)
+		}
+	}
+	fmt.Printf("\t==> 平均 浮动溢价率:%.4f%%, 平均 隔日溢价率: %.4f%%\n", num.Mean(fudong), num.Mean(geri))
 }

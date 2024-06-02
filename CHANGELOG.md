@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.20] - 2024-06-02
+### Changed
+- 修订README,修复数据命令的用法
+
 ## [1.8.19] - 2024-06-02
 ### Changed
 - 优化回测宽表数据日期的对齐逻辑
@@ -15,6 +19,7 @@ All notable changes to this project will be documented in this file.
 
 ## [1.8.18] - 2024-05-27
 ### Changed
+- update changelog
 - update changelog
 - update changelog
 
@@ -1592,7 +1597,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.18...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.20...HEAD
+[1.8.20]: https://gitee.com/quant1x/engine.git/compare/v1.8.19...v1.8.20
 [1.8.19]: https://gitee.com/quant1x/engine.git/compare/v1.8.18...v1.8.19
 [1.8.18]: https://gitee.com/quant1x/engine.git/compare/v1.8.17...v1.8.18
 [1.8.17]: https://gitee.com/quant1x/engine.git/compare/v1.8.16...v1.8.17

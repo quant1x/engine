@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.21] - 2024-06-06
+### Changed
+- 回测新增按照实际交易天数的统计数据
+- 增补1号策略的注册
+- 添加cpmm公式
+
 ## [1.8.20] - 2024-06-02
 ### Changed
 - 修订README,修复数据命令的用法
@@ -16,6 +22,7 @@ All notable changes to this project will be documented in this file.
 - 历史数据空头统计调整为只计算最低价连续新低
 - 更新exchange版本到0.5.6
 - 修复box中当前分钟数计算错误的bug
+- update changelog
 
 ## [1.8.18] - 2024-05-27
 ### Changed
@@ -1597,7 +1604,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.20...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.21...HEAD
+[1.8.21]: https://gitee.com/quant1x/engine.git/compare/v1.8.20...v1.8.21
 [1.8.20]: https://gitee.com/quant1x/engine.git/compare/v1.8.19...v1.8.20
 [1.8.19]: https://gitee.com/quant1x/engine.git/compare/v1.8.18...v1.8.19
 [1.8.18]: https://gitee.com/quant1x/engine.git/compare/v1.8.17...v1.8.18

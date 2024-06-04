@@ -3,6 +3,8 @@ package services
 import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/factors"
+	"gitee.com/quant1x/engine/global"
+	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/storages"
 	"gitee.com/quant1x/exchange"
 	"time"
@@ -41,30 +43,31 @@ func jobUpdateAll() {
 	}
 	if bUpdated && len(phase) > 0 {
 		factors.SwitchDate(cache.DefaultCanReadDate())
-		updateAll()
+		variables := global.GetGlobalVariables()
+		updateAll(*variables.MarketData)
 		doneUpdate(today, phase)
 	}
 }
 
-func updateAll() {
+func updateAll(marketData market.MarketData) {
 	barIndex := 1
 	currentDate := cache.DefaultCanUpdateDate()
 	cacheDate, featureDate := cache.CorrectDate(currentDate)
-	updateAllBaseData(barIndex, featureDate)
-	updateAllFeatures(barIndex+1, cacheDate, featureDate)
+	updateAllBaseData(barIndex, featureDate, marketData)
+	updateAllFeatures(barIndex+1, cacheDate, featureDate, marketData)
 }
 
-func updateAllBaseData(barIndex int, featureDate string) {
+func updateAllBaseData(barIndex int, featureDate string, marketData market.MarketData) {
 	// 1. 获取全部注册的数据集插件
 	mask := cache.PluginMaskBaseData
 	plugins := cache.Plugins(mask)
 	// 2. 执行操作
-	storages.BaseDataUpdate(barIndex, featureDate, plugins, cache.OpUpdate)
+	storages.BaseDataUpdate(barIndex, featureDate, plugins, cache.OpUpdate, marketData)
 }
 
-func updateAllFeatures(barIndex int, cacheDate, featureDate string) {
+func updateAllFeatures(barIndex int, cacheDate, featureDate string, marketData market.MarketData) {
 	// 1. 获取全部注册的数据集插件
 	mask := cache.PluginMaskFeature
 	plugins := cache.Plugins(mask)
-	storages.FeaturesUpdate(&barIndex, cacheDate, featureDate, plugins, cache.OpUpdate)
+	storages.FeaturesUpdate(&barIndex, cacheDate, featureDate, plugins, cache.OpUpdate, marketData)
 }

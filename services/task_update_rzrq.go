@@ -3,20 +3,22 @@ package services
 import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/factors"
+	"gitee.com/quant1x/engine/global"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/gox/logger"
 )
 
 func jobUpdateMarginTrading() {
 	logger.Infof("同步融资融券...")
-	updateMarginTrading()
+	variables := global.GetGlobalVariables()
+	updateMarginTrading(*variables.MarketData)
 	logger.Infof("同步融资融券...OK")
 }
 
-func updateMarginTrading() {
+func updateMarginTrading(marketData market.MarketData) {
 	date := cache.DefaultCanReadDate()
 	factors.MarginTradingTargetInit(date)
-	allCodes := market.GetCodeList()
+	allCodes := marketData.GetCodeList()
 	for _, securityCode := range allCodes {
 		misc := factors.GetL5Misc(securityCode)
 		if misc == nil {

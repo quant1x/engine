@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
+	"gitee.com/quant1x/engine/global"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/realtime"
@@ -18,15 +19,16 @@ import (
 // 任务 - 卖出117
 func jobOneSizeFitsAllSales() {
 	updateInRealTime, status := exchange.CanUpdateInRealtime()
+	variables := global.GetGlobalVariables()
 	if updateInRealTime && IsTrading(status) {
-		cookieCutterSell()
+		cookieCutterSell(*variables.MarketData)
 	} else if runtime.Debug() {
-		cookieCutterSell()
+		cookieCutterSell(*variables.MarketData)
 	}
 }
 
 // 一刀切卖出
-func cookieCutterSell() {
+func cookieCutterSell(marketData market.MarketData) {
 	defer runtime.IgnorePanic("")
 	sellStrategyCode := models.ModelOneSizeFitsAllSells
 	// 1. 获取117号策略(卖出)
@@ -90,7 +92,7 @@ func cookieCutterSell() {
 		// 昨日收盘
 		lastClose := num.Decimal(snapshot.LastClose)
 		// 6.5 计算涨停价
-		limitUp, _ := market.PriceLimit(securityCode, lastClose)
+		limitUp, _ := marketData.PriceLimit(securityCode, lastClose)
 		// 6.6 如果涨停, 则不出
 		if lastPrice >= limitUp {
 			logger.Infof("%s[%d]: %s LimitUp, skip", sellRule.Name, sellRule.Id, securityCode)

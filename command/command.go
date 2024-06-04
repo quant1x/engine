@@ -2,6 +2,7 @@ package command
 
 import (
 	"fmt"
+	"gitee.com/quant1x/engine/global"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/tracker"
 	"gitee.com/quant1x/gox/runtime"
@@ -39,26 +40,26 @@ func printMotd() {
 }
 
 // 初始化全部子命令
-func initSubCommands() {
+func initSubCommands(variables *global.Variables) {
 	initPrint()
-	initRepair()
-	initUpdate()
+	initRepair(variables)
+	initUpdate(variables)
 	initRules()
 	initSafes()
-	initBackTesting()
-	initTracker()
+	initBackTesting(variables)
+	initTracker(variables)
 	initTools()
 	initService()
 }
 
 // InitCommands 公开初始化函数
 func InitCommands() {
-	initSubCommands()
+	initSubCommands(nil)
 }
 
 // GlobalFlags engine支持的全部命令
-func GlobalFlags() *cmder.Command {
-	initSubCommands()
+func GlobalFlags(variables *global.Variables) *cmder.Command {
+	initSubCommands(variables)
 	engineCmd := &cmder.Command{
 		Use: Application,
 		Run: func(cmd *cmder.Command, args []string) {
@@ -70,7 +71,7 @@ func GlobalFlags() *cmder.Command {
 			// 输出欢迎语
 			printMotd()
 			barIndex := 1
-			tracker.ExecuteStrategy(model, &barIndex)
+			tracker.ExecuteStrategy(model, &barIndex, *variables.MarketData)
 		},
 		PersistentPreRun: func(cmd *cmder.Command, args []string) {
 			// 重置全局调试状态

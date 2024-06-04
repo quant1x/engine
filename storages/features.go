@@ -33,7 +33,7 @@ func updateStockFeature(wg *coroutine.RollingWaitGroup, bar *progressbar.Bar, fe
 }
 
 // FeaturesUpdate 更新特征
-func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cache.DataAdapter, op cache.OpKind) {
+func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cache.DataAdapter, op cache.OpKind, marketData market.MarketData) {
 	moduleName := "特征数据"
 	if op == cache.OpRepair {
 		moduleName = "修复" + moduleName
@@ -58,7 +58,7 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 	var wgAdapter sync.WaitGroup
 	cacheCount := len(adapters)
 	barAdapter := progressbar.NewBar(*barIndex, "执行["+moduleName+"]", cacheCount)
-	allCodes := market.GetCodeList()
+	allCodes := marketData.GetCodeList()
 	allCodes = allCodes[:]
 	codeCount := len(allCodes)
 	var metrics []cache.ScoreBoard

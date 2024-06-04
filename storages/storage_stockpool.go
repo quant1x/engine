@@ -4,6 +4,7 @@ import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/models"
+	_ "gitee.com/quant1x/engine/strategies"
 	"gitee.com/quant1x/engine/trader"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"

@@ -2,6 +2,7 @@ package command
 
 import (
 	"fmt"
+	"gitee.com/quant1x/engine/global"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/permissions"
 	"gitee.com/quant1x/engine/tracker"
@@ -21,7 +22,7 @@ var (
 	CmdTracker           *cmder.Command = nil // 实时跟踪
 )
 
-func initTracker() {
+func initTracker(variables *global.Variables) {
 	CmdTracker = &cmder.Command{
 		Use:     trackerCommand,
 		Example: Application + " " + trackerCommand + " --no=1",
@@ -58,7 +59,7 @@ func initTracker() {
 				logger.Info("没有有效的策略编号, 实时扫描结束")
 				return
 			}
-			tracker.Tracker(strategyCodes...)
+			tracker.Tracker(*variables.MarketData, strategyCodes...)
 		},
 	}
 

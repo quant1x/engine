@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasource/base"
+	"gitee.com/quant1x/engine/global"
 	"gitee.com/quant1x/engine/storages"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/logger"
@@ -23,7 +24,7 @@ var (
 	CmdRepair *cmder.Command = nil
 )
 
-func initRepair() {
+func initRepair(variables *global.Variables) {
 	CmdRepair = &cmder.Command{
 		Use:     repairCommand,
 		Example: Application + " " + repairCommand + " --all",
@@ -48,29 +49,29 @@ func initRepair() {
 			fmt.Printf("修复数据: %s => %s"+strings.Repeat("\r\n", 2), dates[0], dates[count-1])
 			base.UpdateBeginDateOfHistoricalTradingData(dates[0])
 			if flagAll.Value {
-				handleRepairAll(dates)
+				handleRepairAll(dates, variables)
 			} else if len(flagBaseData.Value) > 0 {
 				all, keywords := parseFields(flagBaseData.Value)
 				if all || len(keywords) == 0 {
-					handleRepairAllDataSets(dates)
+					handleRepairAllDataSets(dates, variables)
 				} else {
 					plugins := cache.PluginsWithName(cache.PluginMaskBaseData, keywords...)
 					if len(plugins) == 0 {
 						fmt.Printf("没有找到名字是[%s]的数据插件\n", strings.Join(keywords, ","))
 					} else {
-						handleRepairDataSetsWithPlugins(dates, plugins)
+						handleRepairDataSetsWithPlugins(dates, plugins, variables)
 					}
 				}
 			} else if len(flagFeatures.Value) > 0 {
 				all, keywords := parseFields(flagFeatures.Value)
 				if all || len(keywords) == 0 {
-					handleRepairAllFeatures(dates)
+					handleRepairAllFeatures(dates, variables)
 				} else {
 					plugins := cache.PluginsWithName(cache.PluginMaskFeature, keywords...)
 					if len(plugins) == 0 {
 						fmt.Printf("没有找到名字是[%s]的数据插件\n", strings.Join(keywords, ","))
 					} else {
-						handleRepairFeaturesWithPlugins(dates, plugins)
+						handleRepairFeaturesWithPlugins(dates, plugins, variables)
 					}
 				}
 			} else {
@@ -95,12 +96,12 @@ func initRepair() {
 	commandInit(CmdRepair, &flagFeatures)
 }
 
-func handleRepairAll(dates []string) {
-	handleRepairAllDataSets(dates)
-	handleRepairAllFeatures(dates)
+func handleRepairAll(dates []string, variables *global.Variables) {
+	handleRepairAllDataSets(dates, variables)
+	handleRepairAllFeatures(dates, variables)
 }
 
-func handleRepairAllDataSets(dates []string) {
+func handleRepairAllDataSets(dates []string, variables *global.Variables) {
 	fmt.Println()
 	moduleName := "补登数据集合"
 	logger.Info(moduleName + ", 任务开始")
@@ -112,7 +113,7 @@ func handleRepairAllDataSets(dates []string) {
 	for _, date := range dates {
 		//cacheDate, featureDate := cache.CorrectDate(date)
 		barIndex++
-		storages.BaseDataUpdate(barIndex, date, plugins, cache.OpRepair)
+		storages.BaseDataUpdate(barIndex, date, plugins, cache.OpRepair, *variables.MarketData)
 		bar.Add(1)
 	}
 	bar.Wait()
@@ -121,7 +122,7 @@ func handleRepairAllDataSets(dates []string) {
 }
 
 // 修复 - 指定的基础数据
-func handleRepairDataSetsWithPlugins(dates []string, plugins []cache.DataAdapter) {
+func handleRepairDataSetsWithPlugins(dates []string, plugins []cache.DataAdapter, variables *global.Variables) {
 	fmt.Println()
 	moduleName := "修复数据"
 	logger.Info(moduleName + ", 任务开始")
@@ -131,7 +132,7 @@ func handleRepairDataSetsWithPlugins(dates []string, plugins []cache.DataAdapter
 	for _, date := range dates {
 		//cacheDate, featureDate := cache.CorrectDate(date)
 		//barIndex++
-		storages.BaseDataUpdate(barIndex+1, date, plugins, cache.OpRepair)
+		storages.BaseDataUpdate(barIndex+1, date, plugins, cache.OpRepair, *variables.MarketData)
 		bar.Add(1)
 	}
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())
@@ -139,7 +140,7 @@ func handleRepairDataSetsWithPlugins(dates []string, plugins []cache.DataAdapter
 }
 
 // 修复 - 特征数据
-func handleRepairAllFeatures(dates []string) {
+func handleRepairAllFeatures(dates []string, variables *global.Variables) {
 	moduleName := "补登特征数据"
 	logger.Info(moduleName + ", 任务开始")
 	mask := cache.PluginMaskFeature
@@ -150,7 +151,7 @@ func handleRepairAllFeatures(dates []string) {
 	for _, date := range dates {
 		cacheDate, featureDate := cache.CorrectDate(date)
 		barIndex++
-		storages.FeaturesUpdate(&barIndex, cacheDate, featureDate, plugins, cache.OpRepair)
+		storages.FeaturesUpdate(&barIndex, cacheDate, featureDate, plugins, cache.OpRepair, *variables.MarketData)
 		bar.Add(1)
 	}
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())
@@ -158,7 +159,7 @@ func handleRepairAllFeatures(dates []string) {
 }
 
 // 修复 - 指定的特征数据
-func handleRepairFeaturesWithPlugins(dates []string, plugins []cache.DataAdapter) {
+func handleRepairFeaturesWithPlugins(dates []string, plugins []cache.DataAdapter, variables *global.Variables) {
 	fmt.Println()
 	moduleName := "修复数据"
 	logger.Info(moduleName + ", 任务开始")
@@ -168,7 +169,7 @@ func handleRepairFeaturesWithPlugins(dates []string, plugins []cache.DataAdapter
 	for _, date := range dates {
 		cacheDate, featureDate := cache.CorrectDate(date)
 		barIndex++
-		storages.FeaturesUpdate(&barIndex, cacheDate, featureDate, plugins, cache.OpRepair)
+		storages.FeaturesUpdate(&barIndex, cacheDate, featureDate, plugins, cache.OpRepair, *variables.MarketData)
 		bar.Add(1)
 	}
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())

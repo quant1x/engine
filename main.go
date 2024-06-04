@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"gitee.com/quant1x/engine/command"
 	"gitee.com/quant1x/engine/config"
-	"gitee.com/quant1x/engine/storages"
+	"gitee.com/quant1x/engine/global"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/runtime"
 	_ "net/http/pprof"
@@ -27,8 +27,6 @@ var (
 
 // 更新日线数据工具
 func main() {
-	storages.InitDatabase()
-
 	if config.PprofEnable() {
 		fCpu, err := os.Create(cpuProfile)
 		if err != nil {
@@ -47,8 +45,9 @@ func main() {
 	command.UpdateApplicationVersion(MinVersion)
 	runtime.GoMaxProcs()
 
+	variables := global.GetGlobalVariables()
 	// 命令字
-	rootCommand := command.GlobalFlags()
+	rootCommand := command.GlobalFlags(variables)
 	_ = rootCommand.Execute()
 	if config.PprofEnable() {
 		fMem, err := os.Create(memProfile)

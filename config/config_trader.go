@@ -109,6 +109,10 @@ func TraderConfig() TraderParameter {
 	return trader
 }
 
+func GetSectorIgnorePrefix() string {
+	return sectorIgnorePrefix
+}
+
 // GetStrategyParameterByCode 通过策略编码查找规则
 func GetStrategyParameterByCode(strategyCode uint64) *StrategyParameter {
 	strategies := TraderConfig().Strategies

@@ -2,6 +2,8 @@ package factors
 
 import (
 	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/global"
+	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/gox/logger"
 	"sync"
 )
@@ -18,39 +20,43 @@ var (
 	__l5Box *Cache1D[*Box] = nil
 	// 情绪大师
 	__l5InvestmentSentimentMaster *Cache1D[*InvestmentSentimentMaster] = nil
+
+	marketData market.MarketData
 )
 
 func init() {
+	variables := global.GetGlobalVariables()
+	marketData = *variables.MarketData
 	__l5Once.Do(lazyInitFeatures)
 }
 
 func lazyInitFeatures() {
 	// 历史数据
-	__l5History = NewCache1D[*History](cacheL5KeyHistory, NewHistory)
+	__l5History = NewCache1D[*History](cacheL5KeyHistory, marketData, NewHistory)
 	err := cache.Register(__l5History)
 	if err != nil {
 		logger.Fatalf("%+v", err)
 	}
 	// 基本面F10
-	__l5F10 = NewCache1D[*F10](cacheL5KeyF10, NewF10)
+	__l5F10 = NewCache1D[*F10](cacheL5KeyF10, marketData, NewF10)
 	err = cache.Register(__l5F10)
 	if err != nil {
 		logger.Fatalf("%+v", err)
 	}
 	// 扩展信息
-	__l5Misc = NewCache1D[*Misc](cacheL5KeyMisc, NewMisc)
+	__l5Misc = NewCache1D[*Misc](cacheL5KeyMisc, marketData, NewMisc)
 	err = cache.Register(__l5Misc)
 	if err != nil {
 		logger.Fatalf("%+v", err)
 	}
 	// 平台
-	__l5Box = NewCache1D[*Box](cacheL5KeyBox, NewBox)
+	__l5Box = NewCache1D[*Box](cacheL5KeyBox, marketData, NewBox)
 	err = cache.Register(__l5Box)
 	if err != nil {
 		logger.Fatalf("%+v", err)
 	}
 	// 情绪大师
-	__l5InvestmentSentimentMaster = NewCache1D[*InvestmentSentimentMaster](cacheL5KeyInvestmentSentimentMaster, NewInvestmentSentimentMaster)
+	__l5InvestmentSentimentMaster = NewCache1D[*InvestmentSentimentMaster](cacheL5KeyInvestmentSentimentMaster, marketData, NewInvestmentSentimentMaster)
 	err = cache.Register(__l5InvestmentSentimentMaster)
 	if err != nil {
 		logger.Fatalf("%+v", err)

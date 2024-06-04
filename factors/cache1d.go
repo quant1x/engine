@@ -31,12 +31,13 @@ type Cache1D[T Feature] struct {
 	replaceDate string // 替换缓存的日期
 	allCodes    []string
 	tShadow     T // 泛型T的影子
+	marketData  market.MarketData
 }
 
 // NewCache1D 创建一个新的C1D对象
 //
 //	key支持多级相对路径, 比如a/b, 创建的路径是~/.quant1x/a/b.yyyy-mm-dd
-func NewCache1D[T Feature](key string, factory func(date, securityCode string) T) *Cache1D[T] {
+func NewCache1D[T Feature](key string, marketData market.MarketData, factory func(date, securityCode string) T) *Cache1D[T] {
 	d1 := &Cache1D[T]{
 		cacheKey:    key,
 		Date:        "",
@@ -46,7 +47,7 @@ func NewCache1D[T Feature](key string, factory func(date, securityCode string) T
 		allCodes:    []string{},
 	}
 	d1.Date = cache.DefaultCanReadDate()
-	d1.allCodes = market.GetCodeList()
+	d1.allCodes = marketData.GetCodeList()
 	//d1.Checkout(d1.Date)
 	d1.filename = getCache1DFilepath(d1.cacheKey, d1.Date)
 	d1.tShadow = d1.factory(d1.Date, defaultSecurityCode)
@@ -91,9 +92,9 @@ func (this *Cache1D[T]) Length() int {
 }
 
 // loadCache 加载指定日期的数据
-func (this *Cache1D[T]) loadCache(date string) {
+func (this *Cache1D[T]) loadCache(date string, marketData market.MarketData) {
 	// 重置个股列表
-	this.allCodes = market.GetCodeList()
+	this.allCodes = marketData.GetCodeList()
 	this.Date = exchange.FixTradeDate(date)
 	this.filename = getCache1DFilepath(this.cacheKey, this.Date)
 	logger.Warnf("%s: date=%s, filename=%s", this.cacheKey, this.Date, this.filename)
@@ -111,13 +112,13 @@ func (this *Cache1D[T]) loadCache(date string) {
 
 // 加载默认数据, 日期为当前交易中的日期
 func (this *Cache1D[T]) loadDefault() {
-	this.loadCache(this.Date)
+	this.loadCache(this.Date, this.marketData)
 }
 
 // ReplaceCache 替换当前缓存数据
 func (this *Cache1D[T]) ReplaceCache() {
 	this.mapCache.Clear()
-	this.loadCache(this.replaceDate)
+	this.loadCache(this.replaceDate, this.marketData)
 }
 
 func (this *Cache1D[T]) Checkout(date ...string) {

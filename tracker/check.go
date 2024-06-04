@@ -3,13 +3,14 @@ package tracker
 import (
 	"fmt"
 	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/gotdx/securities"
 	"slices"
 )
 
 // CheckStrategy 检查当前交易日中个股在策略中的执行情况
-func CheckStrategy(strategyCode uint64, securityCode string) {
+func CheckStrategy(strategyCode uint64, securityCode string, marketData market.MarketData) {
 	fmt.Printf("\n策略检测中...\n")
 	// 1. 获取快照
 	name := securities.GetStockName(securityCode)
@@ -52,7 +53,7 @@ func CheckStrategy(strategyCode uint64, securityCode string) {
 
 	// 4. 检测板块及两融匹配
 	fmt.Printf("\t=> 4. 检测策略[%d]板块是否匹配...\n", strategyCode)
-	stockList := strategyParameter.StockList()
+	stockList := marketData.GetStrategyStockCodeList(strategyParameter)
 	if !slices.Contains(stockList, securityCode) {
 		fmt.Printf("\t=> 4. 检测策略[%d]板块是否匹配...失败, %s非策略配置的板块成分股\n", strategyCode, securityCode)
 		return

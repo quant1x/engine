@@ -43,7 +43,7 @@ func updateOneDataSet(wg *sync.WaitGroup, parent, bar *progressbar.Bar, dataSet 
 }
 
 // BaseDataUpdate 修复数据
-func BaseDataUpdate(barIndex int, date string, plugins []cache.DataAdapter, op cache.OpKind) {
+func BaseDataUpdate(barIndex int, date string, plugins []cache.DataAdapter, op cache.OpKind, marketData market.MarketData) {
 	moduleName := "基础数据"
 	if op == cache.OpRepair {
 		moduleName = "修复" + moduleName
@@ -68,7 +68,7 @@ func BaseDataUpdate(barIndex int, date string, plugins []cache.DataAdapter, op c
 	dataSetCount := len(dataSetList)
 	barCache := progressbar.NewBar(barIndex, "执行["+date+":"+moduleName+"]", dataSetCount)
 
-	allCodes := market.GetCodeList()
+	allCodes := marketData.GetCodeList()
 	codeCount := len(allCodes)
 	var wg sync.WaitGroup
 

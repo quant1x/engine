@@ -3,6 +3,7 @@ package tracker
 import (
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
+	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/permissions"
 	"gitee.com/quant1x/exchange"
@@ -15,7 +16,7 @@ import (
 )
 
 // Tracker 盘中跟踪
-func Tracker(strategyNumbers ...uint64) {
+func Tracker(marketData market.MarketData, strategyNumbers ...uint64) {
 	for {
 		updateInRealTime, status := exchange.CanUpdateInRealtime()
 		isTrading := updateInRealTime && status == exchange.ExchangeTrading
@@ -41,10 +42,10 @@ func Tracker(strategyNumbers ...uint64) {
 				continue
 			}
 			if strategyParameter.Session.IsTrading() {
-				snapshotTracker(&barIndex, model, strategyParameter)
+				snapshotTracker(&barIndex, model, strategyParameter, marketData)
 			} else {
 				if runtime.Debug() {
-					snapshotTracker(&barIndex, model, strategyParameter)
+					snapshotTracker(&barIndex, model, strategyParameter, marketData)
 				} else {
 					break
 				}
@@ -54,11 +55,11 @@ func Tracker(strategyNumbers ...uint64) {
 	}
 }
 
-func snapshotTracker(barIndex *int, model models.Strategy, tradeRule *config.StrategyParameter) {
+func snapshotTracker(barIndex *int, model models.Strategy, tradeRule *config.StrategyParameter, marketData market.MarketData) {
 	if tradeRule == nil {
 		return
 	}
-	stockCodes := tradeRule.StockList()
+	stockCodes := marketData.GetStrategyStockCodeList(tradeRule)
 	if len(stockCodes) == 0 {
 		return
 	}

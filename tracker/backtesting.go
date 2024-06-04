@@ -50,7 +50,7 @@ type SampleFeature struct {
 }
 
 // BackTesting 回测
-func BackTesting(strategyNo uint64, countDays, countTopN int) {
+func BackTesting(strategyNo uint64, countDays, countTopN int, marketData market.MarketData) {
 	currentlyDay := exchange.GetCurrentlyDay()
 	dates := exchange.TradingDateRange(exchange.MARKET_CH_FIRST_LISTTIME, currentlyDay)
 	scope := api.RangeFinite(-countDays)
@@ -73,7 +73,7 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 	allResult := []models.Statistics{}
 	gcs := []GoodCase{}
 	dates = dates[s : e+1]
-	codes := market.GetCodeList()
+	codes := marketData.GetCodeList()
 	mapStock := map[string][]factors.SecurityFeature{}
 	for i, date := range dates {
 		// 切换策略数据的缓存日期

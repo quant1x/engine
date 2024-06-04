@@ -1,7 +1,6 @@
 package config
 
 import (
-	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gox/api"
 	"slices"
@@ -110,24 +109,4 @@ func (this *StrategyParameter) Filter(codes []string) []string {
 		})
 	}
 	return newCodeList
-}
-
-// StockList 取得可以交易的证券代码列表
-func (this *StrategyParameter) StockList() []string {
-	var codes []string
-	for _, v := range this.Sectors {
-		sectorCode := strings.TrimSpace(v)
-		if !strings.HasPrefix(sectorCode, sectorIgnorePrefix) {
-			blockInfo := securities.GetBlockInfo(sectorCode)
-			if blockInfo != nil {
-				codes = append(codes, blockInfo.ConstituentStocks...)
-
-			}
-		}
-	}
-	if len(codes) == 0 {
-		codes = market.GetStockCodeList()
-	}
-	codes = this.Filter(codes)
-	return codes
 }

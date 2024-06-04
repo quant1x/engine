@@ -34,7 +34,7 @@ var (
 )
 
 // AllScan 全市场扫描
-func AllScan(barIndex *int, model models.Strategy) {
+func AllScan(barIndex *int, model models.Strategy, marketData market.MarketData) {
 	today := exchange.IndexToday()
 	dates := exchange.TradingDateRange(exchange.MARKET_CN_FIRST_DATE, today)
 	days := len(dates)
@@ -70,11 +70,11 @@ func AllScan(barIndex *int, model models.Strategy) {
 		// 查看规则配置
 		if tradeRule == nil {
 			// 如果规则没有配置, 则取全部有效的代码列表
-			stockCodes = market.GetStockCodeList()
+			stockCodes = marketData.GetStockCodeList()
 			needFilter = true
 		} else {
 			// 如果规则配置有效, 股票代码列表从规则中获取
-			stockCodes = tradeRule.StockList()
+			stockCodes = marketData.GetStrategyStockCodeList(tradeRule)
 		}
 	}
 	if needFilter && tradeRule != nil {

@@ -3,6 +3,7 @@ package services
 import (
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/factors"
+	"gitee.com/quant1x/engine/global"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/exchange"
@@ -17,14 +18,15 @@ import (
 
 // 更新快照
 func jobUpdateMiscAndSnapshot() {
+	variables := global.GetGlobalVariables()
 	now := time.Now()
 	updateInRealTime, _ := exchange.CanUpdateInRealtime()
 	// 集合竞价时段更新数据
 	if updateInRealTime && exchange.CheckCallAuctionTime(now) {
-		realtimeUpdateMiscAndSnapshot()
+		realtimeUpdateMiscAndSnapshot(*variables.MarketData)
 	} else {
 		if runtime.Debug() {
-			realtimeUpdateMiscAndSnapshot()
+			realtimeUpdateMiscAndSnapshot(*variables.MarketData)
 		}
 	}
 }
@@ -45,11 +47,11 @@ func resetSnapshotCache() {
 }
 
 // realtimeUpdateMiscAndSnapshot 更新快照缓存
-func realtimeUpdateMiscAndSnapshot() {
+func realtimeUpdateMiscAndSnapshot(marketData market.MarketData) {
 	onceSnapshot.Do(resetSnapshotCache)
 	moduleName := "执行[misc]"
 	logger.Infof("%s: begin", moduleName)
-	allCodes := market.GetCodeList()
+	allCodes := marketData.GetCodeList()
 	count := len(allCodes)
 	currentDate := cache.DefaultCanReadDate()
 	bar := progressbar.NewBar(barIndexUpdateExchangeAndSnapshot, moduleName, count)

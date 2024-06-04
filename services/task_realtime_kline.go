@@ -2,6 +2,7 @@ package services
 
 import (
 	"gitee.com/quant1x/engine/datasource/base"
+	"gitee.com/quant1x/engine/global"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/exchange"
@@ -14,13 +15,14 @@ import (
 // 任务 - 实时更新K线
 func jobRealtimeKLine() {
 	funcName := "jobRealtimeKLine"
+	variables := global.GetGlobalVariables()
 	updateInRealTime, status := exchange.CanUpdateInRealtime()
 	// 14:30:00~15:01:00之间更新数据
 	if updateInRealTime && IsTrading(status) {
-		realtimeUpdateOfKLine()
+		realtimeUpdateOfKLine(*variables.MarketData)
 	} else {
 		if runtime.Debug() {
-			realtimeUpdateOfKLine()
+			realtimeUpdateOfKLine(*variables.MarketData)
 		} else {
 			logger.Infof("%s, 非尾盘交易时段: %d", funcName, status)
 		}
@@ -28,10 +30,10 @@ func jobRealtimeKLine() {
 }
 
 // 更新K线
-func realtimeUpdateOfKLine() {
+func realtimeUpdateOfKLine(marketData market.MarketData) {
 	defer runtime.IgnorePanic("")
 	barIndex := barIndexRealtimeKLine
-	allCodes := market.GetCodeList()
+	allCodes := marketData.GetCodeList()
 	wg := coroutine.NewRollingWaitGroup(5)
 	bar := progressbar.NewBar(barIndex, "执行[实时更新K线]", len(allCodes))
 	for _, code := range allCodes {

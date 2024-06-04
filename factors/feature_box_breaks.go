@@ -89,10 +89,10 @@ func NewKLineBox(code, date string) *KLineBox {
 	BLL := IFF(BLN.Eq(0), BOXL, REF(BOXL, BLN))
 	//倍量H:IFF(BLN=0,REF(BLH,1),BLH),DOTLINE;
 	dvH := IFF(BLN.Eq(0), REF(BLH, 1), BLH)
-	doubleHigh := utils.SeriesIndexOf(dvH, -1)
+	doubleHigh := utils.Float64IndexOf(dvH, -1)
 	//倍量L:IFF(BLN=0,REF(BLL,1),BLL),DOTLINE;
 	dvL := IFF(BLN.Eq(0), REF(BLL, 1), BLL)
-	doubleLow := utils.SeriesIndexOf(dvL, -1)
+	doubleLow := utils.Float64IndexOf(dvL, -1)
 	//倍量压力:IFF(BLN=0,HIGH,HHV(HIGH,BLN)),DOTLINE;
 	//
 	//MA3:MA(CLOSE,3),COLORYELLOW;

@@ -10,7 +10,7 @@ import (
 )
 
 func TestFeatureToSnapshot(t *testing.T) {
-	code := "600105"
+	code := "300410"
 	securityCode := exchange.CorrectSecurityCode(code)
 	filename := cache.WideFilename(securityCode)
 	features := []factors.SecurityFeature{}

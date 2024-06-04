@@ -215,7 +215,8 @@ func miscTurnZ(info *Misc, securityCode string, cacheDate, featureDate string) {
 	if len(list) > 0 {
 		summary := CountInflow(list, securityCode, featureDate)
 		// 修正f10的缓存, 应该是缓存日期为准
-		f10 := GetL5F10(securityCode, cacheDate)
+		// 为了减少f10特征文件频繁切, 暂时调整为获取特征数据的日期 [wangfeng on 2024/5/17 16:45]
+		f10 := GetL5F10(securityCode, featureDate)
 		if f10 != nil {
 			summary.OpenTurnZ = f10.TurnZ(summary.OpenVolume)
 			summary.CloseTurnZ = f10.TurnZ(summary.CloseVolume)

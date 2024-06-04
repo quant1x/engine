@@ -2,21 +2,41 @@ package tracker
 
 import (
 	"fmt"
+	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/models"
+	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/securities"
 	"slices"
+	"strings"
 )
 
 // CheckStrategy 检查当前交易日中个股在策略中的执行情况
-func CheckStrategy(strategyCode uint64, securityCode string, marketData market.MarketData) {
+func CheckStrategy(strategyCode uint64, securityCode, testDate string, marketData market.MarketData) {
 	fmt.Printf("\n策略检测中...\n")
 	// 1. 获取快照
 	name := securities.GetStockName(securityCode)
 	fmt.Printf("\t=> 证券代码: %s, 证券名称: %s...\n", securityCode, name)
 	fmt.Printf("\t=> 1. 获取tick[%s]...\n", securityCode)
-	snapshot := models.GetTick(securityCode)
+	testDate = strings.TrimSpace(testDate)
+	var snapshot *factors.QuoteSnapshot
+	if len(testDate) == 0 {
+		snapshot = models.GetTick(securityCode)
+		testDate = cache.DefaultCanReadDate()
+	} else {
+		testDate = exchange.FixTradeDate(testDate)
+		//cacheDate, featureDate := cache.CorrectDate(testDate)
+		features := factors.CheckoutWideTableByDate(securityCode, testDate)
+		rows := len(features)
+		if rows > 0 {
+			tick := models.FeatureToSnapshot(features[rows-1], securityCode)
+			snapshot = &tick
+			factors.SwitchDate(testDate)
+		}
+	}
+	fmt.Printf("\t=> 1. 获取tick[%s], date=%s...\n", securityCode, testDate)
 	if snapshot == nil {
 		fmt.Printf("\t=> 1. 获取tick[%s]...failed\n", securityCode)
 		return

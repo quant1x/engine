@@ -3,13 +3,14 @@ module gitee.com/quant1x/engine
 go 1.21.8
 
 require (
-	gitee.com/quant1x/exchange v0.5.3
-	gitee.com/quant1x/gotdx v1.22.6
-	gitee.com/quant1x/gox v1.21.1
-	gitee.com/quant1x/num v0.3.1
-	gitee.com/quant1x/pandas v1.4.7
+	gitee.com/quant1x/exchange v0.5.6
+	gitee.com/quant1x/gotdx v1.22.9
+	gitee.com/quant1x/gox v1.21.2
+	gitee.com/quant1x/num v0.3.2
+	gitee.com/quant1x/pandas v1.4.8
 	gitee.com/quant1x/pkg v0.2.8
 	github.com/bits-and-blooms/bitset v1.13.0
+	github.com/marcboeker/go-duckdb v1.6.3
 	github.com/spf13/cobra v1.8.0
 	golang.org/x/sys v0.20.0
 )
@@ -25,15 +26,14 @@ require (
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/klauspost/compress v1.16.7 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.5 // indirect
-	github.com/marcboeker/go-duckdb v1.6.3 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/pierrec/lz4/v4 v4.1.18 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/zeebo/xxh3 v1.0.2 // indirect
 	golang.org/x/mod v0.13.0 // indirect
+	golang.org/x/text v0.15.0 // indirect
 	golang.org/x/tools v0.14.0 // indirect
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
-	golang.org/x/text v0.15.0 // indirect
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 )

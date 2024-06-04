@@ -140,7 +140,7 @@ func ScanAllSectors(barIndex *int, model models.Strategy) {
 			}
 		}
 	}
-
+	// TODO 板块再排序
 	// 输出 板块排行表格
 	var lastBlocks []SectorInfo
 	isHead := tradeRule.Flag == models.OrderFlagHead
@@ -221,7 +221,7 @@ func ScanAllSectors(barIndex *int, model models.Strategy) {
 		bs, ok := __stock2Block[stockCode]
 		if ok {
 			tb := bs[0]
-			if block, ok := __mapBlockData[tb.Code]; ok {
+			if block, ok1 := __mapBlockData[tb.Code]; ok1 {
 				row.BlockType = block.Type
 				row.BlockName = block.Name
 				row.BlockRate = block.ChangeRate

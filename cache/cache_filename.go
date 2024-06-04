@@ -104,9 +104,10 @@ func FundFlowFilename(securityCode string) string {
 }
 
 // SnapshotFilename 快照数据文件
-func SnapshotFilename(securityCode string) string {
+func SnapshotFilename(securityCode string, date string) string {
+	date = exchange.FixTradeDate(date, FilenameDate)
 	cacheId := CacheId(securityCode)
-	length := len(cacheId)
-	filepath := fmt.Sprintf("%s/%s/%s.csv", GetSnapshotPath(), cacheId[:length-3], cacheId)
+	//length := len(cacheId)
+	filepath := fmt.Sprintf("%s/%s/%s/%s.csv", GetSnapshotPath(), date[0:4], date, cacheId)
 	return filepath
 }

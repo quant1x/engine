@@ -84,15 +84,16 @@ func FeatureToSnapshot(feature factors.SecurityFeature, securityCode string) fac
 		qs.UpdateTime = now.Format(exchange.TimeStampMilli)
 	}
 
-	f10 := factors.GetL5F10(securityCode)
+	f10 := factors.GetL5F10(securityCode, qs.Date)
 	if f10 != nil {
 		qs.Capital = f10.Capital
 		qs.FreeCapital = f10.FreeCapital
 		qs.OpenTurnZ = f10.TurnZ(qs.OpenVolume)
 	}
-	extend := factors.GetL5History(securityCode)
-	if extend != nil && extend.MV5 > 0 {
-		qs.OpenQuantityRatio = num.ChangeRate(extend.MV5, qs.OpenVolume)
+	history := factors.GetL5History(securityCode, qs.Date)
+	if history != nil && history.MV5 > 0 {
+		lastMinuteVolume := history.GetMV5()
+		qs.OpenQuantityRatio = num.ChangeRate(lastMinuteVolume, qs.OpenVolume)
 	}
 	return qs
 }

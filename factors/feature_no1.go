@@ -6,7 +6,6 @@ import (
 	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/pandas"
 	. "gitee.com/quant1x/pandas/formula"
 )
@@ -39,8 +38,6 @@ func (this *HousNo1) Factory(date string, code string) Feature {
 }
 
 func (this *HousNo1) FromHistory(history History) Feature {
-	no1 := history.Payloads.No1
-	_ = api.Copy(this, &no1)
 	return this
 }
 

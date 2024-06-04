@@ -60,7 +60,7 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 	}
 	// 2. 确定结束日期
 	endDate := exchange.Today()
-	ts := exchange.TradeRange(startDate, endDate)
+	ts := exchange.TradingDateRange(startDate, endDate)
 	history := make([]quotes.SecurityBar, 0)
 	step := uint16(quotes.TDX_SECURITY_BARS_MAX)
 	total := uint16(len(ts))
@@ -137,8 +137,6 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 		}
 		newKLines = append(newKLines, kline)
 	}
-	// 7. 前复权
-	calculatePreAdjustedStockPrice(securityCode, newKLines, startDate)
 	// 8. 拼接缓存和新增的数据
 	var klines []KLine
 	// 8.1 先截取本地缓存的数据
@@ -151,6 +149,8 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 	} else {
 		klines = newKLines
 	}
+	// 7. 前复权
+	calculatePreAdjustedStockPrice(securityCode, klines, startDate)
 	// 9. 刷新缓存文件
 	if len(klines) > 0 {
 		UpdateCacheKLines(securityCode, klines)
@@ -160,7 +160,7 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 	return klines
 }
 
-// 计算前复权
+// 计算前复权 假定缓存中的记录都是截至当日的前一个交易日已经前复权
 // startDate 表示已经除权的日期
 func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDate string) {
 	rows := len(kLines)
@@ -171,11 +171,14 @@ func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDa
 	// 那么就应该只拉取缓存最后1条记录之后的除权除息记录进行复权
 	// 前复权adjust
 	dividends := GetCacheXdxrList(securityCode)
-	cacheLastDay := kLines[rows-1].Date
 	for i := 0; i < len(dividends); i++ {
 		xdxr := dividends[i]
-		if xdxr.Category != 1 || xdxr.Date < startDate || xdxr.Date > cacheLastDay {
-			// 忽略非除权信息以及除权数据在新数据之前的除权记录
+		if xdxr.Category != 1 {
+			// 忽略非除权信息
+			continue
+		}
+		if xdxr.Date <= startDate {
+			// 忽略除权数据在新数据之前的除权记录
 			continue
 		}
 		xdxrDate := xdxr.Date

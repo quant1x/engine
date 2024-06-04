@@ -15,7 +15,7 @@ type StockPool struct {
 	StrategyCode uint64         `name:"策略编码" dataframe:"strategy_code"`
 	StrategyName string         `name:"策略名称" dataframe:"strategy_name"`
 	OrderId      int            `name:"订单ID" dataframe:"order_id"`
-	OrderStatus  int            `name:"委托(订单)状态" dataframe:"order_status"`
+	OrderStatus  int            `name:"委托(订单)状态" dataframe:"order_status"` // 订单状态, 0-无效,1-可买入
 	Active       int            `name:"活跃度" dataframe:"active"`
 	Speed        float64        `name:"涨速" dataframe:"speed"`
 	CreateTime   string         `name:"创建时间" dataframe:"create_time"`

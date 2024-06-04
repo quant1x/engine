@@ -68,7 +68,7 @@ func (q QuoteSnapshot) ExistUpwardGap() bool {
 	if history == nil {
 		return false
 	}
-	return history.HIGH < q.Low
+	return q.Low > history.HIGH
 }
 
 // ExistDownwardGap 是否存在向下跳空缺口
@@ -77,7 +77,25 @@ func (q QuoteSnapshot) ExistDownwardGap() bool {
 	if history == nil {
 		return false
 	}
-	return history.LOW > q.High
+	return q.High < history.LOW
+}
+
+// OpenUpwardGap 开盘, 是否存在向上跳空缺口
+func (q QuoteSnapshot) OpenUpwardGap() bool {
+	history := GetL5History(q.SecurityCode, q.Date)
+	if history == nil {
+		return false
+	}
+	return q.Open > history.HIGH
+}
+
+// OpenDownwardGap 开盘, 是否存在向下跳空缺口
+func (q QuoteSnapshot) OpenDownwardGap() bool {
+	history := GetL5History(q.SecurityCode, q.Date)
+	if history == nil {
+		return false
+	}
+	return q.Open < history.LOW
 }
 
 // BoxUpwardGap K线实体位于昨日K线实体上方
@@ -100,6 +118,26 @@ func (q QuoteSnapshot) BoxDownwardGap() bool {
 	lastBoxLow := min(history.OPEN, history.CLOSE)
 	boxHigh := max(q.Open, q.Price)
 	return lastBoxLow > boxHigh
+}
+
+// OpenAboveKLineEntity 开盘价位于K线实体上方
+func (q QuoteSnapshot) OpenAboveKLineEntity() bool {
+	history := GetL5History(q.SecurityCode, q.Date)
+	if history == nil {
+		return false
+	}
+	lastBoxHigh := max(history.OPEN, history.CLOSE)
+	return q.Open > lastBoxHigh
+}
+
+// OpenBelowKLineEntity 开盘价位于K线实体下方
+func (q QuoteSnapshot) OpenBelowKLineEntity() bool {
+	history := GetL5History(q.SecurityCode, q.Date)
+	if history == nil {
+		return false
+	}
+	lastBoxLow := min(history.OPEN, history.CLOSE)
+	return q.Open < lastBoxLow
 }
 
 // KLineWeaknessToStrength K线弱转强, 毕竟还是弱, 下一个交易日有低吸机会

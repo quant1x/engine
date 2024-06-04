@@ -49,6 +49,25 @@ type SampleFeature struct {
 	Alpha             float64
 }
 
+func checkWideOffset(klines []factors.SecurityFeature, date string) (offset int) {
+	rows := len(klines)
+	offset = 0
+	for i := 0; i < rows; i++ {
+		klineDate := klines[rows-1-i].Date
+		if klineDate < date {
+			return -1
+		} else if klineDate == date {
+			break
+		} else {
+			offset++
+		}
+	}
+	if offset+1 >= rows {
+		return -1
+	}
+	return
+}
+
 // BackTesting 回测
 func BackTesting(strategyNo uint64, countDays, countTopN int, marketData market.MarketData) {
 	currentlyDay := exchange.GetCurrentlyDay()
@@ -76,13 +95,14 @@ func BackTesting(strategyNo uint64, countDays, countTopN int, marketData market.
 	codes := marketData.GetCodeList()
 	mapStock := map[string][]factors.SecurityFeature{}
 	for i, date := range dates {
+		testDate := date
 		// 切换策略数据的缓存日期
-		factors.SwitchDate(date)
+		factors.SwitchDate(testDate)
 		var marketPrices []float64
 		stockSnapshots := []factors.QuoteSnapshot{}
 		total := len(codes)
-		pos := 0
-		bar := progressbar.NewBar(1, "执行["+date+"涨幅扫描]", total)
+		//pos := 0
+		bar := progressbar.NewBar(1, "执行["+testDate+"涨幅扫描]", total)
 		for _, securityCode := range codes {
 			bar.Add(1)
 			if !exchange.AssertStockBySecurityCode(securityCode) && securityCode != backTestingParameter.TargetIndex {
@@ -104,27 +124,35 @@ func BackTesting(strategyNo uint64, countDays, countTopN int, marketData market.
 				}
 			}
 			length := len(features)
-			pos = length - countDays + i
-			if pos < 0 {
+			offset := checkWideOffset(features, testDate)
+			if offset < 0 {
 				continue
 			}
+			//wides := features[0 : length-offset]
+			pos := length - countDays + i
 			markets := marketPrices[:pos+1]
 			prices := make([]float64, pos+1)
 			for si, sv := range features[:pos+1] {
 				prices[si] = sv.ChangeRate
 			}
-			feature := features[pos]
+			feature := features[length-offset-1]
+			// 宽表和测试日期没有对齐, 跳过
+			if feature.Date != testDate {
+				// 停牌导致的日期无法从后往前对齐
+				continue
+			}
 			snapshot := models.FeatureToSnapshot(feature, securityCode)
 			// 下一个交易日开盘价
 			diffDays := 1
-			if pos+diffDays < length {
-				nextFeature := features[pos+diffDays]
+			nextOffset := length - offset - 1 + diffDays
+			if nextOffset < length {
+				nextFeature := features[nextOffset]
 				snapshot.NextOpen = nextFeature.Open
 				snapshot.NextClose = nextFeature.Close
 				snapshot.NextHigh = nextFeature.High
 				snapshot.NextLow = nextFeature.Low
 			}
-			snapshot.Beta, snapshot.Alpha = exchange.EvaluateYields(prices, markets, config.TraderConfig().DailyRiskFreeRate(date))
+			snapshot.Beta, snapshot.Alpha = exchange.EvaluateYields(prices, markets, config.TraderConfig().DailyRiskFreeRate(testDate))
 			snapshot.Beta *= 100
 			snapshot.Alpha *= 100
 			stockSnapshots = append(stockSnapshots, snapshot)
@@ -136,7 +164,12 @@ func BackTesting(strategyNo uint64, countDays, countTopN int, marketData market.
 
 		// 过滤不符合条件的个股
 		stockSnapshots = api.Filter(stockSnapshots, func(snapshot factors.QuoteSnapshot) bool {
-			return model.Filter(tradeRule.Rules, snapshot) == nil
+			err := model.Filter(tradeRule.Rules, snapshot)
+			//if snapshot.SecurityCode == "sz300956" {
+			//	fmt.Printf("%+v, err=%v\n", snapshot, err)
+			//	//return true
+			//}
+			return err == nil
 		})
 		// 排序
 		sortedStatus := model.Sort(stockSnapshots)
@@ -156,7 +189,7 @@ func BackTesting(strategyNo uint64, countDays, countTopN int, marketData market.
 			securityCode := snapshot.SecurityCode
 			// 获取证券名称
 			securityName := "unknown"
-			f10 := factors.GetL5F10(securityCode)
+			f10 := factors.GetL5F10(securityCode, testDate)
 			if f10 != nil {
 				securityName = f10.SecurityName
 			}
@@ -206,7 +239,7 @@ func BackTesting(strategyNo uint64, countDays, countTopN int, marketData market.
 		var results []models.Statistics
 		for _, v := range samples {
 			zs := models.Statistics{
-				Date:            date,                // 日期
+				Date:            testDate,            // 日期
 				Code:            v.SecurityCode,      // 证券代码
 				Name:            v.Name,              // 证券名称
 				OpenRaise:       v.OpenChangeRate,    // 开盘涨幅
@@ -263,7 +296,7 @@ func BackTesting(strategyNo uint64, countDays, countTopN int, marketData market.
 		tbl.Render()
 		count := len(samples)
 		gc := GoodCase{
-			Date:   date,
+			Date:   testDate,
 			Num:    count,
 			Yields: yields,
 			GtP1:   100 * float64(gtP1) / float64(count),
@@ -279,7 +312,7 @@ func BackTesting(strategyNo uint64, countDays, countTopN int, marketData market.
 			gc.GtP1 = 0
 		}
 		gcs = append(gcs, gc)
-		fmt.Println(date + ", 胜率统计:")
+		fmt.Println(testDate + ", 胜率统计:")
 		fmt.Printf("\t==> 胜    率: %d/%d, %.2f%%, 收益率: %.2f%%\n", gtP1, count, 100*float64(gtP1)/float64(count), yields)
 		fmt.Printf("\t==> 溢价超1%%: %d/%d, %.2f%%\n", gtP2, count, 100*float64(gtP2)/float64(count))
 		fmt.Printf("\t==> 溢价超2%%: %d/%d, %.2f%%\n", gtP3, count, 100*float64(gtP3)/float64(count))
@@ -291,6 +324,7 @@ func BackTesting(strategyNo uint64, countDays, countTopN int, marketData market.
 	}
 
 	// 合计输出
+	fmt.Printf("\n策略编号: %d, 策略名称: %s, 订单类型: %s\n", model.Code(), model.Name(), tradeRule.Flag)
 	fmt.Printf("%s - %s 合计:\n", dates[0], dates[len(dates)-1])
 	today := cache.Today()
 	dfTotal := pandas.LoadStructs(gcs)

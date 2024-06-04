@@ -74,7 +74,7 @@ func SyncAllSnapshots(barIndex *int) {
 	// 读取配置的并发数
 	parallelCount := config.GetDataConfig().Snapshot.Concurrency
 	if parallelCount < 1 {
-		parallelCount := tdxApi.NumOfServers()
+		parallelCount = tdxApi.NumOfServers()
 		parallelCount /= 2
 		if parallelCount < config.DefaultMinimumConcurrencyForSnapshots {
 			parallelCount = config.DefaultMinimumConcurrencyForSnapshots

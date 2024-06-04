@@ -45,6 +45,7 @@ func NewCache1D[T Feature](key string, marketData market.MarketData, factory fun
 		mapCache:    concurrent.NewTreeMap[string, T](),
 		replaceDate: "",
 		allCodes:    []string{},
+		marketData:  marketData,
 	}
 	d1.Date = cache.DefaultCanReadDate()
 	d1.allCodes = marketData.GetCodeList()
@@ -214,7 +215,7 @@ func (this *Cache1D[T]) Filter(f func(v T) bool) []T {
 // Apply 数据合并
 //
 //	泛型T需要保持一个string类型的Date字段
-func (this *Cache1D[T]) Apply(merge func(code string, local *T) (updated bool)) {
+func (this *Cache1D[T]) Apply(merge func(code string, local *T) (updated bool), force ...bool) {
 	list := make([]T, 0, len(this.allCodes))
 	for _, securityCode := range this.allCodes {
 		v, found := this.mapCache.Get(securityCode)
@@ -230,7 +231,7 @@ func (this *Cache1D[T]) Apply(merge func(code string, local *T) (updated bool)) 
 		list = append(list, v)
 	}
 	if len(list) > 0 {
-		err := api.SlicesToCsv(this.filename, list)
+		err := api.SlicesToCsv(this.filename, list, force...)
 		if err != nil {
 			logger.Errorf("刷新%s异常:%+v", this.filename, err)
 		}

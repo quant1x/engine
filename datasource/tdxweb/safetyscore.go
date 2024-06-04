@@ -21,6 +21,9 @@ var (
 	__mapSafetyScore = concurrent.NewTreeMap[string, int]()
 )
 
+// GetSafetyScore 获取个股安全分
+//
+//	http://page3.tdx.com.cn:7615/site/pcwebcall_static/bxb/bxb.html?code=600178&color=0
 func GetSafetyScore(securityCode string) (score int) {
 	if !exchange.AssertStockBySecurityCode(securityCode) {
 		return defaultSafetyScore

@@ -39,7 +39,7 @@ type TraderParameter struct {
 	ProxyUrl                    string              `name:"代理URL" yaml:"proxy_url" default:"http://127.0.0.1:18168/qmt"`                        // 禁止使用公网地址
 	Strategies                  []StrategyParameter `name:"策略集合" yaml:"strategies"`                                                             // 策略集合
 	CancelSession               TradingSession      `name:"撤单时段" yaml:"cancel" default:"09:15:00~09:19:59,09:25:00~11:29:59,13:00:00~14:59:59"` // 可撤单配置
-	UndertakeRatio              float64             `name:"承接比" yaml:"undertake_ratio" default:"0.8000"`
+	UndertakeRatio              float64             `name:"承接比" yaml:"undertake_ratio" default:"0.8000"`                                        // 竞价承接强度
 }
 
 // TotalNumberOfTargets 统计标的总数

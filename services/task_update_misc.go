@@ -169,7 +169,7 @@ func realtimeUpdateMiscAndSnapshot(marketData market.MarketData) {
 			// 获取第一条记录
 			first := listSnapshot[0]
 			securityCode := first.SecurityCode
-			filename := cache.SnapshotFilename(securityCode)
+			filename := cache.SnapshotFilename(securityCode, snapshotDate)
 			cacheList := []quotes.Snapshot{}
 			err := api.CsvToSlices(filename, &cacheList)
 			if err == nil && len(cacheList) > 0 {

@@ -16,19 +16,20 @@ import (
 type ModelKind = uint64
 
 const (
-	ModelZero                ModelKind = 0   // 0号策略, 是一个特殊策略, 不允许覆盖
-	ModelHousNo1             ModelKind = 1   // 1号策略, 经典的默认策略, 不允许覆盖
-	ModelNo2                 ModelKind = 2   // 2号策略, 不允许覆盖
-	ModelNo3                 ModelKind = 3   // 3号策略, 不允许覆盖
-	ModelNo4                 ModelKind = 4   // 4号策略, 不允许覆盖
-	ModelNo5                 ModelKind = 5   // 5号策略, 不允许覆盖
-	ModelNo6                 ModelKind = 6   // 6号策略, 不允许覆盖
-	ModelNo7                 ModelKind = 7   // 7号策略, 不允许覆盖
-	ModelNo8                 ModelKind = 8   // 8号策略, 不允许覆盖
-	ModelNo9                 ModelKind = 9   // 9号策略, 不允许覆盖
-	Model89K                 ModelKind = 89  // 89号策略, 89K策略, 不允许覆盖
-	ModelOneSizeFitsAllSells ModelKind = 117 // 卖出策略: 一刀切(Panic sell, cookie-cutter, One size fits all sales)
-	ModelNoShareHolding      ModelKind = 861 // 卖出策略: 不留了
+	ModelZero                ModelKind = 0          // 0号策略, 是一个特殊策略, 不允许覆盖
+	ModelHousNo1             ModelKind = 1          // 1号策略, 经典的默认策略, 不允许覆盖
+	ModelNo2                 ModelKind = 2          // 2号策略, 不允许覆盖
+	ModelNo3                 ModelKind = 3          // 3号策略, 不允许覆盖
+	ModelNo4                 ModelKind = 4          // 4号策略, 不允许覆盖
+	ModelNo5                 ModelKind = 5          // 5号策略, 不允许覆盖
+	ModelNo6                 ModelKind = 6          // 6号策略, 不允许覆盖
+	ModelNo7                 ModelKind = 7          // 7号策略, 不允许覆盖
+	ModelNo8                 ModelKind = 8          // 8号策略, 不允许覆盖
+	ModelNo9                 ModelKind = 9          // 9号策略, 不允许覆盖
+	Model89K                 ModelKind = 89         // 89号策略, 89K策略, 不允许覆盖
+	ModelOneSizeFitsAllSells ModelKind = 117        // 卖出策略: 一刀切(Panic sell, cookie-cutter, One size fits all sales)
+	ModelNoShareHolding      ModelKind = 861        // 卖出策略: 不留了
+	ModelForceOverwrite      ModelKind = 0x80000000 // 强制覆盖
 )
 
 var (
@@ -102,21 +103,33 @@ func QmtOrderRemark(model Strategy) string {
 }
 
 var (
-	_mutexStrategies sync.Mutex
-	_mapStrategies   = map[ModelKind]Strategy{}
-	ErrAlreadyExists = errors.New("the strategy already exists") // 已经存在
-	ErrNotFound      = errors.New("the strategy was not found")  // 不存在
+	_mutexStrategies        sync.Mutex
+	_mapStrategies          = map[ModelKind]Strategy{}
+	_mapStrategiesOverwrite = map[ModelKind]bool{}                      //  强制覆盖缓存
+	ErrAlreadyExists        = errors.New("the strategy already exists") // 已经存在
+	ErrNotFound             = errors.New("the strategy was not found")  // 不存在
 )
 
 // Register 注册策略
 func Register(strategy Strategy) error {
 	_mutexStrategies.Lock()
 	defer _mutexStrategies.Unlock()
-	_, ok := _mapStrategies[strategy.Code()]
-	if ok {
-		return ErrAlreadyExists
+	strategyCode := strategy.Code()
+	// 检查是否存在覆盖策略的情况
+	_, overwritten := _mapStrategiesOverwrite[strategyCode]
+	if overwritten {
+		return nil
 	}
-	_mapStrategies[strategy.Code()] = strategy
+	if strategyCode < ModelForceOverwrite {
+		_, ok := _mapStrategies[strategyCode]
+		if ok {
+			return ErrAlreadyExists
+		}
+	} else {
+		strategyCode = strategyCode &^ ModelForceOverwrite
+		_mapStrategiesOverwrite[strategyCode] = true
+	}
+	_mapStrategies[strategyCode] = strategy
 	return nil
 }
 
@@ -140,7 +153,7 @@ func UsageStrategyList() string {
 	usage := ""
 	for _, kind := range kinds {
 		if rule, ok := _mapStrategies[kind]; ok {
-			usage += fmt.Sprintf("%d: %s\n", rule.Code(), rule.Name())
+			usage += fmt.Sprintf("%d: %s\n", kind, rule.Name())
 		}
 	}
 	return usage

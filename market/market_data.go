@@ -28,11 +28,7 @@ func (m *MarketData) GetStrategyStockCodeList(sp *config.StrategyParameter) []st
 	for _, v := range sp.Sectors {
 		sectorCode := strings.TrimSpace(v)
 		if !strings.HasPrefix(sectorCode, config.GetSectorIgnorePrefix()) {
-			blockInfo := securities.GetBlockInfo(sectorCode)
-			if blockInfo != nil {
-				codes = append(codes, blockInfo.ConstituentStocks...)
-
-			}
+			codes = append(codes, m.db.GetBlockSecurities(sectorCode)...)
 		}
 	}
 	if len(codes) == 0 {
@@ -64,7 +60,10 @@ func (m *MarketData) GetCodeList() []string {
 
 // PriceLimit 计算基于前一个收盘价的涨停和跌停价格。
 func (m *MarketData) PriceLimit(securityCode string, lastClose float64) (limitUp, limitDown float64) {
-	limitRate := exchange.MarketLimit(securityCode)
+	limitRate, err := m.db.GetStockLimitRate(securityCode)
+	if err != nil {
+		return 0, 0
+	}
 	priceLimitUp := num.Decimal(lastClose * (1.000 + limitRate))
 	priceLimitDown := num.Decimal(lastClose * (1.000 - limitRate))
 	return priceLimitUp, priceLimitDown

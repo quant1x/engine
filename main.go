@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gitee.com/quant1x/engine/command"
 	"gitee.com/quant1x/engine/config"
+	_ "gitee.com/quant1x/engine/strategies"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/runtime"
 	_ "net/http/pprof"

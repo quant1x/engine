@@ -3,6 +3,41 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.22] - 2024-06-12
+### Changed
+- 删除cpmm指标,格式太旧,大智慧已经不能打开
+- 调整macos的服务模板
+- 调整linux服务
+- 调整linux服务
+- 调整linux服务
+- 调整linux服务
+- 暂时屏蔽linux守护进程
+- 分离macos的服务模板
+- 新增单一标的策略检测结果增加具体数值的尝试
+- 调试Linux守护进程
+- 规则新增显示冗详信息开关, 默认为false
+- 调整linux守护进程执行方式
+- 调整linux守护进程执行方式
+- 调整linux守护进程执行方式
+- 调整linux守护进程执行方式
+- 调整linux守护进程执行方式
+- 调整linux守护进程执行方式
+- 调整linux守护进程执行方式
+- 调整linux守护进程执行方式
+- 调整linux守护进程执行方式
+- 调整linux守护进程执行方式
+- 调整linux守护进程执行方式
+- 调整linux守护进程执行方式
+- 调整linux守护进程执行方式
+- 调整linux守护进程执行方式
+- 调整linux守护进程执行方式
+- 调整linux守护进程流程
+- 优化服务service,linux系统暂时采用守护进程的方式执行
+- 调整linux守护进程临时文件路径
+- 规则新增显示冗详信息开关, 默认为false
+- 更新依赖库
+- 修订history特征组合
+
 ## [1.8.21] - 2024-06-06
 ### Changed
 - 回测新增按照实际交易天数的统计数据
@@ -12,6 +47,7 @@ All notable changes to this project will be documented in this file.
 ## [1.8.20] - 2024-06-02
 ### Changed
 - 修订README,修复数据命令的用法
+- update changelog
 
 ## [1.8.19] - 2024-06-02
 ### Changed
@@ -1604,7 +1640,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.21...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.22...HEAD
+[1.8.22]: https://gitee.com/quant1x/engine.git/compare/v1.8.21...v1.8.22
 [1.8.21]: https://gitee.com/quant1x/engine.git/compare/v1.8.20...v1.8.21
 [1.8.20]: https://gitee.com/quant1x/engine.git/compare/v1.8.19...v1.8.20
 [1.8.19]: https://gitee.com/quant1x/engine.git/compare/v1.8.18...v1.8.19

@@ -66,9 +66,12 @@ func initService() {
 				os.Exit(1)
 			}
 			service := &Service{srv}
-			replacer := strings.NewReplacer("${ROOT_PATH}", cache.GetRootPath(), "${LOG_PATH}", cache.GetLoggerPath())
-			properties := replacer.Replace(propertyList)
-			_ = service.daemon.SetTemplate(properties)
+			switch runtime.GOOS {
+			case "darwin":
+				replacer := strings.NewReplacer("${ROOT_PATH}", cache.GetRootPath(), "${LOG_PATH}", cache.GetLoggerPath())
+				properties := replacer.Replace(propertyList)
+				_ = service.daemon.SetTemplate(properties)
+			}
 			status, err := service.Manage()
 			if err != nil {
 				logger.Errorf("Error: %+v", err)

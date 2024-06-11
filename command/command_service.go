@@ -8,7 +8,6 @@ import (
 	"gitee.com/quant1x/gox/logger"
 	nix "github.com/sevlyar/go-daemon"
 	cmder "github.com/spf13/cobra"
-	"log"
 	"os"
 	"runtime"
 	"strings"
@@ -88,9 +87,12 @@ func initService() {
 					case "start":
 						d, err := cntxt.Reborn()
 						if err != nil {
-							log.Fatal("Unable to run: ", err)
+							fmt.Println("Unable to run: ", err)
+							os.Exit(1)
 						}
 						if d != nil {
+							fmt.Println("Unable to run")
+							os.Exit(1)
 							return
 						}
 						defer cntxt.Release()

@@ -6,7 +6,9 @@ import (
 	"gitee.com/quant1x/engine/services"
 	"gitee.com/quant1x/gox/daemon"
 	"gitee.com/quant1x/gox/logger"
+	nix "github.com/sevlyar/go-daemon"
 	cmder "github.com/spf13/cobra"
+	"log"
 	"os"
 	"runtime"
 	"strings"
@@ -67,18 +69,60 @@ func initService() {
 			}
 			service := &Service{srv}
 			switch runtime.GOOS {
-			case "darwin":
+			case "linux":
+				cntxt := &nix.Context{
+					PidFileName: Application + ".pid",
+					PidFilePerm: 0644,
+					LogFileName: Application + ".log",
+					LogFilePerm: 0640,
+					WorkDir:     cache.GetVariablePath(),
+					Umask:       027,
+					Args:        []string{"[go-daemon sample]"},
+				}
+				if len(serviceSubCommand) > 1 {
+					switch serviceSubCommand {
+					case "install":
+						//return service.daemon.Install(serviceProgramArguments)
+					case "remove", "uninstall":
+						//return service.daemon.Remove()
+					case "start":
+						d, err := cntxt.Reborn()
+						if err != nil {
+							log.Fatal("Unable to run: ", err)
+						}
+						if d != nil {
+							return
+						}
+						defer cntxt.Release()
+
+						fmt.Println("- - - - - - - - - - - - - - -")
+						fmt.Println("daemon started")
+						service.daemon.Run(service)
+					case "stop":
+						// No need to explicitly stop cron since job will be killed
+						//return service.daemon.Stop()
+					case "list":
+						services.PrintJobList()
+						//return "", nil
+					case "status":
+						//return service.daemon.Status()
+					default:
+						//return usage, nil
+					}
+				}
+
+			default:
 				replacer := strings.NewReplacer("${ROOT_PATH}", cache.GetRootPath(), "${LOG_PATH}", cache.GetLoggerPath())
 				properties := replacer.Replace(propertyList)
 				_ = service.daemon.SetTemplate(properties)
+				status, err := service.Manage()
+				if err != nil {
+					logger.Errorf("Error: %+v", err)
+					fmt.Println(status, "\nError: ", err)
+					os.Exit(1)
+				}
+				fmt.Println(status)
 			}
-			status, err := service.Manage()
-			if err != nil {
-				logger.Errorf("Error: %+v", err)
-				fmt.Println(status, "\nError: ", err)
-				os.Exit(1)
-			}
-			fmt.Println(status)
 		},
 	}
 }

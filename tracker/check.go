@@ -8,6 +8,7 @@ import (
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/securities"
+	"gitee.com/quant1x/gox/api"
 	"slices"
 	"strings"
 )
@@ -90,7 +91,11 @@ func CheckStrategy(strategyCode uint64, securityCode, testDate string) {
 
 	// 6. 执行过滤规则
 	fmt.Printf("\t=> 6. 执行策略[%d]过滤规则...\n", strategyCode)
-	v := model.Filter(strategyParameter.Rules, *snapshot)
+	var rules config.RuleParameter
+	_ = api.Copy(&rules, &strategyParameter.Rules)
+	//rules = strategyParameter.Rules
+	rules.Verbose = true
+	v := model.Filter(rules, *snapshot)
 	if v == nil {
 		fmt.Printf("\t=> 6. 执行策略[%d]过滤规则...passed\n", strategyCode)
 	} else {

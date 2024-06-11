@@ -6,7 +6,6 @@ import (
 	"gitee.com/quant1x/engine/services"
 	"gitee.com/quant1x/gox/daemon"
 	"gitee.com/quant1x/gox/logger"
-	nix "github.com/sevlyar/go-daemon"
 	cmder "github.com/spf13/cobra"
 	"os"
 	"runtime"
@@ -68,52 +67,6 @@ func initService() {
 			}
 			service := &Service{srv}
 			switch runtime.GOOS {
-			case "linux":
-				cntxt := &nix.Context{
-					PidFileName: Application + ".pid",
-					PidFilePerm: 0644,
-					LogFileName: Application + ".log",
-					LogFilePerm: 0640,
-					//WorkDir:     cache.GetVariablePath(),
-					WorkDir: "./",
-					Umask:   027,
-					Args:    []string{"[service]"},
-				}
-				if len(serviceSubCommand) > 1 {
-					switch serviceSubCommand {
-					case "install":
-						//return service.daemon.Install(serviceProgramArguments)
-					case "remove", "uninstall":
-						//return service.daemon.Remove()
-					case "start":
-						d, err := cntxt.Reborn()
-						if err != nil {
-							fmt.Println("Unable to run: ", err)
-							os.Exit(1)
-						}
-						if d != nil {
-							fmt.Println("Unable to run")
-							os.Exit(1)
-							return
-						}
-						defer cntxt.Release()
-
-						fmt.Println("- - - - - - - - - - - - - - -")
-						fmt.Println("daemon started")
-						service.daemon.Run(service)
-					case "stop":
-						// No need to explicitly stop cron since job will be killed
-						//return service.daemon.Stop()
-					case "list":
-						services.PrintJobList()
-						//return "", nil
-					case "status":
-						//return service.daemon.Status()
-					default:
-						//return usage, nil
-					}
-				}
-
 			default:
 				replacer := strings.NewReplacer("${ROOT_PATH}", cache.GetRootPath(), "${LOG_PATH}", cache.GetLoggerPath())
 				properties := replacer.Replace(propertyList)

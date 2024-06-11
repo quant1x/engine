@@ -77,7 +77,7 @@ func initService() {
 					//WorkDir:     cache.GetVariablePath(),
 					WorkDir: "./",
 					Umask:   027,
-					Args:    []string{"[go-daemon sample]"},
+					Args:    []string{"[service]"},
 				}
 				if len(serviceSubCommand) > 1 {
 					switch serviceSubCommand {

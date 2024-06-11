@@ -74,9 +74,10 @@ func initService() {
 					PidFilePerm: 0644,
 					LogFileName: Application + ".log",
 					LogFilePerm: 0640,
-					WorkDir:     cache.GetVariablePath(),
-					Umask:       027,
-					Args:        []string{"[go-daemon sample]"},
+					//WorkDir:     cache.GetVariablePath(),
+					WorkDir: "./",
+					Umask:   027,
+					Args:    []string{"[go-daemon sample]"},
 				}
 				if len(serviceSubCommand) > 1 {
 					switch serviceSubCommand {

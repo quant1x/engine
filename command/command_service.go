@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/services"
+	"gitee.com/quant1x/gox/coroutine"
 	"gitee.com/quant1x/gox/daemon"
 	"gitee.com/quant1x/gox/logger"
 	nix "github.com/sevlyar/go-daemon"
@@ -106,6 +107,7 @@ func initService() {
 					case "stop":
 						// No need to explicitly stop cron since job will be killed
 						//return service.daemon.Stop()
+						coroutine.Shutdown()
 					case "list":
 						services.PrintJobList()
 						//return "", nil

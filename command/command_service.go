@@ -99,7 +99,6 @@ func initService() {
 							//os.Exit(1)
 							return
 						}
-						defer cntxt.Release()
 
 						fmt.Println("- - - - - - - - - - - - - - -")
 						fmt.Println("daemon started")
@@ -127,6 +126,7 @@ func initService() {
 					}
 				} else {
 					logger.Warnf("run service")
+					defer cntxt.Release()
 					services.DaemonService()
 				}
 

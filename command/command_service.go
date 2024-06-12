@@ -110,8 +110,8 @@ func initService() {
 					case "status":
 						//return service.daemon.Status()
 					default:
-						service.daemon.Run(service)
-						//return usage, nil
+						status, err := service.daemon.Run(service)
+						fmt.Println(status, err)
 					}
 				}
 

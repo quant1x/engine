@@ -94,8 +94,8 @@ func initService() {
 							os.Exit(1)
 						}
 						if d != nil {
-							fmt.Println("Unable to run")
-							os.Exit(1)
+							//fmt.Println("Unable to run")
+							//os.Exit(1)
 							return
 						}
 						defer cntxt.Release()

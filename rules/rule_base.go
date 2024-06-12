@@ -1,6 +1,8 @@
 package rules
 
 import (
+	"errors"
+	"fmt"
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/gox/exception"
@@ -37,7 +39,12 @@ func ruleBase(ruleParameter config.RuleParameter, snapshot factors.QuoteSnapshot
 	}
 	// 2. 当日 - 开盘量比
 	if num.IsNaN(snapshot.OpenQuantityRatio) || !ruleParameter.OpenQuantityRatio.Validate(snapshot.OpenQuantityRatio) {
-		return ErrRangeOfOpeningQuantityRatio
+		if !ruleParameter.Verbose {
+			return ErrRangeOfOpeningQuantityRatio
+		} else {
+			err := ErrRangeOfOpeningQuantityRatio
+			return errors.New(fmt.Sprintf("%s, %f", err.Error(), snapshot.OpenQuantityRatio))
+		}
 	}
 	// 3. 当日 - 开盘涨幅
 	if num.IsNaN(snapshot.OpeningChangeRate) || !ruleParameter.OpenChangeRate.Validate(snapshot.OpeningChangeRate) {

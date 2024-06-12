@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/services"
-	"gitee.com/quant1x/gox/coroutine"
 	"gitee.com/quant1x/gox/daemon"
 	"gitee.com/quant1x/gox/logger"
 	nix "github.com/sevlyar/go-daemon"
@@ -12,6 +11,7 @@ import (
 	"os"
 	"runtime"
 	"strings"
+	"syscall"
 )
 
 const (
@@ -107,7 +107,15 @@ func initService() {
 					case "stop":
 						// No need to explicitly stop cron since job will be killed
 						//return service.daemon.Stop()
-						coroutine.Shutdown()
+						//coroutine.Shutdown()
+						d, err := cntxt.Search()
+						if err != nil {
+							logger.Fatalf("Unable send signal to the daemon: %s", err.Error())
+						}
+						err = d.Signal(syscall.SIGQUIT)
+						if err != nil {
+							logger.Fatalf("Unable send signal to the daemon: %s", err.Error())
+						}
 					case "list":
 						services.PrintJobList()
 						//return "", nil

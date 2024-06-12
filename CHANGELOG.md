@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.23] - 2024-06-14
+### Changed
+- 初步实现市场情绪值的规划
+- 统一冗详模式输出过滤结果
+- 更新依赖库版本
+- 优化板块部分代码
+- 更新依赖库版本
+
 ## [1.8.22] - 2024-06-12
 ### Changed
 - 删除cpmm指标,格式太旧,大智慧已经不能打开
@@ -43,6 +51,7 @@ All notable changes to this project will be documented in this file.
 - 回测新增按照实际交易天数的统计数据
 - 增补1号策略的注册
 - 添加cpmm公式
+- update changelog
 
 ## [1.8.20] - 2024-06-02
 ### Changed
@@ -1640,7 +1649,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.22...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.23...HEAD
+[1.8.23]: https://gitee.com/quant1x/engine.git/compare/v1.8.22...v1.8.23
 [1.8.22]: https://gitee.com/quant1x/engine.git/compare/v1.8.21...v1.8.22
 [1.8.21]: https://gitee.com/quant1x/engine.git/compare/v1.8.20...v1.8.21
 [1.8.20]: https://gitee.com/quant1x/engine.git/compare/v1.8.19...v1.8.20

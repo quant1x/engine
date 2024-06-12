@@ -113,7 +113,7 @@ func initService() {
 						}
 						err = d.Signal(syscall.SIGQUIT)
 						if err != nil {
-							logger.Fatalf("Unable send signal to the daemon: %s", err.Error())
+							logger.Fatalf("send signal failed: %s", err.Error())
 						}
 					case "list":
 						services.PrintJobList()

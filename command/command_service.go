@@ -111,9 +111,10 @@ func initService() {
 						//return service.daemon.Status()
 					default:
 						//status, err := service.daemon.Run(service)
-						services.DaemonService()
 						//fmt.Println(status, err)
 					}
+				} else {
+					services.DaemonService()
 				}
 
 			default:

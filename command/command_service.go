@@ -111,6 +111,9 @@ func initService() {
 						if err != nil {
 							logger.Fatalf("Unable send signal to the daemon: %s", err.Error())
 						}
+						if d == nil {
+							logger.Fatalf("Not found %s", applicationName)
+						}
 						err = d.Signal(syscall.SIGQUIT)
 						if err != nil {
 							logger.Fatalf("send signal failed: %s", err.Error())

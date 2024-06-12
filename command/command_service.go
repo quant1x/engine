@@ -87,6 +87,7 @@ func initService() {
 					case "remove", "uninstall":
 						//return service.daemon.Remove()
 					case "start":
+						logger.Warnf("start service")
 						d, err := cntxt.Reborn()
 						if err != nil {
 							fmt.Println("Unable to run: ", err)
@@ -115,7 +116,7 @@ func initService() {
 						//fmt.Println(status, err)
 					}
 				} else {
-					logger.Warnf("stock args:%+v", os.Args)
+					logger.Warnf("run service")
 					services.DaemonService()
 				}
 

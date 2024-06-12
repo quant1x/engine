@@ -29,4 +29,5 @@ type RuleParameter struct {
 	CheckBPS                    bool        `yaml:"check_bps" default:"false"`                   // 是否检测每股净资产, 默认不检测
 	CheckSafetyScore            bool        `yaml:"check_safety_score" default:"false"`          // 是否检测安全分
 	FinancingBalanceRatio       float64     `yaml:"financing_balance_ratio" default:"10"`        // 融资余额占比阀值, 过滤超过阀值的标的
+	Verbose                     bool        `yaml:"verbose" default:"false"`                     // 冗详模式
 }

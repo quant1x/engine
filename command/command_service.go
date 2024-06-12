@@ -72,14 +72,13 @@ func initService() {
 			switch runtime.GOOS {
 			case "linux":
 				cntxt := &nix.Context{
-					PidFileName: Application + ".pid",
+					PidFileName: cache.GetVariablePath() + "/" + Application + ".pid",
 					PidFilePerm: 0644,
-					LogFileName: Application + ".log",
+					LogFileName: cache.GetVariablePath() + "/" + Application + ".log",
 					LogFilePerm: 0640,
-					//WorkDir:     cache.GetVariablePath(),
-					WorkDir: "./",
-					Umask:   027,
-					Args:    []string{os.Args[0], serviceCommand},
+					WorkDir:     cache.GetVariablePath(),
+					Umask:       027,
+					Args:        []string{os.Args[0], serviceCommand},
 				}
 				logger.Warnf("stock args:%+v", os.Args)
 				if len(serviceSubCommand) > 1 {

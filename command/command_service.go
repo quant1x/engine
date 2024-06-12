@@ -114,6 +114,7 @@ func initService() {
 						//fmt.Println(status, err)
 					}
 				} else {
+					fmt.Println("stock service loading...")
 					services.DaemonService()
 				}
 

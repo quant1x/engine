@@ -79,6 +79,7 @@ func initService() {
 					Umask:   027,
 					Args:    []string{serviceCommand},
 				}
+				logger.Warnf("stock args:%+v", os.Args)
 				if len(serviceSubCommand) > 1 {
 					switch serviceSubCommand {
 					case "install":
@@ -114,7 +115,7 @@ func initService() {
 						//fmt.Println(status, err)
 					}
 				} else {
-					fmt.Println("stock service loading...")
+					logger.Warnf("stock args:%+v", os.Args)
 					services.DaemonService()
 				}
 

@@ -77,7 +77,7 @@ func initService() {
 					//WorkDir:     cache.GetVariablePath(),
 					WorkDir: "./",
 					Umask:   027,
-					Args:    []string{serviceCommand},
+					Args:    []string{os.Args[0], serviceCommand},
 				}
 				logger.Warnf("stock args:%+v", os.Args)
 				if len(serviceSubCommand) > 1 {

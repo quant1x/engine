@@ -77,7 +77,7 @@ func initService() {
 					//WorkDir:     cache.GetVariablePath(),
 					WorkDir: "./",
 					Umask:   027,
-					Args:    []string{"service"},
+					Args:    []string{serviceCommand},
 				}
 				if len(serviceSubCommand) > 1 {
 					switch serviceSubCommand {
@@ -100,7 +100,7 @@ func initService() {
 
 						fmt.Println("- - - - - - - - - - - - - - -")
 						fmt.Println("daemon started")
-						service.daemon.Run(service)
+						//service.daemon.Run(service)
 					case "stop":
 						// No need to explicitly stop cron since job will be killed
 						//return service.daemon.Stop()
@@ -110,6 +110,7 @@ func initService() {
 					case "status":
 						//return service.daemon.Status()
 					default:
+						service.daemon.Run(service)
 						//return usage, nil
 					}
 				}

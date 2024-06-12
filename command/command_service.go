@@ -129,6 +129,16 @@ func initService() {
 					}
 				} else {
 					logger.Warnf("run service")
+					d, err := cntxt.Reborn()
+					if err != nil {
+						fmt.Println("Unable to run: ", err)
+						os.Exit(1)
+					}
+					if d != nil {
+						//fmt.Println("Unable to run")
+						//os.Exit(1)
+						return
+					}
 					defer cntxt.Release()
 					services.DaemonService()
 				}

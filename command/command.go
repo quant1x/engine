@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/tracker"
+	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/runtime"
 	"gitee.com/quant1x/num"
 	cmder "github.com/spf13/cobra"
+	"os"
 	goruntime "runtime"
 	"strings"
 	_ "unsafe" // For go:linkname
@@ -62,6 +64,7 @@ func GlobalFlags() *cmder.Command {
 	engineCmd := &cmder.Command{
 		Use: Application,
 		Run: func(cmd *cmder.Command, args []string) {
+			logger.Warnf("stock default args:%+v", os.Args)
 			model, err := models.CheckoutStrategy(strategyNumber)
 			if err != nil {
 				fmt.Println(err)

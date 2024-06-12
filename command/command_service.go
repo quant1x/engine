@@ -1,6 +1,7 @@
 package command
 
 import (
+	"errors"
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/services"
@@ -85,8 +86,10 @@ func initService() {
 					switch serviceSubCommand {
 					case "install":
 						//return service.daemon.Install(serviceProgramArguments)
+						fmt.Println("success")
 					case "remove", "uninstall":
 						//return service.daemon.Remove()
+						fmt.Println("success")
 					case "start":
 						logger.Warnf("start service")
 						d, err := cntxt.Reborn()
@@ -123,6 +126,7 @@ func initService() {
 						//return "", nil
 					case "status":
 						//return service.daemon.Status()
+						fmt.Println("success")
 					default:
 						//status, err := service.daemon.Run(service)
 						//fmt.Println(status, err)
@@ -202,9 +206,11 @@ func (service *Service) Manage() (string, error) {
 		case "status":
 			return service.daemon.Status()
 		default:
-			//return usage, nil
+			_ = CmdService.Usage()
+			return "", errors.New("unknown service flags=" + serviceSubCommand)
 		}
+	} else {
+		// serviceCommand = service
+		return service.daemon.Run(service)
 	}
-	// serviceCommand = service
-	return service.daemon.Run(service)
 }

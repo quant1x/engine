@@ -75,7 +75,7 @@ func ScanAllSectors(barIndex *int, model models.Strategy) {
 			return StockSort(a, b)
 		})
 
-		stockList := []string{}
+		var stockList []string
 		for j := 0; j < len(stockSnapshots) && j < tradeRule.Rules.StockTopNInSector; j++ {
 			si := stockSnapshots[j]
 			stockCode := si.SecurityCode

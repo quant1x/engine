@@ -29,22 +29,26 @@ var (
 	ErrRangeOfFinancingBalanceRatio = exception.New(errorRuleBase+8, "融资余额占比过大")
 )
 
+// 判断是否冗详模式输出错误信息
+func throwException(err error, ruleParameter config.RuleParameter, value float64) error {
+	if !ruleParameter.Verbose {
+		return err
+	} else {
+		return errors.New(fmt.Sprintf("%s, %f", err.Error(), value))
+	}
+}
+
 // ruleBase 基础规则
 func ruleBase(ruleParameter config.RuleParameter, snapshot factors.QuoteSnapshot) error {
 	// 基础过滤规则
 	securityCode := snapshot.SecurityCode
 	// 1. 开盘换手Z的逻辑
 	if num.IsNaN(snapshot.OpenTurnZ) || !ruleParameter.OpenTurnZ.Validate(snapshot.OpenTurnZ) {
-		return ErrRangeOfOpeningTurnZ
+		return throwException(ErrRangeOfOpeningTurnZ, ruleParameter, snapshot.OpenTurnZ)
 	}
 	// 2. 当日 - 开盘量比
 	if num.IsNaN(snapshot.OpenQuantityRatio) || !ruleParameter.OpenQuantityRatio.Validate(snapshot.OpenQuantityRatio) {
-		if !ruleParameter.Verbose {
-			return ErrRangeOfOpeningQuantityRatio
-		} else {
-			err := ErrRangeOfOpeningQuantityRatio
-			return errors.New(fmt.Sprintf("%s, %f", err.Error(), snapshot.OpenQuantityRatio))
-		}
+		return throwException(ErrRangeOfOpeningQuantityRatio, ruleParameter, snapshot.OpenQuantityRatio)
 	}
 	// 3. 当日 - 开盘涨幅
 	if num.IsNaN(snapshot.OpeningChangeRate) || !ruleParameter.OpenChangeRate.Validate(snapshot.OpeningChangeRate) {
@@ -73,7 +77,7 @@ func ruleBase(ruleParameter config.RuleParameter, snapshot factors.QuoteSnapshot
 		//}
 		// 6.2 检查融资余额占比
 		if misc.RZYEZB > 0 && misc.RZYEZB >= ruleParameter.FinancingBalanceRatio {
-			return ErrRangeOfFinancingBalanceRatio
+			return throwException(ErrRangeOfFinancingBalanceRatio, ruleParameter, misc.RZYEZB)
 		}
 	}
 	// 7. 历史数据

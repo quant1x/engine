@@ -10,6 +10,7 @@ require (
 	gitee.com/quant1x/pandas v1.4.8
 	gitee.com/quant1x/pkg v0.2.8
 	github.com/bits-and-blooms/bitset v1.13.0
+	github.com/fatih/color v1.17.0
 	github.com/sevlyar/go-daemon v0.1.6
 	github.com/spf13/cobra v1.8.0
 	golang.org/x/sys v0.20.0
@@ -22,6 +23,8 @@ require (
 	github.com/google/pprof v0.0.0-20240509144519-723abb6459b7 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/kardianos/osext v0.0.0-20190222173326-2bc1f35cddc0 // indirect
+	github.com/mattn/go-colorable v0.1.13 // indirect
+	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	golang.org/x/text v0.15.0 // indirect

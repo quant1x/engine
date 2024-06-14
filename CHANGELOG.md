@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.24] - 2024-06-16
+### Changed
+- 更新依赖库版本
+- 新增实验性代码, 开发阶段获取模块版本号
+- 修订主程序入口函数main的注释
+
 ## [1.8.23] - 2024-06-14
 ### Changed
 - 初步实现市场情绪值的规划
@@ -45,6 +51,7 @@ All notable changes to this project will be documented in this file.
 - 规则新增显示冗详信息开关, 默认为false
 - 更新依赖库
 - 修订history特征组合
+- update changelog
 
 ## [1.8.21] - 2024-06-06
 ### Changed
@@ -1649,7 +1656,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.23...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.24...HEAD
+[1.8.24]: https://gitee.com/quant1x/engine.git/compare/v1.8.23...v1.8.24
 [1.8.23]: https://gitee.com/quant1x/engine.git/compare/v1.8.22...v1.8.23
 [1.8.22]: https://gitee.com/quant1x/engine.git/compare/v1.8.21...v1.8.22
 [1.8.21]: https://gitee.com/quant1x/engine.git/compare/v1.8.20...v1.8.21

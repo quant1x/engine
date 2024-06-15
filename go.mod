@@ -12,7 +12,7 @@ require (
 	github.com/bits-and-blooms/bitset v1.13.0
 	github.com/fatih/color v1.17.0
 	github.com/sevlyar/go-daemon v0.1.6
-	github.com/spf13/cobra v1.8.0
+	github.com/spf13/cobra v1.8.1
 	golang.org/x/sys v0.21.0
 )
 

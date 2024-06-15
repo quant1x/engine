@@ -17,7 +17,8 @@ import (
 // go build -ldflags "-X 'main.MinVersion=${version}'"
 
 var (
-	MinVersion = "1.0.0" // 应用版本号
+	MinVersion = "1.8.23"  // 应用版本号
+	tdxVersion = "1.22.10" // tdx api版本号
 )
 
 var (
@@ -41,6 +42,7 @@ func main() {
 		elapsedTime := time.Since(mainStart) / time.Millisecond
 		fmt.Printf("\n总耗时: %.3fs\n", float64(elapsedTime)/1000)
 	}()
+
 	// stock模块内的更新版本号
 	command.UpdateApplicationVersion(MinVersion)
 	runtime.GoMaxProcs()

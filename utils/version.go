@@ -5,12 +5,12 @@ import (
 )
 
 const (
-	defaultVersion = "0.0.0"
+	InvalidVersion = "0.0.0"
 )
 
 // CurrentVersion 开发中获取版本号
 func CurrentVersion() string {
-	minVersion := defaultVersion
+	minVersion := InvalidVersion
 	latest, err := git.Exec("describe", "--tags", "--abbrev=0")
 	if err == nil {
 		minVersion = fixVersion(latest)
@@ -22,7 +22,7 @@ func CurrentVersion() string {
 //
 //	通过 go list -m 命令获取
 func RequireVersion(module string) string {
-	minVersion := defaultVersion
+	minVersion := InvalidVersion
 	mod, err := shell("go", "list", "-m", module)
 	if err == nil {
 		arr := strings.Split(mod, " ")

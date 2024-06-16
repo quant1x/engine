@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.25] - 2024-06-16
+### Changed
+- 调整版本号在开发阶段和发行后两种不同情况的处理方式
+
 ## [1.8.24] - 2024-06-16
 ### Changed
 - 更新依赖库版本
@@ -16,6 +20,7 @@ All notable changes to this project will be documented in this file.
 - 更新依赖库版本
 - 优化板块部分代码
 - 更新依赖库版本
+- update changelog
 
 ## [1.8.22] - 2024-06-12
 ### Changed
@@ -1656,7 +1661,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.24...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.25...HEAD
+[1.8.25]: https://gitee.com/quant1x/engine.git/compare/v1.8.24...v1.8.25
 [1.8.24]: https://gitee.com/quant1x/engine.git/compare/v1.8.23...v1.8.24
 [1.8.23]: https://gitee.com/quant1x/engine.git/compare/v1.8.22...v1.8.23
 [1.8.22]: https://gitee.com/quant1x/engine.git/compare/v1.8.21...v1.8.22

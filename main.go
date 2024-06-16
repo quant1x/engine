@@ -26,7 +26,7 @@ var (
 	memProfile = "./mem.pprof"
 )
 
-// 更新日线数据工具
+// 更新基础数据,特征,执行策略,回测等功能入口
 func main() {
 	if config.PprofEnable() {
 		fCpu, err := os.Create(cpuProfile)

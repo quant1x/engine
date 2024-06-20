@@ -247,9 +247,7 @@ func (this *Cache1D[T]) Merge(p *treemap.Map) {
 			tmp, ok := p.Get(securityCode)
 			if ok {
 				_ = api.CopyWithOption(v, tmp, api.Option{})
-				if ok {
-					this.mapCache.Put(securityCode, v)
-				}
+				this.mapCache.Put(securityCode, v)
 			}
 		}
 		list = append(list, v)

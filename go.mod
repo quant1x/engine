@@ -3,11 +3,11 @@ module gitee.com/quant1x/engine
 go 1.21.8
 
 require (
-	gitee.com/quant1x/exchange v0.5.7
-	gitee.com/quant1x/gotdx v1.22.13
-	gitee.com/quant1x/gox v1.21.3
-	gitee.com/quant1x/num v0.3.3
-	gitee.com/quant1x/pandas v1.4.9
+	gitee.com/quant1x/exchange v0.5.8
+	gitee.com/quant1x/gotdx v1.22.14
+	gitee.com/quant1x/gox v1.21.4
+	gitee.com/quant1x/num v0.3.4
+	gitee.com/quant1x/pandas v1.4.10
 	gitee.com/quant1x/pkg v0.2.9
 	github.com/bits-and-blooms/bitset v1.13.0
 	github.com/fatih/color v1.17.0

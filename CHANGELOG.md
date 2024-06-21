@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.30] - 2024-06-24
+### Changed
+- 更新依赖库gotdx版本到1.22.16
+
 ## [1.8.29] - 2024-06-21
 ### Changed
 - 更新依赖库gotdx版本到1.22.15
@@ -11,6 +15,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - 删除多余的逻辑判断
 - 更新依赖库gotdx版本到1.22.14
+- update changelog
 
 ## [1.8.27] - 2024-06-20
 ### Changed
@@ -1682,7 +1687,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.29...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.30...HEAD
+[1.8.30]: https://gitee.com/quant1x/engine.git/compare/v1.8.29...v1.8.30
 [1.8.29]: https://gitee.com/quant1x/engine.git/compare/v1.8.28...v1.8.29
 [1.8.28]: https://gitee.com/quant1x/engine.git/compare/v1.8.27...v1.8.28
 [1.8.27]: https://gitee.com/quant1x/engine.git/compare/v1.8.26...v1.8.27

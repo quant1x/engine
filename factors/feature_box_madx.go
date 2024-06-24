@@ -12,6 +12,7 @@ type JuXianDongXiang struct {
 	Dm2       float64 // 10日线差
 	Diverging float64 // 均线发散度
 	B         bool    // 买入信号
+	BN        int     // 连续B信号周期数
 }
 
 // 多空趋势
@@ -52,12 +53,15 @@ func computeJuXianDongXiang(OPEN, CLOSE, HIGH, LOW pandas.Series) *JuXianDongXia
 	//B:X0>0 AND X1>0 AND X2>0,NODRAW;
 	B := X0.Gt(0).And(X1.Gt(0)).And(X2.Gt(0))
 	//DRAWICON(B,0.01,1);
+	// BN:BARSLASTCOUNT(B),COLORRED,NODRAW;
+	BN := BARSLASTCOUNT(B)
 	madx := JuXianDongXiang{
 		Dm0:       utils.Float64IndexOf(DM0, -1),
 		Dm1:       utils.Float64IndexOf(DM1, -1),
 		Dm2:       utils.Float64IndexOf(DM2, -1),
 		Diverging: utils.Float64IndexOf(DIVERGING, -1),
 		B:         utils.BoolIndexOf(B, -1),
+		BN:        utils.IntegerIndexOf(BN, -1),
 	}
 	return &madx
 }

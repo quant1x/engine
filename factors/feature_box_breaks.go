@@ -39,6 +39,7 @@ type KLineBox struct {
 	DxDm1          float64 // madx: 均线发散度-短线
 	DxDm2          float64 // madx: 均线发散度-中线
 	DxB            bool    // madx: 买入
+	DxBN           int     // madx: 连续DxB信号周期数
 }
 
 // NewKLineBox 构建有效突破数据
@@ -163,6 +164,7 @@ func NewKLineBox(code, date string) *KLineBox {
 	box.DxDm1 = madx.Dm1
 	box.DxDm2 = madx.Dm2
 	box.DxB = madx.B
+	box.DxBN = madx.BN
 	return &box
 }
 

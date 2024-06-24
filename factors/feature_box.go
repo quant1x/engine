@@ -40,6 +40,8 @@ type Box struct {
 	DxDm1             float64 `name:"dxdm1" dataframe:"dxdm1"`               // madx: 短线均线发散度
 	DxDm2             float64 `name:"dxdm2" dataframe:"dxdm2"`               // madx: 中线均线发散度
 	DxB               bool    `name:"dxb" dataframe:"dxb"`                   // madx: 买入
+	DxBN              int     `name:"dxbn" dataframe:"dxbn"`                 // madx: 连续DxB信号周期数
+	UpdateTime        string  `name:"更新时间" dataframe:"update_time"`          // 更新时间
 	State             uint64  `name:"样本状态" dataframe:"样本状态"`                 // 样本状态
 }
 
@@ -116,9 +118,11 @@ func (this *Box) Update(code, cacheDate, featureDate string, complete bool) {
 	info.DxDm2 = cover.DxDm2
 	info.DxDivergence = cover.DxDivergence
 	info.DxB = cover.DxB
+	info.DxBN = cover.DxBN
 
 	// 样本状态
 	info.State |= cover.Kind()
+	info.UpdateTime = GetTimestamp()
 	_ = cacheDate
 	_ = complete
 }

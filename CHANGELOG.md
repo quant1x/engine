@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.31] - 2024-06-24
+### Changed
+- misc增加时间戳字段
+- box新增时间戳字段和dxbn周期数字段
+- box新增SAR指标数据
+- box新增SAR数据增量计算方法
+
 ## [1.8.30] - 2024-06-24
 ### Changed
 - 更新依赖库gotdx版本到1.22.16
@@ -10,6 +17,7 @@ All notable changes to this project will be documented in this file.
 ## [1.8.29] - 2024-06-21
 ### Changed
 - 更新依赖库gotdx版本到1.22.15
+- update changelog
 
 ## [1.8.28] - 2024-06-20
 ### Changed
@@ -1687,7 +1695,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.30...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.31...HEAD
+[1.8.31]: https://gitee.com/quant1x/engine.git/compare/v1.8.30...v1.8.31
 [1.8.30]: https://gitee.com/quant1x/engine.git/compare/v1.8.29...v1.8.30
 [1.8.29]: https://gitee.com/quant1x/engine.git/compare/v1.8.28...v1.8.29
 [1.8.28]: https://gitee.com/quant1x/engine.git/compare/v1.8.27...v1.8.28

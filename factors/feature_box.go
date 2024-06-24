@@ -41,6 +41,14 @@ type Box struct {
 	DxDm2             float64 `name:"dxdm2" dataframe:"dxdm2"`               // madx: 中线均线发散度
 	DxB               bool    `name:"dxb" dataframe:"dxb"`                   // madx: 买入
 	DxBN              int     `name:"dxbn" dataframe:"dxbn"`                 // madx: 连续DxB信号周期数
+	SarPos            int     `name:"sarPos" dataframe:"sarPos"`             // 坐标位置
+	SarBull           bool    `name:"sarBull" dataframe:"sarBull"`           // 当前多空
+	SarAf             float64 `name:"sarAf" dataframe:"sarAf"`               // 加速因子(Acceleration Factor)
+	SarEp             float64 `name:"sarEp" dataframe:"sarEp"`               // 极值点(Extreme Point)
+	SarSar            float64 `name:"sarSar" dataframe:"sarSar"`             // SAR[Pos]
+	SarHigh           float64 `name:"sarHigh" dataframe:"sarHigh"`           // pos周期最高价
+	SarLow            float64 `name:"sarLow" dataframe:"sarLow"`             // pos周期最低价
+	SarPeriod         int     `name:"sarPeriod" dataframe:"sarPeriod"`       // 周期数, 上涨趋势, 周期数大于0, 下跌趋势, 周期数小于0, 绝对值就是已过多少天
 	UpdateTime        string  `name:"更新时间" dataframe:"update_time"`          // 更新时间
 	State             uint64  `name:"样本状态" dataframe:"样本状态"`                 // 样本状态
 }
@@ -120,6 +128,15 @@ func (this *Box) Update(code, cacheDate, featureDate string, complete bool) {
 	info.DxB = cover.DxB
 	info.DxBN = cover.DxBN
 
+	// SAR
+	info.SarPos = cover.SarPos
+	info.SarBull = cover.SarBull
+	info.SarAf = cover.SarAf
+	info.SarEp = cover.SarEp
+	info.SarSar = cover.SarSar
+	info.SarHigh = cover.SarHigh
+	info.SarLow = cover.SarLow
+	info.SarPeriod = cover.SarPeriod
 	// 样本状态
 	info.State |= cover.Kind()
 	info.UpdateTime = GetTimestamp()

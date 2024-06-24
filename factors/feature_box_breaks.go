@@ -8,6 +8,7 @@ import (
 	"gitee.com/quant1x/num"
 	"gitee.com/quant1x/pandas"
 	. "gitee.com/quant1x/pandas/formula"
+	"gitee.com/quant1x/ta-lib/indicators"
 )
 
 // KLineBox 有效突破(BreaksThrough)平台
@@ -40,6 +41,14 @@ type KLineBox struct {
 	DxDm2          float64 // madx: 均线发散度-中线
 	DxB            bool    // madx: 买入
 	DxBN           int     // madx: 连续DxB信号周期数
+	SarPos         int     // 坐标位置
+	SarBull        bool    // 当前多空
+	SarAf          float64 // 加速因子(Acceleration Factor)
+	SarEp          float64 // 极值点(Extreme Point)
+	SarSar         float64 // SAR[Pos]
+	SarHigh        float64 // pos周期最高价
+	SarLow         float64 // pos周期最低价
+	SarPeriod      int     // 周期数, 上涨趋势, 周期数大于0, 下跌趋势, 周期数小于0, 绝对值就是已过多少天
 }
 
 // NewKLineBox 构建有效突破数据
@@ -165,6 +174,20 @@ func NewKLineBox(code, date string) *KLineBox {
 	box.DxDm2 = madx.Dm2
 	box.DxB = madx.B
 	box.DxBN = madx.BN
+
+	// SAR
+	sars := indicators.SAR(HIGH.Float64s(), LOW.Float64s())
+	if len(sars) > 0 {
+		sar := sars[len(sars)-1]
+		box.SarPos = sar.Pos
+		box.SarBull = sar.Bull
+		box.SarAf = sar.Af
+		box.SarEp = sar.Ep
+		box.SarSar = sar.Sar
+		box.SarHigh = sar.High
+		box.SarLow = sar.Low
+		box.SarPeriod = sar.Period
+	}
 	return &box
 }
 

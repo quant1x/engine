@@ -10,8 +10,8 @@ import (
 )
 
 func TestBox_basic(t *testing.T) {
-	code := "600996"
-	date := "2024-05-30"
+	code := "002766"
+	date := "2024-06-24"
 	cacheDate, featureDate := cache.CorrectDate(date)
 	code = exchange.CorrectSecurityCode(code)
 	box := NewBox(cacheDate, code)

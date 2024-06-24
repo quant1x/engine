@@ -4,6 +4,7 @@ import (
 	"context"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/gox/logger"
+	"gitee.com/quant1x/ta-lib/indicators"
 )
 
 const (
@@ -159,4 +160,19 @@ func (this *Box) ValidateSample() error {
 		return nil
 	}
 	return ErrInvalidFeatureSample
+}
+
+// SarIncr SAR增量计算
+func (this *Box) SarIncr(snapshot QuoteSnapshot) indicators.FeatureSar {
+	sar := indicators.FeatureSar{
+		Pos:    this.SarPos,
+		Bull:   this.SarBull,
+		Af:     this.SarAf,
+		Ep:     this.SarEp,
+		Sar:    this.SarSar,
+		High:   this.SarHigh,
+		Low:    this.SarLow,
+		Period: this.SarPeriod,
+	}
+	return sar.Incr(snapshot.High, snapshot.Low)
 }

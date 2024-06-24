@@ -76,6 +76,7 @@ type Misc struct {
 	BearPower             float64 `name:"空方强度" dataframe:"空方强度"`            // 空方强度
 	PowerTrendReversal    int     `name:"多空反转" dataframe:"多空反转"`            // 多空反转
 	PowerTrendPeriod      int     `name:"多空趋势周期" dataframe:"多空趋势周期"`        // 多空趋势周期
+	UpdateTime            string  `name:"更新时间" dataframe:"update_time"`     // 更新时间
 	State                 uint64  `name:"样本状态" dataframe:"样本状态"`            // 样本状态
 }
 
@@ -123,7 +124,7 @@ func (this *Misc) Update(code, cacheDate, featureDate string, complete bool) {
 	// 4. 资金流向
 	miscFundFlow(this, code, cacheDate, featureDate)
 	miscPower(this, code, cacheDate, featureDate)
-
+	this.UpdateTime = GetTimestamp()
 	_ = complete
 }
 
@@ -151,7 +152,7 @@ func (this *Misc) Repair(code, cacheDate, featureDate string, complete bool) {
 	if ok {
 		this.RZYEZB = rzrq.RZYEZB
 	}
-
+	this.UpdateTime = GetTimestamp()
 	_ = complete
 }
 

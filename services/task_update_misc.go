@@ -135,6 +135,7 @@ func realtimeUpdateMiscAndSnapshot() {
 		//cacheSnapshots = append(cacheSnapshots, *exchange)
 
 		// 6. 更新内存中的数据
+		misc.UpdateTime = factors.GetTimestamp()
 		factors.UpdateL5Misc(misc)
 		// 7. 刷新缓存
 		cacheList, ok := mapSnapshot[securityCode]

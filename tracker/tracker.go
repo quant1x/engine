@@ -18,10 +18,14 @@ import (
 func Tracker(strategyNumbers ...uint64) {
 	for {
 		updateInRealTime, status := exchange.CanUpdateInRealtime()
-		isTrading := updateInRealTime && status == exchange.ExchangeTrading
+		isTrading := updateInRealTime && (status == exchange.ExchangeTrading || status == exchange.ExchangeSuspend)
 		if !runtime.Debug() && !isTrading {
 			// 非调试且非交易时段返回
 			return
+		}
+		if status == exchange.ExchangeSuspend {
+			time.Sleep(time.Second * 1)
+			continue
 		}
 		barIndex := 1
 		models.SyncAllSnapshots(&barIndex)

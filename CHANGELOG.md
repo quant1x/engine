@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.34] - 2024-06-26
+### Changed
+- 更新gotdx版本到1.22.18
+
 ## [1.8.33] - 2024-06-25
 ### Changed
 - tick模式午间休市, tracker不退出
@@ -10,6 +14,7 @@ All notable changes to this project will be documented in this file.
 ## [1.8.32] - 2024-06-25
 ### Changed
 - 更新gotdx版本到1.22.17
+- update changelog
 
 ## [1.8.31] - 2024-06-24
 ### Changed
@@ -1705,7 +1710,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.33...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.34...HEAD
+[1.8.34]: https://gitee.com/quant1x/engine.git/compare/v1.8.33...v1.8.34
 [1.8.33]: https://gitee.com/quant1x/engine.git/compare/v1.8.32...v1.8.33
 [1.8.32]: https://gitee.com/quant1x/engine.git/compare/v1.8.31...v1.8.32
 [1.8.31]: https://gitee.com/quant1x/engine.git/compare/v1.8.30...v1.8.31

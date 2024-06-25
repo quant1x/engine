@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.33] - 2024-06-25
+### Changed
+- tick模式午间休市, tracker不退出
+
 ## [1.8.32] - 2024-06-25
 ### Changed
 - 更新gotdx版本到1.22.17
@@ -13,6 +17,7 @@ All notable changes to this project will be documented in this file.
 - box新增时间戳字段和dxbn周期数字段
 - box新增SAR指标数据
 - box新增SAR数据增量计算方法
+- update changelog
 
 ## [1.8.30] - 2024-06-24
 ### Changed
@@ -1700,7 +1705,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.32...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.33...HEAD
+[1.8.33]: https://gitee.com/quant1x/engine.git/compare/v1.8.32...v1.8.33
 [1.8.32]: https://gitee.com/quant1x/engine.git/compare/v1.8.31...v1.8.32
 [1.8.31]: https://gitee.com/quant1x/engine.git/compare/v1.8.30...v1.8.31
 [1.8.30]: https://gitee.com/quant1x/engine.git/compare/v1.8.29...v1.8.30

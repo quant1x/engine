@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.37] - 2024-06-27
+### Changed
+- 更新gotdx版本到1.22.19
+- 更新日K线, 在交易日9点15分之前, 屏蔽交易日的数据, 以保持除权的有效状态, 即只有1条上一个交易日的数据
+
 ## [1.8.36] - 2024-06-26
 ### Changed
 - 修复除权bug,T+1除权,T日除权正确,T日前的数据存在重复除权的问题
@@ -10,6 +15,7 @@ All notable changes to this project will be documented in this file.
 ## [1.8.35] - 2024-06-26
 ### Changed
 - 更新ta-lib版本号到0.7.18
+- update changelog
 
 ## [1.8.34] - 2024-06-26
 ### Changed
@@ -1720,7 +1726,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.36...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.37...HEAD
+[1.8.37]: https://gitee.com/quant1x/engine.git/compare/v1.8.36...v1.8.37
 [1.8.36]: https://gitee.com/quant1x/engine.git/compare/v1.8.35...v1.8.36
 [1.8.35]: https://gitee.com/quant1x/engine.git/compare/v1.8.34...v1.8.35
 [1.8.34]: https://gitee.com/quant1x/engine.git/compare/v1.8.33...v1.8.34

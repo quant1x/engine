@@ -137,6 +137,12 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 		}
 		newKLines = append(newKLines, kline)
 	}
+	// 判断是否已除权的依据是当前更新K线只有1条记录
+	adjusted := len(newKLines) == 1
+	if adjusted {
+		// 只前复权当日数据
+		calculatePreAdjustedStockPrice(securityCode, newKLines, startDate)
+	}
 	// 8. 拼接缓存和新增的数据
 	var klines []KLine
 	// 8.1 先截取本地缓存的数据
@@ -150,7 +156,9 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 		klines = newKLines
 	}
 	// 7. 前复权
-	calculatePreAdjustedStockPrice(securityCode, klines, startDate)
+	if !adjusted {
+		calculatePreAdjustedStockPrice(securityCode, klines, startDate)
+	}
 	// 9. 刷新缓存文件
 	if len(klines) > 0 {
 		UpdateCacheKLines(securityCode, klines)
@@ -183,12 +191,20 @@ func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDa
 		}
 		xdxrDate := xdxr.Date
 		factor := xdxr.Adjust()
+		//last := kLines[rows-1]
+		//tmpOpen := factor(last.Open)
+		//if tmpOpen == last.Open {
+		//	continue
+		//}
 		for j := 0; j < rows; j++ {
 			kl := &kLines[j]
 			barCurrentDate := kl.Date
 			if barCurrentDate > xdxrDate {
 				break
 			}
+			//if j == rows-1 {
+			//	fmt.Println(1)
+			//}
 			if barCurrentDate < xdxrDate {
 				kl.Open = factor(kl.Open)
 				kl.Close = factor(kl.Close)

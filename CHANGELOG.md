@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.38] - 2024-06-27
+### Changed
+- 更新依赖库版本
+- 更新gotdx版本到1.22.20, 修复日线多次除权出息后,股价因为精度损失存在不准确的bug
+
 ## [1.8.37] - 2024-06-27
 ### Changed
 - 更新gotdx版本到1.22.19
@@ -11,6 +16,7 @@ All notable changes to this project will be documented in this file.
 ## [1.8.36] - 2024-06-26
 ### Changed
 - 修复除权bug,T+1除权,T日除权正确,T日前的数据存在重复除权的问题
+- update changelog
 
 ## [1.8.35] - 2024-06-26
 ### Changed
@@ -1726,7 +1732,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.37...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.38...HEAD
+[1.8.38]: https://gitee.com/quant1x/engine.git/compare/v1.8.37...v1.8.38
 [1.8.37]: https://gitee.com/quant1x/engine.git/compare/v1.8.36...v1.8.37
 [1.8.36]: https://gitee.com/quant1x/engine.git/compare/v1.8.35...v1.8.36
 [1.8.35]: https://gitee.com/quant1x/engine.git/compare/v1.8.34...v1.8.35

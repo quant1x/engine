@@ -59,6 +59,7 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 		//}
 	}
 	// 2. 确定结束日期
+	currentTradingDate := exchange.GetCurrentlyDay()
 	endDate := exchange.Today()
 	ts := exchange.TradingDateRange(startDate, endDate)
 	history := make([]quotes.SecurityBar, 0)
@@ -112,7 +113,7 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 	for _, v := range hs {
 		for _, row := range v.List {
 			dateTime := exchange.FixTradeDate(row.DateTime)
-			if dateTime < startDate {
+			if dateTime < startDate || dateTime > currentTradingDate {
 				continue
 			}
 			row.Vol = row.Vol * 100

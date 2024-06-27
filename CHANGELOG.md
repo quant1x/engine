@@ -3,6 +3,19 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.39] - 2024-07-05
+### Changed
+- git仓库忽略html文件
+- 新增go-echarts html图表测试代码
+- 调整私有变量名, 解除和go-echarts包冲突
+- 调整html图表的title
+- 修订除权除息中的成交量复权中的描述
+- 删除废弃的代码
+- 删除废弃的代码
+- 新增加一处除权除息前一个交易日的跟踪点
+- 更新exchange版本号到0.5.9
+- 调整部分测试代码
+
 ## [1.8.38] - 2024-06-27
 ### Changed
 - 更新依赖库版本
@@ -12,6 +25,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - 更新gotdx版本到1.22.19
 - 更新日K线, 在交易日9点15分之前, 屏蔽交易日的数据, 以保持除权的有效状态, 即只有1条上一个交易日的数据
+- update changelog
 
 ## [1.8.36] - 2024-06-26
 ### Changed
@@ -1732,7 +1746,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.38...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.39...HEAD
+[1.8.39]: https://gitee.com/quant1x/engine.git/compare/v1.8.38...v1.8.39
 [1.8.38]: https://gitee.com/quant1x/engine.git/compare/v1.8.37...v1.8.38
 [1.8.37]: https://gitee.com/quant1x/engine.git/compare/v1.8.36...v1.8.37
 [1.8.36]: https://gitee.com/quant1x/engine.git/compare/v1.8.35...v1.8.36

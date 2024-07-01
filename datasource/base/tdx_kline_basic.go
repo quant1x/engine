@@ -215,6 +215,7 @@ func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDa
 				// 1. 计算均价线
 				maPrice := kl.Amount / kl.Volume
 				// 2. 均价线复权
+				// 通达信中可能存在没有量复权的情况, 需要在系统设置中的"设置1"勾选分析图中成交量复权
 				maPrice = factor(maPrice)
 				// 3. 以成交金额为基准, 用复权均价线计算成交量
 				kl.Volume = kl.Amount / maPrice

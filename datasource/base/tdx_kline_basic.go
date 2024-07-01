@@ -192,11 +192,6 @@ func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDa
 		}
 		xdxrDate := xdxr.Date
 		factor := xdxr.Adjust()
-		//last := kLines[rows-1]
-		//tmpOpen := factor(last.Open)
-		//if tmpOpen == last.Open {
-		//	continue
-		//}
 		for j := 0; j < rows; j++ {
 			kl := &kLines[j]
 			barCurrentDate := kl.Date

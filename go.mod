@@ -12,6 +12,7 @@ require (
 	gitee.com/quant1x/ta-lib v0.7.19
 	github.com/bits-and-blooms/bitset v1.13.0
 	github.com/fatih/color v1.17.0
+	github.com/go-echarts/go-echarts/v2 v2.4.0
 	github.com/sevlyar/go-daemon v0.1.6
 	github.com/spf13/cobra v1.8.1
 	golang.org/x/sys v0.21.0

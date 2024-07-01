@@ -70,6 +70,8 @@ func TestWideTableValuate(t *testing.T) {
 	code = "002085"
 	code = "002823"
 	code = "002857"
+	code = "300947"
+	code = "301397"
 	date := "2024-06-28"
 	code = exchange.CorrectSecurityCode(code)
 	lines := CheckoutWideTableByDate(code, date)
@@ -148,6 +150,7 @@ func TestWideTableValuate(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
+	line.PageTitle = fmt.Sprintf("%s(%s)", name, code)
 	line.Render(f)
 	err = utils.OpenURL("file://" + filename)
 	fmt.Println(err)

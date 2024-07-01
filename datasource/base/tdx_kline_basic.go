@@ -198,6 +198,9 @@ func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDa
 			if barCurrentDate > xdxrDate {
 				break
 			}
+			//if j == rows-2 {
+			//	fmt.Println(1)
+			//}
 			if barCurrentDate < xdxrDate {
 				kl.Open = factor(kl.Open)
 				kl.Close = factor(kl.Close)

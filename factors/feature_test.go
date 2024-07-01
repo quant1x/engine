@@ -22,7 +22,7 @@ func typelinks2() (sections []unsafe.Pointer, offset [][]int32)
 //go:linkname resolveTypeOff reflect.resolveTypeOff
 func resolveTypeOff(rtype unsafe.Pointer, off int32) unsafe.Pointer
 
-var types map[string]reflect.Type
+var typeMaps map[string]reflect.Type
 var packages map[string]map[string]reflect.Type
 
 type emptyInterface struct {
@@ -48,7 +48,7 @@ func loadGoTypes() {
 				}
 				typeName := loadedType.String()
 				//fmt.Println(typeName, "==>", loadedType.PkgPath())
-				types[typeName] = loadedType
+				typeMaps[typeName] = loadedType
 				pkgTypes[loadedType.Name()] = loadedType
 				//if loadedType.Implements(Feature) {
 				//	fmt.Println(typeName, "==>", loadedType.PkgPath())
@@ -66,7 +66,7 @@ func loadGoTypes() {
 }
 
 func TestInterface(t *testing.T) {
-	types = make(map[string]reflect.Type)
+	typeMaps = make(map[string]reflect.Type)
 	packages = make(map[string]map[string]reflect.Type)
 	loadGoTypes()
 }

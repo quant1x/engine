@@ -50,7 +50,8 @@ func TestKLineWide(t *testing.T) {
 func TestDataSetWide_pullWideByDate(t *testing.T) {
 	code := "sz301129"
 	code = "002857"
-	date := "20240528"
+	code = "603230"
+	date := "2024-06-28"
 	securityCode := exchange.CorrectSecurityCode(code)
 	lines := pullWideByDate(securityCode, date)
 	df := pandas.LoadStructs(lines)
@@ -72,6 +73,11 @@ func TestWideTableValuate(t *testing.T) {
 	code = "002857"
 	code = "300947"
 	code = "301397"
+	code = "300561"
+	code = "000702"
+	code = "605577"
+	code = "603230"
+	code = "880866"
 	date := "2024-06-28"
 	code = exchange.CorrectSecurityCode(code)
 	lines := CheckoutWideTableByDate(code, date)
@@ -102,7 +108,7 @@ func TestWideTableValuate(t *testing.T) {
 	lp := low.Sub(r1Low).Div(r1Low)
 	sLow := pandas.SeriesWithName("创新低速度环比", lp.Float64s())
 
-	df = df.Select([]string{"date", "low"})
+	df = df.Select([]string{"date", "low", "amount", "volume"})
 	df = df.Join(sAp, sAbp, sAsp, sBs, sLow)
 	name := securities.GetStockName(code)
 	fmt.Printf("%s, %s\n", code, name)

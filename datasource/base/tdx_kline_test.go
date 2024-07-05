@@ -15,6 +15,11 @@ func TestGetAllBasicKLine(t *testing.T) {
 	code = "sz301129"
 	code = "sz002669"
 	code = "600256"
+	code = "000063"
+	code = "688981"
+	code = "002857"
+	code = "603230"
+	code = "880866"
 	code = exchange.CorrectSecurityCode(code)
 	klines := UpdateAllBasicKLine(code)
 	df := pandas.LoadStructs(klines)

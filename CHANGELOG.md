@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.40] - 2024-07-14
+### Changed
+- 更新ta-lib版本到0.7.23
+- 调整实时K线重试部分代码
+
 ## [1.8.39] - 2024-07-05
 ### Changed
 - git仓库忽略html文件
@@ -20,6 +25,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - 更新依赖库版本
 - 更新gotdx版本到1.22.20, 修复日线多次除权出息后,股价因为精度损失存在不准确的bug
+- update changelog
 
 ## [1.8.37] - 2024-06-27
 ### Changed
@@ -1746,7 +1752,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.39...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.40...HEAD
+[1.8.40]: https://gitee.com/quant1x/engine.git/compare/v1.8.39...v1.8.40
 [1.8.39]: https://gitee.com/quant1x/engine.git/compare/v1.8.38...v1.8.39
 [1.8.38]: https://gitee.com/quant1x/engine.git/compare/v1.8.37...v1.8.38
 [1.8.37]: https://gitee.com/quant1x/engine.git/compare/v1.8.36...v1.8.37

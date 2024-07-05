@@ -3,19 +3,19 @@ module gitee.com/quant1x/engine
 go 1.21.8
 
 require (
-	gitee.com/quant1x/exchange v0.5.8
+	gitee.com/quant1x/exchange v0.5.9
 	gitee.com/quant1x/gotdx v1.22.20
-	gitee.com/quant1x/gox v1.21.4
-	gitee.com/quant1x/num v0.3.4
-	gitee.com/quant1x/pandas v1.4.10
-	gitee.com/quant1x/pkg v0.2.9
+	gitee.com/quant1x/gox v1.21.5
+	gitee.com/quant1x/num v0.3.5
+	gitee.com/quant1x/pandas v1.4.11
+	gitee.com/quant1x/pkg v0.2.10
 	gitee.com/quant1x/ta-lib v0.7.19
 	github.com/bits-and-blooms/bitset v1.13.0
 	github.com/fatih/color v1.17.0
 	github.com/go-echarts/go-echarts/v2 v2.4.0
 	github.com/sevlyar/go-daemon v0.1.6
 	github.com/spf13/cobra v1.8.1
-	golang.org/x/sys v0.21.0
+	golang.org/x/sys v0.22.0
 )
 
 require (

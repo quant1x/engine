@@ -42,9 +42,8 @@ func BatchRealtimeBasicKLine(codes []string) error {
 	var hq []quotes.Snapshot
 	retryTimes := 0
 	for retryTimes < quotes.DefaultRetryTimes {
-		list, err := tdxApi.GetSnapshot(codes)
-		if err == nil && list != nil && len(list) > 0 {
-			hq = list
+		hq, err = tdxApi.GetSnapshot(codes)
+		if err == nil && hq != nil && len(hq) > 0 {
 			break
 		}
 		retryTimes++

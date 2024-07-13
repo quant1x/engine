@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.41] - 2024-07-31
+### Changed
+- 特征旋转适配器get接口增加锁机制
+- 修订QMT的定义为miniQMT
+- 修订QMT的定义为miniQMT
+- 新增实时测试流程图
+- 修订早盘抢筹时序图
+- 修订尾盘先手时序图
+- 新增龙虎榜接口和结构
+- 修订东方财富泛型响应结构体
+- 黑白名单命令字增加显示列表功能
+
 ## [1.8.40] - 2024-07-14
 ### Changed
 - 更新ta-lib版本到0.7.23
@@ -20,6 +32,7 @@ All notable changes to this project will be documented in this file.
 - 新增加一处除权除息前一个交易日的跟踪点
 - 更新exchange版本号到0.5.9
 - 调整部分测试代码
+- update changelog
 
 ## [1.8.38] - 2024-06-27
 ### Changed
@@ -1752,7 +1765,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.40...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.41...HEAD
+[1.8.41]: https://gitee.com/quant1x/engine.git/compare/v1.8.40...v1.8.41
 [1.8.40]: https://gitee.com/quant1x/engine.git/compare/v1.8.39...v1.8.40
 [1.8.39]: https://gitee.com/quant1x/engine.git/compare/v1.8.38...v1.8.39
 [1.8.38]: https://gitee.com/quant1x/engine.git/compare/v1.8.37...v1.8.38

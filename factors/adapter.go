@@ -63,5 +63,7 @@ func SwitchDate(date string) {
 }
 
 func Get(key string) FeatureRotationAdapter {
+	__mutexFeatureRotationAdapters.Lock()
+	defer __mutexFeatureRotationAdapters.Unlock()
 	return __mapFeatureRotationAdapters[key]
 }

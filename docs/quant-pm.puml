@@ -1,6 +1,6 @@
 @startuml
-title A股 - 尾盘(14:57~15:01)
-robust "miniQMT" as QMT
+title A股 - 尾盘(14:57~15:02)
+concise "miniQMT" as QMT
 concise "量化策略工具" as Quant
 concise "数据引擎" as Stock
 scale 30 as 60 pixels
@@ -9,15 +9,42 @@ scale 30 as 60 pixels
 Stock is 初始化
 
 @14:57:00
-Stock is "集合竞价收盘, 计算板块情绪"
+Stock is "集合竞价收盘阶段"
 Quant is Waiting #LightCyan;line:Aqua
 QMT is Waiting
 
+@14:58:00
+Stock is 缓存
+Quant is 计算情绪 #Gold
+@14:58:30
+Stock is 采集连续竞价数据
+Quant is 缓存
+Quant ->QMT: 输出订单
+
+@14:58:30
+QMT is 执行交易指令 #Red
+Quant is ok
+
+@14:59:30
+QMT is 同步订单回报
+
 @15:01:00
-Stock is "计算指数情绪"
+Stock is 计算板块竞价
+Quant is 计算情绪 #Gold
 
 @15:02:00
 Stock is 缓存
-highlight 14:57:00 to 15:01:00 #Yellow;line:DimGrey : 数据采集阶段
-highlight 15:01:00 to 15:02:00 #Gold;line:DimGrey : 收盘缓存
+Quant is 同步
+
+@15:02:10
+Quant -> QMT: 同步持仓
+
+highlight 14:57:00 to 15:02:00 #Yellow;line:DimGrey : 数据采集阶段
+highlight 14:58:00 to 14:59:30 #Gold;line:DimGrey : 执行策略
+
+@15:02:30
+QMT is 结束
+Quant is 结束
+Stock is 结束
+
 @enduml

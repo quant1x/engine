@@ -1,6 +1,6 @@
 @startuml
 title A股 - 早盘(09:15~09:30)
-concise "券商QMT" as QMT
+concise "miniQMT" as QMT
 concise "量化策略工具" as Quant
 concise "数据引擎" as Stock
 scale 60 as 60 pixels

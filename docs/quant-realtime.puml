@@ -1,0 +1,21 @@
+@startuml
+
+start
+:加载实时策略;
+:板块排序;
+if (选出板块前N1?) then (yes)
+  :前N1板块内个股排序：因子权重，依赖Tick数据准确性;
+  if (板块内个股数等于0，最大N2只?) then (no)
+    stop
+  endif
+
+  if (命中标的数大于0?) then (yes)
+    :推荐不超过N1*N2只个股;
+  else (no)
+    :全量的个股列表;
+  endif
+  :执行策略x号策略,输出结果集;
+  :执行交易执行;
+endif
+stop
+@enduml

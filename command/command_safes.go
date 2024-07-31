@@ -7,8 +7,9 @@ import (
 )
 
 var (
-	safesSecureType   int = 0
-	safesSecurityCode string
+	safesList         bool       // 输出列表
+	safesSecureType   int    = 0 // 名单类型
+	safesSecurityCode string     // 证券代码
 )
 
 var (
@@ -22,14 +23,18 @@ func initSafes() {
 		Example: Application + " safes --code=sh000001 --type=1",
 		Short:   "黑白名单",
 		Run: func(cmd *cmder.Command, args []string) {
-			if len(safesSecurityCode) == 0 {
-				fmt.Println("证券代码不能为空")
-				return
+			if safesList {
+				trader.GetBlackAndWhiteList()
+			} else {
+				if len(safesSecurityCode) == 0 {
+					fmt.Println("证券代码不能为空")
+					return
+				}
+				trader.AddCodeToBlackList(safesSecurityCode, trader.SecureType(safesSecureType))
 			}
-			trader.AddCodeToBlackList(safesSecurityCode, trader.SecureType(safesSecureType))
 		},
 	}
-
+	CmdSafes.Flags().BoolVar(&safesList, "list", false, "显示黑白名单列表")
 	CmdSafes.Flags().StringVar(&safesSecurityCode, "code", "", "证券代码")
 	CmdSafes.Flags().IntVar(&safesSecureType, "type", 0, trader.UsageOfSecureType())
 }

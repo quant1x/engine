@@ -4,13 +4,16 @@ import (
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/concurrent"
 	"gitee.com/quant1x/gox/coroutine"
 	"gitee.com/quant1x/gox/logger"
+	"gitee.com/quant1x/pkg/tablewriter"
 	"os"
 	"path"
 	"slices"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -146,6 +149,41 @@ func SyncLoadListOfBlackAndWhite() {
 		list = append(list, BlackAndWhite{Code: key, Type: value})
 	})
 	_ = api.SlicesToCsv(filename, list)
+}
+
+// GetBlackAndWhiteList 黑白名单列表
+func GetBlackAndWhiteList() {
+	onceSafes.Do(lazyLoadListOfBlackAndWhite)
+	var list []BlackAndWhite
+	mapSafes.Each(func(key string, value SecureType) {
+		if value == FreeTrading {
+			return
+		}
+		list = append(list, BlackAndWhite{Code: key, Type: value})
+	})
+	count := len(list)
+	fmt.Println("黑白名单列表, 总数：", count)
+	if count == 0 {
+		return
+	}
+	// 表头
+	headers := []string{"序号", "证券代码", "证券名称", "安全类型"}
+	// 数据集
+	records := make([][]string, count)
+	for i, v := range list {
+		record := []string{
+			strconv.Itoa(i + 1),
+			v.Code,
+			securities.GetStockName(v.Code),
+			mapSecureTypes[v.Type],
+		}
+		records = append(records, record)
+	}
+	table := tablewriter.NewWriter(os.Stdout)
+	table.SetHeader(headers)
+	table.SetColumnAlignment([]int{tablewriter.ALIGN_RIGHT, tablewriter.ALIGN_LEFT})
+	table.AppendBulk(records)
+	table.Render()
 }
 
 // 校验和修正证券代码

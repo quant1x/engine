@@ -1,5 +1,13 @@
 package dfcf
 
+import (
+	"encoding/json"
+	"fmt"
+	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/gox/http"
+	urlpkg "net/url"
+)
+
 //龙虎榜分为两个接口
 //https://datacenter-web.eastmoney.com/api/data/v1/get?reportName=RPT_BILLBOARD_DAILYDETAILSBUY&columns=ALL&filter=(TRADE_DATE%3D%272024-07-16%27)(SECURITY_CODE%3D%22600611%22)&pageNumber=1&pageSize=50&sortTypes=-1&sortColumns=BUY&source=WEB&client=WEB&_=1721172995452
 //https://datacenter-web.eastmoney.com/api/data/v1/get?reportName=RPT_BILLBOARD_DAILYDETAILSSELL&columns=ALL&filter=(TRADE_DATE%3D%272024-07-16%27)(SECURITY_CODE%3D%22600611%22)&pageNumber=1&pageSize=50&sortTypes=-1&sortColumns=SELL&source=WEB&client=WEB&_=1721172995453
@@ -271,4 +279,32 @@ type BillBoard struct {
 	TOTAL_BUYRIO                float64 `json:"TOTAL_BUYRIO"`                // 买入占比
 	TOTAL_SELLRIO               float64 `json:"TOTAL_SELLRIO"`               // 卖出占比
 	TRADE_ID                    string  `json:"TRADE_ID"`                    // 交易ID
+}
+
+// 原始的龙虎榜列表
+func rawBillBoardList(date string, pageNumber int, direction string) ([]BillBoard, int, error) {
+	tradeDate := exchange.FixTradeDate(date)
+	params := urlpkg.Values{
+		"reportName":  {mapTypeLonghuBang[direction]},
+		"columns":     {"ALL"},
+		"source":      {"WEB"},
+		"client":      {"WEB"},
+		"sortColumns": {direction},
+		"sortTypes":   {"-1"},
+		"pageSize":    {fmt.Sprintf("%d", rzrqPageSize)},
+		"pageNumber":  {fmt.Sprintf("%d", pageNumber)},
+		"filter":      {fmt.Sprintf(`(TRADE_DATE='%s')`, tradeDate)},
+	}
+
+	url := urlLongHuBang + "?" + params.Encode()
+	data, err := http.Get(url)
+	if err != nil {
+		return nil, 0, err
+	}
+	var raw rawResult[BillBoard]
+	err = json.Unmarshal(data, &raw)
+	if err != nil {
+		return nil, 0, err
+	}
+	return raw.Data, raw.Pages, nil
 }

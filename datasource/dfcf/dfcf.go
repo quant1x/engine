@@ -8,10 +8,15 @@ type eastMoneyStatus struct {
 	Message string `json:"message"` // 错误信息
 }
 
-// 原始的api响应结果
-type rawResult[T any] struct {
-	eastMoneyStatus
+// 原始api结果结构体
+type eastMoneyData[T any] struct {
 	Pages int `json:"pages"`
 	Count int `json:"count"`
 	Data  []T `json:"data"`
+}
+
+// 原始的api响应结果
+type rawResult[T any] struct {
+	eastMoneyStatus
+	eastMoneyData[T] `json:"result"`
 }

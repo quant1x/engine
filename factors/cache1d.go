@@ -91,6 +91,7 @@ func (this *Cache1D[T]) Length() int {
 }
 
 // loadCache 加载指定日期的数据
+// TODO: 这里存在内存逃逸和泄漏的问题
 func (this *Cache1D[T]) loadCache(date string) {
 	// 重置个股列表
 	this.allCodes = market.GetCodeList()

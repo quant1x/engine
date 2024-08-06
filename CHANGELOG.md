@@ -3,10 +3,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.43] - 2024-08-06
+### Changed
+- 更新依赖库版本
+
 ## [1.8.42] - 2024-08-06
 ### Changed
 - 加载缓存增加TODO项,确认和解决内存泄漏的问题
 - 更新依赖库版本
+- update changelog
 
 ## [1.8.41] - 2024-07-31
 ### Changed
@@ -1771,7 +1776,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.42...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.43...HEAD
+[1.8.43]: https://gitee.com/quant1x/engine.git/compare/v1.8.42...v1.8.43
 [1.8.42]: https://gitee.com/quant1x/engine.git/compare/v1.8.41...v1.8.42
 [1.8.41]: https://gitee.com/quant1x/engine.git/compare/v1.8.40...v1.8.41
 [1.8.40]: https://gitee.com/quant1x/engine.git/compare/v1.8.39...v1.8.40

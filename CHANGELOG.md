@@ -3,9 +3,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.45] - 2024-08-06
+### Changed
+- 更新依赖库ta-lib版本号到0.7.27
+
 ## [1.8.44] - 2024-08-06
 ### Changed
 - 更新依赖库ta-lib版本号到0.7.26
+- update changelog
 
 ## [1.8.43] - 2024-08-06
 ### Changed
@@ -1781,7 +1786,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.44...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.45...HEAD
+[1.8.45]: https://gitee.com/quant1x/engine.git/compare/v1.8.44...v1.8.45
 [1.8.44]: https://gitee.com/quant1x/engine.git/compare/v1.8.43...v1.8.44
 [1.8.43]: https://gitee.com/quant1x/engine.git/compare/v1.8.42...v1.8.43
 [1.8.42]: https://gitee.com/quant1x/engine.git/compare/v1.8.41...v1.8.42

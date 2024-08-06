@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.8.42] - 2024-08-06
+### Changed
+- 加载缓存增加TODO项,确认和解决内存泄漏的问题
+- 更新依赖库版本
+
 ## [1.8.41] - 2024-07-31
 ### Changed
 - 特征旋转适配器get接口增加锁机制
@@ -19,6 +24,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - 更新ta-lib版本到0.7.23
 - 调整实时K线重试部分代码
+- update changelog
 
 ## [1.8.39] - 2024-07-05
 ### Changed
@@ -1765,7 +1771,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.41...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.8.42...HEAD
+[1.8.42]: https://gitee.com/quant1x/engine.git/compare/v1.8.41...v1.8.42
 [1.8.41]: https://gitee.com/quant1x/engine.git/compare/v1.8.40...v1.8.41
 [1.8.40]: https://gitee.com/quant1x/engine.git/compare/v1.8.39...v1.8.40
 [1.8.39]: https://gitee.com/quant1x/engine.git/compare/v1.8.38...v1.8.39

@@ -14,8 +14,9 @@ import (
 	_ "unsafe" // For go:linkname
 )
 
-//go:linkname cpuModelName internal/cpu.Name
-func cpuModelName() string
+func cpuModelName() string {
+	return "Unknown"
+}
 
 const (
 	KB = 1024      // Kilo Byte
@@ -36,7 +37,7 @@ var (
 
 // 输出欢迎语
 func printMotd() {
-	fmt.Printf("CPU: %s %dCores, AVX2: %t\n", cpuModelName(), goruntime.NumCPU(), num.GetAvx2Enabled())
+	fmt.Printf("CPU: %s, %dCores, AVX2: %t\n", cpuModelName(), goruntime.NumCPU(), num.GetAvx2Enabled())
 	fmt.Println()
 }
 

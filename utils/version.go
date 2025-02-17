@@ -13,7 +13,7 @@ func CurrentVersion() string {
 	minVersion := InvalidVersion
 	latest, err := git.Exec("describe", "--tags", "--abbrev=0")
 	if err == nil {
-		minVersion = fixVersion(latest)
+		minVersion = NormalizeVersion(latest)
 	}
 	return minVersion
 }
@@ -27,16 +27,18 @@ func RequireVersion(module string) string {
 	if err == nil {
 		arr := strings.Split(mod, " ")
 		if len(arr) >= 2 {
-			minVersion = fixVersion(arr[1])
+			minVersion = NormalizeVersion(arr[1])
 		}
 	}
 	return minVersion
 }
 
-// 去掉版本号前的字符v或V
-func fixVersion(version string) string {
+// NormalizeVersion 表示将版本号格式化为标准形式
+//
+//	去掉版本号前的字符v或V
+func NormalizeVersion(version string) string {
 	latest := strings.TrimSpace(version)
-	if latest[0] == 'v' || latest[0] == 'V' {
+	for len(latest) > 0 && (latest[0] == 'v' || latest[0] == 'V') {
 		latest = latest[1:]
 	}
 	return latest

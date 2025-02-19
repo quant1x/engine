@@ -13,6 +13,7 @@ require (
 	github.com/bits-and-blooms/bitset v1.20.0
 	github.com/fatih/color v1.18.0
 	github.com/go-echarts/go-echarts/v2 v2.5.0
+	github.com/klauspost/cpuid/v2 v2.2.9
 	github.com/sevlyar/go-daemon v0.1.6
 	github.com/spf13/cobra v1.8.1
 	golang.org/x/sys v0.30.0

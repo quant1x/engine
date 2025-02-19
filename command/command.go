@@ -7,6 +7,7 @@ import (
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/runtime"
 	"gitee.com/quant1x/num"
+	"github.com/klauspost/cpuid/v2" // For cpuid
 	cmder "github.com/spf13/cobra"
 	"os"
 	goruntime "runtime"
@@ -14,8 +15,9 @@ import (
 	_ "unsafe" // For go:linkname
 )
 
+// 获取CPU型号
 func cpuModelName() string {
-	return "Unknown"
+	return cpuid.CPU.BrandName
 }
 
 const (

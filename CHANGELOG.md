@@ -3,9 +3,18 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.9.1] - 2025-02-25
+### Changed
+- 优化修订版本号函数并规范函数名
+- 调整获取CPU型号的方法
+- 调整成交数据的测试代码
+- data配置项增加cache,允许用特征关键字作为key的map,方便扩展基础数据和特征的新增配置项,有灵活性,不用每次增加配置就要改动engine
+- data配置项增加cache,允许用特征关键字作为key的map,方便扩展基础数据和特征的新增配置项,有灵活性,不用每次增加配置就要改动engine
+
 ## [1.9.0] - 2025-02-15
 ### Changed
 - 更新依赖库gotdx版本号到1.23.0
+- update changelog
 
 ## [1.8.46] - 2024-12-27
 ### Changed
@@ -1796,7 +1805,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.0...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.1...HEAD
+[1.9.1]: https://gitee.com/quant1x/engine.git/compare/v1.9.0...v1.9.1
 [1.9.0]: https://gitee.com/quant1x/engine.git/compare/v1.8.46...v1.9.0
 [1.8.46]: https://gitee.com/quant1x/engine.git/compare/v1.8.45...v1.8.46
 [1.8.45]: https://gitee.com/quant1x/engine.git/compare/v1.8.44...v1.8.45

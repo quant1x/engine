@@ -97,6 +97,7 @@ func AllScan(barIndex *int, model models.Strategy) {
 			stockSnapshots = append(stockSnapshots, snapshot)
 		}
 	}
+	bar.Wait()
 	if len(stockSnapshots) == 0 {
 		return
 	}

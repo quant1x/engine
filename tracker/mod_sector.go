@@ -33,7 +33,7 @@ func ScanAllSectors(barIndex *int, model models.Strategy) {
 	// 执行板块指数的检测
 	typeBlocks := TopBlockWithType(barIndex, tradeRule)
 	// 不分板块类型, 所有的板块放在一起排序
-	allBlocks := []SectorInfo{}
+	var allBlocks []SectorInfo
 	for _, v := range typeBlocks {
 		allBlocks = append(allBlocks, v...)
 	}
@@ -140,6 +140,7 @@ func ScanAllSectors(barIndex *int, model models.Strategy) {
 			}
 		}
 	}
+	bar.Wait()
 	// TODO 板块再排序
 	// 输出 板块排行表格
 	var lastBlocks []SectorInfo
@@ -202,13 +203,11 @@ func ScanAllSectors(barIndex *int, model models.Strategy) {
 	fmt.Println()
 	table := tablewriter.NewWriter(os.Stdout)
 	table.SetHeader(tags.GetHeadersByTags(models.ResultInfo{}))
-
 	elapsedTime := time.Since(mainStart) / time.Millisecond
 	goals := mapStock.Size()
-	message := fmt.Sprintf("总耗时: %.3fs, 总记录: %d, 命中: %d, 平均: %.3f/s\n", float64(elapsedTime)/1000, count, goals, float64(count)/(float64(elapsedTime)/1000))
+	message := fmt.Sprintf("\n总耗时: %.3fs, 总记录: %d, 命中: %d, 平均: %.3f/s\n", float64(elapsedTime)/1000, count, goals, float64(count)/(float64(elapsedTime)/1000))
 	fmt.Printf(message)
 	logger.Infof(message)
-	fmt.Println("")
 	// 执行曲线回归
 	wg = sync.WaitGroup{}
 	bar = progressbar.NewBar(*barIndex, "执行[综合策略]", goals)
@@ -246,7 +245,8 @@ func ScanAllSectors(barIndex *int, model models.Strategy) {
 		predict(row, &rs, table)
 	})
 	wg.Wait()
-	fmt.Println("")
+	bar.Wait()
+	fmt.Println()
 	output(model.Code(), rs)
 	table.Render()
 }

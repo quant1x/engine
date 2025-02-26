@@ -149,8 +149,9 @@ func handleRepairAllFeatures(dates []string) {
 	barIndex++
 	for _, date := range dates {
 		cacheDate, featureDate := cache.CorrectDate(date)
-		storages.FeaturesUpdate(&barIndex, cacheDate, featureDate, plugins, cache.OpRepair)
+		cb := storages.FeaturesUpdate(&barIndex, cacheDate, featureDate, plugins, cache.OpRepair)
 		bar.Add(1)
+		cb()
 	}
 	bar.Wait()
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())
@@ -167,8 +168,9 @@ func handleRepairFeaturesWithPlugins(dates []string, plugins []cache.DataAdapter
 	barIndex++
 	for _, date := range dates {
 		cacheDate, featureDate := cache.CorrectDate(date)
-		storages.FeaturesUpdate(&barIndex, cacheDate, featureDate, plugins, cache.OpRepair)
+		cb := storages.FeaturesUpdate(&barIndex, cacheDate, featureDate, plugins, cache.OpRepair)
 		bar.Add(1)
+		cb()
 	}
 	bar.Wait()
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())

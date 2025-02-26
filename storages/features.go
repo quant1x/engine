@@ -9,11 +9,16 @@ import (
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/runtime"
+	"gitee.com/quant1x/gox/tags"
 	"gitee.com/quant1x/gox/text/runewidth"
 	"gitee.com/quant1x/gox/util/treemap"
+	"gitee.com/quant1x/pkg/tablewriter"
+	"os"
 	"sync"
 	"time"
 )
+
+type MetricCallback func()
 
 func updateStockFeature(wg *coroutine.RollingWaitGroup, bar *progressbar.Bar, feature factors.Feature, code string, cacheDate, featureDate string, op cache.OpKind, p *treemap.Map, sb *cache.ScoreBoard, now time.Time) {
 	defer runtime.CatchPanic("code[%s]: cacheDate=%s,featureDate=%s", code, cacheDate, featureDate)
@@ -29,7 +34,7 @@ func updateStockFeature(wg *coroutine.RollingWaitGroup, bar *progressbar.Bar, fe
 }
 
 // FeaturesUpdate 更新特征
-func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cache.DataAdapter, op cache.OpKind) {
+func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cache.DataAdapter, op cache.OpKind) MetricCallback {
 	moduleName := "特征数据"
 	if op == cache.OpRepair {
 		moduleName = "修复" + moduleName
@@ -98,18 +103,22 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 	wgAdapter.Wait()
 	barAdapter.Wait()
 	logger.Infof("%s: all, end", moduleName)
-	//// 输出衡量性能的指标列表
-	//metricCount := len(metrics)
-	//if metricCount > 0 {
-	//	fmt.Printf("\r\n")
-	//	//lineCount := (metricCount+1)*2 + 1
-	//	//fmt.Printf(strings.Repeat("\n", lineCount))
-	//	//progressbar.SetMaxLine(progressbar.GetMaxLine() + lineCount)
-	//	table := tablewriter.NewWriter(os.Stdout)
-	//	table.SetHeader(tags.GetHeadersByTags(cache.ScoreBoard{}))
-	//	for _, v := range metrics {
-	//		table.Append(tags.GetValuesByTags(v))
-	//	}
-	//	table.Render()
-	//}
+	// 输出衡量性能的指标列表
+	mcb := func() {
+		metricCount := len(metrics)
+		if metricCount > 0 {
+			//fmt.Println("\r")
+			//lineCount := (metricCount+1)*2 + 1
+			//lineCount = 2
+			//fmt.Printf(strings.Repeat("\r\n", lineCount))
+			//progressbar.SetMaxLine(progressbar.GetMaxLine() + lineCount)
+			table := tablewriter.NewWriter(os.Stdout)
+			table.SetHeader(tags.GetHeadersByTags(cache.ScoreBoard{}))
+			for _, v := range metrics {
+				table.Append(tags.GetValuesByTags(v))
+			}
+			table.Render()
+		}
+	}
+	return mcb
 }

@@ -3,10 +3,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.9.3] - 2025-02-26
+### Changed
+- 更新gox版本到1.22.2
+
 ## [1.9.2] - 2025-02-26
 ### Changed
 - 优化进度条
 - 调整控制台显示顺序
+- update changelog
 
 ## [1.9.1] - 2025-02-25
 ### Changed
@@ -1811,7 +1816,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.2...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.3...HEAD
+[1.9.3]: https://gitee.com/quant1x/engine.git/compare/v1.9.2...v1.9.3
 [1.9.2]: https://gitee.com/quant1x/engine.git/compare/v1.9.1...v1.9.2
 [1.9.1]: https://gitee.com/quant1x/engine.git/compare/v1.9.0...v1.9.1
 [1.9.0]: https://gitee.com/quant1x/engine.git/compare/v1.8.46...v1.9.0

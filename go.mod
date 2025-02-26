@@ -5,12 +5,12 @@ go 1.24
 require (
 	gitee.com/quant1x/exchange v0.6.1
 	gitee.com/quant1x/gotdx v1.23.0
-	gitee.com/quant1x/gox v1.22.1
+	gitee.com/quant1x/gox v1.22.2
 	gitee.com/quant1x/num v0.4.1
 	gitee.com/quant1x/pandas v1.5.0
 	gitee.com/quant1x/pkg v0.4.0
 	gitee.com/quant1x/ta-lib v0.8.2
-	github.com/bits-and-blooms/bitset v1.20.0
+	github.com/bits-and-blooms/bitset v1.21.0
 	github.com/fatih/color v1.18.0
 	github.com/go-echarts/go-echarts/v2 v2.5.1
 	github.com/klauspost/cpuid/v2 v2.2.10

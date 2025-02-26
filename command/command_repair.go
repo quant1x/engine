@@ -101,7 +101,6 @@ func handleRepairAll(dates []string) {
 }
 
 func handleRepairAllDataSets(dates []string) {
-	fmt.Println()
 	moduleName := "补登数据集合"
 	logger.Info(moduleName + ", 任务开始")
 	mask := cache.PluginMaskBaseData
@@ -109,9 +108,9 @@ func handleRepairAllDataSets(dates []string) {
 	count := len(dates)
 	barIndex := 1
 	bar := progressbar.NewBar(barIndex, "执行["+moduleName+"]", count)
+	barIndex++
 	for _, date := range dates {
 		//cacheDate, featureDate := cache.CorrectDate(date)
-		barIndex++
 		storages.BaseDataUpdate(barIndex, date, plugins, cache.OpRepair)
 		bar.Add(1)
 	}
@@ -122,7 +121,6 @@ func handleRepairAllDataSets(dates []string) {
 
 // 修复 - 指定的基础数据
 func handleRepairDataSetsWithPlugins(dates []string, plugins []cache.DataAdapter) {
-	fmt.Println()
 	moduleName := "修复数据"
 	logger.Info(moduleName + ", 任务开始")
 	count := len(dates)
@@ -134,6 +132,7 @@ func handleRepairDataSetsWithPlugins(dates []string, plugins []cache.DataAdapter
 		storages.BaseDataUpdate(barIndex+1, date, plugins, cache.OpRepair)
 		bar.Add(1)
 	}
+	bar.Wait()
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())
 	fmt.Println()
 }
@@ -147,30 +146,31 @@ func handleRepairAllFeatures(dates []string) {
 	count := len(dates)
 	barIndex := 1
 	bar := progressbar.NewBar(barIndex, "执行["+moduleName+"]", count)
+	barIndex++
 	for _, date := range dates {
 		cacheDate, featureDate := cache.CorrectDate(date)
-		barIndex++
 		storages.FeaturesUpdate(&barIndex, cacheDate, featureDate, plugins, cache.OpRepair)
 		bar.Add(1)
 	}
+	bar.Wait()
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())
 	fmt.Println()
 }
 
 // 修复 - 指定的特征数据
 func handleRepairFeaturesWithPlugins(dates []string, plugins []cache.DataAdapter) {
-	fmt.Println()
 	moduleName := "修复数据"
 	logger.Info(moduleName + ", 任务开始")
 	count := len(dates)
 	barIndex := 1
 	bar := progressbar.NewBar(barIndex, "执行["+moduleName+"]", count)
+	barIndex++
 	for _, date := range dates {
 		cacheDate, featureDate := cache.CorrectDate(date)
-		barIndex++
 		storages.FeaturesUpdate(&barIndex, cacheDate, featureDate, plugins, cache.OpRepair)
 		bar.Add(1)
 	}
+	bar.Wait()
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())
 	fmt.Println()
 }

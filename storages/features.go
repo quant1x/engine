@@ -18,6 +18,7 @@ import (
 	"time"
 )
 
+// MetricCallback 性能指标回调函数
 type MetricCallback func()
 
 func updateStockFeature(wg *coroutine.RollingWaitGroup, bar *progressbar.Bar, feature factors.Feature, code string, cacheDate, featureDate string, op cache.OpKind, p *treemap.Map, sb *cache.ScoreBoard, now time.Time) {

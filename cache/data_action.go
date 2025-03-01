@@ -12,3 +12,10 @@ const (
 	OpIncr                       // 增量
 	OpBackTest                   // 回测
 )
+
+var OpMap = map[OpKind]string{
+	OpUpdate:   "更新",
+	OpRepair:   "修复",
+	OpIncr:     "增量",
+	OpBackTest: "回测",
+}

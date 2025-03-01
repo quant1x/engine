@@ -8,12 +8,31 @@ import (
 	"gitee.com/quant1x/gox/runtime"
 	"gitee.com/quant1x/num"
 	"github.com/klauspost/cpuid/v2" // For cpuid
-	cmder "github.com/spf13/cobra"
+	cli "github.com/spf13/cobra"
 	"os"
 	goruntime "runtime"
 	"strings"
 	_ "unsafe" // For go:linkname
 )
+
+var (
+	Application = "stock"
+	MinVersion  = "0.0.1" // 主程序版本号
+)
+
+func init() {
+	Application = runtime.ApplicationName()
+}
+
+// UpdateApplicationName 更新应用(Application)名称
+func UpdateApplicationName(name string) {
+	Application = name
+}
+
+// UpdateApplicationVersion 更新版本号
+func UpdateApplicationVersion(v string) {
+	MinVersion = v
+}
 
 // 获取CPU型号
 func cpuModelName() string {
@@ -54,6 +73,7 @@ func initSubCommands() {
 	initTracker()
 	initTools()
 	initService()
+	initBackTest()
 }
 
 // InitCommands 公开初始化函数
@@ -62,11 +82,11 @@ func InitCommands() {
 }
 
 // GlobalFlags engine支持的全部命令
-func GlobalFlags() *cmder.Command {
+func GlobalFlags() *cli.Command {
 	initSubCommands()
-	engineCmd := &cmder.Command{
+	engineCmd := &cli.Command{
 		Use: Application,
-		Run: func(cmd *cmder.Command, args []string) {
+		Run: func(cmd *cli.Command, args []string) {
 			logger.Warnf("stock default args:%+v", os.Args)
 			model, err := models.CheckoutStrategy(strategyNumber)
 			if err != nil {
@@ -78,7 +98,7 @@ func GlobalFlags() *cmder.Command {
 			barIndex := 1
 			tracker.ExecuteStrategy(model, &barIndex)
 		},
-		PersistentPreRun: func(cmd *cmder.Command, args []string) {
+		PersistentPreRun: func(cmd *cli.Command, args []string) {
 			// 重置全局调试状态
 			runtime.SetDebug(businessDebug)
 			// AVX2 加速
@@ -86,7 +106,7 @@ func GlobalFlags() *cmder.Command {
 			// 设置CPU最大核数
 			runtime.GoMaxProcs(cpuNum)
 		},
-		PersistentPostRun: func(cmd *cmder.Command, args []string) {
+		PersistentPostRun: func(cmd *cli.Command, args []string) {
 			//
 		},
 	}

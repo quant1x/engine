@@ -63,7 +63,7 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 	allCodes := market.GetCodeList()
 	allCodes = allCodes[:]
 	codeCount := len(allCodes)
-	var metrics []cache.ScoreBoard
+	var metrics []cache.AdapterMetric
 	for _, adapter := range adapters {
 		logger.Infof("%s: %s, begin", moduleName, adapter.Name())
 
@@ -98,7 +98,7 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 		// 适配器进度条+1
 		barAdapter.Add(1)
 		wgAdapter.Done()
-		metrics = append(metrics, sb)
+		metrics = append(metrics, sb.Metric())
 		logger.Infof("%s: %s, end", moduleName, adapter.Name())
 	}
 	wgAdapter.Wait()

@@ -11,3 +11,20 @@ func TestCommand(t *testing.T) {
 	err := errors.New("invalid argument \"f10\" for \"--features\" flag: strconv.ParseBool: parsing \"f10\": invalid syntax")
 	parseFlagError(err)
 }
+
+func TestUpdateApplicationName(t *testing.T) {
+	type args struct {
+		name string
+	}
+	tests := []struct {
+		name string
+		args args
+	}{
+		// TODO: Add test cases.
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			UpdateApplicationName(tt.args.name)
+		})
+	}
+}

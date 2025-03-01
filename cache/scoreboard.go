@@ -6,9 +6,14 @@ import (
 	"time"
 )
 
-// ScoreBoard 记分牌
+// ScoreBoard 记分牌, 线程安全
 type ScoreBoard struct {
-	m         sync.Mutex
+	m sync.Mutex
+	AdapterMetric
+}
+
+// AdapterMetric 适配器性能指标
+type AdapterMetric struct {
 	Name      string        `name:"name"`       // 名称
 	Kind      Kind          `name:"kind"`       // 类型
 	Count     int           `name:"count"`      // 总数
@@ -40,4 +45,8 @@ func (this *ScoreBoard) Add(delta int, take time.Duration) {
 func (this *ScoreBoard) String() string {
 	s := fmt.Sprintf("name: %s, kind: %d, total: %d, crosstime: %s, max: %d, min: %d, speed: %f", this.Name, this.Kind, this.Count, this.CrossTime, this.Max, this.Min, this.Speed)
 	return s
+}
+
+func (this *ScoreBoard) Metric() AdapterMetric {
+	return this.AdapterMetric
 }

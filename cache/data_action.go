@@ -7,7 +7,8 @@ const (
 type OpKind int
 
 const (
-	OpUpdate OpKind = iota + 1 // 更新
-	OpRepair                   // 修复
-	OpIncr                     // 增量
+	OpUpdate   OpKind = iota + 1 // 更新
+	OpRepair                     // 修复
+	OpIncr                       // 增量
+	OpBackTest                   // 回测
 )

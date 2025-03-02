@@ -119,6 +119,7 @@ func GlobalFlags() *cli.Command {
 	engineCmd.AddCommand(CmdVersion, CmdSafes, CmdBestIP, CmdConfig, CmdTools)
 	engineCmd.AddCommand(CmdUpdate, CmdRepair, CmdPrint)
 	engineCmd.AddCommand(CmdBackTesting, CmdRules, CmdTracker)
+	engineCmd.AddCommand(cmdBackTest)
 	engineCmd.AddCommand(CmdService)
 	return engineCmd
 }

@@ -89,8 +89,8 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 		return
 	}
 	backTestingParameter := config.GetDataConfig().BackTesting
-	allResult := []models.Statistics{}
-	gcs := []GoodCase{}
+	var allResult []models.Statistics
+	var gcs []GoodCase
 	dates = dates[s : e+1]
 	codes := market.GetCodeList()
 	mapStock := map[string][]factors.SecurityFeature{}
@@ -99,7 +99,7 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 		// 切换策略数据的缓存日期
 		factors.SwitchDate(testDate)
 		var marketPrices []float64
-		stockSnapshots := []factors.QuoteSnapshot{}
+		var stockSnapshots []factors.QuoteSnapshot
 		total := len(codes)
 		//pos := 0
 		bar := progressbar.NewBar(1, "执行["+testDate+"涨幅扫描]", total)
@@ -184,7 +184,7 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 			})
 		}
 
-		samples := []SampleFeature{}
+		var samples []SampleFeature
 		for _, snapshot := range stockSnapshots {
 			securityCode := snapshot.SecurityCode
 			// 获取证券名称
@@ -270,7 +270,7 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 		gtP3 := 0 // 超过2%
 		gtP4 := 0 // 超过3%
 		gtP5 := 0 // 超过5%
-		yields := float64(0.00)
+		yields := 0.00
 		for _, v := range results {
 			rate := v.NextPremiumRate
 			if rate > 0 {

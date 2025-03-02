@@ -32,8 +32,12 @@ func getCache1DFilepath(key, date string) string {
 //
 //	一天一个特征组合缓存文件
 type FeatureRotationAdapter interface {
+	// Kind 获取缓存类型
+	Kind() cache.Kind
 	// Name 名称
 	Name() string
+	// Element 获取指定日期的特征
+	Element(securityCode string, date ...string) Feature
 	// Checkout 加载指定日期的缓存
 	Checkout(date ...string)
 	// Merge 合并数据

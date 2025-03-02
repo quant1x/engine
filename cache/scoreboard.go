@@ -17,6 +17,7 @@ type AdapterMetric struct {
 	Name      string        `name:"name"`       // 名称
 	Kind      Kind          `name:"kind"`       // 类型
 	Count     int           `name:"count"`      // 总数
+	Passed    int           `name:"passed"`     // 通过检测数
 	Max       time.Duration `name:"max"`        // 最大值
 	Min       time.Duration `name:"min"`        // 最小值
 	CrossTime time.Duration `name:"cross_time"` // 总耗时
@@ -28,7 +29,7 @@ func (this *ScoreBoard) From(adapter DataAdapter) {
 	this.Kind = adapter.Kind()
 }
 
-func (this *ScoreBoard) Add(delta int, take time.Duration) {
+func (this *ScoreBoard) Add(delta int, take time.Duration, pass ...bool) {
 	this.m.Lock()
 	defer this.m.Unlock()
 	this.Count = this.Count + delta
@@ -40,6 +41,13 @@ func (this *ScoreBoard) Add(delta int, take time.Duration) {
 		this.Max = take
 	}
 	this.Speed = float64(this.Count) / this.CrossTime.Seconds()
+	passed := false
+	if len(pass) > 0 {
+		passed = pass[0]
+	}
+	if passed {
+		this.Passed++
+	}
 }
 
 func (this *ScoreBoard) String() string {

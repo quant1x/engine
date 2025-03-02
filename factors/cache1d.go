@@ -188,6 +188,16 @@ func (this *Cache1D[T]) Get(securityCode string, date ...string) *T {
 	return nil
 }
 
+func (this *Cache1D[T]) Element(securityCode string, date ...string) Feature {
+	this.Checkout(date...)
+	this.once.Do(this.loadDefault)
+	t, ok := this.mapCache.Get(securityCode)
+	if ok {
+		return t
+	}
+	return nil
+}
+
 // Set 更新map中指定证券代码的数据
 func (this *Cache1D[T]) Set(securityCode string, newValue T, date ...string) {
 	this.Checkout(date...)

@@ -20,11 +20,21 @@ func TestUpdateApplicationName(t *testing.T) {
 		name string
 		args args
 	}{
-		// TODO: Add test cases.
+		{
+			name: "test",
+			args: args{
+				name: "test",
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			UpdateApplicationName(tt.args.name)
 		})
 	}
+}
+
+func TestInitCommands(t *testing.T) {
+	InitCommands()
+
 }

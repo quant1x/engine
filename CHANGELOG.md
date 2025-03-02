@@ -3,9 +3,26 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.9.4] - 2025-03-02
+### Changed
+- 回调接口补充注释
+- 调整记分牌和性能指标的结构, 去除mutex不能append到切片的告警
+- 将和engine入口有关的源代码文件合并到app中
+- 消除UpdateApplicationName函数未使用的告警
+- 操作动作增加回测
+- 将和engine入口有关的源代码文件合并到app中
+- 操作动作增加回测
+- 删除废弃的代码
+- 调整部分代码
+- 子命令加入backtest
+- 更新gox版本到1.22.3, ta-lib版本到0.8.3
+- 调整部分测试代码
+- 优化backtest功能, 去除冗余的操作
+
 ## [1.9.3] - 2025-02-26
 ### Changed
 - 更新gox版本到1.22.2
+- update changelog
 
 ## [1.9.2] - 2025-02-26
 ### Changed
@@ -1816,7 +1833,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.3...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.4...HEAD
+[1.9.4]: https://gitee.com/quant1x/engine.git/compare/v1.9.3...v1.9.4
 [1.9.3]: https://gitee.com/quant1x/engine.git/compare/v1.9.2...v1.9.3
 [1.9.2]: https://gitee.com/quant1x/engine.git/compare/v1.9.1...v1.9.2
 [1.9.1]: https://gitee.com/quant1x/engine.git/compare/v1.9.0...v1.9.1

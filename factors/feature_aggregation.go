@@ -18,6 +18,8 @@ var (
 	__l5Box *Cache1D[*Box] = nil
 	// 情绪大师
 	__l5InvestmentSentimentMaster *Cache1D[*InvestmentSentimentMaster] = nil
+	// 融资融券
+	__l5SecuritiesMarginTrading *Cache1D[*SecuritiesMarginTrading] = nil
 )
 
 func init() {
@@ -52,6 +54,12 @@ func lazyInitFeatures() {
 	// 情绪大师
 	__l5InvestmentSentimentMaster = NewCache1D[*InvestmentSentimentMaster](cacheL5KeyInvestmentSentimentMaster, NewInvestmentSentimentMaster)
 	err = cache.Register(__l5InvestmentSentimentMaster)
+	if err != nil {
+		logger.Fatalf("%+v", err)
+	}
+	// 融资融券
+	__l5SecuritiesMarginTrading = NewCache1D[*SecuritiesMarginTrading](cacheL5KeySecuritiesMarginTrading, NewSecuritiesMarginTrading)
+	err = cache.Register(__l5SecuritiesMarginTrading)
 	if err != nil {
 		logger.Fatalf("%+v", err)
 	}
@@ -117,6 +125,16 @@ func GetL5Box(securityCode string, date ...string) *Box {
 func GetL5InvestmentSentimentMaster(securityCode string, date ...string) (ism *InvestmentSentimentMaster) {
 	__l5Once.Do(lazyInitFeatures)
 	v := __l5InvestmentSentimentMaster.Get(securityCode, date...)
+	if v == nil {
+		return nil
+	}
+	return *v
+}
+
+// GetL5SecuritiesMarginTrading 获取情绪大师的数据
+func GetL5SecuritiesMarginTrading(securityCode string, date ...string) (rzrq *SecuritiesMarginTrading) {
+	__l5Once.Do(lazyInitFeatures)
+	v := __l5SecuritiesMarginTrading.Get(securityCode, date...)
 	if v == nil {
 		return nil
 	}

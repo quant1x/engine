@@ -104,6 +104,7 @@ func (this *Misc) Factory(date string, code string) Feature {
 }
 
 func (this *Misc) Init(ctx context.Context, date string) error {
+	MarginTradingTargetInit(this.GetDate())
 	_ = ctx
 	_ = date
 	return nil

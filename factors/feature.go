@@ -48,6 +48,7 @@ const (
 	FeatureBreaksThroughBox          = baseFeature + 5 // 特征数据-box
 	FeatureKLineShap                 = baseFeature + 6 // 特征数据-K线形态等
 	FeatureInvestmentSentimentMaster = baseFeature + 7 // 狩猎者-情绪周期
+	FeatureSecuritiesMarginTrading   = baseFeature + 8 // 融资融券
 )
 
 var (
@@ -57,6 +58,7 @@ var (
 		FeatureMisc:                      cache.Summary(FeatureMisc, cacheL5KeyMisc, "交易数据集合", cache.DefaultDataProvider),
 		FeatureBreaksThroughBox:          cache.Summary(FeatureBreaksThroughBox, cacheL5KeyBox, "有效突破平台", cache.DefaultDataProvider),
 		FeatureInvestmentSentimentMaster: cache.Summary(FeatureInvestmentSentimentMaster, cacheL5KeyInvestmentSentimentMaster, "情绪大师", cache.DefaultDataProvider),
+		FeatureSecuritiesMarginTrading:   cache.Summary(FeatureSecuritiesMarginTrading, cacheL5KeySecuritiesMarginTrading, "融资融券", cache.DefaultDataProvider),
 	}
 )
 

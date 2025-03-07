@@ -1,6 +1,7 @@
 package factors
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"gitee.com/quant1x/engine/cache"
@@ -15,9 +16,10 @@ func TestFeatureMisc(t *testing.T) {
 	code = "sh603038"
 	code = "sh600178"
 	code = "sz300261"
-	date := "2024-03-27"
+	date := "2025-03-07"
 	cacheDate, featureDate := cache.CorrectDate(date)
 	misc := NewMisc(date, code)
+	misc.Init(context.Background(), featureDate)
 	misc.Update(code, cacheDate, featureDate, false)
 	fmt.Println(misc.Shape & KLineShapeDoji)
 	data, _ := json.Marshal(misc)

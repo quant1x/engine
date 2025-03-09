@@ -140,3 +140,15 @@ func GetL5SecuritiesMarginTrading(securityCode string, date ...string) (rzrq *Se
 	}
 	return *v
 }
+
+// UpdateL5SecuritiesMarginTrading 更新单条数据
+func UpdateL5SecuritiesMarginTrading(smt *SecuritiesMarginTrading) {
+	__l5Once.Do(lazyInitFeatures)
+	__l5SecuritiesMarginTrading.Set(smt.Code, smt, cache.DefaultCanReadDate())
+}
+
+// RefreshL5SecuritiesMarginTrading 刷新数据缓存
+func RefreshL5SecuritiesMarginTrading() {
+	__l5Once.Do(lazyInitFeatures)
+	__l5SecuritiesMarginTrading.Apply(nil, true)
+}

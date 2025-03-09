@@ -45,6 +45,7 @@ func updateMarginTradingForRzrq(cacheDate string) {
 		if ok {
 			_ = api.Copy(smt, &rzrq)
 			smt.UpdateTime = factors.GetTimestamp()
+			smt.State |= factors.FeatureSecuritiesMarginTrading
 			factors.UpdateL5SecuritiesMarginTrading(smt)
 		}
 	}

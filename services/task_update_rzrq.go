@@ -12,15 +12,15 @@ func jobUpdateMarginTrading() {
 	logger.Infof("同步融资融券...")
 	date := cache.DefaultCanReadDate()
 	factors.MarginTradingTargetInit(date)
-	updateMarginTradingForMisc()
-	updateMarginTradingForRzrq()
+	updateMarginTradingForMisc(date)
+	updateMarginTradingForRzrq(date)
 	logger.Infof("同步融资融券...OK")
 }
 
-func updateMarginTradingForMisc() {
+func updateMarginTradingForMisc(cacheDate string) {
 	allCodes := market.GetCodeList()
 	for _, securityCode := range allCodes {
-		misc := factors.GetL5Misc(securityCode)
+		misc := factors.GetL5Misc(securityCode, cacheDate)
 		if misc == nil {
 			continue
 		}
@@ -34,10 +34,10 @@ func updateMarginTradingForMisc() {
 	factors.RefreshL5Misc()
 }
 
-func updateMarginTradingForRzrq() {
+func updateMarginTradingForRzrq(cacheDate string) {
 	allCodes := market.GetCodeList()
 	for _, securityCode := range allCodes {
-		smt := factors.GetL5SecuritiesMarginTrading(securityCode)
+		smt := factors.GetL5SecuritiesMarginTrading(securityCode, cacheDate)
 		if smt == nil {
 			continue
 		}

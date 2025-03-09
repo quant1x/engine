@@ -1,22 +1,18 @@
 package storages
 
 import (
-	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
-	"gitee.com/quant1x/gox/tags"
 	"gitee.com/quant1x/pkg/runewidth"
-	"gitee.com/quant1x/pkg/tablewriter"
-	"os"
 	"sync"
 	"time"
 )
 
 // FeaturesBackTest FeaturesUpdate 特征-数据有效性验证
-func FeaturesBackTest(barIndex *int, cacheDate, featureDate string, plugins []cache.DataAdapter, op cache.OpKind) MetricCallback {
+func FeaturesBackTest(barIndex *int, cacheDate, featureDate string, plugins []cache.DataAdapter, op cache.OpKind) []cache.AdapterMetric {
 	moduleName := cache.OpMap[op] + "特征数据"
 	moduleName += cacheDate
 	var adapters []factors.FeatureRotationAdapter
@@ -80,18 +76,6 @@ func FeaturesBackTest(barIndex *int, cacheDate, featureDate string, plugins []ca
 	wgAdapter.Wait()
 	barAdapter.Wait()
 	logger.Infof("%s: all, end", moduleName)
-	// 输出衡量性能的指标列表
-	mcb := func() {
-		fmt.Println()
-		metricCount := len(metrics)
-		if metricCount > 0 {
-			table := tablewriter.NewWriter(os.Stdout)
-			table.SetHeader(tags.GetHeadersByTags(cache.ScoreBoard{}))
-			for _, v := range metrics {
-				table.Append(tags.GetValuesByTags(v))
-			}
-			table.Render()
-		}
-	}
-	return mcb
+
+	return metrics
 }

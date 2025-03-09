@@ -8,7 +8,10 @@ import (
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
+	"gitee.com/quant1x/gox/tags"
+	"gitee.com/quant1x/pkg/tablewriter"
 	cli "github.com/spf13/cobra"
+	"os"
 	"strings"
 	"time"
 )
@@ -168,13 +171,38 @@ func handleBacktestFeaturesWithPlugins(dates []string, plugins []cache.DataAdapt
 	barIndex := 1
 	bar := progressbar.NewBar(barIndex, "执行["+moduleName+"]", count)
 	barIndex++
+	//var metrics []cache.AdapterMetric
+	var rows [][]string
 	for _, date := range dates {
 		cacheDate, featureDate := cache.CorrectDate(date)
-		cb := storages.FeaturesBackTest(&barIndex, cacheDate, featureDate, plugins, cache.OpBackTest)
+		result := storages.FeaturesBackTest(&barIndex, cacheDate, featureDate, plugins, cache.OpBackTest)
+		for _, v := range result {
+			row := []string{date}
+			cols := tags.GetValuesByTags(v)
+			row = append(row, cols...)
+			rows = append(rows, row)
+		}
+		//if len(result) > 0 {
+		//	metrics = append(metrics, result...)
+		//}
+
 		bar.Add(1)
-		cb()
 	}
 	bar.Wait()
 	logger.Info(moduleName+", 任务执行完毕.", time.Now())
 	fmt.Println()
+	//metricCount := len(metrics)
+	//if metricCount > 0 {
+	table := tablewriter.NewWriter(os.Stdout)
+	headers := []string{"date"}
+	headers = append(headers, tags.GetHeadersByTags(cache.AdapterMetric{})...)
+	table.SetAutoFormatHeaders(false)
+	//table.SetAutoMergeCells(true)
+	table.SetHeader(headers)
+	//for i, v := range metrics {
+	//	table.Append(tags.GetValuesByTags(v))
+	//}
+	table.AppendBulk(rows)
+	table.Render()
+	//}
 }

@@ -3,9 +3,17 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.9.7] - 2025-03-09
+### Changed
+- 更新gox版本到1.22.7, 去掉日志切割终端调试信息
+- 每天早点9点5分开始更新misc和rzrq的两融数据
+- 明确获取特征缓存的日期
+- 早上盘前更新两融数据同时修改样本状态为有效
+
 ## [1.9.6] - 2025-03-09
 ### Changed
 - 更新gox版本到1.22.6, logger的优化
+- update changelog
 
 ## [1.9.5] - 2025-03-07
 ### Changed
@@ -1845,7 +1853,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.6...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.7...HEAD
+[1.9.7]: https://gitee.com/quant1x/engine.git/compare/v1.9.6...v1.9.7
 [1.9.6]: https://gitee.com/quant1x/engine.git/compare/v1.9.5...v1.9.6
 [1.9.5]: https://gitee.com/quant1x/engine.git/compare/v1.9.4...v1.9.5
 [1.9.4]: https://gitee.com/quant1x/engine.git/compare/v1.9.3...v1.9.4

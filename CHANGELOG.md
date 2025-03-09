@@ -3,11 +3,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.9.6] - 2025-03-09
+### Changed
+- 更新gox版本到1.22.6, logger的优化
+
 ## [1.9.5] - 2025-03-07
 ### Changed
 - 更新依赖库版本
 - 调整融资融券测试代码
 - 调整融资融券处理方式统一处理, 每日清空依次
+- update changelog
 
 ## [1.9.4] - 2025-03-02
 ### Changed
@@ -1840,7 +1845,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.5...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.6...HEAD
+[1.9.6]: https://gitee.com/quant1x/engine.git/compare/v1.9.5...v1.9.6
 [1.9.5]: https://gitee.com/quant1x/engine.git/compare/v1.9.4...v1.9.5
 [1.9.4]: https://gitee.com/quant1x/engine.git/compare/v1.9.3...v1.9.4
 [1.9.3]: https://gitee.com/quant1x/engine.git/compare/v1.9.2...v1.9.3

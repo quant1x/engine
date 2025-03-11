@@ -3,14 +3,14 @@ module gitee.com/quant1x/engine
 go 1.24
 
 require (
-	gitee.com/quant1x/exchange v0.6.2
-	gitee.com/quant1x/gotdx v1.23.1
-	gitee.com/quant1x/gox v1.22.7
-	gitee.com/quant1x/num v0.4.1
+	gitee.com/quant1x/exchange v0.6.3
+	gitee.com/quant1x/gotdx v1.23.2
+	gitee.com/quant1x/gox v1.22.11
+	gitee.com/quant1x/num v0.4.6
 	gitee.com/quant1x/pandas v1.5.0
-	gitee.com/quant1x/pkg v0.4.0
-	gitee.com/quant1x/ta-lib v0.8.3
-	github.com/bits-and-blooms/bitset v1.21.0
+	gitee.com/quant1x/pkg v0.5.1
+	gitee.com/quant1x/ta-lib v0.8.5
+	github.com/bits-and-blooms/bitset v1.22.0
 	github.com/fatih/color v1.18.0
 	github.com/go-echarts/go-echarts/v2 v2.5.1
 	github.com/klauspost/cpuid/v2 v2.2.10

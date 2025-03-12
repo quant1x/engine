@@ -59,7 +59,7 @@ func updateAllBaseData(barIndex int, featureDate string) {
 	mask := cache.PluginMaskBaseData
 	plugins := cache.Plugins(mask)
 	// 2. 执行操作
-	storages.BaseDataUpdate(barIndex, featureDate, plugins, cache.OpUpdate)
+	storages.DataSetUpdate(barIndex, featureDate, plugins, cache.OpUpdate)
 }
 
 func updateAllFeatures(barIndex int, cacheDate, featureDate string) {

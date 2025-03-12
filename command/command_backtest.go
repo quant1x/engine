@@ -116,7 +116,7 @@ func initBackTest() {
 //	barIndex++
 //	for _, date := range dates {
 //		//cacheDate, featureDate := cache.CorrectDate(date)
-//		storages.BaseDataUpdate(barIndex, date, plugins, cache.OpRepair)
+//		storages.DataSetUpdate(barIndex, date, plugins, cache.OpRepair)
 //		bar.Add(1)
 //	}
 //	bar.Wait()
@@ -134,7 +134,7 @@ func initBackTest() {
 //	for _, date := range dates {
 //		//cacheDate, featureDate := cache.CorrectDate(date)
 //		//barIndex++
-//		storages.BaseDataUpdate(barIndex+1, date, plugins, cache.OpRepair)
+//		storages.DataSetUpdate(barIndex+1, date, plugins, cache.OpRepair)
 //		bar.Add(1)
 //	}
 //	bar.Wait()

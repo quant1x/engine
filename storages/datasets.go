@@ -42,8 +42,8 @@ func updateOneDataSet(wg *sync.WaitGroup, parent, bar *progressbar.Bar, dataSet 
 	logger.Infof("%s: %s, end", moduleName, dataSet.Name())
 }
 
-// BaseDataUpdate 修复数据
-func BaseDataUpdate(barIndex int, date string, plugins []cache.DataAdapter, op cache.OpKind) {
+// DataSetUpdate 修复数据
+func DataSetUpdate(barIndex int, date string, plugins []cache.DataAdapter, op cache.OpKind) {
 	moduleName := "基础数据"
 	if op == cache.OpRepair {
 		moduleName = "修复" + moduleName

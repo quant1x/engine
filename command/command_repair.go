@@ -111,7 +111,7 @@ func handleRepairAllDataSets(dates []string) {
 	barIndex++
 	for _, date := range dates {
 		//cacheDate, featureDate := cache.CorrectDate(date)
-		storages.BaseDataUpdate(barIndex, date, plugins, cache.OpRepair)
+		storages.DataSetUpdate(barIndex, date, plugins, cache.OpRepair)
 		bar.Add(1)
 	}
 	bar.Wait()
@@ -129,7 +129,7 @@ func handleRepairDataSetsWithPlugins(dates []string, plugins []cache.DataAdapter
 	for _, date := range dates {
 		//cacheDate, featureDate := cache.CorrectDate(date)
 		//barIndex++
-		storages.BaseDataUpdate(barIndex+1, date, plugins, cache.OpRepair)
+		storages.DataSetUpdate(barIndex+1, date, plugins, cache.OpRepair)
 		bar.Add(1)
 	}
 	bar.Wait()

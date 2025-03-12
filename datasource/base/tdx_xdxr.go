@@ -37,7 +37,7 @@ func UpdateXdxrInfo(securityCode string) {
 func GetCacheXdxrList(securityCode string) []quotes.XdxrInfo {
 	securityCode = exchange.CorrectSecurityCode(securityCode)
 	filename := cache.XdxrFilename(securityCode)
-	list := []quotes.XdxrInfo{}
+	var list []quotes.XdxrInfo
 	_ = api.CsvToSlices(filename, &list)
 	return list
 }

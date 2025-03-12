@@ -3,12 +3,26 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.9.8] - 2025-03-12
+### Changed
+- 调整数据回测的表格展示在全部测试完成以后显示, 避免和进度条显示冲突
+- 更新依赖库版本
+- 忽略.bin文件
+- 新增chips protobuf协议
+- 新增chips基础数据结构
+- 更新依赖库版本, 新增protobuf
+- 特征更新和修复时date字段确定为特征日期, 即原数据日期
+- kline适配除权除息接口
+- 明确成交数据函数的注释
+- 修订部分代码
+
 ## [1.9.7] - 2025-03-09
 ### Changed
 - 更新gox版本到1.22.7, 去掉日志切割终端调试信息
 - 每天早点9点5分开始更新misc和rzrq的两融数据
 - 明确获取特征缓存的日期
 - 早上盘前更新两融数据同时修改样本状态为有效
+- update changelog
 
 ## [1.9.6] - 2025-03-09
 ### Changed
@@ -1853,7 +1867,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.7...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.8...HEAD
+[1.9.8]: https://gitee.com/quant1x/engine.git/compare/v1.9.7...v1.9.8
 [1.9.7]: https://gitee.com/quant1x/engine.git/compare/v1.9.6...v1.9.7
 [1.9.6]: https://gitee.com/quant1x/engine.git/compare/v1.9.5...v1.9.6
 [1.9.5]: https://gitee.com/quant1x/engine.git/compare/v1.9.4...v1.9.5

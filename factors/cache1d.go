@@ -225,11 +225,12 @@ func (this *Cache1D[T]) Filter(f func(v T) bool) []T {
 //
 //	泛型T需要保持一个string类型的Date字段
 func (this *Cache1D[T]) Apply(merge func(code string, local *T) (updated bool), force ...bool) {
+	cacheDate, featureDate := cache.CorrectDate(this.Date)
 	list := make([]T, 0, len(this.allCodes))
 	for _, securityCode := range this.allCodes {
 		v, found := this.mapCache.Get(securityCode)
 		if !found && this.factory != nil {
-			v = this.factory(this.Date, securityCode)
+			v = this.factory(featureDate, securityCode)
 		}
 		if merge != nil {
 			ok := merge(securityCode, &v)
@@ -245,14 +246,16 @@ func (this *Cache1D[T]) Apply(merge func(code string, local *T) (updated bool), 
 			logger.Errorf("刷新%s异常:%+v", this.filename, err)
 		}
 	}
+	_ = cacheDate
 }
 
 func (this *Cache1D[T]) Merge(p *treemap.Map) {
+	cacheDate, featureDate := cache.CorrectDate(this.Date)
 	list := make([]T, 0, len(this.allCodes))
 	for _, securityCode := range this.allCodes {
 		v, found := this.mapCache.Get(securityCode)
 		if !found && this.factory != nil {
-			v = this.factory(this.Date, securityCode)
+			v = this.factory(featureDate, securityCode)
 		}
 		if p != nil {
 			tmp, ok := p.Get(securityCode)
@@ -269,4 +272,5 @@ func (this *Cache1D[T]) Merge(p *treemap.Map) {
 			logger.Errorf("刷新%s异常:%+v", this.filename, err)
 		}
 	}
+	_ = cacheDate
 }

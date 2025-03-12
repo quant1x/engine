@@ -78,7 +78,7 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 		_ = dataSource.Init(ctx, featureDate)
 		for _, code := range allCodes {
 			now := time.Now()
-			feature := adapter.Factory(cacheDate, code).(factors.Feature)
+			feature := adapter.Factory(featureDate, code).(factors.Feature)
 			if feature.Kind() != factors.FeatureHistory {
 				history := factors.GetL5History(code, cacheDate)
 				if history != nil {

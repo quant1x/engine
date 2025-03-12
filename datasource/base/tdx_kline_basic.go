@@ -29,6 +29,16 @@ type KLine struct {
 	Datetime string  `name:"时间" dataframe:"datetime"`   // 时间
 }
 
+func (k *KLine) Apply(factor func(p float64) float64) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (k *KLine) GetDate() string {
+	//TODO implement me
+	panic("implement me")
+}
+
 // LoadBasicKline 加载基础K线
 func LoadBasicKline(securityCode string) []KLine {
 	filename := cache.KLineFilename(securityCode)

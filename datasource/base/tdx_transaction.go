@@ -161,10 +161,15 @@ func GetHistoricalTradingDataByDate(securityCode string, date string) (list []qu
 //
 //	先从缓存获取, 如果缓存不存在, 则从服务器下载
 //	K线附加成交数据
-func CheckoutTransactionData(securityCode string, date string, ignorePreviousData bool) (list []quotes.TickTransaction) {
+//
+// 参数
+//   - securityCode 证券代码
+//   - cacheDate 缓存日期, 即交易日期
+//   - ignorePreviousData 是否忽略系统配置的成交数据的起始日期之前的数据
+func CheckoutTransactionData(securityCode string, cacheDate string, ignorePreviousData bool) (list []quotes.TickTransaction) {
 	securityCode = exchange.CorrectSecurityCode(securityCode)
 	// 对齐日期格式: YYYYMMDD
-	tradeDate := exchange.FixTradeDate(date, cache.TDX_FORMAT_PROTOCOL_DATE)
+	tradeDate := exchange.FixTradeDate(cacheDate, cache.TDX_FORMAT_PROTOCOL_DATE)
 	if ignorePreviousData {
 		// 在默认日期之前的数据直接返回空
 		startDate := exchange.FixTradeDate(GetBeginDateOfHistoricalTradingData(), cache.TDX_FORMAT_PROTOCOL_DATE)

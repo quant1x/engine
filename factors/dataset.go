@@ -20,6 +20,7 @@ const (
 	BaseSafetyScore         = cache.PluginMaskBaseData | (baseKind + 6) // 基础数据-安全分
 	BaseWideKLine           = cache.PluginMaskBaseData | (baseKind + 7) // 基础数据-宽表
 	BasePerformanceForecast = cache.PluginMaskBaseData | (baseKind + 8) // 基础数据-业绩预告
+	BaseChipDistribution    = cache.PluginMaskBaseData | (baseKind + 9) // 基础数据-筹码分布
 )
 
 // DataSet 数据层, 数据集接口 smart
@@ -49,6 +50,7 @@ var (
 		BaseSafetyScore:         cache.Summary(BaseSafetyScore, "safetyscore", "安全分", cache.DefaultDataProvider),
 		BaseWideKLine:           cache.Summary(BaseWideKLine, "wide", "宽表", cache.DefaultDataProvider),
 		BasePerformanceForecast: cache.Summary(BasePerformanceForecast, "forecast", "业绩预告", cache.DefaultDataProvider),
+		BaseChipDistribution:    cache.Summary(BaseChipDistribution, "chips", "筹码分布", cache.DefaultDataProvider),
 	}
 )
 

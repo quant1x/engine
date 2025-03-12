@@ -1,0 +1,21 @@
+// metrics.fbs
+namespace Metrics;
+
+table DataPoint {
+    timestamp: long;
+    visits: int;
+    users: int;
+    // 可扩展其他字段
+}
+
+table Chip {
+    price: float64;
+    vol: float64;
+}
+
+table DateBlock {
+    date: string (key); // 日期作为键
+    points: [DataPoint]; // 数据点列表
+}
+
+root_type DateBlock;

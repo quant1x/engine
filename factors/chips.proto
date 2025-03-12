@@ -1,0 +1,14 @@
+//edition = "2024";
+syntax = "proto3";
+
+package pb;
+option go_package = "./pb";
+
+message Chips {
+  string date = 1;
+  map<int32, double> dist = 2; // key单位为分的价格, value是成交量
+}
+
+message ChipDistribution {
+  map<string, Chips> data = 1; // key是日期, value是chips的map
+}

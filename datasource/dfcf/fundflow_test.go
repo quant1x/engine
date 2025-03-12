@@ -7,8 +7,8 @@ import (
 )
 
 func TestIndividualStocksFundFlow(t *testing.T) {
-	code := "sh603260"
-	list := IndividualStocksFundFlow(code, "2023-06-09")
+	code := "sz000701"
+	list := IndividualStocksFundFlow(code, "2025-03-12")
 	df := pandas.LoadStructs(list)
 	fmt.Println(df)
 }

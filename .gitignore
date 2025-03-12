@@ -20,3 +20,4 @@ bin/
 *.csv
 *.pprof
 *.html
+*.bin

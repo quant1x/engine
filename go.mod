@@ -17,6 +17,7 @@ require (
 	github.com/sevlyar/go-daemon v0.1.6
 	github.com/spf13/cobra v1.9.1
 	golang.org/x/sys v0.31.0
+	google.golang.org/protobuf v1.36.5
 )
 
 require (

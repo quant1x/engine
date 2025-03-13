@@ -15,6 +15,7 @@ const (
 	cacheHoldingPath  = "holding"  // 流通股东数据路径
 	cacheFundFlowPath = "fund"     // 资金流向
 	cacheTransPath    = "trans"    // 成交数据
+	cacheChipsPath    = "chips"    // 筹码分布
 )
 
 // GetMetaPath 元数据路径
@@ -77,4 +78,9 @@ func GetFundFlowPath() string {
 // GetTransPath 成交数据路径
 func GetTransPath() string {
 	return filepath.Join(GetRootPath(), cacheTransPath)
+}
+
+// GetChipsPath 筹码分布路径
+func GetChipsPath() string {
+	return filepath.Join(GetRootPath(), cacheChipsPath)
 }

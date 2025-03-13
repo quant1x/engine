@@ -4,10 +4,16 @@ import (
 	"fmt"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
+	"path/filepath"
 )
 
 const (
 	FilenameDate = "20060102" // 缓存文件相关的日期格式
+)
+
+const (
+	// 使用时：cacheID + chipFileSuffix
+	chipFileSuffix = ".bin"
 )
 
 // XdxrFilename XDXR缓存路径
@@ -22,16 +28,16 @@ func XdxrFilename(code string) string {
 func KLineFilename(code string) string {
 	cacheId := CacheId(code)
 	length := len(cacheId)
-	filepath := fmt.Sprintf("%s/%s/%s.csv", GetDayPath(), cacheId[:length-3], cacheId)
-	return filepath
+	filename := fmt.Sprintf("%s/%s/%s.csv", GetDayPath(), cacheId[:length-3], cacheId)
+	return filename
 }
 
 // WideFilename 宽表据缓存路径
 func WideFilename(code string) string {
 	cacheId := CacheId(code)
 	length := len(cacheId)
-	filepath := fmt.Sprintf("%s/%s/%s.csv", GetWidePath(), cacheId[:length-3], cacheId)
-	return filepath
+	filename := fmt.Sprintf("%s/%s/%s.csv", GetWidePath(), cacheId[:length-3], cacheId)
+	return filename
 }
 
 func MinuteFilename(code, date string) string {
@@ -99,8 +105,8 @@ func TransFilename(code, date string) string {
 func FundFlowFilename(securityCode string) string {
 	cacheId := CacheId(securityCode)
 	length := len(cacheId)
-	filepath := fmt.Sprintf("%s/%s/%s.csv", GetFundFlowPath(), cacheId[:length-3], cacheId)
-	return filepath
+	filename := fmt.Sprintf("%s/%s/%s.csv", GetFundFlowPath(), cacheId[:length-3], cacheId)
+	return filename
 }
 
 // SnapshotFilename 快照数据文件
@@ -108,6 +114,14 @@ func SnapshotFilename(securityCode string, date string) string {
 	date = exchange.FixTradeDate(date, FilenameDate)
 	cacheId := CacheId(securityCode)
 	//length := len(cacheId)
-	filepath := fmt.Sprintf("%s/%s/%s/%s.csv", GetSnapshotPath(), date[0:4], date, cacheId)
-	return filepath
+	filename := fmt.Sprintf("%s/%s/%s/%s.csv", GetSnapshotPath(), date[0:4], date, cacheId)
+	return filename
+}
+
+// ChipsFilename 筹码分布文件
+func ChipsFilename(securityCode string) string {
+	idCode := CacheId(securityCode)
+	idPath := CacheIdPath(idCode)
+	filename := filepath.Join(GetChipsPath(), idPath, idCode+chipFileSuffix)
+	return filename
 }

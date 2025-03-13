@@ -68,16 +68,19 @@ func (r *DataQuarterlyReport) Check(cacheDate, featureDate string) error {
 	panic("implement me")
 }
 
-func (r *DataQuarterlyReport) Update(date string) {
+func (r *DataQuarterlyReport) Update(date string) error {
 	_ = date
+	return nil
 }
 
-func (r *DataQuarterlyReport) Repair(date string) {
+func (r *DataQuarterlyReport) Repair(date string) error {
 	_ = date
+	return nil
 }
 
-func (r *DataQuarterlyReport) Increase(snapshot quotes.Snapshot) {
+func (r *DataQuarterlyReport) Increase(snapshot quotes.Snapshot) error {
 	_ = snapshot
+	return nil
 }
 
 // IntegrateQuarterlyReports 更新季报数据

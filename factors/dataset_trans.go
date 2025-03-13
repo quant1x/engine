@@ -62,16 +62,19 @@ func (r *TransactionRecord) Filename(date, code string) string {
 	panic("implement me")
 }
 
-func (r *TransactionRecord) Update(date string) {
+func (r *TransactionRecord) Update(date string) error {
 	base.UpdateBeginDateOfHistoricalTradingData(date)
 	base.GetAllHistoricalTradingData(r.GetSecurityCode())
+	return nil
 }
 
-func (r *TransactionRecord) Repair(date string) {
+func (r *TransactionRecord) Repair(date string) error {
 	//base.GetAllHistoricalTradingData(r.code)
 	base.GetHistoricalTradingDataByDate(r.GetSecurityCode(), date)
+	return nil
 }
 
-func (r *TransactionRecord) Increase(snapshot quotes.Snapshot) {
+func (r *TransactionRecord) Increase(snapshot quotes.Snapshot) error {
 	_ = snapshot
+	return nil
 }

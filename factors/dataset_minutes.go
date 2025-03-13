@@ -35,15 +35,17 @@ func (this *DataMinutes) Init(ctx context.Context, date string) error {
 	return nil
 }
 
-func (this *DataMinutes) Update(date string) {
+func (this *DataMinutes) Update(date string) error {
 	base.UpdateMinutes(this.GetSecurityCode(), date)
+	return nil
 }
 
-func (this *DataMinutes) Repair(date string) {
+func (this *DataMinutes) Repair(date string) error {
 	this.Update(date)
+	return nil
 }
 
-func (this *DataMinutes) Increase(snapshot quotes.Snapshot) {
+func (this *DataMinutes) Increase(snapshot quotes.Snapshot) error {
 	_ = snapshot
 	//TODO implement me
 	panic("implement me")

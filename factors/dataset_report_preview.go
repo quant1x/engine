@@ -77,16 +77,19 @@ func (this *DataPreviewReport) Init(ctx context.Context, date string) error {
 	return nil
 }
 
-func (this *DataPreviewReport) Update(date string) {
+func (this *DataPreviewReport) Update(date string) error {
 	_ = date
+	return nil
 }
 
-func (this *DataPreviewReport) Repair(date string) {
+func (this *DataPreviewReport) Repair(date string) error {
 	_ = date
+	return nil
 }
 
-func (this *DataPreviewReport) Increase(snapshot quotes.Snapshot) {
+func (this *DataPreviewReport) Increase(snapshot quotes.Snapshot) error {
 	_ = snapshot
+	return nil
 }
 
 func (this *DataPreviewReport) Print(code string, date ...string) {

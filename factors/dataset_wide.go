@@ -41,16 +41,18 @@ func (this *DataWideKLine) Init(ctx context.Context, date string) error {
 	return nil
 }
 
-func (this *DataWideKLine) Update(date string) {
+func (this *DataWideKLine) Update(date string) error {
 	pullWideByDate(this.GetSecurityCode(), date)
+	return nil
 }
 
-func (this *DataWideKLine) Repair(date string) {
-	this.Update(date)
+func (this *DataWideKLine) Repair(date string) error {
+	return this.Update(date)
 }
 
-func (this *DataWideKLine) Increase(snapshot quotes.Snapshot) {
+func (this *DataWideKLine) Increase(snapshot quotes.Snapshot) error {
 	_ = snapshot
+	return nil
 }
 
 func (this *DataWideKLine) Print(code string, date ...string) {

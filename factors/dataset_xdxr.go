@@ -39,16 +39,6 @@ func (x *DataXdxr) Init(ctx context.Context, date string) error {
 	return nil
 }
 
-//	func (x *DataXdxr) Checkout(securityCode, date string) {
-//		//TODO implement me
-//		panic("implement me")
-//	}
-//
-//	func (x *DataXdxr) Check(cacheDate, featureDate string) error {
-//		//TODO implement me
-//		panic("implement me")
-//	}
-
 func (x *DataXdxr) Print(code string, date ...string) {
 	//TODO implement me
 	panic("implement me")
@@ -61,17 +51,20 @@ func (x *DataXdxr) Filename(date, code string) string {
 	panic("implement me")
 }
 
-func (x *DataXdxr) Update(date string) {
+func (x *DataXdxr) Update(date string) error {
 	base.UpdateXdxrInfo(x.GetSecurityCode())
 	_ = date
+	return nil
 }
 
-func (x *DataXdxr) Repair(date string) {
+func (x *DataXdxr) Repair(date string) error {
 	base.UpdateXdxrInfo(x.GetSecurityCode())
 	_ = date
+	return nil
 }
 
-func (x *DataXdxr) Increase(snapshot quotes.Snapshot) {
+func (x *DataXdxr) Increase(snapshot quotes.Snapshot) error {
 	// 除权除息没有增量计算的逻辑
 	_ = snapshot
+	return nil
 }

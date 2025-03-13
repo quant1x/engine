@@ -28,15 +28,15 @@ const (
 //	数据集是基础数据, 应当遵循结构简单, 尽量减小缓存的文件数量, 加载迅速
 //	检索的规则是按日期和代码进行查询
 type DataSet interface {
-	// Clone 克隆一个DataSet, 是所有写操作的基础
-	Clone(date string, code string) DataSet
 	cache.Manifest
+	// Clone 克隆一个DataSet, 是所有写操作的基础
+	Clone(featureDate, securityCode string) DataSet
 	// Update 更新数据
-	Update(date string)
+	Update(featureDate string) error
 	// Repair 回补数据
-	Repair(date string)
+	Repair(featureDate string) error
 	// Increase 增量计算, 用快照增量计算特征
-	Increase(snapshot quotes.Snapshot)
+	Increase(snapshot quotes.Snapshot) error
 }
 
 var (
@@ -74,4 +74,24 @@ func (m Manifest) GetDate() string {
 
 func (m Manifest) GetSecurityCode() string {
 	return m.Code
+}
+
+type Properties struct {
+	date string
+	code string
+}
+
+func NewProperties(featureDate, securityCode string) Properties {
+	return Properties{
+		date: featureDate,
+		code: securityCode,
+	}
+}
+
+func (p Properties) GetDate() string {
+	return p.date
+}
+
+func (p Properties) GetSecurityCode() string {
+	return p.code
 }

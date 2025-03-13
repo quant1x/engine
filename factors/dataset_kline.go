@@ -71,17 +71,19 @@ func (k *DataKLine) Print(code string, date ...string) {
 	panic("implement me")
 }
 
-func (k *DataKLine) Update(date string) {
+func (k *DataKLine) Update(date string) error {
 	base.UpdateAllBasicKLine(k.GetSecurityCode())
 	_ = date
+	return nil
 }
 
-func (k *DataKLine) Repair(date string) {
+func (k *DataKLine) Repair(date string) error {
 	base.UpdateAllBasicKLine(k.GetSecurityCode())
 	_ = date
+	return nil
 }
 
-func (k *DataKLine) Increase(snapshot quotes.Snapshot) {
+func (k *DataKLine) Increase(snapshot quotes.Snapshot) error {
 	//TODO K线增量更新数据的条件是缓存的数据最晚的日期是上一个交易日, 否则会缺失缓存数据中最后1条数据和当日之间的数据, 所以只能按照K线的更新方法, 不适合用快照更新
 	// 第一步: 取出最后一条数据的记录
 	// 第二步: 检查时间的有效性

@@ -122,6 +122,6 @@ func SnapshotFilename(securityCode string, date string) string {
 func ChipsFilename(securityCode string) string {
 	idCode := CacheId(securityCode)
 	idPath := CacheIdPath(idCode)
-	filename := filepath.Join(GetChipsPath(), idPath, idCode+chipFileSuffix)
+	filename := filepath.Join(GetChipsPath(), idPath+chipFileSuffix)
 	return filename
 }

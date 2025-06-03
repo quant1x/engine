@@ -3,6 +3,24 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.9.9] - 2025-06-03
+### Changed
+- 修改存储包中数据集的功能函数前缀, 统一为DataSet
+- 调整资金流向的测试代码
+- 明确基础数据接口的日期全部使用特征日期featureDate
+- 增加chips保存路径和文件名函数
+- 调整chips基础数据路径
+- 删除废弃的安全分的数据集
+- 调整update和repair接口函数, 增加error类型的返回值
+- 更新gotdx版本到1.23.3, 修复网络心跳功能潜在内存泄露问题
+- 更新gotdx版本到1.23.5, 优化了其它问题。
+- 修复除权除息信息公布可能远早于实施日期的bug
+- 如果最后一个交易日的下一个交易日就是除权除息日是可以除权除息的
+- 根据接口的变化调整字段类型
+- fmt。。。
+- 调整测试代码
+- 更新pandas版本到1.5.1
+
 ## [1.9.8] - 2025-03-12
 ### Changed
 - 调整数据回测的表格展示在全部测试完成以后显示, 避免和进度条显示冲突
@@ -15,6 +33,7 @@ All notable changes to this project will be documented in this file.
 - kline适配除权除息接口
 - 明确成交数据函数的注释
 - 修订部分代码
+- update changelog
 
 ## [1.9.7] - 2025-03-09
 ### Changed
@@ -1867,7 +1886,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.8...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.9...HEAD
+[1.9.9]: https://gitee.com/quant1x/engine.git/compare/v1.9.8...v1.9.9
 [1.9.8]: https://gitee.com/quant1x/engine.git/compare/v1.9.7...v1.9.8
 [1.9.7]: https://gitee.com/quant1x/engine.git/compare/v1.9.6...v1.9.7
 [1.9.6]: https://gitee.com/quant1x/engine.git/compare/v1.9.5...v1.9.6

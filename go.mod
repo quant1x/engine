@@ -7,7 +7,7 @@ require (
 	gitee.com/quant1x/gotdx v1.23.5
 	gitee.com/quant1x/gox v1.22.11
 	gitee.com/quant1x/num v0.4.6
-	gitee.com/quant1x/pandas v1.5.0
+	gitee.com/quant1x/pandas v1.5.1
 	gitee.com/quant1x/pkg v0.5.1
 	gitee.com/quant1x/ta-lib v0.8.5
 	github.com/bits-and-blooms/bitset v1.22.0

@@ -186,6 +186,7 @@ func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDa
 	if rows == 0 {
 		return
 	}
+	lastDay := kLines[rows-1].Date
 	// 复权之前, 假定当前缓存之中的数据都是复权过的数据
 	// 那么就应该只拉取缓存最后1条记录之后的除权除息记录进行复权
 	// 前复权adjust
@@ -198,6 +199,10 @@ func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDa
 		}
 		if xdxr.Date <= startDate {
 			// 忽略除权数据在新数据之前的除权记录
+			continue
+		}
+		if xdxr.Date > lastDay {
+			// 除权除息数据有可能提前公布
 			continue
 		}
 		xdxrDate := xdxr.Date

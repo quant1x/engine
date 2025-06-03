@@ -17,16 +17,16 @@ var (
 
 // KLine 日K线基础结构
 type KLine struct {
-	Date     string  `name:"日期" dataframe:"date"`       // 日期
-	Open     float64 `name:"开盘" dataframe:"open"`       // 开盘价
-	Close    float64 `name:"收盘" dataframe:"close"`      // 收盘价
-	High     float64 `name:"最高" dataframe:"high"`       // 最高价
-	Low      float64 `name:"最低" dataframe:"low"`        // 最低价
+	Date     string  `name:"日期" dataframe:"date"`         // 日期
+	Open     float64 `name:"开盘" dataframe:"open"`         // 开盘价
+	Close    float64 `name:"收盘" dataframe:"close"`        // 收盘价
+	High     float64 `name:"最高" dataframe:"high"`         // 最高价
+	Low      float64 `name:"最低" dataframe:"low"`          // 最低价
 	Volume   float64 `name:"成交量(股)" dataframe:"volume"` // 成交量
 	Amount   float64 `name:"成交额(元)" dataframe:"amount"` // 成交金额
 	Up       int     `name:"上涨/外盘" dataframe:"up"`      // 上涨家数
 	Down     int     `name:"下跌/内盘" dataframe:"down"`    // 下跌家数
-	Datetime string  `name:"时间" dataframe:"datetime"`   // 时间
+	Datetime string  `name:"时间" dataframe:"datetime"`     // 时间
 }
 
 func (k *KLine) Apply(factor func(p float64) float64) {
@@ -187,6 +187,7 @@ func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDa
 		return
 	}
 	lastDay := kLines[rows-1].Date
+	lastDayNext := exchange.NextTradeDate(lastDay)
 	// 复权之前, 假定当前缓存之中的数据都是复权过的数据
 	// 那么就应该只拉取缓存最后1条记录之后的除权除息记录进行复权
 	// 前复权adjust
@@ -201,7 +202,7 @@ func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDa
 			// 忽略除权数据在新数据之前的除权记录
 			continue
 		}
-		if xdxr.Date > lastDay {
+		if xdxr.Date > lastDayNext {
 			// 除权除息数据有可能提前公布
 			continue
 		}

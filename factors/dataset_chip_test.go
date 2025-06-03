@@ -12,10 +12,7 @@ import (
 func Test_updateChipDistribution(t *testing.T) {
 	code := "000701"
 	date := "2025-03-11"
-	err := updateChipDistribution(date, code)
-	if err != nil {
-		fmt.Println(err)
-	}
+	_ = updateChipDistribution(date, code)
 	filename := "t1.bin"
 	dataBytes, err := os.ReadFile(filename)
 	if err != nil {
@@ -34,10 +31,8 @@ func Test_updateChipDistribution(t *testing.T) {
 func Test_v1updateChipDistribution(t *testing.T) {
 	code := "000701"
 	date := "2025-03-11"
-	err := updateChipDistribution(date, code)
-	if err != nil {
-		fmt.Println(err)
-	}
+	_ = updateChipDistribution(date, code)
+
 	filename := "t1.yaml"
 	dataBytes, err := os.ReadFile(filename)
 	if err != nil {

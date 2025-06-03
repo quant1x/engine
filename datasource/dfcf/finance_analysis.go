@@ -37,7 +37,7 @@ type QuarterlyReport struct {
 	SJLHZ              float64 `json:"SJLHZ"`
 	ASSIGNDSCRPT       float64 `json:"ASSIGNDSCRPT"`
 	PAYYEAR            float64 `json:"PAYYEAR"`
-	PUBLISHNAME        float64 `json:"PUBLISHNAME"`
+	PUBLISHNAME        string  `json:"PUBLISHNAME"`
 	ZXGXL              float64 `json:"ZXGXL"`
 	ORGCODE            string  `json:"ORG_CODE"`
 	TRADEMARKETZJG     string  `json:"TRADE_MARKET_ZJG"`
@@ -126,7 +126,7 @@ func GetQuarterlyReports(pageNumber ...int) (reports []QuarterlyReport, pages in
 				SJLHZ:              v.GetFloat64("SJLHZ"),
 				ASSIGNDSCRPT:       v.GetFloat64("ASSIGNDSCRPT"),
 				PAYYEAR:            v.GetFloat64("PAYYEAR"),
-				PUBLISHNAME:        v.GetFloat64("PUBLISHNAME"),
+				PUBLISHNAME:        v.GetString("PUBLISHNAME"),
 				ZXGXL:              v.GetFloat64("ZXGXL"),
 			}
 			// 截取市场编码，截取股票编码，市场编码+股票编码拼接作为主键

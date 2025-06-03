@@ -82,7 +82,7 @@ func QuarterlyReports(featureDate string, pageNumber ...int) (reports []Quarterl
 				SJLHZ:              v.GetFloat64("SJLHZ"),
 				ASSIGNDSCRPT:       v.GetFloat64("ASSIGNDSCRPT"),
 				PAYYEAR:            v.GetFloat64("PAYYEAR"),
-				PUBLISHNAME:        v.GetFloat64("PUBLISHNAME"),
+				PUBLISHNAME:        v.GetString("PUBLISHNAME"),
 				ZXGXL:              v.GetFloat64("ZXGXL"),
 			}
 			// 截取市场编码，截取股票编码，市场编码+股票编码拼接作为主键
@@ -162,7 +162,7 @@ func QuarterlyReportsBySecurityCode(securityCode, date string, diffQuarters int,
 				SJLHZ:              v.GetFloat64("SJLHZ"),
 				ASSIGNDSCRPT:       v.GetFloat64("ASSIGNDSCRPT"),
 				PAYYEAR:            v.GetFloat64("PAYYEAR"),
-				PUBLISHNAME:        v.GetFloat64("PUBLISHNAME"),
+				PUBLISHNAME:        v.GetString("PUBLISHNAME"),
 				ZXGXL:              v.GetFloat64("ZXGXL"),
 			}
 			// 截取市场编码，截取股票编码，市场编码+股票编码拼接作为主键

@@ -52,21 +52,29 @@ func LoadBasicKline(securityCode string) []KLine {
 // UpdateAllBasicKLine 更新全部日K线基础数据并保存文件
 func UpdateAllBasicKLine(securityCode string) []KLine {
 	// 1. 确定本地有效数据最后1条数据作为拉取数据的开始日期
-	startDate := exchange.MARKET_CN_FIRST_DATE
+	startDate := exchange.MARKET_CH_FIRST_LISTTIME
 	securityCode = exchange.CorrectSecurityCode(securityCode)
 	isIndex := exchange.AssertIndexBySecurityCode(securityCode)
 	cacheKLines := LoadBasicKline(securityCode)
 	kLength := len(cacheKLines)
 	var klineDaysOffset = DataDaysDiff
-	adjust_times := 0 // 除权除息的次数
+	adjustTimes := 0 // 除权除息的次数
+	timestampLength := len(api.Timestamp)
 	if kLength > 0 {
 		if klineDaysOffset > kLength {
 			klineDaysOffset = kLength
 		}
+
 		kline := cacheKLines[kLength-klineDaysOffset]
-		startDate = kline.Date
-		datetime, _ := api.ParseTime(kline.Datetime)
-		adjust_times = int(datetime.UnixMilli() & 0x01)
+		if len(kline.Datetime) == timestampLength {
+			startDate = kline.Date
+			datetime, _ := api.ParseTime(kline.Datetime)
+			adjustTimes = int(datetime.UnixMilli() & 0x01)
+		} else {
+			// 时间戳格式不对, 清楚缓存清空
+			cacheKLines = cacheKLines[:0]
+			klineDaysOffset = len(cacheKLines)
+		}
 	} else {
 		//f10 := flash.GetL5F10(securityCode)
 		//if f10 != nil && len(f10.IpoDate) > 0 {
@@ -155,7 +163,7 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 		newKLines = append(newKLines, kline)
 	}
 	// 判断是否已除权的依据是当前更新K线只有1条记录
-	adjusted := adjust_times == 1
+	adjusted := adjustTimes == 1
 	if adjusted {
 		// 只前复权当日数据
 		calculatePreAdjustedStockPrice(securityCode, newKLines, startDate)

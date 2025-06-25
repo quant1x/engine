@@ -3,10 +3,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.9.11] - 2025-06-25
+### Changed
+- 更新依赖库版本
+
 ## [1.9.10] - 2025-06-25
 ### Changed
 - 调整K线除权除息的计算方法, 在不增加字段的情况下, 使用时间戳的毫秒数作为除权除息的次数
 - 自动矫正数据格式, 如果是旧版本数据则清空数据, 重新生成
+- update changelog
 
 ## [1.9.9] - 2025-06-03
 ### Changed
@@ -1892,7 +1897,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.10...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.11...HEAD
+[1.9.11]: https://gitee.com/quant1x/engine.git/compare/v1.9.10...v1.9.11
 [1.9.10]: https://gitee.com/quant1x/engine.git/compare/v1.9.9...v1.9.10
 [1.9.9]: https://gitee.com/quant1x/engine.git/compare/v1.9.8...v1.9.9
 [1.9.8]: https://gitee.com/quant1x/engine.git/compare/v1.9.7...v1.9.8

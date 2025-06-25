@@ -1,6 +1,7 @@
 package base
 
 import (
+	"fmt"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx"
@@ -8,6 +9,7 @@ import (
 	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
+	"strconv"
 )
 
 var (
@@ -56,11 +58,15 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 	cacheKLines := LoadBasicKline(securityCode)
 	kLength := len(cacheKLines)
 	var klineDaysOffset = DataDaysDiff
+	adjust_times := 0 // 除权除息的次数
 	if kLength > 0 {
 		if klineDaysOffset > kLength {
 			klineDaysOffset = kLength
 		}
-		startDate = cacheKLines[kLength-klineDaysOffset].Date
+		kline := cacheKLines[kLength-klineDaysOffset]
+		startDate = kline.Date
+		datetime, _ := api.ParseTime(kline.Datetime)
+		adjust_times = int(datetime.UnixMilli() & 0x01)
 	} else {
 		//f10 := flash.GetL5F10(securityCode)
 		//if f10 != nil && len(f10.IpoDate) > 0 {
@@ -149,7 +155,7 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 		newKLines = append(newKLines, kline)
 	}
 	// 判断是否已除权的依据是当前更新K线只有1条记录
-	adjusted := len(newKLines) == 1
+	adjusted := adjust_times == 1
 	if adjusted {
 		// 只前复权当日数据
 		calculatePreAdjustedStockPrice(securityCode, newKLines, startDate)
@@ -192,6 +198,7 @@ func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDa
 	// 那么就应该只拉取缓存最后1条记录之后的除权除息记录进行复权
 	// 前复权adjust
 	dividends := GetCacheXdxrList(securityCode)
+	timestamp_length := len(api.Timestamp)
 	for i := 0; i < len(dividends); i++ {
 		xdxr := dividends[i]
 		if xdxr.Category != 1 {
@@ -214,9 +221,6 @@ func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDa
 			if barCurrentDate > xdxrDate {
 				break
 			}
-			//if j == rows-2 {
-			//	fmt.Println(1)
-			//}
 			if barCurrentDate < xdxrDate {
 				kl.Open = factor(kl.Open)
 				kl.Close = factor(kl.Close)
@@ -230,6 +234,27 @@ func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDa
 				maPrice = factor(maPrice)
 				// 3. 以成交金额为基准, 用复权均价线计算成交量
 				kl.Volume = kl.Amount / maPrice
+				datetime := ""
+				adjustCount := 0
+				if len(kl.Datetime) == timestamp_length {
+					datetime = kl.Datetime[0 : timestamp_length-3]
+					num, err := strconv.Atoi(kl.Datetime[timestamp_length-3:]) // 自动忽略前导零
+					if err == nil {
+						adjustCount = num
+					}
+				} else if len(kl.Datetime) == timestamp_length-4 {
+					datetime = kl.Datetime[0:timestamp_length-4] + "."
+				} else {
+					tm, _ := api.ParseTime(kl.Datetime)
+					datetime = tm.Format(api.TimeFormat) + "."
+				}
+				adjustCount += 1
+				kl.Datetime = datetime + fmt.Sprintf("%03d", adjustCount)
+
+				//// 4. 时间戳毫秒数+1
+				//tm, _ := api.ParseTime(kl.Datetime)
+				//tm = tm.Add(time.Millisecond * 1)
+				//kl.Datetime = tm.Format(api.Timestamp)
 			}
 			if barCurrentDate == xdxrDate {
 				break

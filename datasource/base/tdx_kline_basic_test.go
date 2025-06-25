@@ -6,8 +6,8 @@ import (
 )
 
 func TestUpdateAllBasicKLine(t *testing.T) {
-	code := "sh000001"
+	code := "sz300773"
 	data := UpdateAllBasicKLine(code)
-	fmt.Println(data[len(data)-1])
+	fmt.Println(data[0])
 	_ = data
 }

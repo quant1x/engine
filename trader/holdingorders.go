@@ -8,33 +8,6 @@ import (
 	"sync"
 )
 
-//// HoldingOrder 持仓订单
-//type HoldingOrder struct {
-//	AccountType   int     `name:"账户类型" json:"account_type" dataframe:"account_type"`     // 账户类型
-//	Date          string  `name:"信号日期" json:"date" dataframe:"date"`                     // 日期
-//	AccountId     string  `name:"资金账户" json:"account_id" dataframe:"account_id"`         // 资金账号
-//	OrderTime     string  `name:"委托时间" json:"order_time" dataframe:"order_time"`         // 报单时间
-//	StockCode     string  `name:"证券代码" json:"stock_code" dataframe:"stock_code"`         // 证券代码, 例如"600000.SH"
-//	OrderType     int     `name:"订单类型" json:"order_type" dataframe:"order_type"`         // 委托类型, 23:买, 24:卖
-//	Price         float64 `name:"委托价格" json:"price" dataframe:"price"`                   // 报价价格, 如果price_type为指定价, 那price为指定的价格, 否则填0
-//	PriceType     int     `name:"报价类型" json:"price_type" dataframe:"price_type"`         // 报价类型, 详见帮助手册
-//	OrderVolume   int     `name:"委托量" json:"order_volume" dataframe:"order_volume"`      // 委托数量, 股票以'股'为单位, 债券以'张'为单位
-//	OrderId       int     `name:"订单ID" json:"order_id" dataframe:"order_id"`             // 委托编号
-//	OrderSysid    string  `name:"合同编号" json:"order_sysid" dataframe:"order_sysid"`       // 柜台编号
-//	TradedPrice   float64 `name:"成交均价" json:"traded_price" dataframe:"traded_price"`     // 成交均价
-//	TradedVolume  int     `name:"成交数量" json:"traded_volume" dataframe:"traded_volume"`   // 成交数量, 股票以'股'为单位, 债券以'张'为单位
-//	OrderStatus   int     `name:"订单状态" json:"order_status" dataframe:"order_status"`     // 委托状态
-//	StatusMessage string  `name:"委托状态描述" json:"status_msg" dataframe:"status_message"`   // 委托状态描述, 如废单原因
-//	StrategyName  string  `name:"策略名称" json:"strategy_name" dataframe:"strategy_name"`   // 策略名称
-//	OrderRemark   string  `name:"委托备注" json:"order_remark" dataframe:"order_remark"`     // 委托备注
-//	HoldingPeriod int     `name:"持股周期" json:"holding_period" dataframe:"holding_period"` // 持股周期
-//}
-//
-//// Key 索引字段: 日期/订单类型/策略名称/证券代码
-//func (this HoldingOrder) Key() string {
-//	return fmt.Sprintf("%s/%d/%s/%s", this.Date, this.OrderType, this.StrategyName, this.StockCode)
-//}
-
 type HoldingPosition struct {
 	AccountType     int     `name:"账户类型" dataframe:"account_type"`     // 账户类型
 	AccountId       string  `name:"资金账户" dataframe:"account_id"`       // 资金账号

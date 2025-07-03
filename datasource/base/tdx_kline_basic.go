@@ -136,8 +136,8 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 	// 5. 调整成交量, 单位从手改成股, vol字段 * 100
 	for _, v := range hs {
 		for _, row := range v.List {
-			dateTime := exchange.FixTradeDate(row.DateTime)
-			if dateTime < startDate || dateTime > currentTradingDate {
+			date := exchange.FixTradeDate(row.DateTime)
+			if date < startDate || date > currentTradingDate {
 				continue
 			}
 			row.Vol = row.Vol * 100
@@ -162,9 +162,12 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 		}
 		newKLines = append(newKLines, kline)
 	}
+	// 下面的流程只判断当前从服务器拉取的数据是否需要除权
 	// 判断是否已除权的依据是当前更新K线只有1条记录
-	adjusted := adjustTimes == 1
-	if adjusted {
+	// 并且除权了1次, 那么, 在截断klineDaysOffset的数据后重新拉取是需要复权的
+	// 如果除权次数是0, 说明历史数据从尾部取klineDaysOffset条数据是不需要除权的
+	fetchDataNeedAdjust := adjustTimes == 1
+	if fetchDataNeedAdjust {
 		// 只前复权当日数据
 		calculatePreAdjustedStockPrice(securityCode, newKLines, startDate)
 	}
@@ -181,7 +184,8 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 		klines = newKLines
 	}
 	// 7. 前复权
-	if !adjusted {
+	// 如果前面没复权, 这里用全量数据进行复权
+	if !fetchDataNeedAdjust {
 		calculatePreAdjustedStockPrice(securityCode, klines, startDate)
 	}
 	// 9. 刷新缓存文件

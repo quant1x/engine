@@ -41,6 +41,12 @@ func (k *KLine) GetDate() string {
 	panic("implement me")
 }
 
+func (k *KLine) AdjustTime() int {
+	datetime, _ := api.ParseTime(k.Datetime)
+	adjustTimes := int(datetime.UnixMilli() % 1000)
+	return adjustTimes
+}
+
 // LoadBasicKline 加载基础K线
 func LoadBasicKline(securityCode string) []KLine {
 	filename := cache.KLineFilename(securityCode)
@@ -59,21 +65,24 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 	kLength := len(cacheKLines)
 	var klineDaysOffset = DataDaysDiff
 	adjustTimes := 0 // 除权除息的次数
-	timestampLength := len(api.Timestamp)
+	clearHistory := false
 	if kLength > 0 {
 		if klineDaysOffset > kLength {
 			klineDaysOffset = kLength
 		}
 
-		kline := cacheKLines[kLength-klineDaysOffset]
-		if len(kline.Datetime) == timestampLength {
-			startDate = kline.Date
-			datetime, _ := api.ParseTime(kline.Datetime)
-			adjustTimes = int(datetime.UnixMilli() & 0x01)
+		timestampLength := len(api.Timestamp)
+		klineFirst := cacheKLines[0]
+		klineLast := cacheKLines[kLength-klineDaysOffset]
+		totalTimes := totalAdjustmentTimes(securityCode, klineFirst.Date, klineLast.Date)
+		if totalTimes != klineFirst.AdjustTime() {
+			clearHistory = true
+		} else if len(klineLast.Datetime) == timestampLength && len(klineFirst.Datetime) == timestampLength {
+			// 如果第一条数据和最后一条数据的datetime字段都包括毫秒
+			startDate = klineLast.Date
+			adjustTimes = klineLast.AdjustTime()
 		} else {
-			// 时间戳格式不对, 清楚缓存清空
-			cacheKLines = cacheKLines[:0]
-			klineDaysOffset = len(cacheKLines)
+			clearHistory = true
 		}
 	} else {
 		//f10 := flash.GetL5F10(securityCode)
@@ -82,6 +91,15 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 		//	startDate = trading.FixTradeDate(startDate)
 		//}
 	}
+
+	if clearHistory {
+		// 时间戳格式不对, 清楚缓存清空
+		cacheKLines = cacheKLines[0:0]
+		kLength = len(cacheKLines)
+		// 保持最早的开始日期, 1990-12-19
+		adjustTimes = 0
+	}
+
 	// 2. 确定结束日期
 	currentTradingDate := exchange.GetCurrentlyDay()
 	endDate := exchange.Today()
@@ -166,8 +184,8 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 	// 判断是否已除权的依据是当前更新K线只有1条记录
 	// 并且除权了1次, 那么, 在截断klineDaysOffset的数据后重新拉取是需要复权的
 	// 如果除权次数是0, 说明历史数据从尾部取klineDaysOffset条数据是不需要除权的
-	fetchDataNeedAdjust := adjustTimes == 1
-	if fetchDataNeedAdjust {
+	isFreshFetchRequireAdjustment := adjustTimes == 1
+	if isFreshFetchRequireAdjustment {
 		// 只前复权当日数据
 		calculatePreAdjustedStockPrice(securityCode, newKLines, startDate)
 	}
@@ -185,7 +203,7 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 	}
 	// 7. 前复权
 	// 如果前面没复权, 这里用全量数据进行复权
-	if !fetchDataNeedAdjust {
+	if !isFreshFetchRequireAdjustment {
 		calculatePreAdjustedStockPrice(securityCode, klines, startDate)
 	}
 	// 9. 刷新缓存文件
@@ -210,7 +228,7 @@ func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDa
 	// 那么就应该只拉取缓存最后1条记录之后的除权除息记录进行复权
 	// 前复权adjust
 	dividends := GetCacheXdxrList(securityCode)
-	timestamp_length := len(api.Timestamp)
+	timestampLength := len(api.Timestamp)
 	for i := 0; i < len(dividends); i++ {
 		xdxr := dividends[i]
 		if xdxr.Category != 1 {
@@ -248,14 +266,14 @@ func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDa
 				kl.Volume = kl.Amount / maPrice
 				datetime := ""
 				adjustCount := 0
-				if len(kl.Datetime) == timestamp_length {
-					datetime = kl.Datetime[0 : timestamp_length-3]
-					num, err := strconv.Atoi(kl.Datetime[timestamp_length-3:]) // 自动忽略前导零
+				if len(kl.Datetime) == timestampLength {
+					datetime = kl.Datetime[0 : timestampLength-3]
+					num, err := strconv.Atoi(kl.Datetime[timestampLength-3:]) // 自动忽略前导零
 					if err == nil {
 						adjustCount = num
 					}
-				} else if len(kl.Datetime) == timestamp_length-4 {
-					datetime = kl.Datetime[0:timestamp_length-4] + "."
+				} else if len(kl.Datetime) == timestampLength-4 {
+					datetime = kl.Datetime[0:timestampLength-4] + "."
 				} else {
 					tm, _ := api.ParseTime(kl.Datetime)
 					datetime = tm.Format(api.TimeFormat) + "."
@@ -273,4 +291,37 @@ func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDa
 			}
 		}
 	}
+}
+
+// 统计 除权次数
+//
+//	securityCode 证券代码
+//	startDate 起始日期
+//	endDate 结束日期
+func totalAdjustmentTimes(securityCode string, startDate, endDate string) int {
+	startDate = exchange.FixTradeDate(startDate)
+	endDate = exchange.FixTradeDate(endDate)
+	lastDayNext := exchange.NextTradeDate(endDate)
+	// 复权之前, 假定当前缓存之中的数据都是复权过的数据
+	// 那么就应该只拉取缓存最后1条记录之后的除权除息记录进行复权
+	// 前复权adjust
+	dividends := GetCacheXdxrList(securityCode)
+	times := 0
+	for i := 0; i < len(dividends); i++ {
+		xdxr := dividends[i]
+		if xdxr.Category != 1 {
+			// 忽略非除权信息
+			continue
+		}
+		if xdxr.Date <= startDate {
+			// 忽略除权数据在新数据之前的除权记录
+			continue
+		}
+		if xdxr.Date > lastDayNext {
+			// 除权除息数据有可能提前公布
+			continue
+		}
+		times++
+	}
+	return times
 }

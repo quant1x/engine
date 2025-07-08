@@ -74,7 +74,7 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 		timestampLength := len(api.Timestamp)
 		klineFirst := cacheKLines[0]
 		klineLast := cacheKLines[kLength-klineDaysOffset]
-		totalTimes := totalAdjustmentTimes(securityCode, klineFirst.Date, klineLast.Date)
+		totalTimes := TotalAdjustmentTimes(securityCode, klineFirst.Date, klineLast.Date)
 		if totalTimes != klineFirst.GetAdjustmentCount() {
 			clearHistory = true
 		} else if len(klineLast.Datetime) == timestampLength && len(klineFirst.Datetime) == timestampLength {
@@ -280,11 +280,6 @@ func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDa
 				}
 				adjustCount += 1
 				kl.Datetime = datetime + fmt.Sprintf("%03d", adjustCount)
-
-				//// 4. 时间戳毫秒数+1
-				//tm, _ := api.ParseTime(kl.Datetime)
-				//tm = tm.Add(time.Millisecond * 1)
-				//kl.Datetime = tm.Format(api.Timestamp)
 			}
 			if barCurrentDate == xdxrDate {
 				break
@@ -293,12 +288,12 @@ func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDa
 	}
 }
 
-// 统计 除权次数
+// TotalAdjustmentTimes 统计 除权次数
 //
 //	securityCode 证券代码
 //	startDate 起始日期
 //	endDate 结束日期
-func totalAdjustmentTimes(securityCode string, startDate, endDate string) int {
+func TotalAdjustmentTimes(securityCode string, startDate, endDate string) int {
 	startDate = exchange.FixTradeDate(startDate)
 	endDate = exchange.FixTradeDate(endDate)
 	lastDayNext := exchange.NextTradeDate(endDate)

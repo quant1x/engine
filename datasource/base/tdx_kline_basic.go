@@ -41,7 +41,7 @@ func (k *KLine) GetDate() string {
 	panic("implement me")
 }
 
-func (k *KLine) AdjustTime() int {
+func (k *KLine) GetAdjustmentCount() int {
 	datetime, _ := api.ParseTime(k.Datetime)
 	adjustTimes := int(datetime.UnixMilli() % 1000)
 	return adjustTimes
@@ -75,12 +75,12 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 		klineFirst := cacheKLines[0]
 		klineLast := cacheKLines[kLength-klineDaysOffset]
 		totalTimes := totalAdjustmentTimes(securityCode, klineFirst.Date, klineLast.Date)
-		if totalTimes != klineFirst.AdjustTime() {
+		if totalTimes != klineFirst.GetAdjustmentCount() {
 			clearHistory = true
 		} else if len(klineLast.Datetime) == timestampLength && len(klineFirst.Datetime) == timestampLength {
 			// 如果第一条数据和最后一条数据的datetime字段都包括毫秒
 			startDate = klineLast.Date
-			adjustTimes = klineLast.AdjustTime()
+			adjustTimes = klineLast.GetAdjustmentCount()
 		} else {
 			clearHistory = true
 		}

@@ -3,11 +3,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.9.14] - 2025-07-08
+### Changed
+- 修改已复权函数名
+
 ## [1.9.13] - 2025-07-08
 ### Changed
 - 补充关于除权除息处理的注释
 - 更新依赖库版本
 - 调整除权除息处理流程
+- update changelog
 
 ## [1.9.12] - 2025-07-02
 ### Changed
@@ -1909,7 +1914,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.13...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.14...HEAD
+[1.9.14]: https://gitee.com/quant1x/engine.git/compare/v1.9.13...v1.9.14
 [1.9.13]: https://gitee.com/quant1x/engine.git/compare/v1.9.12...v1.9.13
 [1.9.12]: https://gitee.com/quant1x/engine.git/compare/v1.9.11...v1.9.12
 [1.9.11]: https://gitee.com/quant1x/engine.git/compare/v1.9.10...v1.9.11

@@ -3,9 +3,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.9.15] - 2025-07-08
+### Changed
+- 暴露统计复权次数的函数为公有函数
+
 ## [1.9.14] - 2025-07-08
 ### Changed
 - 修改已复权函数名
+- update changelog
 
 ## [1.9.13] - 2025-07-08
 ### Changed
@@ -1914,7 +1919,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.14...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.15...HEAD
+[1.9.15]: https://gitee.com/quant1x/engine.git/compare/v1.9.14...v1.9.15
 [1.9.14]: https://gitee.com/quant1x/engine.git/compare/v1.9.13...v1.9.14
 [1.9.13]: https://gitee.com/quant1x/engine.git/compare/v1.9.12...v1.9.13
 [1.9.12]: https://gitee.com/quant1x/engine.git/compare/v1.9.11...v1.9.12

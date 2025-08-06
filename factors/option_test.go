@@ -2,10 +2,22 @@ package factors
 
 import (
 	"fmt"
-	"gitee.com/quant1x/exchange"
 	"log"
 	"testing"
+
+	"gitee.com/quant1x/exchange"
 )
+
+func TestOptionFinanceBoard(t *testing.T) {
+	data, err := OptionFinanceBoard("华夏上证50ETF期权", "2509")
+	if err != nil {
+		log.Printf("获取期权行情失败: %v", err)
+	} else {
+		for _, d := range data {
+			fmt.Printf("%+v\n", d)
+		}
+	}
+}
 
 func TestOptions(t *testing.T) {
 	// 示例1: 获取上证50ETF期权行情（到期月 06）
@@ -31,6 +43,7 @@ func TestOptions(t *testing.T) {
 
 func TestVIX(t *testing.T) {
 	tradeDate := exchange.GetFrontTradeDay()
+	tradeDate = exchange.GetCurrentlyDay()
 	tradeDate = exchange.FixTradeDate(tradeDate, "20060102")
 	fmt.Println("🚀 开始执行 300ETF 恐慌指数监控...")
 

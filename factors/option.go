@@ -12,6 +12,9 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/num"
 )
 
 // OptionFinanceBoardData 表示期权行情数据
@@ -27,22 +30,24 @@ type OptionFinanceBoardData struct {
 
 // RiskIndicator 上交所风险指标
 type RiskIndicator struct {
-	TradeDate      time.Time `json:"TRADE_DATE"`
-	SecurityID     string    `json:"SECURITY_ID"`
-	ContractID     string    `json:"CONTRACT_ID"`
-	ContractSymbol string    `json:"CONTRACT_SYMBOL"`
-	Delta          float64   `json:"DELTA_VALUE"`
-	Theta          float64   `json:"THETA_VALUE"`
-	Gamma          float64   `json:"GAMMA_VALUE"`
-	Vega           float64   `json:"VEGA_VALUE"`
-	Rho            float64   `json:"RHO_VALUE"`
-	ImplVolatility float64   `json:"IMPLC_VOLATLTY"`
+	TradeDate       time.Time `json:"TRADE_DATE"`
+	SecurityID      string    `json:"SECURITY_ID"`
+	ContractID      string    `json:"CONTRACT_ID"`
+	ContractSymbol  string    `json:"CONTRACT_SYMBOL"`
+	Delta           float64   `json:"DELTA_VALUE"`
+	Theta           float64   `json:"THETA_VALUE"`
+	Gamma           float64   `json:"GAMMA_VALUE"`
+	Vega            float64   `json:"VEGA_VALUE"`
+	Rho             float64   `json:"RHO_VALUE"`
+	ImplcVolatility float64   `json:"IMPLC_VOLATLTY"`
 }
 
 // HTTP 客户端
 var client = &http.Client{Timeout: 10 * time.Second}
 
 // ==================== 1. 期权行情数据：option_finance_board ====================
+
+// OptionFinanceBoard 期权行情数据
 func OptionFinanceBoard(symbol string, endMonth string) ([]OptionFinanceBoardData, error) {
 	endMonth = endMonth[len(endMonth)-2:] // 取最后两位
 
@@ -150,7 +155,7 @@ func OptionRiskIndicatorSSE(date string) ([]RiskIndicator, error) {
 	var indicators []RiskIndicator
 	for _, item := range result.Result {
 		// 解析日期
-		t, _ := time.Parse("2006-01-02", item["TRADE_DATE"])
+		t, _ := api.ParseTime(item["TRADE_DATE"])
 
 		// 转换浮点数
 		delta, _ := strconv.ParseFloat(item["DELTA_VALUE"], 64)
@@ -161,16 +166,16 @@ func OptionRiskIndicatorSSE(date string) ([]RiskIndicator, error) {
 		iv, _ := strconv.ParseFloat(item["IMPLC_VOLATLTY"], 64)
 
 		indicators = append(indicators, RiskIndicator{
-			TradeDate:      t,
-			SecurityID:     item["SECURITY_ID"],
-			ContractID:     item["CONTRACT_ID"],
-			ContractSymbol: item["CONTRACT_SYMBOL"],
-			Delta:          delta,
-			Theta:          theta,
-			Gamma:          gamma,
-			Vega:           vega,
-			Rho:            rho,
-			ImplVolatility: iv,
+			TradeDate:       t,
+			SecurityID:      item["SECURITY_ID"],
+			ContractID:      item["CONTRACT_ID"],
+			ContractSymbol:  item["CONTRACT_SYMBOL"],
+			Delta:           delta,
+			Theta:           theta,
+			Gamma:           gamma,
+			Vega:            vega,
+			Rho:             rho,
+			ImplcVolatility: iv,
 		})
 	}
 	return indicators, nil
@@ -186,24 +191,27 @@ const (
 )
 
 // ------------------------------- 2. 数据结构定义 -------------------------------
-// 保持与您提供的 OptionFinanceBoardData, SZOptionData, RiskIndicator 定义一致
-// 为了清晰，我们重新定义 MergedOption 结构
+
+// MergedOption
+//
+//	保持与您提供的 OptionFinanceBoardData, SZOptionData, RiskIndicator 定义一致
+//	为了清晰，我们重新定义 MergedOption 结构
 type MergedOption struct {
-	ContractID     string
-	Strike         float64
-	Type           string
-	Price          float64
-	ExpireDate     time.Time
-	TDays          int
-	TYears         float64
-	ImplVolatility float64
-	Delta          float64
+	ContractID      string
+	Strike          float64
+	Type            string
+	Price           float64
+	ExpireDate      time.Time
+	TDays           int
+	TYears          float64
+	ImplcVolatility float64
+	Delta           float64
 }
 
 // ------------------------------- 3. 计算“第四个星期三”函数 -------------------------------
 func getFourthWednesday(year, month int) time.Time {
 	// 1. 创建该月的第一天
-	firstDay := time.Date(year, time.Month(month), 1, 0, 0, 0, 0, time.UTC)
+	firstDay := time.Date(year, time.Month(month), 1, 0, 0, 0, 0, time.Local)
 	// 2. 获取第一天是星期几 (0=周日, 1=周一, ..., 6=周六)
 	weekdayOfFirst := int(firstDay.Weekday())
 
@@ -219,13 +227,15 @@ func getFourthWednesday(year, month int) time.Time {
 	// 5. 第四个星期三的日期 = 第一个星期三 + 21天
 	fourthWednesdayDay := firstWednesday + 21
 
-	return time.Date(year, time.Month(month), fourthWednesdayDay, 0, 0, 0, 0, time.UTC)
+	return time.Date(year, time.Month(month), fourthWednesdayDay, 0, 0, 0, 0, time.Local)
 }
 
 // ------------------------------- 4. 提取并合并数据 (使用真实数据) -------------------------------
+
+// 提取并合并数据
 func extractAndMergeData(riskData []RiskIndicator, tradeDateStr string) ([]MergedOption, error) {
 	// 1. 将 tradeDateStr 解析为 time.Time
-	currentDate, err := time.Parse("20060102", tradeDateStr)
+	currentDate, err := api.ParseTime(tradeDateStr)
 	if err != nil {
 		return nil, fmt.Errorf("无效的交易日期: %s", tradeDateStr)
 	}
@@ -256,6 +266,10 @@ func extractAndMergeData(riskData []RiskIndicator, tradeDateStr string) ([]Merge
 		// 👇 构建 map[ContractID]OptionFinanceBoardData
 		priceMap := make(map[string]OptionFinanceBoardData)
 		for _, price := range priceData {
+			_, ok := priceMap[price.ContractID]
+			if ok {
+				continue
+			}
 			priceMap[price.ContractID] = price // 存储整个结构体
 		}
 		priceDataMap[yyMM] = priceMap
@@ -269,6 +283,7 @@ func extractAndMergeData(riskData []RiskIndicator, tradeDateStr string) ([]Merge
 			continue
 		}
 
+		// 期权合约ID
 		contractID := risk.ContractID
 		if len(contractID) < 13 {
 			continue
@@ -298,20 +313,20 @@ func extractAndMergeData(riskData []RiskIndicator, tradeDateStr string) ([]Merge
 		}
 
 		// 过滤异常波动率
-		if risk.ImplVolatility <= 0.01 || risk.ImplVolatility >= 1.0 {
+		if risk.ImplcVolatility <= 0.01 || risk.ImplcVolatility >= 1.0 {
 			continue
 		}
-
+		fmt.Printf("ContractID=%s, price=%f\n", contractID, price.Price)
 		merged = append(merged, MergedOption{
-			ContractID:     contractID,
-			Strike:         price.StrikePrice,
-			Type:           optType,
-			Price:          price.Price,
-			ExpireDate:     expireDate,
-			TDays:          tDays,
-			TYears:         tYears,
-			ImplVolatility: risk.ImplVolatility,
-			Delta:          risk.Delta,
+			ContractID:      contractID,
+			Strike:          price.StrikePrice,
+			Type:            optType,
+			Price:           price.Price,
+			ExpireDate:      expireDate,
+			TDays:           tDays,
+			TYears:          tYears,
+			ImplcVolatility: risk.ImplcVolatility,
+			Delta:           risk.Delta,
 		})
 	}
 
@@ -325,7 +340,7 @@ func extractAndMergeData(riskData []RiskIndicator, tradeDateStr string) ([]Merge
 
 // ------------------------------- 5. 计算“恐慌指数”（真实VIX） -------------------------------
 func calculateRealVix(mergedData []MergedOption, tradeDateStr string, riskFreeRate float64) (float64, error) {
-	currentDate, err := time.Parse("20060102", tradeDateStr)
+	currentDate, err := api.ParseTime(tradeDateStr)
 	if err != nil {
 		return 0, err
 	}
@@ -377,6 +392,8 @@ func calculateRealVix(mergedData []MergedOption, tradeDateStr string, riskFreeRa
 
 	term1 := groups[t1]
 	term2 := groups[t2]
+	fmt.Println("==>", len(term1), len(term2))
+	fmt.Println("==>", T1, T2)
 
 	var1, err := computeVariance(term1, T1, riskFreeRate)
 	if err != nil {
@@ -391,6 +408,7 @@ func calculateRealVix(mergedData []MergedOption, tradeDateStr string, riskFreeRa
 	if var1 <= 0 || var2 <= 0 {
 		return 0, fmt.Errorf("方差非正")
 	}
+	fmt.Println(var1, var2)
 
 	vixSquared := ((T2-targetT)*var1 + (targetT-T1)*var2) / (T2 - T1)
 	vix := math.Sqrt(vixSquared) * 100
@@ -475,8 +493,12 @@ func computeVariance(options []MergedOption, T, r float64) (float64, error) {
 			// 找到交叉点，进行线性插值
 			k1, k2 := strikes[i], strikes[i+1]
 			c1, c2 := cMinusP[i], cMinusP[i+1]
-			w := -c1 / (c2 - c1)
-			F = k1 + w*(k2-k1)
+			if c2 != c1 {
+				w := -c1 / (c2 - c1)
+				F = k1 + w*(k2-k1)
+			} else {
+				F = (k1 + k2) / 2
+			}
 			found = true
 			break
 		}
@@ -494,36 +516,56 @@ func computeVariance(options []MergedOption, T, r float64) (float64, error) {
 		F = strikes[minIdx]
 	}
 
+	fmt.Println("远期价格 F ≈ ", F)
+
 	// 👉 4. 找到最接近 F 的行权价 K0
 	var K0 float64
-	minDiff := math.Abs(options[0].Strike - F)
-	K0 = options[0].Strike
+	//minDiff := math.Abs(options[0].Strike - F)
+	//K0 = options[0].Strike
+	//for _, opt := range options {
+	//	diff := math.Abs(opt.Strike - F)
+	//	if diff < minDiff {
+	//		minDiff = diff
+	//		K0 = opt.Strike
+	//	}
+	//}
 	for _, opt := range options {
-		diff := math.Abs(opt.Strike - F)
-		if diff < minDiff {
-			minDiff = diff
+		if F >= opt.Strike {
 			K0 = opt.Strike
+		} else {
+			break
 		}
 	}
 
 	// 👉 5. 计算主项的加权和
-	sum := 0.0
+	var sum_ float64
 	for i, opt := range options {
+		var K float64
 		var dk float64
+		Q := opt.Price
+		if num.IsNaN(Q) || Q <= 0 {
+			continue
+		}
+		K = opt.Strike
 		if i == 0 {
-			dk = options[1].Strike - opt.Strike
+			dk = options[i+1].Strike - opt.Strike
 		} else if i == len(options)-1 {
 			dk = opt.Strike - options[i-1].Strike
 		} else {
 			dk = (options[i+1].Strike - options[i-1].Strike) / 2
 		}
-
-		weight := dk / (opt.Strike * opt.Strike)
-		sum += weight * opt.Price
+		fmt.Printf("%d: dk=%f, K=%f, Q=%f\n", i, dk, K, Q)
+		weight := dk / (K * K)
+		sum_ += weight * Q
+		fmt.Printf("sum_: %f\n", sum_)
 	}
-
+	fmt.Println("        T =", T)
+	fmt.Println("      sum =", sum_)
+	fmt.Println("        F =", F)
+	fmt.Println("       K0 =", K0)
+	fmt.Println(" discount =", discount)
 	// 👉 6. 计算完整的方差 (包含修正项)
-	variance := (2.0 / T) * sum
+	variance := (2.0 / T) * sum_
 	variance -= math.Pow((F/K0)-1, 2) / T
 	variance *= discount
 

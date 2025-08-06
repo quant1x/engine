@@ -3,9 +3,18 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.9.17] - 2025-08-06
+### Changed
+- 新增基于沪深300ETF期权计算的VIX恐慌指数
+- 优化vix算法, 修正Δk的计算方法
+- 更新依赖库exchange和gotdx
+- 更新依赖库gotdx版本到1.23.11
+- 新增独立的期权行情测试代码
+
 ## [1.9.16] - 2025-07-08
 ### Changed
 - 更新ta-lib依赖库版本到0.8.11
+- update changelog
 
 ## [1.9.15] - 2025-07-08
 ### Changed
@@ -1924,7 +1933,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.16...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.17...HEAD
+[1.9.17]: https://gitee.com/quant1x/engine.git/compare/v1.9.16...v1.9.17
 [1.9.16]: https://gitee.com/quant1x/engine.git/compare/v1.9.15...v1.9.16
 [1.9.15]: https://gitee.com/quant1x/engine.git/compare/v1.9.14...v1.9.15
 [1.9.14]: https://gitee.com/quant1x/engine.git/compare/v1.9.13...v1.9.14

@@ -2,9 +2,10 @@ package base
 
 import (
 	"fmt"
+	"testing"
+
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/pandas"
-	"testing"
 )
 
 func TestGetAllBasicKLine(t *testing.T) {
@@ -25,4 +26,21 @@ func TestGetAllBasicKLine(t *testing.T) {
 	df := pandas.LoadStructs(klines)
 	fmt.Println(df)
 	_ = df
+}
+
+func Test_getYearDay(t *testing.T) {
+	date := "2025-08-08"
+	s, e := getYearDay(date)
+	fmt.Println(s, e)
+}
+
+func TestConvertKlinesTrading(t *testing.T) {
+	code := "sh000001"
+	date := "2025-08-07"
+	klines := CheckoutKLines(code, date)
+	df := pandas.LoadStructs(klines)
+	fmt.Println(df)
+	tmpLines := ConvertKlinesTrading(klines, "q")
+	df = pandas.LoadStructs(tmpLines)
+	fmt.Println(df)
 }

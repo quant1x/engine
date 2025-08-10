@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.9.18] - 2025-08-10
+### Changed
+- 新增独立的K线周期转换函数
+- 更新依赖库gotdx版本到1.23.12, 数据接口支持全部的沪深交易所代码, 包括但不限于指数、个股、板块、ETF、基金等等
+- 更新依赖库gotdx版本到1.23.13, 支撑全部的行业板块
+- 更新依赖库版本
+- 更新依赖库版本
+
 ## [1.9.17] - 2025-08-06
 ### Changed
 - 新增基于沪深300ETF期权计算的VIX恐慌指数
@@ -10,6 +18,7 @@ All notable changes to this project will be documented in this file.
 - 更新依赖库exchange和gotdx
 - 更新依赖库gotdx版本到1.23.11
 - 新增独立的期权行情测试代码
+- update changelog
 
 ## [1.9.16] - 2025-07-08
 ### Changed
@@ -1933,7 +1942,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.17...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.18...HEAD
+[1.9.18]: https://gitee.com/quant1x/engine.git/compare/v1.9.17...v1.9.18
 [1.9.17]: https://gitee.com/quant1x/engine.git/compare/v1.9.16...v1.9.17
 [1.9.16]: https://gitee.com/quant1x/engine.git/compare/v1.9.15...v1.9.16
 [1.9.15]: https://gitee.com/quant1x/engine.git/compare/v1.9.14...v1.9.15

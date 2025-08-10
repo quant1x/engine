@@ -6,7 +6,7 @@ require (
 	gitee.com/quant1x/exchange v0.6.7
 	gitee.com/quant1x/gotdx v1.23.13
 	gitee.com/quant1x/gox v1.22.12
-	gitee.com/quant1x/num v0.5.0
+	gitee.com/quant1x/num v0.5.3
 	gitee.com/quant1x/pandas v1.5.2
 	gitee.com/quant1x/pkg v0.5.2
 	gitee.com/quant1x/ta-lib v0.8.12
@@ -32,6 +32,6 @@ require (
 	github.com/petermattis/goid v0.0.0-20250721140440-ea1c0173183e // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/spf13/pflag v1.0.7 // indirect
-	golang.org/x/text v0.27.0 // indirect
+	golang.org/x/text v0.28.0 // indirect
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 )

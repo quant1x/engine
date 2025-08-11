@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.9.19] - 2025-08-11
+### Changed
+- 更新依赖库版本
+
 ## [1.9.18] - 2025-08-10
 ### Changed
 - 新增独立的K线周期转换函数
@@ -10,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - 更新依赖库gotdx版本到1.23.13, 支撑全部的行业板块
 - 更新依赖库版本
 - 更新依赖库版本
+- update changelog
 
 ## [1.9.17] - 2025-08-06
 ### Changed
@@ -1942,7 +1947,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.18...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.19...HEAD
+[1.9.19]: https://gitee.com/quant1x/engine.git/compare/v1.9.18...v1.9.19
 [1.9.18]: https://gitee.com/quant1x/engine.git/compare/v1.9.17...v1.9.18
 [1.9.17]: https://gitee.com/quant1x/engine.git/compare/v1.9.16...v1.9.17
 [1.9.16]: https://gitee.com/quant1x/engine.git/compare/v1.9.15...v1.9.16

@@ -3,9 +3,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.10.0] - 2025-08-14
+### Changed
+- go版本最低1.25, 更新依赖库版本
+
 ## [1.9.19] - 2025-08-11
 ### Changed
 - 更新依赖库版本
+- update changelog
 
 ## [1.9.18] - 2025-08-10
 ### Changed
@@ -1947,7 +1952,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.9.19...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.10.0...HEAD
+[1.10.0]: https://gitee.com/quant1x/engine.git/compare/v1.9.19...v1.10.0
 [1.9.19]: https://gitee.com/quant1x/engine.git/compare/v1.9.18...v1.9.19
 [1.9.18]: https://gitee.com/quant1x/engine.git/compare/v1.9.17...v1.9.18
 [1.9.17]: https://gitee.com/quant1x/engine.git/compare/v1.9.16...v1.9.17

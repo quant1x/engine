@@ -9,7 +9,7 @@ require (
 	gitee.com/quant1x/num v0.6.0
 	gitee.com/quant1x/pandas v1.6.0
 	gitee.com/quant1x/pkg v0.7.0
-	gitee.com/quant1x/ta-lib v0.9.1
+	gitee.com/quant1x/ta-lib v0.9.3
 	github.com/bits-and-blooms/bitset v1.24.0
 	github.com/fatih/color v1.18.0
 	github.com/go-echarts/go-echarts/v2 v2.6.1

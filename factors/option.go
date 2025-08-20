@@ -14,7 +14,6 @@ import (
 	"time"
 
 	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/num"
 )
 
 // OptionFinanceBoardData 表示期权行情数据
@@ -29,6 +28,13 @@ type OptionFinanceBoardData struct {
 }
 
 // RiskIndicator 上交所风险指标
+//
+// 合约信息:
+//   - Delta值(δ): 又称对冲值，是衡量标的资产价格变动时，期权价格的变化幅度。
+//   - Gamma(γ): 反映期货价格对delta值的影响程度，为delta变化量与期货价格变化量之比。
+//   - vega值: 认股证对引伸波幅变动的敏感度，期权的风险指标通常用希腊字母来表示。
+//   - Theta(θ): 是用来测量时间变化对期权理论价值的影响。表示时间每经过一天，期权价值会损失多少。
+//   - Rho: 是指期权价格对无风险利率变化的敏感程度，是用以衡量利率转变对权证价值影响的指针。
 type RiskIndicator struct {
 	TradeDate       time.Time `json:"TRADE_DATE"`
 	SecurityID      string    `json:"SECURITY_ID"`
@@ -45,7 +51,7 @@ type RiskIndicator struct {
 // HTTP 客户端
 var client = &http.Client{Timeout: 10 * time.Second}
 
-// ==================== 1. 期权行情数据：option_finance_board ====================
+// ==================== 1. 期权行情数据: option_finance_board ====================
 
 // OptionFinanceBoard 期权行情数据
 func OptionFinanceBoard(symbol string, endMonth string) ([]OptionFinanceBoardData, error) {
@@ -114,7 +120,7 @@ func OptionFinanceBoard(symbol string, endMonth string) ([]OptionFinanceBoardDat
 	return data, nil
 }
 
-// ==================== 2. 风险指标：option_risk_indicator_sse ====================
+// ==================== 2. 风险指标: option_risk_indicator_sse ====================
 func OptionRiskIndicatorSSE(date string) ([]RiskIndicator, error) {
 	const riskUrl = "http://query.sse.com.cn/commonQuery.do"
 
@@ -217,7 +223,7 @@ func getFourthWednesday(year, month int) time.Time {
 
 	// 3. 计算从1号到当月第一个星期三需要多少天
 	// 目标星期三的编号是 2 (因为 周日=0, 周一=1, 周二=2, 周三=3, ...)
-	// 这里有一个关键错误：周三的编号是 3，不是 2！
+	// 这里有一个关键错误: 周三的编号是 3，不是 2！
 	// 我们需要计算的是 (3 - weekdayOfFirst + 7) % 7
 	daysUntilFirstWednesday := (3 - weekdayOfFirst + 7) % 7
 
@@ -316,7 +322,7 @@ func extractAndMergeData(riskData []RiskIndicator, tradeDateStr string) ([]Merge
 		if risk.ImplcVolatility <= 0.01 || risk.ImplcVolatility >= 1.0 {
 			continue
 		}
-		fmt.Printf("ContractID=%s, price=%f\n", contractID, price.Price)
+		//fmt.Printf("ContractID=%s, price=%f\n", contractID, price.Price)
 		merged = append(merged, MergedOption{
 			ContractID:      contractID,
 			Strike:          price.StrikePrice,
@@ -338,7 +344,7 @@ func extractAndMergeData(riskData []RiskIndicator, tradeDateStr string) ([]Merge
 	return merged, nil
 }
 
-// ------------------------------- 5. 计算“恐慌指数”（真实VIX） -------------------------------
+// ------------------------------- 5. 计算“恐慌指数”(真实VIX) -------------------------------
 func calculateRealVix(mergedData []MergedOption, tradeDateStr string, riskFreeRate float64) (float64, error) {
 	currentDate, err := api.ParseTime(tradeDateStr)
 	if err != nil {
@@ -393,7 +399,7 @@ func calculateRealVix(mergedData []MergedOption, tradeDateStr string, riskFreeRa
 	term1 := groups[t1]
 	term2 := groups[t2]
 	fmt.Println("==>", len(term1), len(term2))
-	fmt.Println("==>", T1, T2)
+	fmt.Printf("T1=%v, T2=%v\n", T1, T2)
 
 	var1, err := computeVariance(term1, T1, riskFreeRate)
 	if err != nil {
@@ -412,39 +418,56 @@ func calculateRealVix(mergedData []MergedOption, tradeDateStr string, riskFreeRa
 
 	vixSquared := ((T2-targetT)*var1 + (targetT-T1)*var2) / (T2 - T1)
 	vix := math.Sqrt(vixSquared) * 100
-
+	fmt.Printf("📊 M1 方差: %.6f, M2 方差: %.6f\n", var1, var2)
+	fmt.Printf("🎯 插值得到 30 天方差: %.6f → VIX = %.2f\n", vixSquared, vix)
 	return math.Max(vix, 5.0), nil
 }
 
 func computeVariance(options []MergedOption, T, r float64) (float64, error) {
 	if len(options) == 0 {
-		return 0, fmt.Errorf("计算方差失败：期权数据为空")
+		return 0, fmt.Errorf("计算方差失败: 期权数据为空")
 	}
 
-	if T <= 0 {
-		return 0, fmt.Errorf("T <= 0")
+	if T <= 1.0/365.0 { // 小于1天
+		return 0, fmt.Errorf("T <= 1天")
 	}
 
 	discount := math.Exp(-r * T)
+
+	// ✅ 1. 按行权价升序排序(必须！)
 	sort.Slice(options, func(i, j int) bool {
 		return options[i].Strike < options[j].Strike
 	})
+	// 在提取并合并数据后，排序时加入 TYPE 控制
+	sort.Slice(options, func(i, j int) bool {
+		if options[i].Strike == options[j].Strike {
+			// 相同行权价时: Put 在 Call 前
+			if options[i].Type == "P" && options[j].Type == "C" {
+				return true
+			}
+			if options[i].Type == "C" && options[j].Type == "P" {
+				return false
+			}
+			return false // 相同类型，顺序不变
+		}
+		return options[i].Strike < options[j].Strike
+	})
 
-	// 👉 1. 创建新的切片，只包含 Price > 0 的合约
+	// ✅ 2. 过滤 Price > 0 的有效合约
 	var validOptions []MergedOption
 	for _, opt := range options {
 		if opt.Price > 0 {
 			validOptions = append(validOptions, opt)
 		}
 	}
-
 	if len(validOptions) == 0 {
-		return 0, fmt.Errorf("计算方差失败：所有期权价格均为0")
+		return 0, fmt.Errorf("计算方差失败: 所有期权价格均为0")
 	}
+	options = validOptions
 
-	// 👉 2. 使用过滤后的 validOptions 进行后续计算
+	// ✅ 3. 提取 Call 和 Put
 	var calls, puts []MergedOption
-	for _, opt := range validOptions {
+	for _, opt := range options {
 		if opt.Type == "C" {
 			calls = append(calls, opt)
 		} else if opt.Type == "P" {
@@ -453,44 +476,34 @@ func computeVariance(options []MergedOption, T, r float64) (float64, error) {
 	}
 
 	if len(calls) == 0 || len(puts) == 0 {
-		return 0, fmt.Errorf("计算方差失败：缺少 Call 或 Put 合约")
+		return 0, fmt.Errorf("缺少 Call 或 Put 合约")
 	}
 
+	// 构建 Put 行权价映射
 	putMap := make(map[float64]float64)
 	for _, put := range puts {
 		putMap[put.Strike] = put.Price
 	}
-	fmt.Printf("Debug: Total options: %d, Calls: %d, Puts: %d\n", len(options), len(calls), len(puts))
-	fmt.Println("Debug: Call-Put Pairs:")
-	for _, call := range calls {
-		putPrice, exists := putMap[call.Strike]
-		if exists {
-			fmt.Printf("  Strike: %.3f, C: %.4f, P: %.4f, C-P: %.4f\n",
-				call.Strike, call.Price, putPrice, call.Price-putPrice)
-		}
-	}
 
+	// 对齐 C-P
 	var cMinusP []float64
 	var strikes []float64
 	for _, call := range calls {
-		putPrice, exists := putMap[call.Strike]
-		if !exists {
-			continue
+		if putPrice, exists := putMap[call.Strike]; exists {
+			cMinusP = append(cMinusP, call.Price-putPrice)
+			strikes = append(strikes, call.Strike)
 		}
-		cMinusP = append(cMinusP, call.Price-putPrice)
-		strikes = append(strikes, call.Strike)
 	}
 
 	if len(cMinusP) == 0 {
-		return 0, fmt.Errorf("计算方差失败：没有找到有效的 Call-Put 对")
+		return 0, fmt.Errorf("没有找到有效的 Call-Put 对")
 	}
 
-	// 插值找到 C-P=0 的点 (F)
+	// ✅ 4. 插值找 F
 	var F float64
-	found := false
+	foundCross := false
 	for i := 0; i < len(cMinusP)-1; i++ {
 		if cMinusP[i]*cMinusP[i+1] <= 0 {
-			// 找到交叉点，进行线性插值
 			k1, k2 := strikes[i], strikes[i+1]
 			c1, c2 := cMinusP[i], cMinusP[i+1]
 			if c2 != c1 {
@@ -499,12 +512,11 @@ func computeVariance(options []MergedOption, T, r float64) (float64, error) {
 			} else {
 				F = (k1 + k2) / 2
 			}
-			found = true
+			foundCross = true
 			break
 		}
 	}
-	if !found {
-		// 如果没有交叉点，取绝对值最小的
+	if !foundCross {
 		minIdx := 0
 		minAbs := math.Abs(cMinusP[0])
 		for i, v := range cMinusP {
@@ -516,58 +528,62 @@ func computeVariance(options []MergedOption, T, r float64) (float64, error) {
 		F = strikes[minIdx]
 	}
 
-	fmt.Println("远期价格 F ≈ ", F)
-
-	// 👉 4. 找到最接近 F 的行权价 K0
-	var K0 float64
-	//minDiff := math.Abs(options[0].Strike - F)
-	//K0 = options[0].Strike
-	//for _, opt := range options {
-	//	diff := math.Abs(opt.Strike - F)
-	//	if diff < minDiff {
-	//		minDiff = diff
-	//		K0 = opt.Strike
-	//	}
-	//}
+	// ✅ 5. 截断行权价范围(去噪声)
+	var filtered []MergedOption
 	for _, opt := range options {
-		if F >= opt.Strike {
+		if opt.Strike >= 0.7*F && opt.Strike <= 1.3*F {
+			filtered = append(filtered, opt)
+		}
+	}
+	if len(filtered) < 2 {
+		return 0, fmt.Errorf("截断后数据不足")
+	}
+	options = filtered
+
+	// ✅ 6. 重新排序(确保)
+	sort.Slice(options, func(i, j int) bool {
+		return options[i].Strike < options[j].Strike
+	})
+
+	// ✅ 7. 找 K0: 小于等于 F 的最大行权价
+	K0 := 0.0
+	for _, opt := range options {
+		if opt.Strike <= F {
 			K0 = opt.Strike
 		} else {
 			break
 		}
 	}
+	if K0 == 0.0 {
+		K0 = options[0].Strike // 保底
+	}
 
-	// 👉 5. 计算主项的加权和
-	var sum_ float64
+	// ✅ 8. 计算加权和(✅ 先贴现！)
+	sum_ := 0.0
+	fmt.Printf("\n🔍 开始计算 sum_ (T=%.4f, discount=%.6f)\n", T, discount)
 	for i, opt := range options {
-		var K float64
-		var dk float64
-		Q := opt.Price
-		if num.IsNaN(Q) || Q <= 0 {
+		Q := opt.Price * discount // ✅ 贴现价格
+		if Q <= 0 {
 			continue
 		}
-		K = opt.Strike
+		K := opt.Strike
+		var dk float64
 		if i == 0 {
-			dk = options[i+1].Strike - opt.Strike
+			dk = options[i+1].Strike - K
 		} else if i == len(options)-1 {
-			dk = opt.Strike - options[i-1].Strike
+			dk = K - options[i-1].Strike
 		} else {
 			dk = (options[i+1].Strike - options[i-1].Strike) / 2
 		}
-		fmt.Printf("%d: dk=%f, K=%f, Q=%f\n", i, dk, K, Q)
 		weight := dk / (K * K)
-		sum_ += weight * Q
-		fmt.Printf("sum_: %f\n", sum_)
+		contrib := weight * Q
+		fmt.Printf("  K=%5.3f | P=%6.4f | Q=%7.5f | dk=%6.4f | w=%8.6f | → %8.6f\n", K, opt.Price, Q, dk, weight, contrib)
+		sum_ += contrib
 	}
-	fmt.Println("        T =", T)
-	fmt.Println("      sum =", sum_)
-	fmt.Println("        F =", F)
-	fmt.Println("       K0 =", K0)
-	fmt.Println(" discount =", discount)
-	// 👉 6. 计算完整的方差 (包含修正项)
+
+	// ✅ 9. 计算方差(✅ 不再乘 discount)
 	variance := (2.0 / T) * sum_
 	variance -= math.Pow((F/K0)-1, 2) / T
-	variance *= discount
-
-	return variance, nil
+	fmt.Printf("✅ [T=%.4f] F=%.4f, K0=%.4f, sum=%.6f, variance=%.6f\n", T, F, K0, sum_, variance)
+	return math.Max(variance, 1e-6), nil
 }

@@ -44,11 +44,12 @@ func TestOptions(t *testing.T) {
 func TestVIX(t *testing.T) {
 	tradeDate := exchange.GetFrontTradeDay()
 	tradeDate = exchange.GetCurrentlyDay()
+
 	tradeDate = exchange.FixTradeDate(tradeDate, "20060102")
 	fmt.Println("🚀 开始执行 300ETF 恐慌指数监控...")
 
 	// 1. 获取风险数据 (真实接口)
-	fmt.Println("📡 正在获取风险数据...")
+	fmt.Printf("📡 正在获取 %s 风险数据...\n", tradeDate)
 	riskData, err := OptionRiskIndicatorSSE(tradeDate)
 	if err != nil {
 		log.Fatalf("❌ 获取风险数据失败: %v", err)

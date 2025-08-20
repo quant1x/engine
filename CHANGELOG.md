@@ -3,9 +3,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.10.3] - 2025-08-20
+### Changed
+- 优化VIX算法
+
 ## [1.10.2] - 2025-08-19
 ### Changed
 - 更新ta-lib依赖库版本到0.9.3
+- update changelog
 
 ## [1.10.1] - 2025-08-14
 ### Changed
@@ -1962,7 +1967,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.10.2...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.10.3...HEAD
+[1.10.3]: https://gitee.com/quant1x/engine.git/compare/v1.10.2...v1.10.3
 [1.10.2]: https://gitee.com/quant1x/engine.git/compare/v1.10.1...v1.10.2
 [1.10.1]: https://gitee.com/quant1x/engine.git/compare/v1.10.0...v1.10.1
 [1.10.0]: https://gitee.com/quant1x/engine.git/compare/v1.9.19...v1.10.0

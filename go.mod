@@ -6,7 +6,7 @@ require (
 	gitee.com/quant1x/exchange v0.7.0
 	gitee.com/quant1x/gotdx v1.25.0
 	gitee.com/quant1x/gox v1.23.1
-	gitee.com/quant1x/num v0.6.4
+	gitee.com/quant1x/num v0.6.5
 	gitee.com/quant1x/pandas v1.6.0
 	gitee.com/quant1x/pkg v0.7.0
 	gitee.com/quant1x/ta-lib v0.9.3

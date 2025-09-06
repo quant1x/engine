@@ -77,3 +77,11 @@ func Test_totalAdjustmentTimes(t *testing.T) {
 		})
 	}
 }
+
+func TestUpdateAllKLine(t *testing.T) {
+	code := "sz300773"
+	freq := "1min"
+	data := UpdateAllKLine(code, freq)
+	fmt.Println(data[0])
+	_ = data
+}

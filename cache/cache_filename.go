@@ -2,9 +2,10 @@ package cache
 
 import (
 	"fmt"
+	"path/filepath"
+
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
-	"path/filepath"
 )
 
 const (
@@ -29,6 +30,14 @@ func KLineFilename(code string) string {
 	cacheId := CacheId(code)
 	length := len(cacheId)
 	filename := fmt.Sprintf("%s/%s/%s.csv", GetDayPath(), cacheId[:length-3], cacheId)
+	return filename
+}
+
+// KLineFilenameEx K线缓存路径
+func KLineFilenameEx(code string, freq string) string {
+	cacheId := CacheId(code)
+	length := len(cacheId)
+	filename := fmt.Sprintf("%s/%s/%s.csv", GetKLinePath(freq), cacheId[:length-3], cacheId)
 	return filename
 }
 

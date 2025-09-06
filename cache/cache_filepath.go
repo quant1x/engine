@@ -1,6 +1,9 @@
 package cache
 
-import "path/filepath"
+import (
+	"path/filepath"
+	"strings"
+)
 
 const (
 	cacheMetaPath   = "meta"    // 元数据缓存路径
@@ -26,6 +29,13 @@ func GetMetaPath() string {
 // GetDayPath 历史数据-日线缓存路径
 func GetDayPath() string {
 	return GetRootPath() + "/" + cacheDayPath
+}
+
+// GetKLinePath 历史数据-K线缓存路径
+func GetKLinePath(freq string) string {
+	freq = strings.TrimSpace(freq)
+	freq = strings.ToLower(freq)
+	return GetRootPath() + "/" + freq
 }
 
 // GetMinutePath 分时路径

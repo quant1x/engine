@@ -12,15 +12,16 @@ const (
 )
 
 const (
-	BaseXdxr                = cache.PluginMaskBaseData | (baseKind + 1) // 基础数据-除权除息
-	BaseKLine               = cache.PluginMaskBaseData | (baseKind + 2) // 基础数据-基础K线
-	BaseTransaction         = cache.PluginMaskBaseData | (baseKind + 3) // 基础数据-历史成交
-	BaseMinutes             = cache.PluginMaskBaseData | (baseKind + 4) // 基础数据-分时数据
-	BaseQuarterlyReports    = cache.PluginMaskBaseData | (baseKind + 5) // 基础数据-季报
-	BaseSafetyScore         = cache.PluginMaskBaseData | (baseKind + 6) // 基础数据-安全分
-	BaseWideKLine           = cache.PluginMaskBaseData | (baseKind + 7) // 基础数据-宽表
-	BasePerformanceForecast = cache.PluginMaskBaseData | (baseKind + 8) // 基础数据-业绩预告
-	BaseChipDistribution    = cache.PluginMaskBaseData | (baseKind + 9) // 基础数据-筹码分布
+	BaseXdxr                = cache.PluginMaskBaseData | (baseKind + 1)  // 基础数据-除权除息
+	BaseKLine               = cache.PluginMaskBaseData | (baseKind + 2)  // 基础数据-基础K线
+	BaseTransaction         = cache.PluginMaskBaseData | (baseKind + 3)  // 基础数据-历史成交
+	BaseMinutes             = cache.PluginMaskBaseData | (baseKind + 4)  // 基础数据-分时数据
+	BaseQuarterlyReports    = cache.PluginMaskBaseData | (baseKind + 5)  // 基础数据-季报
+	BaseSafetyScore         = cache.PluginMaskBaseData | (baseKind + 6)  // 基础数据-安全分
+	BaseWideKLine           = cache.PluginMaskBaseData | (baseKind + 7)  // 基础数据-宽表
+	BasePerformanceForecast = cache.PluginMaskBaseData | (baseKind + 8)  // 基础数据-业绩预告
+	BaseChipDistribution    = cache.PluginMaskBaseData | (baseKind + 9)  // 基础数据-筹码分布
+	BaseKLineMinute         = cache.PluginMaskBaseData | (baseKind + 10) // 基础数据-基础分钟级别K线
 )
 
 // DataSet 数据层, 数据集接口 smart
@@ -51,6 +52,7 @@ var (
 		BaseWideKLine:           cache.Summary(BaseWideKLine, "wide", "宽表", cache.DefaultDataProvider),
 		BasePerformanceForecast: cache.Summary(BasePerformanceForecast, "forecast", "业绩预告", cache.DefaultDataProvider),
 		BaseChipDistribution:    cache.Summary(BaseChipDistribution, "chips", "筹码分布", cache.DefaultDataProvider),
+		BaseKLineMinute:         cache.Summary(BaseKLineMinute, "min", "分钟级K线", cache.DefaultDataProvider, "支持1min,5min,15min,30min,60min"),
 	}
 )
 

@@ -3,9 +3,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.10.4] - 2025-09-06
+### Changed
+- 更新依赖库版本
+- 新增分钟级K线, 可于yaml配置文件中data.cache.kline设置1min=true, 其中.代表yaml层级，=替换为:, 按照yaml标准设置
+- sort imports
+
 ## [1.10.3] - 2025-08-20
 ### Changed
 - 优化VIX算法
+- update changelog
 
 ## [1.10.2] - 2025-08-19
 ### Changed
@@ -1967,7 +1974,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.10.3...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.10.4...HEAD
+[1.10.4]: https://gitee.com/quant1x/engine.git/compare/v1.10.3...v1.10.4
 [1.10.3]: https://gitee.com/quant1x/engine.git/compare/v1.10.2...v1.10.3
 [1.10.2]: https://gitee.com/quant1x/engine.git/compare/v1.10.1...v1.10.2
 [1.10.1]: https://gitee.com/quant1x/engine.git/compare/v1.10.0...v1.10.1

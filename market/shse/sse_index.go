@@ -38,7 +38,7 @@ func IndexList() {
 	//url += "isPagination=false&"
 	//url += "sqlId=DB_SZZSLB_ZSLB&"
 	url += params.Encode()
-	data, tm, err := http.Request(url, "get", header)
+	data, tm, err := http.Request(url, "get", "", header)
 	fmt.Println(string(data), tm, err)
 
 }

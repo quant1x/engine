@@ -2,11 +2,12 @@ package config
 
 import (
 	"fmt"
+	"regexp"
+	"strings"
+
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/num"
 	"gitee.com/quant1x/pkg/yaml"
-	"regexp"
-	"strings"
 )
 
 // 值范围正则表达式

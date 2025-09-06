@@ -4,9 +4,10 @@
 # since: 2023-09-12
 
 import os
+import platform
 import subprocess
 from git import Repo
-import platform
+
 
 def get_latest_tag(diff: int=0) -> str:
     """

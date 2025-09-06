@@ -2,16 +2,17 @@ package main
 
 import (
 	"fmt"
+	_ "net/http/pprof"
+	"os"
+	"runtime/pprof"
+	"time"
+
 	"gitee.com/quant1x/engine/command"
 	"gitee.com/quant1x/engine/config"
 	_ "gitee.com/quant1x/engine/strategies"
 	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/runtime"
-	_ "net/http/pprof"
-	"os"
-	"runtime/pprof"
-	"time"
 )
 
 // 系统构建时传入的值

@@ -3,9 +3,10 @@ package factors
 import (
 	"encoding/json"
 	"fmt"
+	"testing"
+
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/gox/api"
-	"testing"
 )
 
 func TestISM(t *testing.T) {

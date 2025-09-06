@@ -1,9 +1,10 @@
 package market
 
 import (
+	"sync"
+
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/securities"
-	"sync"
 )
 
 const (

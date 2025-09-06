@@ -1,11 +1,12 @@
 package trader
 
 import (
+	"slices"
+	"sync"
+
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
-	"slices"
-	"sync"
 )
 
 type HoldingPosition struct {

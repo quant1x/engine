@@ -2,6 +2,9 @@ package tracker
 
 import (
 	"fmt"
+	"os"
+	"time"
+
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/storages"
@@ -9,8 +12,6 @@ import (
 	"gitee.com/quant1x/gox/tags"
 	"gitee.com/quant1x/num"
 	"gitee.com/quant1x/pkg/tablewriter"
-	"os"
-	"time"
 )
 
 // OutputTable 输出表格

@@ -2,8 +2,9 @@ package storages
 
 import (
 	"fmt"
-	"gitee.com/quant1x/gox/api"
 	"testing"
+
+	"gitee.com/quant1x/gox/api"
 )
 
 func TestStockPool(t *testing.T) {

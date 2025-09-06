@@ -2,9 +2,10 @@ package szse
 
 import (
 	"fmt"
+	urlpkg "net/url"
+
 	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/gox/http"
-	urlpkg "net/url"
 )
 
 const (

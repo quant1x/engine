@@ -2,12 +2,13 @@ package services
 
 import (
 	"fmt"
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gox/api"
 	"os"
 	"path/filepath"
 	"time"
+
+	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/gox/api"
 )
 
 const (

@@ -2,9 +2,10 @@ package services
 
 import (
 	"fmt"
+	"testing"
+
 	"gitee.com/quant1x/engine/trader"
 	"gitee.com/quant1x/exchange"
-	"testing"
 )
 
 func TestTaskSell_getEarlierDate(t *testing.T) {

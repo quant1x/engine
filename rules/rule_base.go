@@ -3,6 +3,7 @@ package rules
 import (
 	"errors"
 	"fmt"
+
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/gox/exception"

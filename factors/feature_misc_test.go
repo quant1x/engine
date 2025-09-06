@@ -4,10 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"testing"
+
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
-	"testing"
 )
 
 func TestFeatureMisc(t *testing.T) {

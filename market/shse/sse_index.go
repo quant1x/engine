@@ -2,11 +2,12 @@ package shse
 
 import (
 	"fmt"
-	"gitee.com/quant1x/gox/http"
 	"math"
 	"math/rand"
 	urlpkg "net/url"
 	"time"
+
+	"gitee.com/quant1x/gox/http"
 )
 
 const (

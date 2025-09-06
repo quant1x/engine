@@ -1,12 +1,13 @@
 package factors
 
 import (
+	"strings"
+	"time"
+
 	"gitee.com/quant1x/engine/datasource/dfcf"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
-	"strings"
-	"time"
 )
 
 type companyNotice struct {

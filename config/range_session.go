@@ -1,11 +1,12 @@
 package config
 
 import (
+	"slices"
+	"strings"
+
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/pkg/yaml"
-	"slices"
-	"strings"
 )
 
 // TradingSession 交易时段

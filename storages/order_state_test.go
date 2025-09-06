@@ -2,10 +2,11 @@ package storages
 
 import (
 	"fmt"
+	"testing"
+
 	"gitee.com/quant1x/engine/trader"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
-	"testing"
 )
 
 func TestOrderFlag(t *testing.T) {

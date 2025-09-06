@@ -2,8 +2,9 @@ package dfcf
 
 import (
 	"fmt"
-	"gitee.com/quant1x/exchange"
 	"testing"
+
+	"gitee.com/quant1x/exchange"
 )
 
 func TestShareHolder(t *testing.T) {

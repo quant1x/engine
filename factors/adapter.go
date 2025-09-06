@@ -2,10 +2,11 @@ package factors
 
 import (
 	"fmt"
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/gox/util/treemap"
 	"strings"
 	"sync"
+
+	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/gox/util/treemap"
 )
 
 const (

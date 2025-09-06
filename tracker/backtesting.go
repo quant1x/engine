@@ -2,6 +2,9 @@ package tracker
 
 import (
 	"fmt"
+	"os"
+	"sort"
+
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
@@ -15,8 +18,6 @@ import (
 	"gitee.com/quant1x/num"
 	"gitee.com/quant1x/pandas"
 	"gitee.com/quant1x/pkg/tablewriter"
-	"os"
-	"sort"
 )
 
 // GoodCase good case

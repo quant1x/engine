@@ -2,8 +2,9 @@ package rules
 
 import (
 	"fmt"
-	"github.com/bits-and-blooms/bitset"
 	"testing"
+
+	"github.com/bits-and-blooms/bitset"
 )
 
 func TestRule(t *testing.T) {

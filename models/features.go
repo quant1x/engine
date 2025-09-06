@@ -1,10 +1,11 @@
 package models
 
 import (
+	"time"
+
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/num"
-	"time"
 )
 
 // FeatureToSnapshot 特征缓存数据转快照

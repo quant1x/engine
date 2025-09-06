@@ -1,8 +1,9 @@
 package storages
 
 import (
-	"gitee.com/quant1x/engine/cache"
 	"testing"
+
+	"gitee.com/quant1x/engine/cache"
 )
 
 func TestBaseDataUpdate(t *testing.T) {

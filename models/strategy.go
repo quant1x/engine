@@ -3,13 +3,14 @@ package models
 import (
 	"errors"
 	"fmt"
+	"slices"
+	"sync"
+
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/concurrent"
-	"slices"
-	"sync"
 )
 
 // ModelKind 模型类型编码, 整型

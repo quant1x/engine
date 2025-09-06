@@ -2,11 +2,12 @@ package factors
 
 import (
 	"fmt"
+	"os"
+	"testing"
+
 	"gitee.com/quant1x/engine/factors/pb"
 	"gitee.com/quant1x/pkg/yaml"
 	"google.golang.org/protobuf/proto"
-	"os"
-	"testing"
 )
 
 func Test_updateChipDistribution(t *testing.T) {

@@ -2,12 +2,13 @@ package command
 
 import (
 	"fmt"
+	"slices"
+	"strings"
+
 	"gitee.com/quant1x/engine/tools"
 	"gitee.com/quant1x/num"
 	"gitee.com/quant1x/pkg/tools/tail"
 	cmder "github.com/spf13/cobra"
-	"slices"
-	"strings"
 )
 
 const (

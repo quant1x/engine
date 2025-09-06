@@ -2,11 +2,12 @@ package services
 
 import (
 	"fmt"
-	"gitee.com/quant1x/engine/config"
-	"gitee.com/quant1x/engine/models"
 	"reflect"
 	"slices"
 	"testing"
+
+	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/engine/models"
 )
 
 func TestTaskSell_LastSession(t *testing.T) {

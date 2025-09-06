@@ -1,6 +1,8 @@
 package models
 
 import (
+	"sync"
+
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/exchange"
@@ -11,7 +13,6 @@ import (
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/num"
-	"sync"
 )
 
 var (

@@ -3,13 +3,14 @@ package dfcf
 import (
 	"encoding/json"
 	"fmt"
+	urlpkg "net/url"
+	"strings"
+
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/http"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/pkg/fastjson"
-	urlpkg "net/url"
-	"strings"
 )
 
 const (

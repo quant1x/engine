@@ -1,11 +1,12 @@
 package config
 
 import (
+	"slices"
+	"strings"
+
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gox/api"
-	"slices"
-	"strings"
 )
 
 // StrategyParameter 策略参数

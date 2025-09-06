@@ -3,11 +3,12 @@ package shse
 import (
 	"encoding/json"
 	"fmt"
+	urlpkg "net/url"
+
 	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/http"
 	"gitee.com/quant1x/num"
-	urlpkg "net/url"
 )
 
 const (

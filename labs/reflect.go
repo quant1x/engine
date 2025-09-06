@@ -2,11 +2,12 @@ package labs
 
 import (
 	"fmt"
-	"gitee.com/quant1x/engine/factors"
 	"reflect"
 	"strings"
 	"sync"
 	"unsafe"
+
+	"gitee.com/quant1x/engine/factors"
 )
 
 //go:linkname typelinks2 reflect.typelinks

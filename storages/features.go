@@ -2,6 +2,10 @@ package storages
 
 import (
 	"context"
+	"os"
+	"sync"
+	"time"
+
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
@@ -13,9 +17,6 @@ import (
 	"gitee.com/quant1x/gox/text/runewidth"
 	"gitee.com/quant1x/gox/util/treemap"
 	"gitee.com/quant1x/pkg/tablewriter"
-	"os"
-	"sync"
-	"time"
 )
 
 // MetricCallback 性能指标回调函数

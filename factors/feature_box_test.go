@@ -3,10 +3,11 @@ package factors
 import (
 	"encoding/json"
 	"fmt"
+	"testing"
+
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
-	"testing"
 )
 
 func TestBox_basic(t *testing.T) {

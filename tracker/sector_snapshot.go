@@ -2,6 +2,7 @@ package tracker
 
 import (
 	"fmt"
+
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/gotdx/securities"

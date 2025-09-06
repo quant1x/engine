@@ -2,6 +2,9 @@ package storages
 
 import (
 	"context"
+	"strings"
+	"sync"
+
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
@@ -10,8 +13,6 @@ import (
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/runtime"
 	"gitee.com/quant1x/gox/text/runewidth"
-	"strings"
-	"sync"
 )
 
 func syncDataSetByDate(data factors.DataSet, date string, op cache.OpKind) {

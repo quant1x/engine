@@ -2,12 +2,13 @@ package realtime
 
 import (
 	"fmt"
+	"testing"
+	"time"
+
 	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/models"
 	pd "gitee.com/quant1x/pandas"
 	. "gitee.com/quant1x/pandas/formula"
-	"testing"
-	"time"
 )
 
 func TestIncrementalMovingAverageConvergenceDivergence(t *testing.T) {

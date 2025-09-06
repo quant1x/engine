@@ -1,6 +1,9 @@
 package tracker
 
 import (
+	"sort"
+	"time"
+
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/models"
@@ -10,8 +13,6 @@ import (
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/runtime"
-	"sort"
-	"time"
 )
 
 // Tracker 盘中跟踪

@@ -1,8 +1,9 @@
 package services
 
 import (
-	"gitee.com/quant1x/engine/models"
 	"testing"
+
+	"gitee.com/quant1x/engine/models"
 )
 
 func TestRealtimeUpdateExchangeAndSnapshot(t *testing.T) {

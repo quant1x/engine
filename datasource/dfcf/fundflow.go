@@ -3,12 +3,13 @@ package dfcf
 import (
 	"encoding/json"
 	"fmt"
+	urlpkg "net/url"
+	"strings"
+
 	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/http"
-	urlpkg "net/url"
-	"strings"
 )
 
 // 资金流向

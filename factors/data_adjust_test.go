@@ -2,9 +2,10 @@ package factors
 
 import (
 	"fmt"
+	"testing"
+
 	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/exchange"
-	"testing"
 )
 
 // 2. 完善接口实现

@@ -3,8 +3,9 @@ package factors
 import (
 	"encoding/json"
 	"fmt"
-	"gitee.com/quant1x/gox/api"
 	"testing"
+
+	"gitee.com/quant1x/gox/api"
 )
 
 func TestNewExchangeKLine(t *testing.T) {

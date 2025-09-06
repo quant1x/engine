@@ -2,9 +2,10 @@ package market
 
 import (
 	"fmt"
-	"gitee.com/quant1x/exchange"
 	"strings"
 	"testing"
+
+	"gitee.com/quant1x/exchange"
 )
 
 func TestGetCodeList(t *testing.T) {

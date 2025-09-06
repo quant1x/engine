@@ -2,8 +2,9 @@ package factors
 
 import (
 	"fmt"
-	"gitee.com/quant1x/gotdx/securities"
 	"testing"
+
+	"gitee.com/quant1x/gotdx/securities"
 )
 
 func TestGetL5History(t *testing.T) {

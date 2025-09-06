@@ -3,13 +3,14 @@ package rules
 import (
 	"errors"
 	"fmt"
+	"slices"
+	"sync"
+
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/runtime"
 	bitmap "github.com/bits-and-blooms/bitset"
-	"slices"
-	"sync"
 )
 
 // Kind 规则类型

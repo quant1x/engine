@@ -3,8 +3,9 @@ package trader
 import (
 	"encoding/json"
 	"fmt"
-	"gitee.com/quant1x/gox/api"
 	"testing"
+
+	"gitee.com/quant1x/gox/api"
 )
 
 func Test_lazyLoadHoldingOrder(t *testing.T) {

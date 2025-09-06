@@ -2,8 +2,9 @@ package tracker
 
 import (
 	"fmt"
-	"gitee.com/quant1x/engine/config"
 	"testing"
+
+	"gitee.com/quant1x/engine/config"
 )
 
 func TestConfig(t *testing.T) {

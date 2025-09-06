@@ -2,9 +2,10 @@ package rules
 
 import (
 	"fmt"
+	"testing"
+
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/models"
-	"testing"
 )
 
 func Test_baseFilter(t *testing.T) {

@@ -3,16 +3,17 @@ package command
 import (
 	"errors"
 	"fmt"
+	"os"
+	"runtime"
+	"strings"
+	"syscall"
+
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/services"
 	"gitee.com/quant1x/gox/daemon"
 	"gitee.com/quant1x/gox/logger"
 	nix "github.com/sevlyar/go-daemon"
 	cmder "github.com/spf13/cobra"
-	"os"
-	"runtime"
-	"strings"
-	"syscall"
 )
 
 const (

@@ -2,6 +2,8 @@ package factors
 
 import (
 	"context"
+	"os"
+
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/factors/pb"
@@ -10,7 +12,6 @@ import (
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/util/homedir"
 	"google.golang.org/protobuf/proto"
-	"os"
 )
 
 func init() {

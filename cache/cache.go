@@ -1,10 +1,11 @@
 package cache
 
 import (
+	"os"
+
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/util/homedir"
-	"os"
 )
 
 const (

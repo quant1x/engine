@@ -2,9 +2,10 @@ package trader
 
 import (
 	"fmt"
+	"testing"
+
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/strategies"
-	"testing"
 )
 
 func TestQueryAccount(t *testing.T) {

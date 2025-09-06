@@ -2,10 +2,11 @@ package cache
 
 import (
 	"fmt"
-	"gitee.com/quant1x/engine/config"
-	"gitee.com/quant1x/gox/api"
 	"strings"
 	"sync"
+
+	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/gox/api"
 )
 
 const (

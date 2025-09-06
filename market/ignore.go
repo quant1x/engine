@@ -1,8 +1,9 @@
 package market
 
 import (
-	"gitee.com/quant1x/gotdx/securities"
 	"strings"
+
+	"gitee.com/quant1x/gotdx/securities"
 )
 
 // IsNeedIgnore 需要忽略的个股

@@ -2,6 +2,8 @@ package services
 
 import (
 	"fmt"
+	"slices"
+
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
@@ -12,7 +14,6 @@ import (
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/runtime"
 	"gitee.com/quant1x/num"
-	"slices"
 )
 
 // 任务 - 卖出117

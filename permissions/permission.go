@@ -2,8 +2,9 @@ package permissions
 
 import (
 	"errors"
-	"gitee.com/quant1x/engine/models"
 	"sync"
+
+	"gitee.com/quant1x/engine/models"
 )
 
 var (

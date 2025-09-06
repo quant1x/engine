@@ -1,6 +1,8 @@
 package factors
 
 import (
+	"math"
+
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/utils"
@@ -8,7 +10,6 @@ import (
 	"gitee.com/quant1x/num"
 	"gitee.com/quant1x/pandas"
 	. "gitee.com/quant1x/pandas/formula"
-	"math"
 )
 
 // ShapeType K线形态类型

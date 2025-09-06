@@ -2,6 +2,7 @@ package factors
 
 import (
 	"context"
+
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/utils"

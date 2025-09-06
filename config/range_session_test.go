@@ -2,9 +2,10 @@ package config
 
 import (
 	"fmt"
+	"testing"
+
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/pkg/yaml"
-	"testing"
 )
 
 func TestTimeRange(t *testing.T) {

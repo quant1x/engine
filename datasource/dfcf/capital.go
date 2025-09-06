@@ -2,12 +2,13 @@ package dfcf
 
 import (
 	"encoding/json"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/http"
 	urlpkg "net/url"
 	"strings"
 	"time"
+
+	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/gox/http"
 )
 
 type rawCapital struct {

@@ -2,6 +2,11 @@ package command
 
 import (
 	"fmt"
+	"os"
+	goruntime "runtime"
+	"strings"
+	_ "unsafe" // For go:linkname
+
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/tracker"
 	"gitee.com/quant1x/gox/logger"
@@ -9,10 +14,6 @@ import (
 	"gitee.com/quant1x/num"
 	"github.com/klauspost/cpuid/v2" // For cpuid
 	cli "github.com/spf13/cobra"
-	"os"
-	goruntime "runtime"
-	"strings"
-	_ "unsafe" // For go:linkname
 )
 
 var (

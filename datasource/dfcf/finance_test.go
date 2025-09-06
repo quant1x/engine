@@ -3,8 +3,9 @@ package dfcf
 import (
 	"encoding/json"
 	"fmt"
-	"gitee.com/quant1x/gox/api"
 	"testing"
+
+	"gitee.com/quant1x/gox/api"
 )
 
 func TestFinanceReports(t *testing.T) {

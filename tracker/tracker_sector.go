@@ -2,6 +2,10 @@ package tracker
 
 import (
 	"fmt"
+	"os"
+	"slices"
+	"sort"
+
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/models"
@@ -12,9 +16,6 @@ import (
 	"gitee.com/quant1x/gox/tags"
 	"gitee.com/quant1x/num"
 	"gitee.com/quant1x/pkg/tablewriter"
-	"os"
-	"slices"
-	"sort"
 )
 
 // ScanSectorForTick 扫描板块

@@ -2,6 +2,7 @@ package command
 
 import (
 	"fmt"
+
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/exchange"

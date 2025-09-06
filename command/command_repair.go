@@ -2,6 +2,9 @@ package command
 
 import (
 	"fmt"
+	"strings"
+	"time"
+
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/storages"
@@ -9,8 +12,6 @@ import (
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
 	cmder "github.com/spf13/cobra"
-	"strings"
-	"time"
 )
 
 const (

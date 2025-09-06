@@ -2,8 +2,9 @@ package storages
 
 import (
 	"fmt"
-	"gitee.com/quant1x/exchange"
 	"testing"
+
+	"gitee.com/quant1x/exchange"
 )
 
 func Test_checkOrderForBuy(t *testing.T) {

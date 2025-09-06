@@ -2,6 +2,9 @@ package tracker
 
 import (
 	"fmt"
+	"slices"
+	"strings"
+
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
@@ -9,8 +12,6 @@ import (
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gox/api"
-	"slices"
-	"strings"
 )
 
 // CheckStrategy 检查当前交易日中个股在策略中的执行情况

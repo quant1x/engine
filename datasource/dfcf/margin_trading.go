@@ -3,9 +3,10 @@ package dfcf
 import (
 	"encoding/json"
 	"fmt"
+	urlpkg "net/url"
+
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/http"
-	urlpkg "net/url"
 )
 
 const (

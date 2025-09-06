@@ -1,12 +1,13 @@
 package config
 
 import (
-	"gitee.com/quant1x/gox/exception"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/num"
 	"regexp"
 	"strings"
 	_ "unsafe"
+
+	"gitee.com/quant1x/gox/exception"
+	"gitee.com/quant1x/gox/logger"
+	"gitee.com/quant1x/num"
 )
 
 // 正则表达式

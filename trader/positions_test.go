@@ -1,8 +1,9 @@
 package trader
 
 import (
-	"gitee.com/quant1x/engine/models"
 	"testing"
+
+	"gitee.com/quant1x/engine/models"
 )
 
 func TestCacheSync(t *testing.T) {

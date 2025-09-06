@@ -2,9 +2,10 @@ package config
 
 import (
 	"fmt"
-	"gitee.com/quant1x/gox/logger"
 	"net/http"
 	_ "net/http/pprof"
+
+	"gitee.com/quant1x/gox/logger"
 )
 
 type PprofParameter struct {

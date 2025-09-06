@@ -1,10 +1,11 @@
 package trader
 
 import (
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gox/api"
 	"path/filepath"
 	"strings"
+
+	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/gox/api"
 )
 
 // GetOrderFilename 获得订单文件名

@@ -2,13 +2,14 @@ package command
 
 import (
 	"fmt"
+	"strings"
+
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/permissions"
 	"gitee.com/quant1x/engine/tracker"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	cmder "github.com/spf13/cobra"
-	"strings"
 )
 
 const (

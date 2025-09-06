@@ -2,6 +2,7 @@ package utils
 
 import (
 	"errors"
+
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/num"
 	"golang.org/x/sys/cpu"

@@ -2,6 +2,7 @@ package cache
 
 import (
 	"fmt"
+
 	"gitee.com/quant1x/exchange"
 )
 

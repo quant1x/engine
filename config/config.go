@@ -3,12 +3,13 @@ package config
 import (
 	"embed"
 	"fmt"
+	"os"
+	"strings"
+
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/util/homedir"
 	"gitee.com/quant1x/pkg/yaml"
-	"os"
-	"strings"
 )
 
 const (

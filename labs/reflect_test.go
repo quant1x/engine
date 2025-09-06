@@ -2,9 +2,10 @@ package labs
 
 import (
 	"fmt"
-	"gitee.com/quant1x/engine/factors"
 	"reflect"
 	"testing"
+
+	"gitee.com/quant1x/engine/factors"
 )
 
 func TestReflect(t *testing.T) {

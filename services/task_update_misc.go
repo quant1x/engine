@@ -1,6 +1,8 @@
 package services
 
 import (
+	"time"
+
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/market"
@@ -12,7 +14,6 @@ import (
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
 	"gitee.com/quant1x/gox/runtime"
-	"time"
 )
 
 // 更新快照

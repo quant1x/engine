@@ -2,6 +2,11 @@ package factors
 
 import (
 	"fmt"
+	"math/rand"
+	"os"
+	"path/filepath"
+	"testing"
+
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/utils"
 	"gitee.com/quant1x/exchange"
@@ -12,10 +17,6 @@ import (
 	"github.com/go-echarts/go-echarts/v2/charts"
 	"github.com/go-echarts/go-echarts/v2/opts"
 	"github.com/go-echarts/go-echarts/v2/types"
-	"math/rand"
-	"os"
-	"path/filepath"
-	"testing"
 )
 
 func TestKLine(t *testing.T) {

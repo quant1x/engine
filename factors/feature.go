@@ -2,6 +2,7 @@ package factors
 
 import (
 	"errors"
+
 	"gitee.com/quant1x/engine/cache"
 )
 

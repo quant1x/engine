@@ -2,12 +2,13 @@ package storages
 
 import (
 	"fmt"
+	"path/filepath"
+	"testing"
+
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/gox/concurrent"
-	"path/filepath"
-	"testing"
 )
 
 type TestModel82 struct{}

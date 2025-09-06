@@ -1,13 +1,14 @@
 package base
 
 import (
+	"strconv"
+	"strings"
+
 	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gotdx"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/num"
 	"gitee.com/quant1x/pandas"
-	"strconv"
-	"strings"
 )
 
 const (

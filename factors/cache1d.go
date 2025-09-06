@@ -2,6 +2,10 @@ package factors
 
 import (
 	"context"
+	"os"
+	"strings"
+	"sync"
+
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/exchange"
@@ -12,9 +16,6 @@ import (
 	"gitee.com/quant1x/gox/tags"
 	"gitee.com/quant1x/gox/util/treemap"
 	"gitee.com/quant1x/pkg/tablewriter"
-	"os"
-	"strings"
-	"sync"
 )
 
 // Cache1D 缓存所有证券代码的特征组合数据

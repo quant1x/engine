@@ -141,7 +141,7 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 			logger.Errorf("code=%s, error=%s", securityCode, err.Error())
 			return []KLine{}
 		}
-		if data == nil {
+		if data == nil || data.Count == 0 || len(data.List) == 0 {
 			break
 		}
 		hs = append(hs, *data)
@@ -457,7 +457,7 @@ func UpdateAllKLine(securityCode string, freq ...string) []KLine {
 			logger.Errorf("code=%s, error=%s", securityCode, err.Error())
 			return []KLine{}
 		}
-		if data == nil {
+		if data == nil || data.Count == 0 || len(data.List) == 0 {
 			break
 		}
 		hs = append(hs, *data)

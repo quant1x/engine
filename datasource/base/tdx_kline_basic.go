@@ -141,6 +141,9 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 			logger.Errorf("code=%s, error=%s", securityCode, err.Error())
 			return []KLine{}
 		}
+		if data == nil {
+			break
+		}
 		hs = append(hs, *data)
 		if data.Count < count {
 			// 已经是最早的记录
@@ -453,6 +456,9 @@ func UpdateAllKLine(securityCode string, freq ...string) []KLine {
 		if err != nil {
 			logger.Errorf("code=%s, error=%s", securityCode, err.Error())
 			return []KLine{}
+		}
+		if data == nil {
+			break
 		}
 		hs = append(hs, *data)
 		if data.Count < count {

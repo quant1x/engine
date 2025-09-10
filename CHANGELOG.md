@@ -3,9 +3,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.10.7] - 2025-09-10
+### Changed
+- 拉取k线数据安全加固
+- 拉取k线数据安全加固
+
 ## [1.10.6] - 2025-09-10
 ### Changed
 - 更新依赖库版本
+- update changelog
 
 ## [1.10.5] - 2025-09-06
 ### Changed
@@ -1984,7 +1990,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.10.6...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.10.7...HEAD
+[1.10.7]: https://gitee.com/quant1x/engine.git/compare/v1.10.6...v1.10.7
 [1.10.6]: https://gitee.com/quant1x/engine.git/compare/v1.10.5...v1.10.6
 [1.10.5]: https://gitee.com/quant1x/engine.git/compare/v1.10.4...v1.10.5
 [1.10.4]: https://gitee.com/quant1x/engine.git/compare/v1.10.3...v1.10.4

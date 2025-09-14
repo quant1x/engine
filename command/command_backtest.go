@@ -101,69 +101,6 @@ func initBackTest() {
 	commandInit(cmdBackTest, &flagFeatures)
 }
 
-//func handleBacktestAll(dates []string) {
-//	handleBacktestAllDataSets(dates)
-//	handleBacktestAllFeatures(dates)
-//}
-//
-//func handleBacktestAllDataSets(dates []string) {
-//	moduleName := "补登数据集合"
-//	logger.Info(moduleName + ", 任务开始")
-//	mask := cache.PluginMaskBaseData
-//	plugins := cache.Plugins(mask)
-//	count := len(dates)
-//	barIndex := 1
-//	bar := progressbar.NewBar(barIndex, "执行["+moduleName+"]", count)
-//	barIndex++
-//	for _, date := range dates {
-//		//cacheDate, featureDate := cache.CorrectDate(date)
-//		storages.DataSetUpdate(barIndex, date, plugins, cache.OpRepair)
-//		bar.Add(1)
-//	}
-//	bar.Wait()
-//	logger.Info(moduleName+", 任务执行完毕.", time.Now())
-//	fmt.Println()
-//}
-
-//// 修复 - 指定的基础数据
-//func handleBacktestDataSetsWithPlugins(dates []string, plugins []cache.DataAdapter) {
-//	moduleName := "修复数据"
-//	logger.Info(moduleName + ", 任务开始")
-//	count := len(dates)
-//	barIndex := 1
-//	bar := progressbar.NewBar(barIndex, "执行["+moduleName+"]", count)
-//	for _, date := range dates {
-//		//cacheDate, featureDate := cache.CorrectDate(date)
-//		//barIndex++
-//		storages.DataSetUpdate(barIndex+1, date, plugins, cache.OpRepair)
-//		bar.Add(1)
-//	}
-//	bar.Wait()
-//	logger.Info(moduleName+", 任务执行完毕.", time.Now())
-//	fmt.Println()
-//}
-//
-//// 修复 - 特征数据
-//func handleBacktestAllFeatures(dates []string) {
-//	moduleName := "补登特征数据"
-//	logger.Info(moduleName + ", 任务开始")
-//	mask := cache.PluginMaskFeature
-//	plugins := cache.Plugins(mask)
-//	count := len(dates)
-//	barIndex := 1
-//	bar := progressbar.NewBar(barIndex, "执行["+moduleName+"]", count)
-//	barIndex++
-//	for _, date := range dates {
-//		cacheDate, featureDate := cache.CorrectDate(date)
-//		cb := storages.FeaturesUpdate(&barIndex, cacheDate, featureDate, plugins, cache.OpRepair)
-//		bar.Add(1)
-//		cb()
-//	}
-//	bar.Wait()
-//	logger.Info(moduleName+", 任务执行完毕.", time.Now())
-//	fmt.Println()
-//}
-
 // 回测 - 指定的特征数据
 func handleBacktestFeaturesWithPlugins(dates []string, plugins []cache.DataAdapter) {
 	moduleName := "回测数据"

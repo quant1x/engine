@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"testing"
 
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gox/api"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/engine/factors"
+	"github.com/quant1x/exchange"
+	"github.com/quant1x/x/api"
 )
 
 func TestFeatureToSnapshot(t *testing.T) {

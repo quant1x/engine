@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"gitee.com/quant1x/pandas"
+	"github.com/quant1x/pandas"
 )
 
 func TestIndividualStocksFundFlow(t *testing.T) {

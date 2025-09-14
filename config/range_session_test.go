@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/pkg/yaml"
+	"github.com/quant1x/pkg/yaml"
+	"github.com/quant1x/x/api"
 )
 
 func TestTimeRange(t *testing.T) {

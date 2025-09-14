@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	"gitee.com/quant1x/engine/factors"
+	"github.com/quant1x/engine/factors"
 )
 
 func TestReflect(t *testing.T) {

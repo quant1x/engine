@@ -5,10 +5,10 @@ import (
 	"sync"
 	"time"
 
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/num"
-	"gitee.com/quant1x/pandas"
+	"github.com/quant1x/exchange"
+	"github.com/quant1x/num"
+	"github.com/quant1x/pandas"
+	"github.com/quant1x/x/api"
 )
 
 var (

@@ -6,11 +6,11 @@ import (
 	"slices"
 	"sync"
 
-	"gitee.com/quant1x/engine/config"
-	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/runtime"
 	bitmap "github.com/bits-and-blooms/bitset"
+	"github.com/quant1x/engine/config"
+	"github.com/quant1x/engine/factors"
+	"github.com/quant1x/x/api"
+	"github.com/quant1x/x/runtime"
 )
 
 // Kind 规则类型

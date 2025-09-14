@@ -3,9 +3,9 @@ package models
 import (
 	"time"
 
-	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/num"
+	"github.com/quant1x/engine/factors"
+	"github.com/quant1x/exchange"
+	"github.com/quant1x/num"
 )
 
 // FeatureToSnapshot 特征缓存数据转快照

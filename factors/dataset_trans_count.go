@@ -1,8 +1,8 @@
 package factors
 
 import (
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gotdx/quotes"
+	"github.com/quant1x/exchange"
+	"github.com/quant1x/gotdx/quotes"
 )
 
 // CountInflow 统计指定日期的内外盘

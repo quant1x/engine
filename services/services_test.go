@@ -3,9 +3,9 @@ package services
 import (
 	"testing"
 
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/gotdx"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/engine/factors"
+	"github.com/quant1x/gotdx"
 )
 
 func TestGlobalReset(t *testing.T) {

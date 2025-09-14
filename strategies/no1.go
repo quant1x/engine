@@ -1,16 +1,16 @@
 package strategies
 
 import (
-	"gitee.com/quant1x/engine/config"
-	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/engine/realtime"
-	"gitee.com/quant1x/engine/utils"
-	"gitee.com/quant1x/gotdx/securities"
-	"gitee.com/quant1x/gox/concurrent"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/pandas"
-	. "gitee.com/quant1x/pandas/formula"
+	"github.com/quant1x/engine/config"
+	"github.com/quant1x/engine/factors"
+	"github.com/quant1x/engine/models"
+	"github.com/quant1x/engine/realtime"
+	"github.com/quant1x/engine/utils"
+	"github.com/quant1x/gotdx/securities"
+	"github.com/quant1x/pandas"
+	. "github.com/quant1x/pandas/formula"
+	"github.com/quant1x/x/concurrent"
+	"github.com/quant1x/x/logger"
 )
 
 const (

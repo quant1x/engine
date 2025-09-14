@@ -1,11 +1,11 @@
 package services
 
 import (
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/gotdx"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/gox/runtime"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/engine/factors"
+	"github.com/quant1x/gotdx"
+	"github.com/quant1x/x/logger"
+	"github.com/quant1x/x/runtime"
 )
 
 // 任务 - 交易日数据缓存重置

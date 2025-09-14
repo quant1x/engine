@@ -1,13 +1,13 @@
 package rules
 
 import (
-	"gitee.com/quant1x/engine/config"
-	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/engine/market"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/exception"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/num"
+	"github.com/quant1x/engine/config"
+	"github.com/quant1x/engine/factors"
+	"github.com/quant1x/engine/market"
+	"github.com/quant1x/num"
+	"github.com/quant1x/x/api"
+	"github.com/quant1x/x/exception"
+	"github.com/quant1x/x/logger"
 )
 
 func init() {

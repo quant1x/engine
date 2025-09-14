@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/engine/strategies"
+	"github.com/quant1x/engine/models"
+	"github.com/quant1x/engine/strategies"
 )
 
 func TestQueryAccount(t *testing.T) {

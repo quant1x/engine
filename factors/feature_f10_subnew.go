@@ -1,9 +1,9 @@
 package factors
 
 import (
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gotdx/quotes"
-	"gitee.com/quant1x/gox/api"
+	"github.com/quant1x/exchange"
+	"github.com/quant1x/gotdx/quotes"
+	"github.com/quant1x/x/api"
 )
 
 const (

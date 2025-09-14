@@ -4,10 +4,10 @@ import (
 	"strings"
 	"time"
 
-	"gitee.com/quant1x/engine/datasource/dfcf"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/logger"
+	"github.com/quant1x/engine/datasource/dfcf"
+	"github.com/quant1x/exchange"
+	"github.com/quant1x/x/api"
+	"github.com/quant1x/x/logger"
 )
 
 type companyNotice struct {

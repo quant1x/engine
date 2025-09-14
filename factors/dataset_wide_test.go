@@ -7,16 +7,16 @@ import (
 	"path/filepath"
 	"testing"
 
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/utils"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gotdx/securities"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/pandas"
-	"gitee.com/quant1x/pandas/formula"
 	"github.com/go-echarts/go-echarts/v2/charts"
 	"github.com/go-echarts/go-echarts/v2/opts"
 	"github.com/go-echarts/go-echarts/v2/types"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/engine/utils"
+	"github.com/quant1x/exchange"
+	"github.com/quant1x/gotdx/securities"
+	"github.com/quant1x/pandas"
+	"github.com/quant1x/pandas/formula"
+	"github.com/quant1x/x/api"
 )
 
 func TestKLine(t *testing.T) {

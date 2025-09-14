@@ -4,10 +4,10 @@ import (
 	"strings"
 	"unsafe"
 
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gox/tags"
-	"gitee.com/quant1x/pkg/tablewriter"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/exchange"
+	"github.com/quant1x/pkg/tablewriter"
+	"github.com/quant1x/x/tags"
 	cmder "github.com/spf13/cobra"
 )
 

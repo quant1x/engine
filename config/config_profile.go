@@ -5,7 +5,7 @@ import (
 	"net/http"
 	_ "net/http/pprof"
 
-	"gitee.com/quant1x/gox/logger"
+	"github.com/quant1x/x/logger"
 )
 
 type PprofParameter struct {

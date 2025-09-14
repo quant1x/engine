@@ -1,12 +1,12 @@
 package base
 
 import (
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gotdx"
-	"gitee.com/quant1x/gotdx/quotes"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/logger"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/exchange"
+	"github.com/quant1x/gotdx"
+	"github.com/quant1x/gotdx/quotes"
+	"github.com/quant1x/x/api"
+	"github.com/quant1x/x/logger"
 )
 
 // UpdateXdxrInfo 除权除息数据

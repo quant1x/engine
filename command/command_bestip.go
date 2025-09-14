@@ -1,7 +1,7 @@
 package command
 
 import (
-	"gitee.com/quant1x/gotdx/quotes"
+	"github.com/quant1x/gotdx/quotes"
 	cmder "github.com/spf13/cobra"
 )
 

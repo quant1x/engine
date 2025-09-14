@@ -3,7 +3,7 @@ package tdxweb
 import (
 	"fmt"
 
-	"gitee.com/quant1x/gox/http"
+	"github.com/quant1x/x/http"
 )
 
 const (

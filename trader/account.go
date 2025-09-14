@@ -1,10 +1,10 @@
 package trader
 
 import (
-	"gitee.com/quant1x/engine/config"
-	"gitee.com/quant1x/gox/coroutine"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/num"
+	"github.com/quant1x/engine/config"
+	"github.com/quant1x/num"
+	"github.com/quant1x/x/coroutine"
+	"github.com/quant1x/x/logger"
 )
 
 var (

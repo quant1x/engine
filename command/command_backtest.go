@@ -6,14 +6,14 @@ import (
 	"strings"
 	"time"
 
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/datasource/base"
-	"gitee.com/quant1x/engine/storages"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/gox/progressbar"
-	"gitee.com/quant1x/gox/tags"
-	"gitee.com/quant1x/pkg/tablewriter"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/engine/datasource/base"
+	"github.com/quant1x/engine/storages"
+	"github.com/quant1x/exchange"
+	"github.com/quant1x/pkg/tablewriter"
+	"github.com/quant1x/x/logger"
+	"github.com/quant1x/x/progressbar"
+	"github.com/quant1x/x/tags"
 	cli "github.com/spf13/cobra"
 )
 

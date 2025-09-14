@@ -3,17 +3,17 @@ package services
 import (
 	"time"
 
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/engine/market"
-	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gotdx/quotes"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/coroutine"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/gox/progressbar"
-	"gitee.com/quant1x/gox/runtime"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/engine/factors"
+	"github.com/quant1x/engine/market"
+	"github.com/quant1x/engine/models"
+	"github.com/quant1x/exchange"
+	"github.com/quant1x/gotdx/quotes"
+	"github.com/quant1x/x/api"
+	"github.com/quant1x/x/coroutine"
+	"github.com/quant1x/x/logger"
+	"github.com/quant1x/x/progressbar"
+	"github.com/quant1x/x/runtime"
 )
 
 // 更新快照

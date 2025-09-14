@@ -7,12 +7,12 @@ import (
 	"runtime/pprof"
 	"time"
 
-	"gitee.com/quant1x/engine/command"
-	"gitee.com/quant1x/engine/config"
-	_ "gitee.com/quant1x/engine/strategies"
-	"gitee.com/quant1x/engine/utils"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/gox/runtime"
+	"github.com/quant1x/engine/command"
+	"github.com/quant1x/engine/config"
+	_ "github.com/quant1x/engine/strategies"
+	"github.com/quant1x/engine/utils"
+	"github.com/quant1x/x/logger"
+	"github.com/quant1x/x/runtime"
 )
 
 // 系统构建时传入的值
@@ -33,7 +33,7 @@ func resetVersions() {
 		MinVersion = utils.CurrentVersion()
 	}
 	if tdxVersion == utils.InvalidVersion {
-		tdxVersion = utils.RequireVersion("gitee.com/quant1x/gotdx")
+		tdxVersion = utils.RequireVersion("github.com/quant1x/gotdx")
 	}
 }
 

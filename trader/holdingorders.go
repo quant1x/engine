@@ -4,9 +4,9 @@ import (
 	"slices"
 	"sync"
 
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/logger"
+	"github.com/quant1x/exchange"
+	"github.com/quant1x/x/api"
+	"github.com/quant1x/x/logger"
 )
 
 type HoldingPosition struct {

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"gitee.com/quant1x/engine/config"
+	"github.com/quant1x/engine/config"
 )
 
 func TestCalculateAvailableFund(t *testing.T) {

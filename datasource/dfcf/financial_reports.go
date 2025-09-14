@@ -5,12 +5,12 @@ import (
 	urlpkg "net/url"
 	"sync"
 
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/http"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/pkg/fastjson"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/exchange"
+	"github.com/quant1x/pkg/fastjson"
+	"github.com/quant1x/x/api"
+	"github.com/quant1x/x/http"
+	"github.com/quant1x/x/logger"
 )
 
 // QuarterlyReports 分页获取季报数据

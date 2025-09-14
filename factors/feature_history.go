@@ -3,13 +3,13 @@ package factors
 import (
 	"context"
 
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/datasource/base"
-	"gitee.com/quant1x/engine/utils"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/pandas"
-	. "gitee.com/quant1x/pandas/formula"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/engine/datasource/base"
+	"github.com/quant1x/engine/utils"
+	"github.com/quant1x/exchange"
+	"github.com/quant1x/pandas"
+	. "github.com/quant1x/pandas/formula"
+	"github.com/quant1x/x/api"
 )
 
 const (

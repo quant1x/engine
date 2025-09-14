@@ -1,14 +1,14 @@
 package factors
 
 import (
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/datasource/base"
-	"gitee.com/quant1x/engine/utils"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/num"
-	"gitee.com/quant1x/pandas"
-	. "gitee.com/quant1x/pandas/formula"
-	"gitee.com/quant1x/ta-lib/indicators"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/engine/datasource/base"
+	"github.com/quant1x/engine/indicators"
+	"github.com/quant1x/engine/utils"
+	"github.com/quant1x/exchange"
+	"github.com/quant1x/num"
+	"github.com/quant1x/pandas"
+	. "github.com/quant1x/pandas/formula"
 )
 
 // KLineBox 有效突破(BreaksThrough)平台

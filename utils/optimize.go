@@ -3,8 +3,8 @@ package utils
 import (
 	"errors"
 
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/num"
+	"github.com/quant1x/num"
+	"github.com/quant1x/x/logger"
 	"golang.org/x/sys/cpu"
 )
 

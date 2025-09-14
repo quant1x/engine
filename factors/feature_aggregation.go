@@ -3,8 +3,8 @@ package factors
 import (
 	"sync"
 
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/gox/logger"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/x/logger"
 )
 
 var (

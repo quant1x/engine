@@ -4,8 +4,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gox/api"
+	"github.com/quant1x/exchange"
+	"github.com/quant1x/x/api"
 )
 
 // GetOrderFilename 获得订单文件名

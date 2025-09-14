@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"gitee.com/quant1x/engine/datasource/base"
+	"github.com/quant1x/engine/datasource/base"
 )
 
 func TestTransactionOld(t *testing.T) {

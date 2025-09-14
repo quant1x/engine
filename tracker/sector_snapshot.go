@@ -3,12 +3,12 @@ package tracker
 import (
 	"fmt"
 
-	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/gotdx/securities"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/progressbar"
-	"gitee.com/quant1x/num"
+	"github.com/quant1x/engine/factors"
+	"github.com/quant1x/engine/models"
+	"github.com/quant1x/gotdx/securities"
+	"github.com/quant1x/num"
+	"github.com/quant1x/x/api"
+	"github.com/quant1x/x/progressbar"
 )
 
 // 板块扫描

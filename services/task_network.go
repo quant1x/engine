@@ -1,8 +1,8 @@
 package services
 
 import (
-	"gitee.com/quant1x/gotdx/quotes"
-	"gitee.com/quant1x/gox/logger"
+	"github.com/quant1x/gotdx/quotes"
+	"github.com/quant1x/x/logger"
 )
 
 // 网络配置重置

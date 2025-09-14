@@ -5,8 +5,8 @@ import (
 	"strings"
 	"sync"
 
-	"gitee.com/quant1x/engine/config"
-	"gitee.com/quant1x/gox/api"
+	"github.com/quant1x/engine/config"
+	"github.com/quant1x/x/api"
 )
 
 const (

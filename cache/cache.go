@@ -3,9 +3,9 @@ package cache
 import (
 	"os"
 
-	"gitee.com/quant1x/engine/config"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/gox/util/homedir"
+	"github.com/quant1x/engine/config"
+	"github.com/quant1x/x/logger"
+	"github.com/quant1x/x/util/homedir"
 )
 
 const (

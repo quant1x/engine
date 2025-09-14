@@ -7,12 +7,12 @@ import (
 	"strings"
 	_ "unsafe" // For go:linkname
 
-	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/engine/tracker"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/gox/runtime"
-	"gitee.com/quant1x/num"
 	"github.com/klauspost/cpuid/v2" // For cpuid
+	"github.com/quant1x/engine/models"
+	"github.com/quant1x/engine/tracker"
+	"github.com/quant1x/num"
+	"github.com/quant1x/x/logger"
+	"github.com/quant1x/x/runtime"
 	cli "github.com/spf13/cobra"
 )
 

@@ -1,11 +1,11 @@
 package services
 
 import (
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/engine/market"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/logger"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/engine/factors"
+	"github.com/quant1x/engine/market"
+	"github.com/quant1x/x/api"
+	"github.com/quant1x/x/logger"
 )
 
 func jobUpdateMarginTrading() {

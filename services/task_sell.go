@@ -4,16 +4,16 @@ import (
 	"fmt"
 	"slices"
 
-	"gitee.com/quant1x/engine/config"
-	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/engine/market"
-	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/engine/realtime"
-	"gitee.com/quant1x/engine/trader"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/gox/runtime"
-	"gitee.com/quant1x/num"
+	"github.com/quant1x/engine/config"
+	"github.com/quant1x/engine/factors"
+	"github.com/quant1x/engine/market"
+	"github.com/quant1x/engine/models"
+	"github.com/quant1x/engine/realtime"
+	"github.com/quant1x/engine/trader"
+	"github.com/quant1x/exchange"
+	"github.com/quant1x/num"
+	"github.com/quant1x/x/logger"
+	"github.com/quant1x/x/runtime"
 )
 
 // 任务 - 卖出117

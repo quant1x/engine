@@ -7,7 +7,7 @@ import (
 	"sync"
 	"unsafe"
 
-	"gitee.com/quant1x/engine/factors"
+	"github.com/quant1x/engine/factors"
 )
 
 //go:linkname typelinks2 reflect.typelinks
@@ -51,7 +51,7 @@ func loadGoTypes() {
 				structName := fmt.Sprintf("%s.%s", pkgPath, typeName)
 				types[structName] = loadedType
 				pkgTypes[loadedType.Name()] = loadedType
-				if strings.HasPrefix(pkgPath, "gitee.com/quant1x/engine") {
+				if strings.HasPrefix(pkgPath, "github.com/quant1x/engine") {
 					//fmt.Println(structName, "==>", loadedType.PkgPath())
 					if reflect.PtrTo(loadedType).Implements(fia) {
 						fmt.Println("found", pkgPath, "==>", loadedType.String(), "==>", structName)

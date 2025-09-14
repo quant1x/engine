@@ -13,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"gitee.com/quant1x/gox/api"
+	"github.com/quant1x/x/api"
 )
 
 // OptionFinanceBoardData 表示期权行情数据

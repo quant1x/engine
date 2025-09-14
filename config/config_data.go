@@ -1,6 +1,6 @@
 package config
 
-import "gitee.com/quant1x/exchange"
+import "github.com/quant1x/exchange"
 
 const (
 	DefaultMinimumConcurrencyForSnapshots = 2 // 快照默认最小并发数

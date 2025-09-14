@@ -4,12 +4,12 @@ import (
 	"strconv"
 	"time"
 
-	"gitee.com/quant1x/engine/datasource/base"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gotdx"
-	"gitee.com/quant1x/gotdx/quotes"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/num"
+	"github.com/quant1x/engine/datasource/base"
+	"github.com/quant1x/exchange"
+	"github.com/quant1x/gotdx"
+	"github.com/quant1x/gotdx/quotes"
+	"github.com/quant1x/num"
+	"github.com/quant1x/x/logger"
 )
 
 // 获取财务数据

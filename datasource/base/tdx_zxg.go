@@ -1,9 +1,9 @@
 package base
 
 import (
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/pandas"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/exchange"
+	"github.com/quant1x/pandas"
 )
 
 const (

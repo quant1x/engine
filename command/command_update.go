@@ -3,8 +3,8 @@ package command
 import (
 	"fmt"
 
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/storages"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/engine/storages"
 	cmder "github.com/spf13/cobra"
 )
 

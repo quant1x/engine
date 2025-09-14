@@ -5,7 +5,7 @@ import (
 	"log"
 	"testing"
 
-	"gitee.com/quant1x/exchange"
+	"github.com/quant1x/exchange"
 )
 
 func TestOptionFinanceBoard(t *testing.T) {

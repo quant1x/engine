@@ -4,12 +4,12 @@ import (
 	"sync"
 	"time"
 
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/engine/market"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/gox/progressbar"
-	"gitee.com/quant1x/pkg/runewidth"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/engine/factors"
+	"github.com/quant1x/engine/market"
+	"github.com/quant1x/pkg/runewidth"
+	"github.com/quant1x/x/logger"
+	"github.com/quant1x/x/progressbar"
 )
 
 // FeaturesBackTest FeaturesUpdate 特征-数据有效性验证

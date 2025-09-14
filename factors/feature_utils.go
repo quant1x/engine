@@ -3,8 +3,8 @@ package factors
 import (
 	"time"
 
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/gotdx/securities"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/gotdx/securities"
 )
 
 // GetTimestamp 时间戳

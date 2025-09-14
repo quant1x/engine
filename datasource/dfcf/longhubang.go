@@ -5,8 +5,8 @@ import (
 	"fmt"
 	urlpkg "net/url"
 
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gox/http"
+	"github.com/quant1x/exchange"
+	"github.com/quant1x/x/http"
 )
 
 //龙虎榜分为两个接口

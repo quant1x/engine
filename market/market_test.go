@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"gitee.com/quant1x/exchange"
+	"github.com/quant1x/exchange"
 )
 
 func TestGetCodeList(t *testing.T) {

@@ -4,13 +4,13 @@ import (
 	"context"
 	"os"
 
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/datasource/base"
-	"gitee.com/quant1x/engine/factors/pb"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gotdx/quotes"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/util/homedir"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/engine/datasource/base"
+	"github.com/quant1x/engine/factors/pb"
+	"github.com/quant1x/exchange"
+	"github.com/quant1x/gotdx/quotes"
+	"github.com/quant1x/x/api"
+	"github.com/quant1x/x/util/homedir"
 	"google.golang.org/protobuf/proto"
 )
 

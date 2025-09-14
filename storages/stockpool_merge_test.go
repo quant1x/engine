@@ -1,10 +1,10 @@
 package storages
 
 import (
-	"gitee.com/quant1x/engine/config"
-	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/gox/concurrent"
+	"github.com/quant1x/engine/config"
+	"github.com/quant1x/engine/factors"
+	"github.com/quant1x/engine/models"
+	"github.com/quant1x/x/concurrent"
 )
 
 type TestModel struct{}

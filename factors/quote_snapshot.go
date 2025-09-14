@@ -1,6 +1,6 @@
 package factors
 
-import "gitee.com/quant1x/gotdx/quotes"
+import "github.com/quant1x/gotdx/quotes"
 
 // QuoteSnapshot 即时行情快照(副本)
 type QuoteSnapshot struct {

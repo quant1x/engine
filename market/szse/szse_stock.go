@@ -4,8 +4,8 @@ import (
 	"fmt"
 	urlpkg "net/url"
 
-	"gitee.com/quant1x/engine/utils"
-	"gitee.com/quant1x/gox/http"
+	"github.com/quant1x/engine/utils"
+	"github.com/quant1x/x/http"
 )
 
 const (

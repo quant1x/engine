@@ -54,7 +54,7 @@ func loadGoTypes() {
 				//	fmt.Println(typeName, "==>", loadedType.PkgPath())
 				//}
 				pkgPath := loadedType.PkgPath()
-				if strings.HasPrefix(pkgPath, "gitee.com/quant1x/engine") {
+				if strings.HasPrefix(pkgPath, "github.com/quant1x/engine") {
 					//fmt.Println(typeName, "==>", loadedType.PkgPath())
 					if reflect.PtrTo(loadedType).Implements(fia) {
 						fmt.Println("found", pkgPath, "==>", loadedType.Name())

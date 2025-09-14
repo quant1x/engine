@@ -3,9 +3,9 @@ package factors
 import (
 	"context"
 
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/ta-lib/indicators"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/engine/indicators"
+	"github.com/quant1x/x/logger"
 )
 
 const (

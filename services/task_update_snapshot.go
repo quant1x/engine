@@ -3,10 +3,10 @@ package services
 import (
 	"time"
 
-	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/gox/runtime"
+	"github.com/quant1x/engine/models"
+	"github.com/quant1x/exchange"
+	"github.com/quant1x/x/logger"
+	"github.com/quant1x/x/runtime"
 )
 
 // 任务 - 更新快照

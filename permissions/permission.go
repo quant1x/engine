@@ -4,7 +4,7 @@ import (
 	"errors"
 	"sync"
 
-	"gitee.com/quant1x/engine/models"
+	"github.com/quant1x/engine/models"
 )
 
 var (

@@ -71,7 +71,7 @@ func initService() {
 			}
 			service := &Service{srv}
 			switch runtime.GOOS {
-			case "linux":
+			case "linux": // linux使用守护进程方式, 不需要安装
 				cntxt := &nix.Context{
 					PidFileName: cache.GetVariablePath() + "/" + Application + ".pid",
 					PidFilePerm: 0644,

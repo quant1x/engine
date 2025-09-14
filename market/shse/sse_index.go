@@ -7,7 +7,7 @@ import (
 	urlpkg "net/url"
 	"time"
 
-	"github.com/quant1x/x/http"
+	"gitee.com/quant1x/gox/http"
 )
 
 const (

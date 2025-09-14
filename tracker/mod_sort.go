@@ -1,8 +1,8 @@
 package tracker
 
 import (
-	"github.com/quant1x/engine/factors"
-	"github.com/quant1x/num"
+	"gitee.com/quant1x/engine/factors"
+	"gitee.com/quant1x/num"
 )
 
 func tickWeight(snapshot factors.QuoteSnapshot) float64 {

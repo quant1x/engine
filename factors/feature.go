@@ -3,7 +3,7 @@ package factors
 import (
 	"errors"
 
-	"github.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/cache"
 )
 
 const (

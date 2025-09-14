@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/quant1x/engine/config"
+	"gitee.com/quant1x/engine/config"
 )
 
 const (

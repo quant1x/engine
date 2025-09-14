@@ -4,14 +4,14 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/quant1x/engine/cache"
-	"github.com/quant1x/engine/config"
-	"github.com/quant1x/engine/models"
-	"github.com/quant1x/engine/storages"
-	"github.com/quant1x/engine/trader"
-	"github.com/quant1x/exchange"
-	"github.com/quant1x/x/api"
-	"github.com/quant1x/x/logger"
+	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/engine/models"
+	"gitee.com/quant1x/engine/storages"
+	"gitee.com/quant1x/engine/trader"
+	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/gox/logger"
 )
 
 // 获得T+HoldingPeriod的具体日期

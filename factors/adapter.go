@@ -5,8 +5,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/quant1x/engine/cache"
-	"github.com/quant1x/x/util/treemap"
+	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/gox/util/treemap"
 )
 
 const (

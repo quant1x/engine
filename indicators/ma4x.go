@@ -1,8 +1,8 @@
 package indicators
 
 import (
-	"github.com/quant1x/pandas"
-	. "github.com/quant1x/pandas/formula"
+	"gitee.com/quant1x/pandas"
+	. "gitee.com/quant1x/pandas/formula"
 )
 
 // MA4X 缠论时间窗口

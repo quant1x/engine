@@ -4,11 +4,11 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/quant1x/exchange"
-	"github.com/quant1x/gotdx"
-	"github.com/quant1x/num"
-	"github.com/quant1x/pandas"
-	"github.com/quant1x/x/api"
+	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/gotdx"
+	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/num"
+	"gitee.com/quant1x/pandas"
 )
 
 const (

@@ -1,15 +1,15 @@
 package factors
 
 import (
-	"github.com/quant1x/engine/cache"
-	"github.com/quant1x/engine/datasource/base"
-	"github.com/quant1x/engine/market"
-	"github.com/quant1x/engine/utils"
-	"github.com/quant1x/exchange"
-	"github.com/quant1x/gotdx/securities"
-	"github.com/quant1x/num"
-	"github.com/quant1x/pandas"
-	. "github.com/quant1x/pandas/formula"
+	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/datasource/base"
+	"gitee.com/quant1x/engine/market"
+	"gitee.com/quant1x/engine/utils"
+	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/gotdx/securities"
+	"gitee.com/quant1x/num"
+	"gitee.com/quant1x/pandas"
+	. "gitee.com/quant1x/pandas/formula"
 )
 
 // MiscKLine K线特征

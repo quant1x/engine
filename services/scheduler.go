@@ -6,11 +6,11 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/quant1x/engine/config"
-	"github.com/quant1x/x/coroutine"
-	"github.com/quant1x/x/cron"
-	"github.com/quant1x/x/logger"
-	"github.com/quant1x/x/runtime"
+	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/gox/coroutine"
+	"gitee.com/quant1x/gox/cron"
+	"gitee.com/quant1x/gox/logger"
+	"gitee.com/quant1x/gox/runtime"
 )
 
 // Task 定时任务

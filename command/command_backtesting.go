@@ -3,9 +3,9 @@ package command
 import (
 	"strings"
 
-	"github.com/quant1x/engine/models"
-	"github.com/quant1x/engine/tracker"
-	"github.com/quant1x/exchange"
+	"gitee.com/quant1x/engine/models"
+	"gitee.com/quant1x/engine/tracker"
+	"gitee.com/quant1x/exchange"
 	cmder "github.com/spf13/cobra"
 )
 

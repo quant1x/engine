@@ -1,8 +1,8 @@
 package indicators
 
 import (
-	"github.com/quant1x/pandas"
-	. "github.com/quant1x/pandas/formula"
+	"gitee.com/quant1x/pandas"
+	. "gitee.com/quant1x/pandas/formula"
 )
 
 // MACD 指标

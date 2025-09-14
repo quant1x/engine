@@ -7,11 +7,11 @@ import (
 	urlpkg "net/url"
 	"strings"
 
-	"github.com/quant1x/engine/utils"
-	"github.com/quant1x/exchange"
-	"github.com/quant1x/num"
-	"github.com/quant1x/x/exception"
-	"github.com/quant1x/x/http"
+	"gitee.com/quant1x/engine/utils"
+	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/gox/exception"
+	"gitee.com/quant1x/gox/http"
+	"gitee.com/quant1x/num"
 )
 
 const (

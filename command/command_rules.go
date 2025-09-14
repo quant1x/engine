@@ -1,7 +1,7 @@
 package command
 
 import (
-	"github.com/quant1x/engine/rules"
+	"gitee.com/quant1x/engine/rules"
 	cmder "github.com/spf13/cobra"
 )
 

@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/quant1x/pkg/yaml"
-	"github.com/quant1x/x/exception"
+	"gitee.com/quant1x/gox/exception"
+	"gitee.com/quant1x/pkg/yaml"
 )
 
 // 值范围正则表达式

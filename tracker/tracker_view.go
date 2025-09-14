@@ -5,13 +5,13 @@ import (
 	"os"
 	"time"
 
-	"github.com/quant1x/engine/factors"
-	"github.com/quant1x/engine/models"
-	"github.com/quant1x/engine/storages"
-	"github.com/quant1x/exchange"
-	"github.com/quant1x/num"
-	"github.com/quant1x/pkg/tablewriter"
-	"github.com/quant1x/x/tags"
+	"gitee.com/quant1x/engine/factors"
+	"gitee.com/quant1x/engine/models"
+	"gitee.com/quant1x/engine/storages"
+	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/gox/tags"
+	"gitee.com/quant1x/num"
+	"gitee.com/quant1x/pkg/tablewriter"
 )
 
 // OutputTable 输出表格

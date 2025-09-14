@@ -3,10 +3,10 @@ package services
 import (
 	"time"
 
-	"github.com/quant1x/engine/cache"
-	"github.com/quant1x/engine/factors"
-	"github.com/quant1x/engine/storages"
-	"github.com/quant1x/exchange"
+	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/factors"
+	"gitee.com/quant1x/engine/storages"
+	"gitee.com/quant1x/exchange"
 )
 
 var (

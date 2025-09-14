@@ -1,9 +1,9 @@
 package factors
 
 import (
-	"github.com/quant1x/engine/utils"
-	"github.com/quant1x/pandas"
-	. "github.com/quant1x/pandas/formula"
+	"gitee.com/quant1x/engine/utils"
+	"gitee.com/quant1x/pandas"
+	. "gitee.com/quant1x/pandas/formula"
 )
 
 type JuXianDongXiang struct {

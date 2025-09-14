@@ -6,11 +6,11 @@ import (
 	"slices"
 	"sync"
 
-	"github.com/quant1x/engine/cache"
-	"github.com/quant1x/engine/config"
-	"github.com/quant1x/engine/factors"
-	"github.com/quant1x/x/api"
-	"github.com/quant1x/x/concurrent"
+	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/engine/factors"
+	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/gox/concurrent"
 )
 
 // ModelKind 模型类型编码, 整型

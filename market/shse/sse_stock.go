@@ -5,10 +5,10 @@ import (
 	"fmt"
 	urlpkg "net/url"
 
-	"github.com/quant1x/engine/utils"
-	"github.com/quant1x/num"
-	"github.com/quant1x/x/api"
-	"github.com/quant1x/x/http"
+	"gitee.com/quant1x/engine/utils"
+	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/gox/http"
+	"gitee.com/quant1x/num"
 )
 
 const (

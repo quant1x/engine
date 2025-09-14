@@ -3,16 +3,16 @@ package models
 import (
 	"sync"
 
-	"github.com/quant1x/engine/config"
-	"github.com/quant1x/engine/factors"
-	"github.com/quant1x/exchange"
-	"github.com/quant1x/gotdx"
-	"github.com/quant1x/gotdx/quotes"
-	"github.com/quant1x/gotdx/securities"
-	"github.com/quant1x/num"
-	"github.com/quant1x/x/api"
-	"github.com/quant1x/x/logger"
-	"github.com/quant1x/x/progressbar"
+	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/engine/factors"
+	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/gotdx"
+	"gitee.com/quant1x/gotdx/quotes"
+	"gitee.com/quant1x/gotdx/securities"
+	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/gox/logger"
+	"gitee.com/quant1x/gox/progressbar"
+	"gitee.com/quant1x/num"
 )
 
 var (

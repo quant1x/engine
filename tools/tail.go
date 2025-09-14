@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/quant1x/pkg/tools/tail"
-	"github.com/quant1x/x/util/homedir"
+	"gitee.com/quant1x/gox/util/homedir"
+	"gitee.com/quant1x/pkg/tools/tail"
 )
 
 // TailFile 跟踪文件更新 tail -f

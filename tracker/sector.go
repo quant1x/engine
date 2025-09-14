@@ -1,9 +1,9 @@
 package tracker
 
 import (
-	"github.com/quant1x/engine/config"
-	"github.com/quant1x/engine/models"
-	"github.com/quant1x/gotdx/securities"
+	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/engine/models"
+	"gitee.com/quant1x/gotdx/securities"
 )
 
 // SectorInfo 板块信息

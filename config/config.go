@@ -6,10 +6,10 @@ import (
 	"os"
 	"strings"
 
-	"github.com/quant1x/pkg/yaml"
-	"github.com/quant1x/x/api"
-	"github.com/quant1x/x/logger"
-	"github.com/quant1x/x/util/homedir"
+	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/gox/logger"
+	"gitee.com/quant1x/gox/util/homedir"
+	"gitee.com/quant1x/pkg/yaml"
 )
 
 const (

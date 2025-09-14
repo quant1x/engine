@@ -4,15 +4,15 @@ import (
 	"sort"
 	"time"
 
-	"github.com/quant1x/engine/config"
-	"github.com/quant1x/engine/factors"
-	"github.com/quant1x/engine/models"
-	"github.com/quant1x/engine/permissions"
-	"github.com/quant1x/exchange"
-	"github.com/quant1x/x/api"
-	"github.com/quant1x/x/logger"
-	"github.com/quant1x/x/progressbar"
-	"github.com/quant1x/x/runtime"
+	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/engine/factors"
+	"gitee.com/quant1x/engine/models"
+	"gitee.com/quant1x/engine/permissions"
+	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/gox/logger"
+	"gitee.com/quant1x/gox/progressbar"
+	"gitee.com/quant1x/gox/runtime"
 )
 
 // Tracker 盘中跟踪

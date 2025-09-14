@@ -1,8 +1,8 @@
 package services
 
 import (
-	"github.com/quant1x/exchange"
-	"github.com/quant1x/x/logger"
+	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/gox/logger"
 )
 
 const (

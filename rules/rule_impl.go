@@ -1,8 +1,8 @@
 package rules
 
 import (
-	"github.com/quant1x/engine/config"
-	"github.com/quant1x/engine/factors"
+	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/engine/factors"
 )
 
 type RuleImpl struct {

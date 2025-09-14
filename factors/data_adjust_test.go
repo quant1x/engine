@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/quant1x/engine/datasource/base"
-	"github.com/quant1x/exchange"
+	"gitee.com/quant1x/engine/datasource/base"
+	"gitee.com/quant1x/exchange"
 )
 
 // 2. 完善接口实现

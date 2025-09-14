@@ -3,7 +3,7 @@ package command
 import (
 	"fmt"
 
-	"github.com/quant1x/engine/trader"
+	"gitee.com/quant1x/engine/trader"
 	cmder "github.com/spf13/cobra"
 )
 

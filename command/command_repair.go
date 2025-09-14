@@ -5,12 +5,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/quant1x/engine/cache"
-	"github.com/quant1x/engine/datasource/base"
-	"github.com/quant1x/engine/storages"
-	"github.com/quant1x/exchange"
-	"github.com/quant1x/x/logger"
-	"github.com/quant1x/x/progressbar"
+	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/datasource/base"
+	"gitee.com/quant1x/engine/storages"
+	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/gox/logger"
+	"gitee.com/quant1x/gox/progressbar"
 	cmder "github.com/spf13/cobra"
 )
 

@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/cache"
 )
 
 var propertyList = `<?xml version="1.0" encoding="UTF-8"?>

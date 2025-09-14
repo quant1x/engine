@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/quant1x/engine/cache"
-	"github.com/quant1x/x/api"
+	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/gox/api"
 )
 
 func TestF10(t *testing.T) {

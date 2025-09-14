@@ -3,9 +3,9 @@ package command
 import (
 	"fmt"
 
-	"github.com/quant1x/engine/config"
-	"github.com/quant1x/pkg/yaml"
-	"github.com/quant1x/x/api"
+	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/pkg/yaml"
 	cmder "github.com/spf13/cobra"
 )
 

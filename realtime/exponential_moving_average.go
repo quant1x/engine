@@ -1,8 +1,8 @@
 package realtime
 
 import (
-	"github.com/quant1x/engine/factors"
-	"github.com/quant1x/pandas/formula"
+	"gitee.com/quant1x/engine/factors"
+	"gitee.com/quant1x/pandas/formula"
 )
 
 // AlphaOfExponentialMovingAverage 计算EMA的alpha值

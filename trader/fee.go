@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/quant1x/engine/config"
-	"github.com/quant1x/num"
+	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/num"
 )
 
 const (

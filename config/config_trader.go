@@ -1,6 +1,6 @@
 package config
 
-import "github.com/quant1x/exchange"
+import "gitee.com/quant1x/exchange"
 
 // TraderRole 交易员角色
 type TraderRole int

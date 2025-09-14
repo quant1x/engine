@@ -5,10 +5,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/quant1x/engine/datasource/base"
-	"github.com/quant1x/engine/models"
-	pd "github.com/quant1x/pandas"
-	. "github.com/quant1x/pandas/formula"
+	"gitee.com/quant1x/engine/datasource/base"
+	"gitee.com/quant1x/engine/models"
+	pd "gitee.com/quant1x/pandas"
+	. "gitee.com/quant1x/pandas/formula"
 )
 
 func TestIncrementalMovingAverageConvergenceDivergence(t *testing.T) {

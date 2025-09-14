@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/quant1x/x/api"
+	"gitee.com/quant1x/gox/api"
 )
 
 func Test_lazyLoadHoldingOrder(t *testing.T) {

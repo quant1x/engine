@@ -6,8 +6,8 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/quant1x/engine/config"
-	"github.com/quant1x/engine/models"
+	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/engine/models"
 )
 
 func TestTaskSell_LastSession(t *testing.T) {

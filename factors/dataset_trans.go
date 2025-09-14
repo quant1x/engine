@@ -3,9 +3,9 @@ package factors
 import (
 	"context"
 
-	"github.com/quant1x/engine/cache"
-	"github.com/quant1x/engine/datasource/base"
-	"github.com/quant1x/gotdx/quotes"
+	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/datasource/base"
+	"gitee.com/quant1x/gotdx/quotes"
 )
 
 // TransactionRecord 成交记录

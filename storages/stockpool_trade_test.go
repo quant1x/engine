@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/quant1x/exchange"
+	"gitee.com/quant1x/exchange"
 )
 
 func Test_checkOrderForBuy(t *testing.T) {

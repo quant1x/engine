@@ -4,9 +4,9 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/quant1x/engine/market"
-	"github.com/quant1x/gotdx/securities"
-	"github.com/quant1x/x/api"
+	"gitee.com/quant1x/engine/market"
+	"gitee.com/quant1x/gotdx/securities"
+	"gitee.com/quant1x/gox/api"
 )
 
 // StrategyParameter 策略参数

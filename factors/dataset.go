@@ -1,10 +1,10 @@
 package factors
 
 import (
-	"github.com/quant1x/engine/cache"
-	"github.com/quant1x/engine/config"
-	"github.com/quant1x/gotdx/quotes"
-	"github.com/quant1x/x/logger"
+	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/gotdx/quotes"
+	"gitee.com/quant1x/gox/logger"
 )
 
 const (

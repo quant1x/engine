@@ -5,10 +5,10 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/quant1x/engine/config"
-	"github.com/quant1x/engine/factors"
-	"github.com/quant1x/engine/models"
-	"github.com/quant1x/x/concurrent"
+	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/engine/factors"
+	"gitee.com/quant1x/engine/models"
+	"gitee.com/quant1x/gox/concurrent"
 )
 
 type TestModel82 struct{}

@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/quant1x/engine/datasource/base"
-	"github.com/quant1x/exchange"
-	"github.com/quant1x/pandas"
-	. "github.com/quant1x/pandas/formula"
+	"gitee.com/quant1x/engine/datasource/base"
+	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/pandas"
+	. "gitee.com/quant1x/pandas/formula"
 )
 
 func TestRSI(t *testing.T) {

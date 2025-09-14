@@ -5,9 +5,9 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/quant1x/num"
-	"github.com/quant1x/pkg/yaml"
-	"github.com/quant1x/x/api"
+	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/num"
+	"gitee.com/quant1x/pkg/yaml"
 )
 
 // 值范围正则表达式

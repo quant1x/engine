@@ -5,9 +5,9 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/quant1x/engine/tools"
-	"github.com/quant1x/num"
-	"github.com/quant1x/pkg/tools/tail"
+	"gitee.com/quant1x/engine/tools"
+	"gitee.com/quant1x/num"
+	"gitee.com/quant1x/pkg/tools/tail"
 	cmder "github.com/spf13/cobra"
 )
 

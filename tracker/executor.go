@@ -3,10 +3,10 @@ package tracker
 import (
 	"fmt"
 
-	"github.com/quant1x/engine/config"
-	"github.com/quant1x/engine/models"
-	"github.com/quant1x/engine/permissions"
-	"github.com/quant1x/x/logger"
+	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/engine/models"
+	"gitee.com/quant1x/engine/permissions"
+	"gitee.com/quant1x/gox/logger"
 )
 
 // ExecuteStrategy 执行策略

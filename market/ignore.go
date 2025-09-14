@@ -3,7 +3,7 @@ package market
 import (
 	"strings"
 
-	"github.com/quant1x/gotdx/securities"
+	"gitee.com/quant1x/gotdx/securities"
 )
 
 // IsNeedIgnore 需要忽略的个股

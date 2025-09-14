@@ -4,9 +4,9 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/quant1x/exchange"
-	"github.com/quant1x/pkg/yaml"
-	"github.com/quant1x/x/api"
+	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/gox/api"
+	"gitee.com/quant1x/pkg/yaml"
 )
 
 // TradingSession 交易时段

@@ -5,9 +5,9 @@ import (
 	"strings"
 	_ "unsafe"
 
-	"github.com/quant1x/num"
-	"github.com/quant1x/x/exception"
-	"github.com/quant1x/x/logger"
+	"gitee.com/quant1x/gox/exception"
+	"gitee.com/quant1x/gox/logger"
+	"gitee.com/quant1x/num"
 )
 
 // 正则表达式

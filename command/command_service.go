@@ -8,10 +8,10 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/quant1x/engine/cache"
-	"github.com/quant1x/engine/services"
-	"github.com/quant1x/x/daemon"
-	"github.com/quant1x/x/logger"
+	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/services"
+	"gitee.com/quant1x/gox/daemon"
+	"gitee.com/quant1x/gox/logger"
 	nix "github.com/sevlyar/go-daemon"
 	cmder "github.com/spf13/cobra"
 )

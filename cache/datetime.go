@@ -3,7 +3,7 @@ package cache
 import (
 	"time"
 
-	"github.com/quant1x/exchange"
+	"gitee.com/quant1x/exchange"
 )
 
 const (

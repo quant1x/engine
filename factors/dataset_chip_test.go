@@ -5,8 +5,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/quant1x/engine/factors/pb"
-	"github.com/quant1x/pkg/yaml"
+	"gitee.com/quant1x/engine/factors/pb"
+	"gitee.com/quant1x/pkg/yaml"
 	"google.golang.org/protobuf/proto"
 )
 

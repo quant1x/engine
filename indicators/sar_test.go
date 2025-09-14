@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/quant1x/engine/datasource/base"
-	"github.com/quant1x/exchange"
-	"github.com/quant1x/num/labs"
-	"github.com/quant1x/pandas"
+	"gitee.com/quant1x/engine/datasource/base"
+	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/num/labs"
+	"gitee.com/quant1x/pandas"
 )
 
 func TestSar_basic(t *testing.T) {

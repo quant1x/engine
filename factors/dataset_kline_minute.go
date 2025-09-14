@@ -4,11 +4,11 @@ import (
 	"context"
 	"log"
 
-	"github.com/quant1x/engine/cache"
-	"github.com/quant1x/engine/config"
-	"github.com/quant1x/engine/datasource/base"
-	"github.com/quant1x/gotdx/quotes"
-	"github.com/quant1x/num"
+	"gitee.com/quant1x/engine/cache"
+	"gitee.com/quant1x/engine/config"
+	"gitee.com/quant1x/engine/datasource/base"
+	"gitee.com/quant1x/gotdx/quotes"
+	"gitee.com/quant1x/num"
 )
 
 const (

@@ -3,8 +3,8 @@ package market
 import (
 	"sync"
 
-	"github.com/quant1x/exchange"
-	"github.com/quant1x/gotdx/securities"
+	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/gotdx/securities"
 )
 
 const (

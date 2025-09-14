@@ -6,8 +6,8 @@ import (
 	urlpkg "net/url"
 	"strings"
 
-	"github.com/quant1x/exchange"
-	"github.com/quant1x/x/http"
+	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/gox/http"
 )
 
 const (

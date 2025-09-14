@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/quant1x/exchange"
-	"github.com/quant1x/pandas"
+	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/pandas"
 )
 
 func TestGetBeginDateOfHistoricalTradingData(t *testing.T) {

@@ -2,11 +2,11 @@
 # author: wangfeng
 # since: 2023-09-12
 
-$commit_id = (git rev-list --tags --max-count = 1) | Out-String
+$commit_id = (git rev-list --tags --max-count=1) | Out-String
 $command = "git describe --tags ${commit_id}"
 $repo = (Invoke-Expression $command) | Out-String
 $version = $repo.Substring(1).Trim()
-Write-Output "quant version: ${version}"
+Write-Output "engine version: ${version}"
 $repo = (go list -m gitee.com/quant1x/gotdx) | Out-String
 $gotdx_version = ($repo -split " ")[1]
 $gotdx_version = $gotdx_version.Substring(1).Trim()

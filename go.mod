@@ -7,9 +7,9 @@ require (
 	github.com/fatih/color v1.18.0
 	github.com/go-echarts/go-echarts/v2 v2.6.2
 	github.com/klauspost/cpuid/v2 v2.3.0
-	github.com/quant1x/exchange v0.8.2
-	github.com/quant1x/gotdx v1.26.2
-	github.com/quant1x/num v0.7.2
+	github.com/quant1x/exchange v0.8.3
+	github.com/quant1x/gotdx v1.26.3
+	github.com/quant1x/num v0.7.3
 	github.com/quant1x/pandas v1.6.1
 	github.com/quant1x/pkg v0.8.1
 	github.com/quant1x/x v0.1.23

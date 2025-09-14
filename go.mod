@@ -7,12 +7,12 @@ require (
 	github.com/fatih/color v1.18.0
 	github.com/go-echarts/go-echarts/v2 v2.6.2
 	github.com/klauspost/cpuid/v2 v2.3.0
-	github.com/quant1x/exchange v0.8.3
-	github.com/quant1x/gotdx v1.26.3
-	github.com/quant1x/num v0.7.3
-	github.com/quant1x/pandas v1.6.2
+	github.com/quant1x/exchange v0.8.4
+	github.com/quant1x/gotdx v1.26.4
+	github.com/quant1x/num v0.7.5
+	github.com/quant1x/pandas v1.6.3
 	github.com/quant1x/pkg v0.8.1
-	github.com/quant1x/x v0.1.23
+	github.com/quant1x/x v0.1.25
 	github.com/sevlyar/go-daemon v0.1.6
 	github.com/spf13/cobra v1.10.1
 	golang.org/x/sys v0.36.0
@@ -24,7 +24,6 @@ require (
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
 	github.com/go-co-op/gocron/v2 v2.16.5 // indirect
 	github.com/go-sourcemap/sourcemap v2.1.4+incompatible // indirect
-	github.com/gocarina/gocsv v0.0.0-20240520201108-78e41c74b4b1 // indirect
 	github.com/google/pprof v0.0.0-20250903194437-c28834ac2320 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect

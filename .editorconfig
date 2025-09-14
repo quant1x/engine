@@ -1,0 +1,34 @@
+# 顶层配置（对所有文件生效）
+root = true
+
+[*] # 所有文件
+charset = utf-8 # 编码
+end_of_line = lf # 换行符（Linux/macOS风格）
+insert_final_newline = true # 文件末尾保留空行
+trim_trailing_whitespace = true # 删除行尾空格
+
+# 针对 Windows 批处理文件的配置
+[*.{bat,cmd}]
+charset = gbk # 编码
+end_of_line = crlf # 强制使用 CRLF（Windows 风格）
+trim_trailing_whitespace = false # 避免破坏批处理命令中的空格
+insert_final_newline = true # 文件末尾保留空行（可选）
+
+# Python 文件特定配置
+[*.py]
+indent_style = space # 缩进风格：空格
+indent_size = 4 # 缩进大小：4空格（符合PEP 8）
+max_line_length = 120 # 行长度限制（可自定义）
+
+# 测试文件可能允许稍长行宽
+[*/tests/*.py]
+max_line_length = 160
+
+# 配置文件（如YAML/JSON）
+[*.{yml,yaml,json}]
+indent_style = space
+indent_size = 2 # 通常为2空格
+
+# Markdown文件
+[*.md]
+trim_trailing_whitespace = false # 允许行尾空格（用于换行）

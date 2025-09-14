@@ -10,7 +10,7 @@ require (
 	github.com/quant1x/exchange v0.8.5
 	github.com/quant1x/gotdx v1.26.5
 	github.com/quant1x/num v0.7.5
-	github.com/quant1x/pandas v1.6.3
+	github.com/quant1x/pandas v1.6.5
 	github.com/quant1x/pkg v0.8.1
 	github.com/quant1x/x v0.1.25
 	github.com/sevlyar/go-daemon v0.1.6

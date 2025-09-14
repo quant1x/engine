@@ -3,10 +3,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.11.1] - 2025-09-14
+### Changed
+- 更新依赖库版本
+
 ## [1.11.0] - 2025-09-14
 ### Changed
 - 新增项目开发环境配置
 - engine仓库改为github
+- update changelog
 
 ## [1.10.7] - 2025-09-10
 ### Changed
@@ -1996,7 +2001,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.11.0...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.11.1...HEAD
+[1.11.1]: https://gitee.com/quant1x/engine.git/compare/v1.11.0...v1.11.1
 [1.11.0]: https://gitee.com/quant1x/engine.git/compare/v1.10.7...v1.11.0
 [1.10.7]: https://gitee.com/quant1x/engine.git/compare/v1.10.6...v1.10.7
 [1.10.6]: https://gitee.com/quant1x/engine.git/compare/v1.10.5...v1.10.6

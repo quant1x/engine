@@ -7,7 +7,7 @@ $command = "git describe --tags ${commit_id}"
 $repo = (Invoke-Expression $command) | Out-String
 $version = $repo.Substring(1).Trim()
 Write-Output "quant version: ${version}"
-$repo = (go list -m github.com/quant1x/gotdx) | Out-String
+$repo = (go list -m gitee.com/quant1x/gotdx) | Out-String
 $gotdx_version = ($repo -split " ")[1]
 $gotdx_version = $gotdx_version.Substring(1).Trim()
 Write-Output "gotdx version: $gotdx_version"
@@ -15,7 +15,7 @@ Write-Output "gotdx version: $gotdx_version"
 $BIN = "./bin"
 $APP = "stock"
 $EXT = ".exe"
-$repo = "github.com/quant1x/engine"
+$repo = "gitee.com/quant1x/engine"
 $GOOS = "windows"
 $GOARCH = $env:PROCESSOR_ARCHITECTURE
 $GOARCH = $GOARCH.Trim().ToLower()

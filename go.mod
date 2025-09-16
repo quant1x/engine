@@ -1,11 +1,11 @@
 module gitee.com/quant1x/engine
 
-go 1.25
+go 1.25.0
 
 require (
 	gitee.com/quant1x/exchange v0.8.6
-	gitee.com/quant1x/gotdx v1.26.6
-	gitee.com/quant1x/gox v1.24.5
+	gitee.com/quant1x/gotdx v1.26.9
+	gitee.com/quant1x/gox v1.24.10
 	gitee.com/quant1x/num v0.7.8
 	gitee.com/quant1x/pandas v1.6.6
 	gitee.com/quant1x/pkg v0.8.2
@@ -20,6 +20,7 @@ require (
 )
 
 require (
+	gitee.com/quant1x/asio v1.1.5 // indirect
 	github.com/dlclark/regexp2 v1.11.5 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
 	github.com/go-sourcemap/sourcemap v2.1.4+incompatible // indirect

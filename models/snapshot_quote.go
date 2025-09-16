@@ -62,7 +62,7 @@ func BatchSnapShot(codes []string) []factors.QuoteSnapshot {
 	}
 
 	for _, v := range hq {
-		if v.State != quotes.TDX_SECURITY_TRADE_STATE_NORMAL {
+		if v.State != quotes.SECURITY_TRADE_STATE_NORMAL {
 			// 非正常交易的记录忽略掉
 			continue
 		}

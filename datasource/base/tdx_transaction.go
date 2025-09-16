@@ -26,7 +26,7 @@ var (
 
 func lazyInitHistoricalTradingData() {
 	date := config.GetDataConfig().Trans.BeginDate
-	__historicalTradingDataBeginDate = exchange.FixTradeDate(date, cache.TDX_FORMAT_PROTOCOL_DATE)
+	__historicalTradingDataBeginDate = exchange.FixTradeDate(date, cache.FORMAT_PROTOCOL_DATE)
 }
 
 // UpdateBeginDateOfHistoricalTradingData 修改tick数据开始下载的日期
@@ -38,7 +38,7 @@ func UpdateBeginDateOfHistoricalTradingData(date string) {
 	if err != nil {
 		return
 	}
-	date = dt.Format(cache.TDX_FORMAT_PROTOCOL_DATE)
+	date = dt.Format(cache.FORMAT_PROTOCOL_DATE)
 	__historicalTradingDataBeginDate = date
 }
 
@@ -61,7 +61,7 @@ func GetBeginDateOfHistoricalTradingData() string {
 func GetHistoricalTradingData(securityCode, tradeDate string) []quotes.TickTransaction {
 	securityCode = exchange.CorrectSecurityCode(securityCode)
 	tdxApi := gotdx.GetTdxApi()
-	offset := uint16(quotes.TDX_TRANSACTION_MAX)
+	offset := uint16(quotes.TRANSACTION_MAX)
 	start := uint16(0)
 	history := make([]quotes.TickTransaction, 0)
 	hs := make([]quotes.TransactionReply, 0)
@@ -170,10 +170,10 @@ func GetHistoricalTradingDataByDate(securityCode string, date string) (list []qu
 func CheckoutTransactionData(securityCode string, cacheDate string, ignorePreviousData bool) (list []quotes.TickTransaction) {
 	securityCode = exchange.CorrectSecurityCode(securityCode)
 	// 对齐日期格式: YYYYMMDD
-	tradeDate := exchange.FixTradeDate(cacheDate, cache.TDX_FORMAT_PROTOCOL_DATE)
+	tradeDate := exchange.FixTradeDate(cacheDate, cache.FORMAT_PROTOCOL_DATE)
 	if ignorePreviousData {
 		// 在默认日期之前的数据直接返回空
-		startDate := exchange.FixTradeDate(GetBeginDateOfHistoricalTradingData(), cache.TDX_FORMAT_PROTOCOL_DATE)
+		startDate := exchange.FixTradeDate(GetBeginDateOfHistoricalTradingData(), cache.FORMAT_PROTOCOL_DATE)
 		if tradeDate < startDate {
 			logger.Errorf("tick: code=%s, trade-date=%s, start-date=%s, 没有数据", securityCode, tradeDate, startDate)
 			return list
@@ -216,7 +216,7 @@ func CheckoutTransactionData(securityCode string, cacheDate string, ignorePrevio
 	}
 
 	tdxApi := gotdx.GetTdxApi()
-	offset := uint16(quotes.TDX_TRANSACTION_MAX)
+	offset := uint16(quotes.TRANSACTION_MAX)
 	u32Date := exchange.ToUint32Date(tradeDate)
 	// 只求增量, 分笔成交数据是从后往前取数据, 缓存是从前到后顺序存取
 	start := uint16(0)

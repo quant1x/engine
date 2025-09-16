@@ -34,7 +34,7 @@ func GetTickFromMemory(securityCode string) *quotes.Snapshot {
 // GetStrategySnapshot 从缓存中获取快照
 func GetStrategySnapshot(securityCode string) *factors.QuoteSnapshot {
 	v := GetTickFromMemory(securityCode)
-	if v == nil || v.State != quotes.TDX_SECURITY_TRADE_STATE_NORMAL {
+	if v == nil || v.State != quotes.SECURITY_TRADE_STATE_NORMAL {
 		// 非正常交易的记录忽略掉
 		return nil
 	}
@@ -111,10 +111,10 @@ func SyncAllSnapshots(barIndex *int) {
 		}()
 	}
 
-	for start := 0; start < count; start += quotes.TDX_SECURITY_QUOTES_MAX {
+	for start := 0; start < count; start += quotes.SECURITY_QUOTES_MAX {
 		length := count - start
-		if length >= quotes.TDX_SECURITY_QUOTES_MAX {
-			length = quotes.TDX_SECURITY_QUOTES_MAX
+		if length >= quotes.SECURITY_QUOTES_MAX {
+			length = quotes.SECURITY_QUOTES_MAX
 		}
 		var subCodes []string
 		for i := 0; i < length; i++ {

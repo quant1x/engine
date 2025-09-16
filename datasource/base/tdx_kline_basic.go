@@ -109,7 +109,7 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 	endDate := exchange.Today()
 	ts := exchange.TradingDateRange(startDate, endDate)
 	history := make([]quotes.SecurityBar, 0)
-	step := uint16(quotes.TDX_SECURITY_BARS_MAX)
+	step := uint16(quotes.SECURITY_BARS_MAX)
 	total := uint16(len(ts))
 	start := uint16(0)
 	hs := make([]quotes.SecurityBarsReply, 0)
@@ -420,7 +420,7 @@ func UpdateAllKLine(securityCode string, freq ...string) []KLine {
 	endDate := exchange.Today()
 	ts := exchange.TradingDateRange(startDate, endDate)
 	history := make([]quotes.SecurityBar, 0)
-	step := uint16(quotes.TDX_SECURITY_BARS_MAX)
+	step := uint16(quotes.SECURITY_BARS_MAX)
 	max_ := math.MaxUint16
 
 	max_days := max_ / numberOfDay

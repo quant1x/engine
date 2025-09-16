@@ -7,14 +7,14 @@ import (
 )
 
 const (
-	TDX_FORMAT_PROTOCOL_DATE = "20060102"   // 通达信协议的日期字符串格式
-	CACHE_DATE               = "20060102"   // 缓存日期
-	INDEX_DATE               = "2006-01-02" // 索引日期格式
-	TDX_DATE                 = "20060102"   // 通达信日期
-	YearOnly                 = "2006"       // 仅年份
-	TimeStampMilli           = "2006-01-02 15:04:05.000"
-	TimeStampMicro           = "2006-01-02 15:04:05.000000"
-	TimeStampNano            = "2006-01-02 15:04:05.000000000"
+	FORMAT_PROTOCOL_DATE = "20060102"   // 通达信协议的日期字符串格式
+	CACHE_DATE           = "20060102"   // 缓存日期
+	INDEX_DATE           = "2006-01-02" // 索引日期格式
+	PROTOCOL_DATE        = "20060102"   // 协议日期格式
+	YearOnly             = "2006"       // 仅年份
+	TimeStampMilli       = "2006-01-02 15:04:05.000"
+	TimeStampMicro       = "2006-01-02 15:04:05.000000"
+	TimeStampNano        = "2006-01-02 15:04:05.000000000"
 )
 
 func Today() string {

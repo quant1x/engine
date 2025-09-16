@@ -20,20 +20,20 @@ func CountInflow(list []quotes.TickTransaction, securityCode string, date string
 			lastPrice = price
 		}
 		vol := int64(v.Vol)
-		if direction != quotes.TDX_TICK_BUY && direction != quotes.TDX_TICK_SELL {
+		if direction != quotes.TICK_BUY && direction != quotes.TICK_SELL {
 			switch {
 			case price > lastPrice:
-				direction = quotes.TDX_TICK_BUY
+				direction = quotes.TICK_BUY
 			case price < lastPrice:
-				direction = quotes.TDX_TICK_SELL
+				direction = quotes.TICK_SELL
 			}
 		}
 		// 统计内外盘数据
-		if direction == quotes.TDX_TICK_BUY {
+		if direction == quotes.TICK_BUY {
 			// 买入
 			summary.OuterVolume += vol
 			summary.OuterAmount += float64(vol) * price
-		} else if direction == quotes.TDX_TICK_SELL {
+		} else if direction == quotes.TICK_SELL {
 			// 卖出
 			summary.InnerVolume += vol
 			summary.InnerAmount += float64(vol) * price

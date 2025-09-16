@@ -17,12 +17,12 @@ import (
 )
 
 var (
-	ErrTdxApiQuotesTickMaxBatchSizeExceeded = errors.New(fmt.Sprintf("[tdx-api-quotes-tick]batch size exceeded maximum(%d) limit", quotes.TDX_SECURITY_QUOTES_MAX))
+	ErrTdxApiQuotesTickMaxBatchSizeExceeded = errors.New(fmt.Sprintf("[tdx-api-quotes-tick]batch size exceeded maximum(%d) limit", quotes.SECURITY_QUOTES_MAX))
 )
 
 // BatchRealtimeBasicKLine 批量获取实时行情数据
 func BatchRealtimeBasicKLine(codes []string) error {
-	if len(codes) > quotes.TDX_SECURITY_QUOTES_MAX {
+	if len(codes) > quotes.SECURITY_QUOTES_MAX {
 		return ErrTdxApiQuotesTickMaxBatchSizeExceeded
 	}
 	now := time.Now()
@@ -54,7 +54,7 @@ func BatchRealtimeBasicKLine(codes []string) error {
 		return err
 	}
 	for _, v := range hq {
-		if v.State == quotes.TDX_SECURITY_TRADE_STATE_DELISTING || v.Code == exchange.StockDelisting || v.LastClose == float64(0) {
+		if v.State == quotes.SECURITY_TRADE_STATE_DELISTING || v.Code == exchange.StockDelisting || v.LastClose == float64(0) {
 			// 终止上市的数据略过
 			continue
 		}
@@ -140,7 +140,7 @@ func BasicKLineForSnapshot(v quotes.Snapshot) {
 			return
 		}
 	}
-	if v.State == quotes.TDX_SECURITY_TRADE_STATE_DELISTING || v.Code == exchange.StockDelisting || v.LastClose == float64(0) {
+	if v.State == quotes.SECURITY_TRADE_STATE_DELISTING || v.Code == exchange.StockDelisting || v.LastClose == float64(0) {
 		// 终止上市的数据略过
 		return
 	}

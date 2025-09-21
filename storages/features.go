@@ -24,7 +24,7 @@ type MetricCallback func()
 
 func updateStockFeature(wg *coroutine.RollingWaitGroup, bar *progressbar.Bar, feature factors.Feature, code string, cacheDate, featureDate string, op cache.OpKind, p *treemap.Map, sb *cache.ScoreBoard, now time.Time) {
 	defer runtime.CatchPanic("code[%s]: cacheDate=%s,featureDate=%s", code, cacheDate, featureDate)
-	defer sb.Add(1, time.Since(now))
+	defer sb.Add(1, time.Since(now), false, false)
 	if op == cache.OpRepair {
 		feature.Repair(code, cacheDate, featureDate, true)
 	} else {
@@ -64,7 +64,7 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 	allCodes := market.GetCodeList()
 	allCodes = allCodes[:]
 	codeCount := len(allCodes)
-	var metrics []cache.AdapterMetric
+	var metrics []cache.FactorMetrics
 	for _, adapter := range adapters {
 		logger.Infof("%s: %s, begin", moduleName, adapter.Name())
 

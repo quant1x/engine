@@ -9,52 +9,89 @@ import (
 // ScoreBoard 记分牌, 线程安全
 type ScoreBoard struct {
 	m sync.Mutex
-	AdapterMetric
+	FactorMetrics
 }
 
-// AdapterMetric 适配器性能指标
-type AdapterMetric struct {
-	Name      string        `name:"name"`       // 名称
-	Kind      Kind          `name:"kind"`       // 类型
-	Count     int           `name:"count"`      // 总数
-	Passed    int           `name:"passed"`     // 通过检测数
-	Max       time.Duration `name:"max"`        // 最大值
-	Min       time.Duration `name:"min"`        // 最小值
-	CrossTime time.Duration `name:"cross_time"` // 总耗时
-	Speed     float64       `name:"speed"`      // 速度
+// FactorMetrics 适配器性能/绩效指标
+type FactorMetrics struct {
+	Name           string        `name:"name"`            // 名称
+	Kind           Kind          `name:"kind"`            // 类型
+	Count          int           `name:"count"`           // 总数(处理样本数)
+	Signals        int           `name:"signals"`         // 信号数
+	Passed         int           `name:"passed"`          // 通过检测数
+	Max            time.Duration `name:"max"`             // 最大值
+	Min            time.Duration `name:"min"`             // 最小值
+	TotalDuration  time.Duration `name:"total_duration"`  // 总耗时
+	Speed          float64       `name:"speed"`           // 速度 = Count / seconds
+	SignalCoverage float64       `name:"signal_coverage"` // 信号覆盖率 = Signals / Count
+	WinRate        float64       `name:"win_rate"`        // 胜率 = Passed / Signals
 }
 
-func (this *ScoreBoard) From(adapter DataAdapter) {
-	this.Name = adapter.Name()
-	this.Kind = adapter.Kind()
+func (s *ScoreBoard) From(adapter DataAdapter) {
+	s.Name = adapter.Name()
+	s.Kind = adapter.Kind()
 }
 
-func (this *ScoreBoard) Add(delta int, take time.Duration, pass ...bool) {
-	this.m.Lock()
-	defer this.m.Unlock()
-	this.Count = this.Count + delta
-	this.CrossTime += take
-	if this.Min == 0 || this.Min > take {
-		this.Min = take
+// recompute 派生指标
+func (s *ScoreBoard) recompute() {
+	if s.TotalDuration > 0 {
+		secs := s.TotalDuration.Seconds()
+		if secs > 0 {
+			s.Speed = float64(s.Count) / secs
+		}
 	}
-	if this.Max == 0 || this.Max < take {
-		this.Max = take
+	if s.Count > 0 {
+		s.SignalCoverage = float64(s.Signals) / float64(s.Count)
+	} else {
+		s.SignalCoverage = 0
 	}
-	this.Speed = float64(this.Count) / this.CrossTime.Seconds()
-	passed := false
-	if len(pass) > 0 {
-		passed = pass[0]
-	}
-	if passed {
-		this.Passed++
+	if s.Signals > 0 {
+		s.WinRate = float64(s.Passed) / float64(s.Signals)
+	} else {
+		s.WinRate = 0
 	}
 }
 
-func (this *ScoreBoard) String() string {
-	s := fmt.Sprintf("name: %s, kind: %d, total: %d, crosstime: %s, max: %d, min: %d, speed: %f", this.Name, this.Kind, this.Count, this.CrossTime, this.Max, this.Min, this.Speed)
-	return s
+// Add 记录一次处理的性能及结果
+// 参数说明:
+//
+//	delta  : 本次增加的样本数量(通常=1)
+//	take   : 本次处理耗时
+//	signal : 是否产生信号(hasSignal && err==nil)
+//	pass   : 是否校验通过(err==nil)
+//
+// 统计逻辑:
+//
+//	Count   += delta
+//	Signals += signal?1:0
+//	Passed  += pass?1:0
+//	SignalCoverage = Signals / Count
+//	WinRate        = Passed / Signals (Signals==0时为0)
+func (s *ScoreBoard) Add(delta int, take time.Duration, signal, pass bool) {
+	s.m.Lock()
+	defer s.m.Unlock()
+	s.Count += delta
+	s.TotalDuration += take
+	if s.Min == 0 || s.Min > take {
+		s.Min = take
+	}
+	if s.Max == 0 || s.Max < take {
+		s.Max = take
+	}
+	if signal {
+		s.Signals++
+	}
+	if pass {
+		s.Passed++
+	}
+
+	s.recompute()
 }
 
-func (this *ScoreBoard) Metric() AdapterMetric {
-	return this.AdapterMetric
+func (s *ScoreBoard) String() string {
+	return fmt.Sprintf("name: %s, kind: %d, total: %d, signals: %d, passed: %d, coverage: %.4f, win: %.4f, crosstime: %s, max: %d, min: %d, speed: %.4f", s.Name, s.Kind, s.Count, s.Signals, s.Passed, s.SignalCoverage, s.WinRate, s.TotalDuration, s.Max, s.Min, s.Speed)
+}
+
+func (s *ScoreBoard) Metric() FactorMetrics {
+	return s.FactorMetrics
 }

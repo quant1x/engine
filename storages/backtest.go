@@ -13,7 +13,7 @@ import (
 )
 
 // FeaturesBackTest FeaturesUpdate 特征-数据有效性验证
-func FeaturesBackTest(barIndex *int, cacheDate, featureDate string, plugins []cache.DataAdapter, op cache.OpKind) []cache.AdapterMetric {
+func FeaturesBackTest(barIndex *int, cacheDate, featureDate string, plugins []cache.DataAdapter, op cache.OpKind) []cache.FactorMetrics {
 	moduleName := cache.OpMap[op] + "特征数据"
 	moduleName += cacheDate
 	var adapters []factors.FeatureRotationAdapter
@@ -36,7 +36,7 @@ func FeaturesBackTest(barIndex *int, cacheDate, featureDate string, plugins []ca
 	allCodes := market.GetCodeList()
 	allCodes = allCodes[:]
 	codeCount := len(allCodes)
-	var metrics []cache.AdapterMetric
+	var metrics []cache.FactorMetrics
 	for _, adapter := range adapters {
 		logger.Infof("%s: %s, begin", moduleName, adapter.Name())
 
@@ -48,24 +48,25 @@ func FeaturesBackTest(barIndex *int, cacheDate, featureDate string, plugins []ca
 		barCode := progressbar.NewBar(*barIndex+1, "执行["+adapter.Name()+"]", codeCount)
 		for _, code := range allCodes {
 			now := time.Now()
-			passed := false
+			var hasSignal bool
+			var passed bool
 			raw := adapter.Element(code)
 			kind := adapter.Kind()
 			sb.From(cache.GetDataAdapter(kind))
 			// 判断是否实现验证接口
-			feature, ok := raw.(cache.Validator)
+			feature, ok := raw.(cache.FactorSignalEvaluator)
 			if ok {
-				err := feature.Check(featureDate)
+				var err error
+				hasSignal, err = feature.Check(featureDate)
 				if err == nil {
 					passed = true
 				}
+			} else {
+				// 未实现Validator接口, 视为仅统计样本, 不产生信号且不算通过
 			}
-			sb.Add(1, time.Since(now), passed)
+			sb.Add(1, time.Since(now), hasSignal, passed)
 			barCode.Add(1)
-			//wg.Add(1)
-			//go updateStockFeature(wg, barCode, feature, code, cacheDate, featureDate, op, mapFeature, &sb, now)
 		}
-		//wg.Wait()
 		barCode.Wait()
 
 		// 适配器进度条+1

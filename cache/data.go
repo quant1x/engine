@@ -42,10 +42,21 @@ type Manifest interface {
 	Initialization
 }
 
-// Validator 验证接口
-type Validator interface {
-	// Check 数据校验
-	Check(featureDate string) error
+// FactorSignalEvaluator 因子验证接口
+type FactorSignalEvaluator interface {
+	// Check 对指定featureDate进行特征数据验证。
+	// 返回值含义:
+	//   hasSignal == true : 该日期产生了有效信号(用于统计信号覆盖率)
+	//   err == nil        : 校验通过(即数据有效/逻辑正确)
+	//   err != nil        : 校验失败, 需要记录或输出错误信息, hasSignal值在此场景下不参与胜率统计
+	// 统计建议:
+	//   Signals 计数: hasSignal==true 且 err==nil
+	//   Passed  计数: err==nil (通过的数据样本)
+	//   WinRate = PassedSignals / Signals (若需要区分“通过且有信号”)
+	//   当前接口保持最小语义, 扩展需求可引入 ValidationResult 结构
+	// NOTE: 不将 err==nil 自动推导为 hasSignal=true, 两者独立
+	//
+	Check(featureDate string) (hasSignal bool, err error)
 }
 
 // DataFile 基础数据文件接口
@@ -62,18 +73,10 @@ type DataFile interface {
 	//Print(code string, date ...string)
 }
 
-// Swift 快速接口
-//
-//	securityCode 证券代码, 2位交易所缩写+6位数字代码, 例如sh600600, 代表上海市场的青岛啤酒
-//	cacheDate 缓存日期
-//	featureDate 特征数据的日期
-type Swift interface {
-}
-
 // Future 预备数据的接口
 type Future interface {
 	// Update 更新数据
-	//	whole 是否完整的数据, false是加工成半成品数据, 为了配合Increase
+	// 	whole 是否完整的数据, false是加工成半成品数据, 为了配合Increase
 	Update(securityCode, cacheDate, featureDate string, whole bool)
 	// Repair 回补数据
 	Repair(securityCode, cacheDate, featureDate string, whole bool)

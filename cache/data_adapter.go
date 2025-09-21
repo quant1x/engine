@@ -83,10 +83,11 @@ func Plugins(mask ...Kind) (list []DataAdapter) {
 	}
 	// TODO: 这个地方的内存申请方面需要优化
 	var kinds []Kind
-	for kind, _ := range mapDataPlugins {
+	for kind, plugin := range mapDataPlugins {
 		if pluginType == 0 || kind&pluginType == pluginType {
 			kinds = append(kinds, kind)
 		}
+		_ = plugin
 	}
 	slices.Sort(kinds)
 	for _, kind := range kinds {

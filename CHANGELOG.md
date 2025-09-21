@@ -3,9 +3,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.11.12] - 2025-09-21
+### Changed
+- 调整因子的统计指标
+- 新增特征回测结果的保存功能
+
 ## [1.11.11] - 2025-09-16
 ### Changed
 - 更新gotdx版本
+- update changelog
 
 ## [1.11.10] - 2025-09-14
 ### Changed
@@ -2052,7 +2058,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.11.11...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.11.12...HEAD
+[1.11.12]: https://gitee.com/quant1x/engine.git/compare/v1.11.11...v1.11.12
 [1.11.11]: https://gitee.com/quant1x/engine.git/compare/v1.11.10...v1.11.11
 [1.11.10]: https://gitee.com/quant1x/engine.git/compare/v1.11.9...v1.11.10
 [1.11.9]: https://gitee.com/quant1x/engine.git/compare/v1.11.8...v1.11.9

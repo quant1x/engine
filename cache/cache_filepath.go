@@ -19,6 +19,7 @@ const (
 	cacheFundFlowPath = "fund"     // 资金流向
 	cacheTransPath    = "trans"    // 成交数据
 	cacheChipsPath    = "chips"    // 筹码分布
+	backtestPath      = "backtest" // 回测结果
 )
 
 // GetMetaPath 元数据路径
@@ -93,4 +94,9 @@ func GetTransPath() string {
 // GetChipsPath 筹码分布路径
 func GetChipsPath() string {
 	return filepath.Join(GetRootPath(), cacheChipsPath)
+}
+
+// GetBacktestCachePath 回测结果路径
+func GetBacktestCachePath() string {
+	return filepath.Join(GetRootPath(), backtestPath)
 }

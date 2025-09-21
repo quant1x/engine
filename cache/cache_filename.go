@@ -134,3 +134,10 @@ func ChipsFilename(securityCode string) string {
 	filename := filepath.Join(GetChipsPath(), idPath+chipFileSuffix)
 	return filename
 }
+
+// BacktestFilename 回测结果文件
+func BacktestFilename(factorName, date string) string {
+	date = exchange.FixTradeDate(date, FilenameDate)
+	filename := fmt.Sprintf("%s/%s.%s", GetBacktestCachePath(), factorName, date)
+	return filename
+}

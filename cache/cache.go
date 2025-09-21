@@ -12,11 +12,11 @@ const (
 	// 目录权限
 	cacheDirMode os.FileMode = 0755
 	// 文件权限
-	cacheFileMode os.FileMode = 0644
+	//cacheFileMode os.FileMode = 0644
 	// 文件替换模式, 会用到os.TRUNC
-	cacheReplace = os.O_CREATE | os.O_RDWR | os.O_TRUNC
+	//cacheReplace = os.O_CREATE | os.O_RDWR | os.O_TRUNC
 	// 更新
-	cacheUpdate = os.O_CREATE | os.O_WRONLY
+	//cacheUpdate = os.O_CREATE | os.O_WRONLY
 )
 
 var (

@@ -40,7 +40,6 @@ func saveStockPoolToCache(list []StockPool) {
 	// 强制刷新股票池
 	err := api.SlicesToCsv(filename, list, true)
 	_ = err
-	return
 }
 
 // 股票池合并

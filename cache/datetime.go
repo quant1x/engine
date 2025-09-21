@@ -59,8 +59,8 @@ func DefaultCanUpdateDate() string {
 	return dateOfUpdatingData
 }
 
-// DefaultCanUpdateDate 获取默认可以更新缓存文件的日期
-func testDefaultCanUpdateDate() string {
-	dateOfUpdatingData := exchange.GetCurrentlyDay()
-	return dateOfUpdatingData
-}
+// // DefaultCanUpdateDate 获取默认可以更新缓存文件的日期
+// func testDefaultCanUpdateDate() string {
+// 	dateOfUpdatingData := exchange.GetCurrentlyDay()
+// 	return dateOfUpdatingData
+// }

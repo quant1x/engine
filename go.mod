@@ -3,12 +3,12 @@ module gitee.com/quant1x/engine
 go 1.25.0
 
 require (
-	gitee.com/quant1x/exchange v0.8.10
-	gitee.com/quant1x/gotdx v1.26.11
-	gitee.com/quant1x/gox v1.25.0
-	gitee.com/quant1x/num v0.7.8
-	gitee.com/quant1x/pandas v1.6.6
-	gitee.com/quant1x/pkg v0.8.2
+	gitee.com/quant1x/exchange v0.8.11
+	gitee.com/quant1x/gotdx v1.26.12
+	gitee.com/quant1x/gox v1.25.1
+	gitee.com/quant1x/num v0.7.9
+	gitee.com/quant1x/pandas v1.6.7
+	gitee.com/quant1x/pkg v0.8.3
 	github.com/bits-and-blooms/bitset v1.24.0
 	github.com/fatih/color v1.18.0
 	github.com/go-echarts/go-echarts/v2 v2.6.2
@@ -24,7 +24,7 @@ require (
 	github.com/dlclark/regexp2 v1.11.5 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
 	github.com/go-sourcemap/sourcemap v2.1.4+incompatible // indirect
-	github.com/google/pprof v0.0.0-20250903194437-c28834ac2320 // indirect
+	github.com/google/pprof v0.0.0-20250919162441-8b542baf5bcf // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/kardianos/osext v0.0.0-20190222173326-2bc1f35cddc0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect

@@ -4,7 +4,7 @@ go 1.25.0
 
 require (
 	gitee.com/quant1x/exchange v0.8.10
-	gitee.com/quant1x/gotdx v1.26.9
+	gitee.com/quant1x/gotdx v1.26.11
 	gitee.com/quant1x/gox v1.25.0
 	gitee.com/quant1x/num v0.7.8
 	gitee.com/quant1x/pandas v1.6.6

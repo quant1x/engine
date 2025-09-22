@@ -41,7 +41,7 @@ func FeaturesBackTest(barIndex *int, cacheDate, featureDate string, plugins []ca
 		logger.Infof("%s: %s, begin", moduleName, adapter.Name())
 
 		wgAdapter.Add(1)
-		// 加载指定日期的特征
+		// 加载指定cacheDate日期的特征, 那么数据本身是featureDate日期
 		adapter.Checkout(cacheDate)
 		var sb cache.ScoreBoard
 
@@ -57,7 +57,7 @@ func FeaturesBackTest(barIndex *int, cacheDate, featureDate string, plugins []ca
 			feature, ok := raw.(cache.FactorSignalEvaluator)
 			if ok {
 				var err error
-				hasSignal, err = feature.Check(featureDate)
+				hasSignal, err = feature.Check(cacheDate, featureDate)
 				if err == nil {
 					passed = true
 				}

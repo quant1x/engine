@@ -37,14 +37,14 @@ type Properties interface {
 
 // Manifest 提要
 type Manifest interface {
-	Schema
-	Properties
-	Initialization
+	Schema         // 概要信息
+	Properties     // 属性
+	Initialization // 初始化
 }
 
 // FactorSignalEvaluator 因子验证接口
 type FactorSignalEvaluator interface {
-	// Check 对指定featureDate进行特征数据验证。
+	// Check 对指定cacheDate和featureDate进行特征数据验证。
 	// 返回值含义:
 	//   hasSignal == true : 该日期产生了有效信号(用于统计信号覆盖率)
 	//   err == nil        : 校验通过(即数据有效/逻辑正确)
@@ -56,7 +56,7 @@ type FactorSignalEvaluator interface {
 	//   当前接口保持最小语义, 扩展需求可引入 ValidationResult 结构
 	// NOTE: 不将 err==nil 自动推导为 hasSignal=true, 两者独立
 	//
-	Check(featureDate string) (hasSignal bool, err error)
+	Check(cacheDate, featureDate string) (hasSignal bool, err error)
 }
 
 // DataFile 基础数据文件接口

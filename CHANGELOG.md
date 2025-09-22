@@ -3,9 +3,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.11.15] - 2025-09-22
+### Changed
+- 删除废弃leveldb的测试代码
+
 ## [1.11.14] - 2025-09-22
 ### Changed
 - 更新依赖库版本
+- update changelog
 
 ## [1.11.13] - 2025-09-22
 ### Changed
@@ -2069,7 +2074,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.11.14...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.11.15...HEAD
+[1.11.15]: https://gitee.com/quant1x/engine.git/compare/v1.11.14...v1.11.15
 [1.11.14]: https://gitee.com/quant1x/engine.git/compare/v1.11.13...v1.11.14
 [1.11.13]: https://gitee.com/quant1x/engine.git/compare/v1.11.12...v1.11.13
 [1.11.12]: https://gitee.com/quant1x/engine.git/compare/v1.11.11...v1.11.12

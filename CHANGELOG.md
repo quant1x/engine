@@ -3,9 +3,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.11.17] - 2025-09-23
+### Changed
+- 补充第三方库的学习文档
+
 ## [1.11.16] - 2025-09-22
 ### Changed
 - 更新依赖库版本
+- update changelog
 
 ## [1.11.15] - 2025-09-22
 ### Changed
@@ -2079,7 +2084,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.11.16...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.11.17...HEAD
+[1.11.17]: https://gitee.com/quant1x/engine.git/compare/v1.11.16...v1.11.17
 [1.11.16]: https://gitee.com/quant1x/engine.git/compare/v1.11.15...v1.11.16
 [1.11.15]: https://gitee.com/quant1x/engine.git/compare/v1.11.14...v1.11.15
 [1.11.14]: https://gitee.com/quant1x/engine.git/compare/v1.11.13...v1.11.14

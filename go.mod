@@ -6,8 +6,8 @@ require (
 	gitee.com/quant1x/exchange v0.8.11
 	gitee.com/quant1x/gotdx v1.26.12
 	gitee.com/quant1x/gox v1.25.1
-	gitee.com/quant1x/num v0.7.9
-	gitee.com/quant1x/pandas v1.6.7
+	gitee.com/quant1x/num v0.7.12
+	gitee.com/quant1x/pandas v1.6.9
 	gitee.com/quant1x/pkg v0.8.3
 	github.com/bits-and-blooms/bitset v1.24.0
 	github.com/fatih/color v1.18.0

@@ -424,7 +424,10 @@ func UpdateAllKLine(securityCode string, freq ...string) []KLine {
 	max_ := math.MaxUint16
 
 	max_days := max_ / numberOfDay
-	days_ := min(max_days, len(ts))
+	total_days := len(ts)
+	days_ := min(max_days, total_days)
+	startDate = ts[total_days-days_]
+	endDate = ts[total_days-1]
 	total_ := days_ * numberOfDay
 	total := uint16(total_)
 	start := uint16(0)

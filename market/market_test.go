@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/gotdx/securities"
 )
 
 func TestGetCodeList(t *testing.T) {
@@ -34,4 +35,12 @@ func TestGetQmtCodeList(t *testing.T) {
 	}
 	fmt.Println(strings.Join(list, ","))
 	_ = batchMax
+}
+
+func TestBlockListCount(t *testing.T) {
+	blocks := securities.BlockList()
+	fmt.Println(len(blocks))
+	// for _, v := range blocks {
+	// 	fmt.Println(v.Code, v.Name, v.Count)
+	// }
 }

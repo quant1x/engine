@@ -3,9 +3,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.11.19] - 2025-09-30
+### Changed
+- 修复分钟级K线除权除息的bug, 可下载数据的总天数修改后, 结束日期不会变，但是开始的日期是会调整的, 不能用原来日线的开始日期
+
 ## [1.11.18] - 2025-09-26
 ### Changed
 - 更新pandas版本号到1.6.9
+- update changelog
 
 ## [1.11.17] - 2025-09-23
 ### Changed
@@ -2089,7 +2094,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.11.18...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.11.19...HEAD
+[1.11.19]: https://gitee.com/quant1x/engine.git/compare/v1.11.18...v1.11.19
 [1.11.18]: https://gitee.com/quant1x/engine.git/compare/v1.11.17...v1.11.18
 [1.11.17]: https://gitee.com/quant1x/engine.git/compare/v1.11.16...v1.11.17
 [1.11.16]: https://gitee.com/quant1x/engine.git/compare/v1.11.15...v1.11.16

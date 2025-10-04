@@ -94,19 +94,29 @@ func (this *Cache1D[T]) Length() int {
 // loadCache 加载指定日期的数据
 // TODO: 这里存在内存逃逸和泄漏的问题
 func (this *Cache1D[T]) loadCache(date string) {
-	// 重置个股列表
+	// 重置个股列表并清理旧缓存
 	this.allCodes = market.GetCodeList()
 	this.Date = exchange.FixTradeDate(date)
 	this.filename = getCache1DFilepath(this.cacheKey, this.Date)
 	logger.Warnf("%s: date=%s, filename=%s", this.cacheKey, this.Date, this.filename)
+
+	// 清理旧数据，保证加载的是全量新数据
+	this.mapCache.Clear()
+
 	var list []T
 	err := api.CsvToSlices(this.filename, &list)
 	if err != nil || len(list) == 0 {
 		logger.Errorf("%s 没有有效数据, error=%+v", this.filename, err)
 		return
 	}
-	for _, v := range list {
+
+	// 使用索引访问，避免 range 对大 struct 切片的重复拷贝影响
+	for i := 0; i < len(list); i++ {
+		v := list[i]
 		code := v.GetSecurityCode()
+		if len(code) == 0 {
+			continue
+		}
 		this.mapCache.Put(code, v)
 	}
 }
@@ -172,16 +182,27 @@ func (this *Cache1D[T]) Print(code string, date ...string) {
 }
 
 func (this *Cache1D[T]) Check(cacheDate, featureDate string) {
+	// 简单检查：如果缓存日期与特征日期不一致，准备替换缓存
+	// 使用 mutex 保护 replaceDate 的写操作
 	_ = cacheDate
-	_ = featureDate
-	//TODO implement me
-	panic("implement me")
+	featureDate = exchange.FixTradeDate(featureDate)
+	this.m.Lock()
+	defer this.m.Unlock()
+	if featureDate == "" {
+		return
+	}
+	if this.Date != featureDate {
+		// 标记需要替换为 featureDate（Checkout 会触发替换）
+		this.replaceDate = featureDate
+		// 重置 once，以便下次 Checkout 能触发 ReplaceCache
+		this.once.Reset()
+	}
 }
 
 // Get 获取指定证券代码的数据
 func (this *Cache1D[T]) Get(securityCode string, date ...string) *T {
 	this.Checkout(date...)
-	this.once.Do(this.loadDefault)
+	// Checkout 已确保 once.Do 被正确调用，移除重复调用
 	t, ok := this.mapCache.Get(securityCode)
 	if ok {
 		return &t
@@ -191,7 +212,7 @@ func (this *Cache1D[T]) Get(securityCode string, date ...string) *T {
 
 func (this *Cache1D[T]) Element(securityCode string, date ...string) Feature {
 	this.Checkout(date...)
-	this.once.Do(this.loadDefault)
+	// Checkout 已确保 once.Do 被正确调用，移除重复调用
 	t, ok := this.mapCache.Get(securityCode)
 	if ok {
 		return t
@@ -202,11 +223,13 @@ func (this *Cache1D[T]) Element(securityCode string, date ...string) Feature {
 // Set 更新map中指定证券代码的数据
 func (this *Cache1D[T]) Set(securityCode string, newValue T, date ...string) {
 	this.Checkout(date...)
-	this.once.Do(this.loadDefault)
+	// Checkout 已确保 once.Do 被正确调用，移除重复调用
 	this.mapCache.Put(securityCode, newValue)
 }
 
 func (this *Cache1D[T]) Filter(f func(v T) bool) []T {
+	this.Checkout()
+	// Checkout 已确保缓存加载
 	var list []T
 	if f == nil {
 		return nil
@@ -226,6 +249,8 @@ func (this *Cache1D[T]) Filter(f func(v T) bool) []T {
 //
 //	泛型T需要保持一个string类型的Date字段
 func (this *Cache1D[T]) Apply(merge func(code string, local *T) (updated bool), force ...bool) {
+	this.Checkout()
+	// Checkout 确保 this.Date 已就绪
 	cacheDate, featureDate := cache.CorrectDate(this.Date)
 	list := make([]T, 0, len(this.allCodes))
 	for _, securityCode := range this.allCodes {
@@ -251,6 +276,8 @@ func (this *Cache1D[T]) Apply(merge func(code string, local *T) (updated bool), 
 }
 
 func (this *Cache1D[T]) Merge(p *treemap.Map) {
+	this.Checkout()
+	// Checkout 确保 this.Date 已就绪
 	cacheDate, featureDate := cache.CorrectDate(this.Date)
 	list := make([]T, 0, len(this.allCodes))
 	for _, securityCode := range this.allCodes {
@@ -270,7 +297,7 @@ func (this *Cache1D[T]) Merge(p *treemap.Map) {
 	if len(list) > 0 {
 		err := api.SlicesToCsv(this.filename, list)
 		if err != nil {
-			logger.Errorf("刷新%s异常:%+v", this.filename, err)
+			logger.Errorf("%s异常:%+v", this.filename, err)
 		}
 	}
 	_ = cacheDate

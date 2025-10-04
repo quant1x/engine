@@ -69,7 +69,28 @@ func checkWideOffset(klines []factors.SecurityFeature, date string) (offset int)
 	return
 }
 
-// BackTesting 回测
+// BackTesting 执行策略回测，计算指定策略在指定日期范围内的表现
+//
+// 参数:
+//
+//	strategyNo: 策略编号
+//	countDays: 回测天数
+//	countTopN: 每日选取的标的数量
+//
+// 功能:
+//  1. 获取指定日期范围内的交易日数据
+//  2. 加载策略模型和交易规则
+//  3. 对每个交易日执行以下操作:
+//     - 加载标的特征数据
+//     - 过滤符合条件的标的
+//     - 计算各项指标(Alpha/Beta/溢价率等)
+//     - 输出每日回测结果
+//  4. 汇总统计整体回测表现
+//
+// 输出:
+//  1. 控制台输出每日回测结果表格
+//  2. 生成CSV文件保存详细回测数据
+//  3. 计算并输出平均收益率、胜率等汇总指标
 func BackTesting(strategyNo uint64, countDays, countTopN int) {
 	currentlyDay := exchange.GetCurrentlyDay()
 	dates := exchange.TradingDateRange(exchange.MARKET_CH_FIRST_LISTTIME, currentlyDay)
@@ -95,7 +116,7 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 	dates = dates[s : e+1]
 	codes := market.GetCodeList()
 	mapStock := map[string][]factors.SecurityFeature{}
-	for i, date := range dates {
+	for _, date := range dates {
 		testDate := date
 		// 切换策略数据的缓存日期
 		factors.SwitchDate(testDate)
@@ -129,14 +150,53 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 			if offset < 0 {
 				continue
 			}
-			//wides := features[0 : length-offset]
-			pos := length - countDays + i
-			markets := marketPrices[:pos+1]
-			prices := make([]float64, pos+1)
-			for si, sv := range features[:pos+1] {
-				prices[si] = sv.ChangeRate
+
+			// 索引防御与窗口计算（基于 feature 在宽表中的位置）
+			idx := length - 1 - offset // 当前 testDate 在 features 中的下标
+			if idx < 0 || idx >= length {
+				continue
 			}
-			feature := features[length-offset-1]
+			start := idx - (countDays - 1)
+			if start < 0 {
+				start = 0
+			}
+			windowLen := idx - start + 1
+			if windowLen <= 0 {
+				continue
+			}
+
+			// 如果还没有基准序列，懒加载目标指数（只加载 targetIndex，不会加载其它无关标的）
+			if len(marketPrices) == 0 && backTestingParameter.TargetIndex != "" {
+				ti := backTestingParameter.TargetIndex
+				if feats, ok := mapStock[ti]; ok && len(feats) > 0 {
+					for _, m := range feats {
+						marketPrices = append(marketPrices, m.ChangeRate)
+					}
+				} else {
+					var feats2 []factors.SecurityFeature
+					fn := cache.WideFilename(ti)
+					if err := api.CsvToSlices(fn, &feats2); err == nil && len(feats2) > 0 {
+						mapStock[ti] = feats2
+						for _, m := range feats2 {
+							marketPrices = append(marketPrices, m.ChangeRate)
+						}
+					}
+				}
+			}
+
+			// 基准数据长度必须满足窗口长度
+			if len(marketPrices) < windowLen {
+				// 基准不足，跳过该标的
+				continue
+			}
+
+			markets := marketPrices[:windowLen]
+			prices := make([]float64, windowLen)
+			for si := 0; si < windowLen; si++ {
+				prices[si] = features[start+si].ChangeRate
+			}
+
+			feature := features[idx]
 			// 宽表和测试日期没有对齐, 跳过
 			if feature.Date != testDate {
 				// 停牌导致的日期无法从后往前对齐

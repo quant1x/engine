@@ -18,8 +18,8 @@ func TestQuarterlyReports(t *testing.T) {
 }
 
 func TestGetCacheQuarterlyReportsBySecurityCode(t *testing.T) {
-	date := "20231027"
-	code := "sh600178"
+	date := "2051020"
+	code := "sh600600"
 	v := GetCacheQuarterlyReportsBySecurityCode(code, date)
 	fmt.Println(v)
 	data, _ := json.Marshal(v)

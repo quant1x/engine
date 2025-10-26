@@ -252,6 +252,23 @@ func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDa
 		}
 		xdxrDate := xdxr.Date
 		factor := xdxr.Adjust()
+
+		songZhuangu := xdxr.SongZhuanGu
+		peiGu := xdxr.PeiGu
+		suoGu := xdxr.SuoGu
+		xdxrGuShu := (songZhuangu + peiGu - suoGu) / 10
+		fenHong := xdxr.FenHong
+		peiGuJia := xdxr.PeiGuJia
+		xdxrFenHong := (peiGuJia*peiGu - fenHong) / 10
+		_ = xdxrFenHong
+		//factor := func(p float64) float64 {
+		//	v := (p + xdxrFenHong) / (1 + xdxrGuShu)
+		//	//return num.Decimal(v)
+		//	return v
+		//}
+		//return factor
+		//return xdxrGuShu, xdxrFenHong
+		//}
 		for j := 0; j < rows; j++ {
 			kl := &kLines[j]
 			barCurrentDate := kl.Date
@@ -269,8 +286,11 @@ func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDa
 				// 2. 均价线复权
 				// 通达信中可能存在没有量复权的情况, 需要在系统设置中的"设置1"勾选分析图中成交量复权
 				maPrice = factor(maPrice)
+				//kl.Amount = factor(kl.Amount)
 				// 3. 以成交金额为基准, 用复权均价线计算成交量
-				kl.Volume = kl.Amount / maPrice
+				kl.Volume *= 1 + xdxrGuShu
+				kl.Amount = maPrice * kl.Volume
+
 				datetime := ""
 				adjustCount := 0
 				if len(kl.Datetime) == timestampLength {

@@ -3,10 +3,10 @@ package command
 import (
 	"fmt"
 
+	"gitee.com/quant1x/data/exchange"
+	"gitee.com/quant1x/data/level1/securities"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gotdx/securities"
 	cmder "github.com/spf13/cobra"
 )
 

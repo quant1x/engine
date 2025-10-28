@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/data/exchange"
 	"gitee.com/quant1x/gox/api"
 )
 

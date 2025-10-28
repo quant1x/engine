@@ -1,11 +1,11 @@
 package factors
 
 import (
+	"gitee.com/quant1x/data/exchange"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/indicators"
 	"gitee.com/quant1x/engine/utils"
-	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/num"
 	"gitee.com/quant1x/pandas"
 	. "gitee.com/quant1x/pandas/formula"

@@ -4,8 +4,8 @@ import (
 	"strconv"
 	"strings"
 
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gotdx"
+	"gitee.com/quant1x/data/exchange"
+	"gitee.com/quant1x/data/level1"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/num"
 	"gitee.com/quant1x/pandas"
@@ -128,7 +128,7 @@ func splitContent(content, unit string) (headers []string, lines [][]string) {
 //
 //	deprecated: 不推荐
 func FundFlow(securityCode string) pandas.DataFrame {
-	tdxApi := gotdx.GetTdxApi()
+	tdxApi := level1.GetApi()
 	securityCode = exchange.CorrectSecurityCode(securityCode)
 	reply, err := tdxApi.GetCompanyInfoContent(securityCode, kCompanyInfoFundFlow)
 	if err != nil {

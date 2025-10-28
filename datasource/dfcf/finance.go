@@ -6,7 +6,7 @@ import (
 	urlpkg "net/url"
 	"strings"
 
-	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/data/exchange"
 	"gitee.com/quant1x/gox/http"
 )
 

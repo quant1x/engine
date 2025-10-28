@@ -1,8 +1,8 @@
 package services
 
 import (
+	"gitee.com/quant1x/data/exchange"
 	"gitee.com/quant1x/engine/trader"
-	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/runtime"

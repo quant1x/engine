@@ -3,12 +3,12 @@ package models
 import (
 	"sync"
 
+	"gitee.com/quant1x/data/exchange"
+	"gitee.com/quant1x/data/level1"
+	"gitee.com/quant1x/data/level1/quotes"
+	"gitee.com/quant1x/data/level1/securities"
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gotdx"
-	"gitee.com/quant1x/gotdx/quotes"
-	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"
@@ -71,7 +71,7 @@ func SyncAllSnapshots(barIndex *int) {
 		bar = progressbar.NewBar(*barIndex, "执行["+modName+"]", count)
 	}
 	currentDate := exchange.GetCurrentlyDay()
-	tdxApi := gotdx.GetTdxApi()
+	tdxApi := level1.GetApi()
 	// 读取配置的并发数
 	parallelCount := config.GetDataConfig().Snapshot.Concurrency
 	if parallelCount < 1 {

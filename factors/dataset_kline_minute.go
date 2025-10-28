@@ -4,10 +4,10 @@ import (
 	"context"
 	"log"
 
+	"gitee.com/quant1x/data/level1/quotes"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/datasource/base"
-	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/num"
 )
 

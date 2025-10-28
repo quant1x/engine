@@ -1,10 +1,10 @@
 package models
 
 import (
+	"gitee.com/quant1x/data/exchange"
+	"gitee.com/quant1x/data/level1"
+	"gitee.com/quant1x/data/level1/quotes"
 	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gotdx"
-	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/num"
@@ -43,7 +43,7 @@ func QuoteSnapshotFromProtocol(v quotes.Snapshot) factors.QuoteSnapshot {
 
 // BatchSnapShot 批量获取即时行情数据快照
 func BatchSnapShot(codes []string) []factors.QuoteSnapshot {
-	tdxApi := gotdx.GetTdxApi()
+	tdxApi := level1.GetApi()
 	list := []factors.QuoteSnapshot{}
 	var err error
 	var hq []quotes.Snapshot

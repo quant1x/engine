@@ -3,7 +3,7 @@ package cache
 import (
 	"fmt"
 
-	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/data/exchange"
 )
 
 // CacheId 通过代码构建目录结构

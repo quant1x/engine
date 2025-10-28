@@ -1,10 +1,10 @@
 package storages
 
 import (
+	"gitee.com/quant1x/data/exchange"
 	"gitee.com/quant1x/engine/config"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/trader"
-	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/logger"
 )
 

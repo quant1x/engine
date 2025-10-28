@@ -1,17 +1,17 @@
 package base
 
 import (
+	"gitee.com/quant1x/data/exchange"
+	"gitee.com/quant1x/data/level1"
+	"gitee.com/quant1x/data/level1/quotes"
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gotdx"
-	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/runtime"
 )
 
 // GetMinutes 获取分时数据
 func GetMinutes(securityCode, date string) (list []quotes.MinuteTime) {
-	tdxApi := gotdx.GetTdxApi()
+	tdxApi := level1.GetApi()
 	u32Date := exchange.ToUint32Date(date)
 	hs, err := tdxApi.GetHistoryMinuteTimeData(securityCode, u32Date)
 	if err != nil || hs.Count == 0 {

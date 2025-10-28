@@ -3,10 +3,10 @@ package services
 import (
 	"time"
 
+	"gitee.com/quant1x/data/exchange"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/storages"
-	"gitee.com/quant1x/exchange"
 )
 
 var (

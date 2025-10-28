@@ -1,10 +1,10 @@
 package factors
 
 import (
+	"gitee.com/quant1x/data/exchange"
+	"gitee.com/quant1x/data/level1/quotes"
 	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/datasource/dfcf"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/api"
 )
 

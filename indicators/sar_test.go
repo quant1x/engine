@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
+	"gitee.com/quant1x/data/exchange"
 	"gitee.com/quant1x/engine/datasource/base"
-	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/num/labs"
 	"gitee.com/quant1x/pandas"
 )

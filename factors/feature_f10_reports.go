@@ -1,9 +1,9 @@
 package factors
 
 import (
+	"gitee.com/quant1x/data/exchange"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasource/dfcf"
-	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 )

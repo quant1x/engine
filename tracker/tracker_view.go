@@ -5,10 +5,10 @@ import (
 	"os"
 	"time"
 
+	"gitee.com/quant1x/data/exchange"
 	"gitee.com/quant1x/engine/factors"
 	"gitee.com/quant1x/engine/models"
 	"gitee.com/quant1x/engine/storages"
-	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/tags"
 	"gitee.com/quant1x/num"
 	"gitee.com/quant1x/pkg/tablewriter"

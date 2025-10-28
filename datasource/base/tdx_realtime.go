@@ -7,10 +7,10 @@ import (
 	"os"
 	"time"
 
+	"gitee.com/quant1x/data/exchange"
+	"gitee.com/quant1x/data/level1"
+	"gitee.com/quant1x/data/level1/quotes"
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gotdx"
-	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/runtime"
@@ -38,7 +38,7 @@ func BatchRealtimeBasicKLine(codes []string) error {
 		return nil
 	}
 
-	tdxApi := gotdx.GetTdxApi()
+	tdxApi := level1.GetApi()
 	var err error
 	var hq []quotes.Snapshot
 	retryTimes := 0

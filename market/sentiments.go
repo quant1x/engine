@@ -1,9 +1,9 @@
 package market
 
 import (
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gotdx"
-	"gitee.com/quant1x/gotdx/quotes"
+	"gitee.com/quant1x/data/exchange"
+	"gitee.com/quant1x/data/level1"
+	"gitee.com/quant1x/data/level1/quotes"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/num"
 )
@@ -34,7 +34,7 @@ func IndexSentiment(codes ...string) (sentiment float64, consistent int) {
 	if len(securityCode) != 8 {
 		return
 	}
-	tdxApi := gotdx.GetTdxApi()
+	tdxApi := level1.GetApi()
 	hq, err := tdxApi.GetSnapshot([]string{securityCode})
 	if err != nil && len(hq) != len(codes) {
 		logger.Errorf("获取即时行情数据失败", err)

@@ -33,7 +33,7 @@ func resetVersions() {
 		MinVersion = utils.CurrentVersion()
 	}
 	if tdxVersion == utils.InvalidVersion {
-		tdxVersion = utils.RequireVersion("gitee.com/quant1x/gotdx")
+		tdxVersion = utils.RequireVersion("gitee.com/quant1x/data/level1")
 	}
 }
 

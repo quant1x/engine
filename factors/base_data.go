@@ -1,7 +1,7 @@
 package factors
 
 import (
-	"gitee.com/quant1x/gotdx/quotes"
+	"gitee.com/quant1x/data/level1/quotes"
 )
 
 // BaseData 数据层, 数据集接口

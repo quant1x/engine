@@ -6,11 +6,11 @@ import (
 	"strconv"
 	"time"
 
+	"gitee.com/quant1x/data/exchange"
+	"gitee.com/quant1x/data/level1"
+	"gitee.com/quant1x/data/level1/proto"
+	"gitee.com/quant1x/data/level1/quotes"
 	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gotdx"
-	"gitee.com/quant1x/gotdx/proto"
-	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/num"
@@ -114,7 +114,7 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 	start := uint16(0)
 	hs := make([]quotes.SecurityBarsReply, 0)
 	kType := uint16(proto.KLINE_TYPE_RI_K)
-	tdxApi := gotdx.GetTdxApi()
+	tdxApi := level1.GetApi()
 	// 3. 拉取数据
 	for {
 		count := step
@@ -453,7 +453,7 @@ func UpdateAllKLine(securityCode string, freq ...string) []KLine {
 	start := uint16(0)
 	hs := make([]quotes.SecurityBarsReply, 0)
 
-	tdxApi := gotdx.GetTdxApi()
+	tdxApi := level1.GetApi()
 	// 3. 拉取数据
 	for {
 		count := step

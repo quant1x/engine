@@ -1,10 +1,10 @@
 package services
 
 import (
+	"gitee.com/quant1x/data/exchange"
 	"gitee.com/quant1x/engine/datasource/base"
 	"gitee.com/quant1x/engine/market"
 	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/coroutine"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/progressbar"

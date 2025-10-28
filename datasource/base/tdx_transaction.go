@@ -4,11 +4,11 @@ import (
 	"strconv"
 	"sync"
 
+	"gitee.com/quant1x/data/exchange"
+	"gitee.com/quant1x/data/level1"
+	"gitee.com/quant1x/data/level1/quotes"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/config"
-	"gitee.com/quant1x/exchange"
-	"gitee.com/quant1x/gotdx"
-	"gitee.com/quant1x/gotdx/quotes"
 	"gitee.com/quant1x/gox/api"
 	"gitee.com/quant1x/gox/logger"
 	"gitee.com/quant1x/gox/runtime"
@@ -60,7 +60,7 @@ func GetBeginDateOfHistoricalTradingData() string {
 // Deprecated: 废弃的函数, 推荐 CheckoutTransactionData [wangfeng on 2024/1/31 17:26]
 func GetHistoricalTradingData(securityCode, tradeDate string) []quotes.TickTransaction {
 	securityCode = exchange.CorrectSecurityCode(securityCode)
-	tdxApi := gotdx.GetTdxApi()
+	tdxApi := level1.GetApi()
 	offset := uint16(quotes.TRANSACTION_MAX)
 	start := uint16(0)
 	history := make([]quotes.TickTransaction, 0)
@@ -103,7 +103,7 @@ func GetHistoricalTradingData(securityCode, tradeDate string) []quotes.TickTrans
 func GetAllHistoricalTradingData(securityCode string) {
 	defer runtime.CatchPanic("trans: code=%s", securityCode)
 	securityCode = exchange.CorrectSecurityCode(securityCode)
-	tdxApi := gotdx.GetTdxApi()
+	tdxApi := level1.GetApi()
 	info, err := tdxApi.GetFinanceInfo(securityCode)
 	if err != nil {
 		return
@@ -215,7 +215,7 @@ func CheckoutTransactionData(securityCode string, cacheDate string, ignorePrevio
 		}
 	}
 
-	tdxApi := gotdx.GetTdxApi()
+	tdxApi := level1.GetApi()
 	offset := uint16(quotes.TRANSACTION_MAX)
 	u32Date := exchange.ToUint32Date(tradeDate)
 	// 只求增量, 分笔成交数据是从后往前取数据, 缓存是从前到后顺序存取

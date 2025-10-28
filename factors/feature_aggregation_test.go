@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"gitee.com/quant1x/gotdx/securities"
+	"gitee.com/quant1x/data/level1/securities"
 )
 
 func TestGetL5History(t *testing.T) {

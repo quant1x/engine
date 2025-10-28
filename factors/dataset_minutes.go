@@ -3,9 +3,9 @@ package factors
 import (
 	"context"
 
+	"gitee.com/quant1x/data/level1/quotes"
 	"gitee.com/quant1x/engine/cache"
 	"gitee.com/quant1x/engine/datasource/base"
-	"gitee.com/quant1x/gotdx/quotes"
 )
 
 // DataMinutes 分时数据

@@ -22,7 +22,7 @@ func MarketSentiment() {
 	// 涨跌家数
 	zdjs := "sh880005"
 	////sh880005 := models.GetTickFromMemory("sh880005")
-	//tdxApi := gotdx.GetTdxApi()
+	//tdxApi := level1.GetApi()
 	//defer tdxApi.Close()
 	//stockShots, _ := tdxApi.GetSnapshot([]string{zdjs})
 	//sh880005 := stockShots[0]

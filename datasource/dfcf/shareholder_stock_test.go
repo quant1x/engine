@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"gitee.com/quant1x/exchange"
+	"gitee.com/quant1x/data/exchange"
 )
 
 func TestShareHolder(t *testing.T) {

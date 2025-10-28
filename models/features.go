@@ -3,8 +3,8 @@ package models
 import (
 	"time"
 
+	"gitee.com/quant1x/data/exchange"
 	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/num"
 )
 

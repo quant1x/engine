@@ -3,8 +3,8 @@ package tdxweb
 import (
 	"fmt"
 
+	"gitee.com/quant1x/data/exchange"
 	"gitee.com/quant1x/engine/market"
-	"gitee.com/quant1x/exchange"
 	"gitee.com/quant1x/gox/concurrent"
 	"gitee.com/quant1x/gox/http"
 	"gitee.com/quant1x/gox/logger"

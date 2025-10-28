@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
+	"gitee.com/quant1x/data/exchange"
 	"gitee.com/quant1x/engine/trader"
-	"gitee.com/quant1x/exchange"
 )
 
 func TestTaskSell_getEarlierDate(t *testing.T) {

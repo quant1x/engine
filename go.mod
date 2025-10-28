@@ -3,12 +3,11 @@ module gitee.com/quant1x/engine
 go 1.25.0
 
 require (
-	gitee.com/quant1x/exchange v0.8.11
-	gitee.com/quant1x/gotdx v1.26.12
+	gitee.com/quant1x/data v0.0.7
 	gitee.com/quant1x/gox v1.25.1
 	gitee.com/quant1x/num v0.7.12
 	gitee.com/quant1x/pandas v1.6.9
-	gitee.com/quant1x/pkg v0.8.3
+	gitee.com/quant1x/pkg v0.9.0
 	github.com/bits-and-blooms/bitset v1.24.0
 	github.com/fatih/color v1.18.0
 	github.com/go-echarts/go-echarts/v2 v2.6.2
@@ -21,10 +20,7 @@ require (
 
 require (
 	gitee.com/quant1x/asio v1.1.5 // indirect
-	github.com/dlclark/regexp2 v1.11.5 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
-	github.com/go-sourcemap/sourcemap v2.1.4+incompatible // indirect
-	github.com/google/pprof v0.0.0-20250919162441-8b542baf5bcf // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/kardianos/osext v0.0.0-20190222173326-2bc1f35cddc0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
@@ -32,7 +28,7 @@ require (
 	github.com/petermattis/goid v0.0.0-20250904145737-900bdf8bb490 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/spf13/pflag v1.0.10 // indirect
-	golang.org/x/text v0.29.0 // indirect
+	golang.org/x/text v0.30.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 )

@@ -4,8 +4,8 @@ import (
 	"slices"
 	"strings"
 
+	"gitee.com/quant1x/data/level1/securities"
 	"gitee.com/quant1x/engine/market"
-	"gitee.com/quant1x/gotdx/securities"
 	"gitee.com/quant1x/gox/api"
 )
 

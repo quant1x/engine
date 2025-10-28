@@ -5,8 +5,8 @@ go 1.25.0
 require (
 	gitee.com/quant1x/data v0.0.8
 	gitee.com/quant1x/gox v1.25.1
-	gitee.com/quant1x/num v0.7.12
-	gitee.com/quant1x/pandas v1.6.9
+	gitee.com/quant1x/num v0.7.13
+	gitee.com/quant1x/pandas v1.6.10
 	gitee.com/quant1x/pkg v0.9.0
 	github.com/bits-and-blooms/bitset v1.24.0
 	github.com/fatih/color v1.18.0

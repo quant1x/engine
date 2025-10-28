@@ -3,9 +3,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.12.1] - 2025-10-28
+### Changed
+- 更新quant1x/data版本到0.0.8
+
 ## [1.12.0] - 2025-10-28
 ### Changed
 - 用quant1x/data替换exchange和gotdx
+- update changelog
 
 ## [1.11.21] - 2025-10-28
 ### Changed
@@ -2112,7 +2117,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.12.0...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.12.1...HEAD
+[1.12.1]: https://gitee.com/quant1x/engine.git/compare/v1.12.0...v1.12.1
 [1.12.0]: https://gitee.com/quant1x/engine.git/compare/v1.11.21...v1.12.0
 [1.11.21]: https://gitee.com/quant1x/engine.git/compare/v1.11.20...v1.11.21
 [1.11.20]: https://gitee.com/quant1x/engine.git/compare/v1.11.19...v1.11.20

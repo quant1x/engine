@@ -3,12 +3,17 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.11.21] - 2025-10-28
+### Changed
+- 调整测试代码
+
 ## [1.11.20] - 2025-10-27
 ### Changed
 - 优化缓存冗余的处理流程
 - 修复边界问题
 - 调整测试代码
 - 修订除权除息中量复权
+- update changelog
 
 ## [1.11.19] - 2025-09-30
 ### Changed
@@ -2102,7 +2107,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.11.20...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.11.21...HEAD
+[1.11.21]: https://gitee.com/quant1x/engine.git/compare/v1.11.20...v1.11.21
 [1.11.20]: https://gitee.com/quant1x/engine.git/compare/v1.11.19...v1.11.20
 [1.11.19]: https://gitee.com/quant1x/engine.git/compare/v1.11.18...v1.11.19
 [1.11.18]: https://gitee.com/quant1x/engine.git/compare/v1.11.17...v1.11.18

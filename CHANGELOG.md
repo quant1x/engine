@@ -3,9 +3,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.12.9] - 2025-10-30
+### Changed
+- 更新依赖库data版本到0.1.8, 每日初始化自动更新板块数据文件，避免了手动更新维护
+
 ## [1.12.8] - 2025-10-29
 ### Changed
 - 更新data版本到0.1.7，添加北证50指数
+- update changelog
 
 ## [1.12.7] - 2025-10-29
 ### Changed
@@ -2153,7 +2158,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.12.8...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.12.9...HEAD
+[1.12.9]: https://gitee.com/quant1x/engine.git/compare/v1.12.8...v1.12.9
 [1.12.8]: https://gitee.com/quant1x/engine.git/compare/v1.12.7...v1.12.8
 [1.12.7]: https://gitee.com/quant1x/engine.git/compare/v1.12.6...v1.12.7
 [1.12.6]: https://gitee.com/quant1x/engine.git/compare/v1.12.5...v1.12.6

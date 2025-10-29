@@ -3,10 +3,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.12.6] - 2025-10-29
+### Changed
+- 更新data版本到0.1.5
+
 ## [1.12.5] - 2025-10-29
 ### Changed
 - 补充北交所的北证50指数和北交所920代码
 - 更新data版本0.1.2
+- update changelog
 
 ## [1.12.4] - 2025-10-29
 ### Changed
@@ -2138,7 +2143,8 @@ Signed-off-by: 王布衣 <wangfengxy@sina.cn>
 - 新增测试特征接口的代码, 以日K线为样本
 
 
-[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.12.5...HEAD
+[Unreleased]: https://gitee.com/quant1x/engine.git/compare/v1.12.6...HEAD
+[1.12.6]: https://gitee.com/quant1x/engine.git/compare/v1.12.5...v1.12.6
 [1.12.5]: https://gitee.com/quant1x/engine.git/compare/v1.12.4...v1.12.5
 [1.12.4]: https://gitee.com/quant1x/engine.git/compare/v1.12.3...v1.12.4
 [1.12.3]: https://gitee.com/quant1x/engine.git/compare/v1.12.2...v1.12.3

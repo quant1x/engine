@@ -3,7 +3,7 @@ module gitee.com/quant1x/engine
 go 1.25.0
 
 require (
-	gitee.com/quant1x/data v0.1.2
+	gitee.com/quant1x/data v0.1.5
 	gitee.com/quant1x/gox v1.25.2
 	gitee.com/quant1x/num v0.7.15
 	gitee.com/quant1x/pandas v1.6.11

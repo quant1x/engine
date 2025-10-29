@@ -83,6 +83,22 @@ func GetStockCodeList() []string {
 			allCodes = append(allCodes, fc)
 		}
 	}
+
+	// 北交所: bj920000-bj920999
+	{
+		var (
+			codeBegin = 920000
+			codeEnd   = 920999
+		)
+		for i := codeBegin; i <= codeEnd; i++ {
+			fc := fmt.Sprintf("bj%06d", i)
+			if IsNeedIgnore(fc) {
+				continue
+			}
+			allCodes = append(allCodes, fc)
+		}
+	}
+
 	//allCodes = allCodes[0:0]
 	// 港股: hk00001-hk09999
 	//{

@@ -1,9 +1,7 @@
 package base
 
 import (
-	"fmt"
 	"math"
-	"strconv"
 	"time"
 
 	"gitee.com/quant1x/data/exchange"
@@ -23,16 +21,17 @@ var (
 
 // KLine 日K线基础结构
 type KLine struct {
-	Date     string  `name:"日期" dataframe:"date"`       // 日期
-	Open     float64 `name:"开盘" dataframe:"open"`       // 开盘价
-	Close    float64 `name:"收盘" dataframe:"close"`      // 收盘价
-	High     float64 `name:"最高" dataframe:"high"`       // 最高价
-	Low      float64 `name:"最低" dataframe:"low"`        // 最低价
-	Volume   float64 `name:"成交量(股)" dataframe:"volume"` // 成交量
-	Amount   float64 `name:"成交额(元)" dataframe:"amount"` // 成交金额
-	Up       int     `name:"上涨/外盘" dataframe:"up"`      // 上涨家数
-	Down     int     `name:"下跌/内盘" dataframe:"down"`    // 下跌家数
-	Datetime string  `name:"时间" dataframe:"datetime"`   // 时间
+	Date            string  `name:"日期" dataframe:"date"`                 // 日期
+	Open            float64 `name:"开盘" dataframe:"open"`                 // 开盘价
+	Close           float64 `name:"收盘" dataframe:"close"`                // 收盘价
+	High            float64 `name:"最高" dataframe:"high"`                 // 最高价
+	Low             float64 `name:"最低" dataframe:"low"`                  // 最低价
+	Volume          float64 `name:"成交量(股)" dataframe:"volume"`           // 成交量
+	Amount          float64 `name:"成交额(元)" dataframe:"amount"`           // 成交金额
+	Up              int     `name:"上涨/外盘" dataframe:"up"`                // 上涨家数
+	Down            int     `name:"下跌/内盘" dataframe:"down"`              // 下跌家数
+	Datetime        string  `name:"时间" dataframe:"datetime"`             // 时间
+	AdjustmentCount int     `name:"除权除息次数" dataframe:"adjustment_count"` // 除权除息次数
 }
 
 func (k *KLine) Apply(factor func(p float64) float64) {
@@ -45,11 +44,11 @@ func (k *KLine) GetDate() string {
 	panic("implement me")
 }
 
-func (k *KLine) GetAdjustmentCount() int {
-	datetime, _ := api.ParseTime(k.Datetime)
-	adjustTimes := int(datetime.UnixMilli() % 1000)
-	return adjustTimes
-}
+// func (k *KLine) GetAdjustmentCount() int {
+// 	datetime, _ := api.ParseTime(k.Datetime)
+// 	adjustTimes := int(datetime.UnixMilli() % 1000)
+// 	return adjustTimes
+// }
 
 // LoadBasicKline 加载基础K线
 func LoadBasicKline(securityCode string) []KLine {
@@ -75,16 +74,15 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 			klineDaysOffset = kLength
 		}
 
-		timestampLength := len(api.Timestamp)
 		klineFirst := cacheKLines[0]
 		klineLast := cacheKLines[kLength-klineDaysOffset]
 		totalTimes := TotalAdjustmentTimes(securityCode, klineFirst.Date, klineLast.Date)
-		if totalTimes != klineFirst.GetAdjustmentCount() {
+		if totalTimes != klineFirst.AdjustmentCount {
 			clearHistory = true
-		} else if len(klineLast.Datetime) == timestampLength && len(klineFirst.Datetime) == timestampLength {
+		} else if len(klineLast.Datetime) == len(klineFirst.Datetime) {
 			// 如果第一条数据和最后一条数据的datetime字段都包括毫秒
 			startDate = klineLast.Date
-			adjustTimes = klineLast.GetAdjustmentCount()
+			adjustTimes = klineLast.AdjustmentCount
 		} else {
 			clearHistory = true
 		}
@@ -174,16 +172,17 @@ func UpdateAllBasicKLine(securityCode string) []KLine {
 	for _, v := range history {
 		date := exchange.FixTradeDate(v.DateTime)
 		kline := KLine{
-			Date:     date,
-			Open:     v.Open,
-			Close:    v.Close,
-			High:     v.High,
-			Low:      v.Low,
-			Volume:   v.Vol,
-			Amount:   v.Amount,
-			Up:       int(v.UpCount),
-			Down:     int(v.DownCount),
-			Datetime: v.DateTime,
+			Date:            date,
+			Open:            v.Open,
+			Close:           v.Close,
+			High:            v.High,
+			Low:             v.Low,
+			Volume:          v.Vol,
+			Amount:          v.Amount,
+			Up:              int(v.UpCount),
+			Down:            int(v.DownCount),
+			Datetime:        v.DateTime,
+			AdjustmentCount: 0,
 		}
 		newKLines = append(newKLines, kline)
 	}
@@ -235,7 +234,6 @@ func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDa
 	// 那么就应该只拉取缓存最后1条记录之后的除权除息记录进行复权
 	// 前复权adjust
 	dividends := GetCacheXdxrList(securityCode)
-	timestampLength := len(api.Timestamp)
 	for i := 0; i < len(dividends); i++ {
 		xdxr := dividends[i]
 		if xdxr.Category != 1 {
@@ -261,14 +259,6 @@ func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDa
 		peiGuJia := xdxr.PeiGuJia
 		xdxrFenHong := (peiGuJia*peiGu - fenHong) / 10
 		_ = xdxrFenHong
-		//factor := func(p float64) float64 {
-		//	v := (p + xdxrFenHong) / (1 + xdxrGuShu)
-		//	//return num.Decimal(v)
-		//	return v
-		//}
-		//return factor
-		//return xdxrGuShu, xdxrFenHong
-		//}
 		for j := 0; j < rows; j++ {
 			kl := &kLines[j]
 			barCurrentDate := kl.Date
@@ -287,26 +277,12 @@ func calculatePreAdjustedStockPrice(securityCode string, kLines []KLine, startDa
 				// 通达信中可能存在没有量复权的情况, 需要在系统设置中的"设置1"勾选分析图中成交量复权
 				maPrice = factor(maPrice)
 				//kl.Amount = factor(kl.Amount)
-				// 3. 以成交金额为基准, 用复权均价线计算成交量
+				// 3. 用股份变更比例计算成交量
 				kl.Volume *= 1 + xdxrGuShu
+				// 4. 计算复权后的成交金额
 				kl.Amount = maPrice * kl.Volume
-
-				datetime := ""
-				adjustCount := 0
-				if len(kl.Datetime) == timestampLength {
-					datetime = kl.Datetime[0 : timestampLength-3]
-					num, err := strconv.Atoi(kl.Datetime[timestampLength-3:]) // 自动忽略前导零
-					if err == nil {
-						adjustCount = num
-					}
-				} else if len(kl.Datetime) == timestampLength-4 {
-					datetime = kl.Datetime[0:timestampLength-4] + "."
-				} else {
-					tm, _ := api.ParseTime(kl.Datetime)
-					datetime = tm.Format(api.TimeFormat) + "."
-				}
-				adjustCount += 1
-				kl.Datetime = datetime + fmt.Sprintf("%03d", adjustCount)
+				// 更新除权次数
+				kl.AdjustmentCount += 1
 			}
 			if barCurrentDate == xdxrDate {
 				break
@@ -406,17 +382,18 @@ func UpdateAllKLine(securityCode string, freq ...string) []KLine {
 			klineDaysOffset = kLength
 		}
 
-		timestampLength := len(api.Timestamp)
 		klineFirst := cacheKLines[0]
 		klineLast := cacheKLines[kLength-klineDaysOffset]
 		totalTimes := TotalAdjustmentTimes(securityCode, klineFirst.Date, klineLast.Date)
-		if totalTimes != klineFirst.GetAdjustmentCount() {
+		if totalTimes != klineFirst.AdjustmentCount {
+			// 说明缓存数据有问题, 需要清空缓存重新拉取
 			clearHistory = true
-		} else if len(klineLast.Datetime) == timestampLength && len(klineFirst.Datetime) == timestampLength {
-			// 如果第一条数据和最后一条数据的datetime字段都包括毫秒
+		} else if len(klineLast.Datetime) == len(klineFirst.Datetime) {
+			// 如果第一条数据和最后一条数据的datetime字段长度相同, 说明格式一致, 可以使用最后一条数据的日期作为开始日期
 			startDate = klineLast.Date
-			adjustTimes = klineLast.GetAdjustmentCount()
+			adjustTimes = klineLast.AdjustmentCount
 		} else {
+			// 时间戳格式不对, 清楚缓存清空
 			clearHistory = true
 		}
 	} else {
@@ -513,16 +490,17 @@ func UpdateAllKLine(securityCode string, freq ...string) []KLine {
 	for _, v := range history {
 		date := exchange.FixTradeDate(v.DateTime)
 		kline := KLine{
-			Date:     date,
-			Open:     v.Open,
-			Close:    v.Close,
-			High:     v.High,
-			Low:      v.Low,
-			Volume:   v.Vol,
-			Amount:   v.Amount,
-			Up:       int(v.UpCount),
-			Down:     int(v.DownCount),
-			Datetime: v.DateTime,
+			Date:            date,
+			Open:            v.Open,
+			Close:           v.Close,
+			High:            v.High,
+			Low:             v.Low,
+			Volume:          v.Vol,
+			Amount:          v.Amount,
+			Up:              int(v.UpCount),
+			Down:            int(v.DownCount),
+			Datetime:        v.DateTime,
+			AdjustmentCount: 0,
 		}
 		newKLines = append(newKLines, kline)
 	}

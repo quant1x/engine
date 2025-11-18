@@ -20,7 +20,7 @@ import (
 
 const (
 	backTestCommand     = "backtest"
-	backTestDescription = "回测"
+	backTestDescription = "回溯因子绩效"
 )
 
 var (

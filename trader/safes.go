@@ -10,14 +10,14 @@ import (
 	"sync"
 	"time"
 
-	"gitee.com/quant1x/data/exchange"
-	"gitee.com/quant1x/data/level1/securities"
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/concurrent"
-	"gitee.com/quant1x/gox/coroutine"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/pkg/tablewriter"
+	"github.com/quant1x/data/exchange"
+	"github.com/quant1x/data/level1/securities"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/gox/api"
+	"github.com/quant1x/gox/concurrent"
+	"github.com/quant1x/gox/coroutine"
+	"github.com/quant1x/gox/logger"
+	"github.com/quant1x/pkg/tablewriter"
 )
 
 const (

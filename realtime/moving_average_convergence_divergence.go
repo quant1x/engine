@@ -1,9 +1,9 @@
 package realtime
 
 import (
-	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/pandas"
-	. "gitee.com/quant1x/pandas/formula"
+	"github.com/quant1x/engine/factors"
+	"github.com/quant1x/pandas"
+	. "github.com/quant1x/pandas/formula"
 )
 
 // MovingAverageConvergenceDivergence 平滑异同移动平均线(Moving Average Convergence Divergence)

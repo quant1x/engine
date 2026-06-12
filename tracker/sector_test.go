@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"gitee.com/quant1x/data/level1/securities"
-	"gitee.com/quant1x/pandas"
+	"github.com/quant1x/data/level1/securities"
+	"github.com/quant1x/pandas"
 )
 
 func Test_scanBlock(t *testing.T) {

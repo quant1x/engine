@@ -6,11 +6,11 @@ import (
 	urlpkg "net/url"
 	"strings"
 
-	"gitee.com/quant1x/data/exchange"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/http"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/pkg/fastjson"
+	"github.com/quant1x/data/exchange"
+	"github.com/quant1x/gox/api"
+	"github.com/quant1x/gox/http"
+	"github.com/quant1x/gox/logger"
+	"github.com/quant1x/pkg/fastjson"
 )
 
 const (

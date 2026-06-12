@@ -3,9 +3,9 @@ package tracker
 import (
 	"fmt"
 
-	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/num"
 	"github.com/fatih/color"
+	"github.com/quant1x/engine/models"
+	"github.com/quant1x/num"
 )
 
 // MarketSentiment 市场情绪

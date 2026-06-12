@@ -3,7 +3,7 @@ package trader
 import (
 	"testing"
 
-	"gitee.com/quant1x/engine/models"
+	"github.com/quant1x/engine/models"
 )
 
 func TestCacheSync(t *testing.T) {

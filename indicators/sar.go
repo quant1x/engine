@@ -1,6 +1,6 @@
 package indicators
 
-import "gitee.com/quant1x/num"
+import "github.com/quant1x/num"
 
 // FeatureSar SAR指标特征数据结构
 type FeatureSar struct {

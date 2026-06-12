@@ -3,16 +3,16 @@ package factors
 import (
 	"context"
 
-	"gitee.com/quant1x/data/exchange"
-	"gitee.com/quant1x/data/level1/securities"
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/config"
-	"gitee.com/quant1x/engine/datasource/dfcf"
-	"gitee.com/quant1x/engine/datasource/tdxweb"
-	"gitee.com/quant1x/engine/market"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/num"
+	"github.com/quant1x/data/exchange"
+	"github.com/quant1x/data/level1/securities"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/engine/config"
+	"github.com/quant1x/engine/datasource/dfcf"
+	"github.com/quant1x/engine/datasource/tdxweb"
+	"github.com/quant1x/engine/market"
+	"github.com/quant1x/gox/api"
+	"github.com/quant1x/gox/logger"
+	"github.com/quant1x/num"
 )
 
 const (

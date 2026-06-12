@@ -1,8 +1,8 @@
 package indicators
 
 import (
-	"gitee.com/quant1x/pandas"
-	. "gitee.com/quant1x/pandas/formula"
+	"github.com/quant1x/pandas"
+	. "github.com/quant1x/pandas/formula"
 )
 
 // RSI 指标

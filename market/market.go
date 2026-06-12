@@ -3,9 +3,9 @@ package market
 import (
 	"fmt"
 
-	"gitee.com/quant1x/data/exchange"
-	"gitee.com/quant1x/data/level1/securities"
-	"gitee.com/quant1x/num"
+	"github.com/quant1x/data/exchange"
+	"github.com/quant1x/data/level1/securities"
+	"github.com/quant1x/num"
 )
 
 func GetStockCodeList() []string {

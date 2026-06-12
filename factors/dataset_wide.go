@@ -4,12 +4,12 @@ import (
 	"context"
 	"slices"
 
-	"gitee.com/quant1x/data/exchange"
-	"gitee.com/quant1x/data/level1/quotes"
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/datasource/base"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/num"
+	"github.com/quant1x/data/exchange"
+	"github.com/quant1x/data/level1/quotes"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/engine/datasource/base"
+	"github.com/quant1x/gox/api"
+	"github.com/quant1x/num"
 )
 
 // DataWideKLine 宽表

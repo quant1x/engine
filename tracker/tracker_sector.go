@@ -6,16 +6,16 @@ import (
 	"slices"
 	"sort"
 
-	"gitee.com/quant1x/data/exchange"
-	"gitee.com/quant1x/data/level1/securities"
-	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/engine/market"
-	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/progressbar"
-	"gitee.com/quant1x/gox/tags"
-	"gitee.com/quant1x/num"
-	"gitee.com/quant1x/pkg/tablewriter"
+	"github.com/quant1x/data/exchange"
+	"github.com/quant1x/data/level1/securities"
+	"github.com/quant1x/engine/factors"
+	"github.com/quant1x/engine/market"
+	"github.com/quant1x/engine/models"
+	"github.com/quant1x/gox/api"
+	"github.com/quant1x/gox/progressbar"
+	"github.com/quant1x/gox/tags"
+	"github.com/quant1x/num"
+	"github.com/quant1x/pkg/tablewriter"
 )
 
 // ScanSectorForTick 扫描板块

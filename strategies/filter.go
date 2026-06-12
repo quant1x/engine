@@ -1,9 +1,9 @@
 package strategies
 
 import (
-	"gitee.com/quant1x/engine/config"
-	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/engine/rules"
+	"github.com/quant1x/engine/config"
+	"github.com/quant1x/engine/factors"
+	"github.com/quant1x/engine/rules"
 )
 
 // GeneralFilter 过滤条件

@@ -1,11 +1,11 @@
 package storages
 
 import (
-	"gitee.com/quant1x/data/exchange"
-	"gitee.com/quant1x/engine/config"
-	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/engine/trader"
-	"gitee.com/quant1x/gox/logger"
+	"github.com/quant1x/data/exchange"
+	"github.com/quant1x/engine/config"
+	"github.com/quant1x/engine/models"
+	"github.com/quant1x/engine/trader"
+	"github.com/quant1x/gox/logger"
 )
 
 // 策略订单是否已完成

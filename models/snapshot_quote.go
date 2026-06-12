@@ -1,13 +1,13 @@
 package models
 
 import (
-	"gitee.com/quant1x/data/exchange"
-	"gitee.com/quant1x/data/level1"
-	"gitee.com/quant1x/data/level1/quotes"
-	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/num"
+	"github.com/quant1x/data/exchange"
+	"github.com/quant1x/data/level1"
+	"github.com/quant1x/data/level1/quotes"
+	"github.com/quant1x/engine/factors"
+	"github.com/quant1x/gox/api"
+	"github.com/quant1x/gox/logger"
+	"github.com/quant1x/num"
 )
 
 func QuoteSnapshotFromProtocol(v quotes.Snapshot) factors.QuoteSnapshot {

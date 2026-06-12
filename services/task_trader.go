@@ -1,11 +1,11 @@
 package services
 
 import (
-	"gitee.com/quant1x/data/exchange"
-	"gitee.com/quant1x/engine/trader"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/gox/runtime"
+	"github.com/quant1x/data/exchange"
+	"github.com/quant1x/engine/trader"
+	"github.com/quant1x/gox/api"
+	"github.com/quant1x/gox/logger"
+	"github.com/quant1x/gox/runtime"
 )
 
 // 同步委托订单

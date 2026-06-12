@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"gitee.com/quant1x/data/level1/securities"
+	"github.com/quant1x/data/level1/securities"
 )
 
 func TestConfig(t *testing.T) {

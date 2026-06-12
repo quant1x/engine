@@ -3,7 +3,7 @@ package storages
 import (
 	"testing"
 
-	"gitee.com/quant1x/engine/cache"
+	"github.com/quant1x/engine/cache"
 )
 
 func TestBaseDataUpdate(t *testing.T) {

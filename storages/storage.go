@@ -3,9 +3,9 @@ package storages
 import (
 	"path/filepath"
 
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/config"
-	"gitee.com/quant1x/engine/models"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/engine/config"
+	"github.com/quant1x/engine/models"
 )
 
 var (

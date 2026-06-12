@@ -1,11 +1,11 @@
 package factors
 
 import (
-	"gitee.com/quant1x/data/level1/quotes"
-	"gitee.com/quant1x/data/level1/securities"
-	"gitee.com/quant1x/engine/datasource/base"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/concurrent"
+	"github.com/quant1x/data/level1/quotes"
+	"github.com/quant1x/data/level1/securities"
+	"github.com/quant1x/engine/datasource/base"
+	"github.com/quant1x/gox/api"
+	"github.com/quant1x/gox/concurrent"
 )
 
 func checkoutCapital(list []quotes.XdxrInfo, date string) *quotes.XdxrInfo {

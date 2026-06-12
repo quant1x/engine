@@ -5,11 +5,11 @@ import (
 	"fmt"
 	urlpkg "net/url"
 
-	"gitee.com/quant1x/data/exchange"
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/http"
-	"gitee.com/quant1x/gox/logger"
+	"github.com/quant1x/data/exchange"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/gox/api"
+	"github.com/quant1x/gox/http"
+	"github.com/quant1x/gox/logger"
 )
 
 // 前十大流通股东 https://emweb.securities.eastmoney.com/PC_HSF10/ShareholderResearch/Index?type=web&code=sh600822#sdltgd-0

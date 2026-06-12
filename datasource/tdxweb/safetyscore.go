@@ -3,12 +3,12 @@ package tdxweb
 import (
 	"fmt"
 
-	"gitee.com/quant1x/data/exchange"
-	"gitee.com/quant1x/engine/market"
-	"gitee.com/quant1x/gox/concurrent"
-	"gitee.com/quant1x/gox/http"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/pkg/fastjson"
+	"github.com/quant1x/data/exchange"
+	"github.com/quant1x/engine/market"
+	"github.com/quant1x/gox/concurrent"
+	"github.com/quant1x/gox/http"
+	"github.com/quant1x/gox/logger"
+	"github.com/quant1x/pkg/fastjson"
 )
 
 const (

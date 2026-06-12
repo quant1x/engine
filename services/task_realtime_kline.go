@@ -1,14 +1,14 @@
 package services
 
 import (
-	"gitee.com/quant1x/data/exchange"
-	"gitee.com/quant1x/engine/datasource/base"
-	"gitee.com/quant1x/engine/market"
-	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/gox/coroutine"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/gox/progressbar"
-	"gitee.com/quant1x/gox/runtime"
+	"github.com/quant1x/data/exchange"
+	"github.com/quant1x/engine/datasource/base"
+	"github.com/quant1x/engine/market"
+	"github.com/quant1x/engine/models"
+	"github.com/quant1x/gox/coroutine"
+	"github.com/quant1x/gox/logger"
+	"github.com/quant1x/gox/progressbar"
+	"github.com/quant1x/gox/runtime"
 )
 
 // 任务 - 实时更新K线

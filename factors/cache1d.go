@@ -6,16 +6,16 @@ import (
 	"strings"
 	"sync"
 
-	"gitee.com/quant1x/data/exchange"
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/market"
-	"gitee.com/quant1x/gox/api"
-	"gitee.com/quant1x/gox/concurrent"
-	"gitee.com/quant1x/gox/coroutine"
-	"gitee.com/quant1x/gox/logger"
-	"gitee.com/quant1x/gox/tags"
-	"gitee.com/quant1x/gox/util/treemap"
-	"gitee.com/quant1x/pkg/tablewriter"
+	"github.com/quant1x/data/exchange"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/engine/market"
+	"github.com/quant1x/gox/api"
+	"github.com/quant1x/gox/concurrent"
+	"github.com/quant1x/gox/coroutine"
+	"github.com/quant1x/gox/logger"
+	"github.com/quant1x/gox/tags"
+	"github.com/quant1x/gox/util/treemap"
+	"github.com/quant1x/pkg/tablewriter"
 )
 
 // Cache1D 缓存所有证券代码的特征组合数据

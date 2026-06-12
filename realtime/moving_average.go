@@ -1,10 +1,10 @@
 package realtime
 
 import (
-	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/num"
-	"gitee.com/quant1x/pandas"
-	"gitee.com/quant1x/pandas/formula"
+	"github.com/quant1x/engine/factors"
+	"github.com/quant1x/num"
+	"github.com/quant1x/pandas"
+	"github.com/quant1x/pandas/formula"
 )
 
 // MovingAverage 计算均线范围

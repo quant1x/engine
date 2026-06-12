@@ -1,9 +1,9 @@
 package factors
 
 import (
-	"gitee.com/quant1x/engine/utils"
-	"gitee.com/quant1x/pandas"
-	. "gitee.com/quant1x/pandas/formula"
+	"github.com/quant1x/engine/utils"
+	"github.com/quant1x/pandas"
+	. "github.com/quant1x/pandas/formula"
 )
 
 // DuoKongQuShi 多空趋势

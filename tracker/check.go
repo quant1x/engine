@@ -5,13 +5,13 @@ import (
 	"slices"
 	"strings"
 
-	"gitee.com/quant1x/data/exchange"
-	"gitee.com/quant1x/data/level1/securities"
-	"gitee.com/quant1x/engine/cache"
-	"gitee.com/quant1x/engine/config"
-	"gitee.com/quant1x/engine/factors"
-	"gitee.com/quant1x/engine/models"
-	"gitee.com/quant1x/gox/api"
+	"github.com/quant1x/data/exchange"
+	"github.com/quant1x/data/level1/securities"
+	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/engine/config"
+	"github.com/quant1x/engine/factors"
+	"github.com/quant1x/engine/models"
+	"github.com/quant1x/gox/api"
 )
 
 // CheckStrategy 检查当前交易日中个股在策略中的执行情况

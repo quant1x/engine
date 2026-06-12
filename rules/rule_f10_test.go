@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"gitee.com/quant1x/engine/config"
-	"gitee.com/quant1x/engine/models"
+	"github.com/quant1x/engine/config"
+	"github.com/quant1x/engine/models"
 )
 
 func Test_baseFilter(t *testing.T) {

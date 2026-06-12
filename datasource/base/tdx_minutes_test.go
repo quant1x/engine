@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"gitee.com/quant1x/data/exchange"
-	"gitee.com/quant1x/pandas"
+	"github.com/quant1x/data/exchange"
+	"github.com/quant1x/pandas"
 )
 
 func TestGetMinutes(t *testing.T) {

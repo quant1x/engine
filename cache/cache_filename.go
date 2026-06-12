@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"gitee.com/quant1x/data/exchange"
-	"gitee.com/quant1x/gox/api"
+	"github.com/quant1x/data/exchange"
+	"github.com/quant1x/gox/api"
 )
 
 const (

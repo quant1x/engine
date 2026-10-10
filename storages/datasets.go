@@ -5,6 +5,7 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/mattn/go-runewidth"
 	"github.com/quant1x/engine/cache"
 	"github.com/quant1x/engine/factors"
 	"github.com/quant1x/engine/market"
@@ -12,7 +13,6 @@ import (
 	"github.com/quant1x/gox/logger"
 	"github.com/quant1x/gox/progressbar"
 	"github.com/quant1x/gox/runtime"
-	"github.com/quant1x/gox/text/runewidth"
 )
 
 func syncDataSetByDate(data factors.DataSet, date string, op cache.OpKind) {

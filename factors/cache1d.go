@@ -6,16 +6,18 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/olekukonko/tablewriter"
+	"github.com/olekukonko/tablewriter/tw"
 	"github.com/quant1x/data/exchange"
 	"github.com/quant1x/engine/cache"
 	"github.com/quant1x/engine/market"
+	"github.com/quant1x/engine/tools"
 	"github.com/quant1x/gox/api"
 	"github.com/quant1x/gox/concurrent"
 	"github.com/quant1x/gox/coroutine"
 	"github.com/quant1x/gox/logger"
 	"github.com/quant1x/gox/tags"
 	"github.com/quant1x/gox/util/treemap"
-	"github.com/quant1x/pkg/tablewriter"
 )
 
 // Cache1D 缓存所有证券代码的特征组合数据
@@ -173,10 +175,12 @@ func (this *Cache1D[T]) Print(code string, date ...string) {
 	value := this.Get(securityCode, tradeDate)
 	if value != nil {
 		headers, records := checkoutTable(*value)
-		table := tablewriter.NewWriter(os.Stdout)
-		table.SetHeader(headers)
-		table.SetColumnAlignment([]int{tablewriter.ALIGN_RIGHT, tablewriter.ALIGN_LEFT})
-		table.AppendBulk(records)
+		table := tools.NewTable(os.Stdout)
+		table.Header(headers)
+		table.Configure(func(cfg *tablewriter.Config) {
+			cfg.Row.Alignment.PerColumn = []tw.Align{tw.AlignRight, tw.AlignLeft}
+		})
+		table.Bulk(records)
 		table.Render()
 	}
 }

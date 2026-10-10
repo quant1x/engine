@@ -9,9 +9,9 @@ import (
 	"github.com/quant1x/engine/factors"
 	"github.com/quant1x/engine/models"
 	"github.com/quant1x/engine/storages"
+	"github.com/quant1x/engine/tools"
 	"github.com/quant1x/gox/tags"
 	"github.com/quant1x/num"
-	"github.com/quant1x/pkg/tablewriter"
 )
 
 // OutputTable 输出表格
@@ -33,8 +33,8 @@ func OutputTable(model models.Strategy, stockSnapshots []factors.QuoteSnapshot) 
 		}
 	}
 	// 控制台输出表格
-	tbl := tablewriter.NewWriter(os.Stdout)
-	tbl.SetHeader(tags.GetHeadersByTags(models.Statistics{}))
+	tbl := tools.NewTable(os.Stdout)
+	tbl.Header(tags.GetHeadersByTags(models.Statistics{}))
 	orderCount := models.CountTopN
 	if orderCount > len(stockSnapshots) {
 		orderCount = len(stockSnapshots)

@@ -6,17 +6,17 @@ import (
 	"sync"
 	"time"
 
+	"github.com/mattn/go-runewidth"
 	"github.com/quant1x/engine/cache"
 	"github.com/quant1x/engine/factors"
 	"github.com/quant1x/engine/market"
+	"github.com/quant1x/engine/tools"
 	"github.com/quant1x/gox/coroutine"
 	"github.com/quant1x/gox/logger"
 	"github.com/quant1x/gox/progressbar"
 	"github.com/quant1x/gox/runtime"
 	"github.com/quant1x/gox/tags"
-	"github.com/quant1x/gox/text/runewidth"
 	"github.com/quant1x/gox/util/treemap"
-	"github.com/quant1x/pkg/tablewriter"
 )
 
 // MetricCallback 性能指标回调函数
@@ -114,8 +114,8 @@ func FeaturesUpdate(barIndex *int, cacheDate, featureDate string, plugins []cach
 			//lineCount = 2
 			//fmt.Printf(strings.Repeat("\r\n", lineCount))
 			//progressbar.SetMaxLine(progressbar.GetMaxLine() + lineCount)
-			table := tablewriter.NewWriter(os.Stdout)
-			table.SetHeader(tags.GetHeadersByTags(cache.ScoreBoard{}))
+			table := tools.NewTable(os.Stdout)
+			table.Header(tags.GetHeadersByTags(cache.ScoreBoard{}))
 			for _, v := range metrics {
 				table.Append(tags.GetValuesByTags(v))
 			}

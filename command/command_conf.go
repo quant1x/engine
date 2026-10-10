@@ -5,8 +5,8 @@ import (
 
 	"github.com/quant1x/engine/config"
 	"github.com/quant1x/gox/api"
-	"github.com/quant1x/pkg/yaml"
 	cmder "github.com/spf13/cobra"
+	"gopkg.in/yaml.v3"
 )
 
 // CmdConfig 显示配置信息

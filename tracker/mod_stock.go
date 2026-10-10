@@ -13,12 +13,12 @@ import (
 	"github.com/quant1x/engine/market"
 	"github.com/quant1x/engine/models"
 	"github.com/quant1x/engine/storages"
+	"github.com/quant1x/engine/tools"
 	"github.com/quant1x/gox/api"
 	"github.com/quant1x/gox/logger"
 	"github.com/quant1x/gox/progressbar"
 	"github.com/quant1x/gox/tags"
 	"github.com/quant1x/num"
-	"github.com/quant1x/pkg/tablewriter"
 )
 
 var (
@@ -139,8 +139,8 @@ func AllScan(barIndex *int, model models.Strategy) {
 	}
 
 	// 输出二维表格
-	tbl := tablewriter.NewWriter(os.Stdout)
-	tbl.SetHeader(tags.GetHeadersByTags(models.Statistics{}))
+	tbl := tools.NewTable(os.Stdout)
+	tbl.Header(tags.GetHeadersByTags(models.Statistics{}))
 	topN := models.CountTopN
 	if topN <= 0 {
 		topN = tradeRule.Total

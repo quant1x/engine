@@ -4,10 +4,11 @@ import (
 	"strings"
 	"unsafe"
 
+	"github.com/olekukonko/tablewriter"
+	"github.com/olekukonko/tablewriter/tw"
 	"github.com/quant1x/data/exchange"
 	"github.com/quant1x/engine/cache"
 	"github.com/quant1x/gox/tags"
-	"github.com/quant1x/pkg/tablewriter"
 	cmder "github.com/spf13/cobra"
 )
 
@@ -85,13 +86,13 @@ type optionUsage struct {
 func getPluginsUsage(plugins []cache.DataAdapter) string {
 	writer := strings.Builder{}
 	table := tablewriter.NewWriter(&writer)
-	table.SetHeader(tags.GetHeadersByTags(optionUsage{}))
+	table.Header(tags.GetHeadersByTags(optionUsage{}))
 	table.Append(tags.GetValuesByTags(optionUsage{Key: defaultFlagAll, Name: "全部", Provider: ""}))
 	for _, plugin := range plugins {
 		ou := optionUsage{Key: plugin.Key(), Name: plugin.Name(), Provider: plugin.Owner(), Usage: plugin.Usage()}
 		table.Append(tags.GetValuesByTags(ou))
 	}
-	table.EnableBorder(false)
+	table.Options(tablewriter.WithRendition(tw.Rendition{Borders: tw.BorderNone}))
 	table.Render()
 	return writer.String()
 }

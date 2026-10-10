@@ -8,7 +8,7 @@ import (
 	"github.com/quant1x/gox/concurrent"
 	"github.com/quant1x/gox/http"
 	"github.com/quant1x/gox/logger"
-	"github.com/quant1x/pkg/fastjson"
+	"github.com/valyala/fastjson"
 )
 
 const (

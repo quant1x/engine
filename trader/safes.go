@@ -10,14 +10,16 @@ import (
 	"sync"
 	"time"
 
+	"github.com/olekukonko/tablewriter"
+	"github.com/olekukonko/tablewriter/tw"
 	"github.com/quant1x/data/exchange"
 	"github.com/quant1x/data/level1/securities"
 	"github.com/quant1x/engine/cache"
+	"github.com/quant1x/engine/tools"
 	"github.com/quant1x/gox/api"
 	"github.com/quant1x/gox/concurrent"
 	"github.com/quant1x/gox/coroutine"
 	"github.com/quant1x/gox/logger"
-	"github.com/quant1x/pkg/tablewriter"
 )
 
 const (
@@ -180,10 +182,12 @@ func GetBlackAndWhiteList() {
 		}
 		records = append(records, record)
 	}
-	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader(headers)
-	table.SetColumnAlignment([]int{tablewriter.ALIGN_RIGHT, tablewriter.ALIGN_LEFT})
-	table.AppendBulk(records)
+	table := tools.NewTable(os.Stdout)
+	table.Header(headers)
+	table.Configure(func(cfg *tablewriter.Config) {
+		cfg.Row.Alignment.PerColumn = []tw.Align{tw.AlignRight, tw.AlignLeft}
+	})
+	table.Bulk(records)
 	table.Render()
 }
 

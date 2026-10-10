@@ -8,12 +8,14 @@ import (
 	"sync"
 	"time"
 
+	"github.com/olekukonko/tablewriter"
 	"github.com/quant1x/data/exchange"
 	"github.com/quant1x/engine/cache"
 	"github.com/quant1x/engine/config"
 	"github.com/quant1x/engine/factors"
 	"github.com/quant1x/engine/market"
 	"github.com/quant1x/engine/models"
+	"github.com/quant1x/engine/tools"
 	"github.com/quant1x/gox/api"
 	"github.com/quant1x/gox/concurrent"
 	"github.com/quant1x/gox/logger"
@@ -21,7 +23,6 @@ import (
 	"github.com/quant1x/gox/tags"
 	"github.com/quant1x/num"
 	"github.com/quant1x/pandas"
-	"github.com/quant1x/pkg/tablewriter"
 )
 
 // ScanAllSectors 扫描板块
@@ -156,9 +157,9 @@ func ScanAllSectors(barIndex *int, model models.Strategy) {
 		bn = tradeRule.Rules.SectorsTopN
 	}
 	topBlocks := lastBlocks[:bn]
-	blkTable := tablewriter.NewWriter(os.Stdout)
+	blkTable := tools.NewTable(os.Stdout)
 	blkHeaders := tags.GetHeadersByTags(SectorInfo{})
-	blkTable.SetHeader(blkHeaders)
+	blkTable.Header(blkHeaders)
 	blkValues := [][]string{}
 	for _, block := range topBlocks {
 		values := tags.GetValuesByTags(block)
@@ -168,7 +169,7 @@ func ScanAllSectors(barIndex *int, model models.Strategy) {
 			__allStocks = append(__allStocks, block.StockCodes...)
 		}
 	}
-	blkTable.AppendBulk(blkValues)
+	blkTable.Bulk(blkValues)
 	fmt.Println()
 	blkTable.Render()
 
@@ -202,8 +203,8 @@ func ScanAllSectors(barIndex *int, model models.Strategy) {
 	}
 	wg.Wait()
 	fmt.Println()
-	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader(tags.GetHeadersByTags(models.ResultInfo{}))
+	table := tools.NewTable(os.Stdout)
+	table.Header(tags.GetHeadersByTags(models.ResultInfo{}))
 	elapsedTime := time.Since(mainStart) / time.Millisecond
 	goals := mapStock.Size()
 	message := fmt.Sprintf("\n总耗时: %.3fs, 总记录: %d, 命中: %d, 平均: %.3f/s\n", float64(elapsedTime)/1000, count, goals, float64(count)/(float64(elapsedTime)/1000))

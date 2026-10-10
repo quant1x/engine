@@ -4,12 +4,12 @@ import (
 	"sync"
 	"time"
 
+	"github.com/mattn/go-runewidth"
 	"github.com/quant1x/engine/cache"
 	"github.com/quant1x/engine/factors"
 	"github.com/quant1x/engine/market"
 	"github.com/quant1x/gox/logger"
 	"github.com/quant1x/gox/progressbar"
-	"github.com/quant1x/pkg/runewidth"
 )
 
 // FeaturesBackTest FeaturesUpdate 特征-数据有效性验证

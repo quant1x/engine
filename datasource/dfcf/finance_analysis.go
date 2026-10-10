@@ -8,7 +8,7 @@ import (
 	"github.com/quant1x/gox/api"
 	"github.com/quant1x/gox/http"
 	"github.com/quant1x/gox/logger"
-	"github.com/quant1x/pkg/fastjson"
+	"github.com/valyala/fastjson"
 )
 
 // 数据来源: https://data.eastmoney.com/bbsj/yjbb/301381.html
@@ -95,27 +95,27 @@ func GetQuarterlyReports(pageNumber ...int) (reports []QuarterlyReport, pages in
 		for _, v := range list {
 			v.GetStringBytes()
 			report := QuarterlyReport{
-				SecuCode:           v.GetString("SECUCODE"),
-				UpdateDate:         v.GetString("UPDATE_DATE"),
-				ReportDate:         v.GetString("REPORTDATE"),
+				SecuCode:           string(v.GetStringBytes("SECUCODE")),
+				UpdateDate:         string(v.GetStringBytes("UPDATE_DATE")),
+				ReportDate:         string(v.GetStringBytes("REPORTDATE")),
 				BasicEPS:           v.GetFloat64("BASIC_EPS"),
 				DeductBasicEPS:     v.GetFloat64("DEDUCT_BASIC_EPS"),
 				BPS:                v.GetFloat64("BPS"),
-				NoticeDate:         v.GetString("NOTICE_DATE"),
-				IsNew:              v.GetString("ISNEW"),
-				ORGCODE:            v.GetString("ORG_CODE"),
-				TRADEMARKETZJG:     v.GetString("TRADE_MARKET_ZJG"),
-				QDATE:              v.GetString("QDATE"),
-				DATATYPE:           v.GetString("DATATYPE"),
-				DATAYEAR:           v.GetString("DATAYEAR"),
-				DATEMMDD:           v.GetString("DATEMMDD"),
-				EITIME:             v.GetString("EITIME"),
-				SECURITYCODE:       v.GetString("SECURITY_CODE"),
-				SECURITYNAMEABBR:   v.GetString("SECURITY_NAME_ABBR"),
-				TRADEMARKETCODE:    v.GetString("TRADE_MARKET_CODE"),
-				TRADEMARKET:        v.GetString("TRADE_MARKET"),
-				SECURITYTYPECODE:   v.GetString("SECURITY_TYPE_CODE"),
-				SECURITYTYPE:       v.GetString("SECURITY_TYPE"),
+				NoticeDate:         string(v.GetStringBytes("NOTICE_DATE")),
+				IsNew:              string(v.GetStringBytes("ISNEW")),
+				ORGCODE:            string(v.GetStringBytes("ORG_CODE")),
+				TRADEMARKETZJG:     string(v.GetStringBytes("TRADE_MARKET_ZJG")),
+				QDATE:              string(v.GetStringBytes("QDATE")),
+				DATATYPE:           string(v.GetStringBytes("DATATYPE")),
+				DATAYEAR:           string(v.GetStringBytes("DATAYEAR")),
+				DATEMMDD:           string(v.GetStringBytes("DATEMMDD")),
+				EITIME:             string(v.GetStringBytes("EITIME")),
+				SECURITYCODE:       string(v.GetStringBytes("SECURITY_CODE")),
+				SECURITYNAMEABBR:   string(v.GetStringBytes("SECURITY_NAME_ABBR")),
+				TRADEMARKETCODE:    string(v.GetStringBytes("TRADE_MARKET_CODE")),
+				TRADEMARKET:        string(v.GetStringBytes("TRADE_MARKET")),
+				SECURITYTYPECODE:   string(v.GetStringBytes("SECURITY_TYPE_CODE")),
+				SECURITYTYPE:       string(v.GetStringBytes("SECURITY_TYPE")),
 				TotalOperateIncome: v.GetFloat64("TOTAL_OPERATE_INCOME"),
 				ParentNetprofit:    v.GetFloat64("PARENT_NETPROFIT"),
 				WeightAvgRoe:       v.GetFloat64("WEIGHTAVG_ROE"),
@@ -127,7 +127,7 @@ func GetQuarterlyReports(pageNumber ...int) (reports []QuarterlyReport, pages in
 				SJLHZ:              v.GetFloat64("SJLHZ"),
 				ASSIGNDSCRPT:       v.GetFloat64("ASSIGNDSCRPT"),
 				PAYYEAR:            v.GetFloat64("PAYYEAR"),
-				PUBLISHNAME:        v.GetString("PUBLISHNAME"),
+				PUBLISHNAME:        string(v.GetStringBytes("PUBLISHNAME")),
 				ZXGXL:              v.GetFloat64("ZXGXL"),
 			}
 			// 截取市场编码，截取股票编码，市场编码+股票编码拼接作为主键

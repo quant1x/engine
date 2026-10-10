@@ -12,12 +12,12 @@ import (
 	"github.com/quant1x/engine/market"
 	"github.com/quant1x/engine/models"
 	"github.com/quant1x/engine/storages"
+	"github.com/quant1x/engine/tools"
 	"github.com/quant1x/gox/api"
 	"github.com/quant1x/gox/progressbar"
 	"github.com/quant1x/gox/tags"
 	"github.com/quant1x/num"
 	"github.com/quant1x/pandas"
-	"github.com/quant1x/pkg/tablewriter"
 )
 
 // GoodCase good case
@@ -294,8 +294,8 @@ func BackTesting(strategyNo uint64, countDays, countTopN int) {
 			topN = len(samples)
 		}
 
-		tbl := tablewriter.NewWriter(os.Stdout)
-		tbl.SetHeader(tags.GetHeadersByTags(models.Statistics{}))
+		tbl := tools.NewTable(os.Stdout)
+		tbl.Header(tags.GetHeadersByTags(models.Statistics{}))
 		samples = samples[:topN]
 		var results []models.Statistics
 		for _, v := range samples {

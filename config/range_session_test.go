@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/quant1x/gox/api"
-	"github.com/quant1x/pkg/yaml"
+	"github.com/quant1x/gox/encoding/yaml"
 )
 
 func TestTimeRange(t *testing.T) {

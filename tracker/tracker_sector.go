@@ -11,11 +11,11 @@ import (
 	"github.com/quant1x/engine/factors"
 	"github.com/quant1x/engine/market"
 	"github.com/quant1x/engine/models"
+	"github.com/quant1x/engine/tools"
 	"github.com/quant1x/gox/api"
 	"github.com/quant1x/gox/progressbar"
 	"github.com/quant1x/gox/tags"
 	"github.com/quant1x/num"
-	"github.com/quant1x/pkg/tablewriter"
 )
 
 // ScanSectorForTick 扫描板块
@@ -136,9 +136,9 @@ func ScanSectorForTick(barIndex *int) []string {
 	//	bn = rules.RuleParameters.SectorsTopN
 	//}
 	topBlocks := lastBlocks[:bn]
-	blkTable := tablewriter.NewWriter(os.Stdout)
+	blkTable := tools.NewTable(os.Stdout)
 	blkHeaders := tags.GetHeadersByTags(SectorInfo{})
-	blkTable.SetHeader(blkHeaders)
+	blkTable.Header(blkHeaders)
 	var blkValues [][]string
 	var targets []string
 	for _, block := range topBlocks {
@@ -149,7 +149,7 @@ func ScanSectorForTick(barIndex *int) []string {
 		targets = append(targets, block.StockCodes...)
 		//}
 	}
-	blkTable.AppendBulk(blkValues)
+	blkTable.Bulk(blkValues)
 	fmt.Println()
 	blkTable.Render()
 	targets = api.Unique(targets)

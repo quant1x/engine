@@ -6,15 +6,17 @@ import (
 	"strings"
 	"time"
 
+	"github.com/olekukonko/tablewriter"
+	"github.com/olekukonko/tablewriter/tw"
 	"github.com/quant1x/data/exchange"
 	"github.com/quant1x/engine/cache"
 	"github.com/quant1x/engine/datasource/base"
 	"github.com/quant1x/engine/storages"
+	"github.com/quant1x/engine/tools"
 	"github.com/quant1x/gox/api"
 	"github.com/quant1x/gox/logger"
 	"github.com/quant1x/gox/progressbar"
 	"github.com/quant1x/gox/tags"
-	"github.com/quant1x/pkg/tablewriter"
 	cli "github.com/spf13/cobra"
 )
 
@@ -132,16 +134,18 @@ func handleBacktestFeaturesWithPlugins(dates []string, plugins []cache.DataAdapt
 	fmt.Println()
 	metricCount := len(metrics)
 	//if metricCount > 0 {
-	table := tablewriter.NewWriter(os.Stdout)
+	table := tools.NewTable(os.Stdout)
 	headers := []string{"date"}
 	headers = append(headers, tags.GetHeadersByTags(cache.FactorMetrics{})...)
-	table.SetAutoFormatHeaders(false)
+	table.Configure(func(cfg *tablewriter.Config) {
+		cfg.Header.Formatting.AutoFormat = tw.Off
+	})
 	//table.SetAutoMergeCells(true)
-	table.SetHeader(headers)
+	table.Header(headers)
 	//for i, v := range metrics {
 	//	table.Append(tags.GetValuesByTags(v))
 	//}
-	table.AppendBulk(rows)
+	table.Bulk(rows)
 	table.Render()
 	if metricCount > 0 {
 		fn := cache.BacktestFilename("backtest", exchange.Today())

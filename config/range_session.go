@@ -6,7 +6,7 @@ import (
 
 	"github.com/quant1x/data/exchange"
 	"github.com/quant1x/gox/api"
-	"github.com/quant1x/pkg/yaml"
+	"github.com/quant1x/gox/encoding/yaml"
 )
 
 // TradingSession 交易时段

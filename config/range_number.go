@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	"github.com/quant1x/gox/api"
+	"github.com/quant1x/gox/encoding/yaml"
 	"github.com/quant1x/num"
-	"github.com/quant1x/pkg/yaml"
 )
 
 // 值范围正则表达式

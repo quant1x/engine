@@ -6,8 +6,8 @@ import (
 	"testing"
 
 	"github.com/quant1x/engine/factors/pb"
-	"github.com/quant1x/pkg/yaml"
 	"google.golang.org/protobuf/proto"
+	"gopkg.in/yaml.v3"
 )
 
 func Test_updateChipDistribution(t *testing.T) {

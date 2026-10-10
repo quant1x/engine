@@ -7,9 +7,9 @@ import (
 	"strings"
 
 	"github.com/quant1x/gox/api"
+	"github.com/quant1x/gox/encoding/yaml"
 	"github.com/quant1x/gox/logger"
 	"github.com/quant1x/gox/util/homedir"
-	"github.com/quant1x/pkg/yaml"
 )
 
 const (
